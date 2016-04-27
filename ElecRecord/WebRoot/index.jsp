@@ -21,6 +21,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <jsp:forward page="jsp/test.jsp"></jsp:forward>
+    <form name="form1" action="test/test_importExcel.action" method="post" enctype="multipart/form-data">
+        <input name="excel" type="file"/>
+        <input type="submit" value="提交">
+    
+    </form>
   </body>
 </html>

@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
+import com.zhbit.excel.ExcelConfig;
+
 /** 
  * 项目名称：ElecRecord
  * 类名称：ExcelServices 
@@ -20,6 +22,15 @@ import java.util.List;
  */
 public interface ExcelServices {
 
-	public List<Object> parseExcel(File excFile);
-	public FileOutputStream parseExcel(List<Object> items);
+	/**
+	 * 方法描述:解释excel文档
+	 * @param config
+	 * @return
+	 */
+	public List<Object> parseExcel(ExcelConfig config);
+	/**
+	 * 方法描述:生成excel文档
+	 * @param config
+	 */
+	public void createExcel(ExcelConfig config);
 }

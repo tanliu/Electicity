@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.zhbit.excel.ExcelConfig;
+import com.zhbit.excel.ExcelUtil;
+
 /** 
  * 项目名称：ElecRecord
  * 类名称：ExcelServicesImpl 
@@ -24,13 +27,27 @@ import org.springframework.stereotype.Service;
 public class ExcelServicesImpl implements ExcelServices {
 
 	@Override
-	public List<Object> parseExcel(File excFile) {
-		return null;
+	public List<Object> parseExcel(ExcelConfig config) {
+		List<Object> lists=null;
+		try {
+			lists=ExcelUtil.SimpleImportExcel(config);
+		} catch (Exception e) {
+			System.out.println("---------------excel解释时出错-----------------------");
+			e.printStackTrace();
+		}
+		return lists;
 	}
 
 	@Override
-	public FileOutputStream parseExcel(List<Object> items) {
-		return null;
+	public void createExcel(ExcelConfig config) {
+		try {
+			ExcelUtil.testSimpleVoExport(config);
+		} catch (Exception e) {
+			System.out.println("-------------------生成excel文档时出错----------------");
+			e.printStackTrace();
+		}
 	}
+
+
 
 }

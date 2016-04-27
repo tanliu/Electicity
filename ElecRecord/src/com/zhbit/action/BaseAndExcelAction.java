@@ -20,13 +20,16 @@ import com.zhbit.services.ExcelServices;
  */ 
 public abstract class BaseAndExcelAction extends BaseAction {
 	//excel文件上传的属性
-	private File excel;
-	private String excelFileName;
-	private String excelContentType;
+	protected File excel;
+	protected String excelFileName;
+	protected String excelContentType;
 	
-	@Resource
-	ExcelServices excelServices;
+	@Resource(name="excelServices")
+	protected ExcelServices excelServices;
 
+	public abstract String importExcel();
+	public abstract void exportExcel();
+	
 	public File getExcel() {
 		return excel;
 	}

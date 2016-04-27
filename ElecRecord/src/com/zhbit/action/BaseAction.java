@@ -23,8 +23,8 @@ public abstract class BaseAction extends ActionSupport{
 
 	protected String[] selectedRow;  //选择的行
 	protected PageUtils pageUtils;   //查询工具
-	private int pageNO;              //当前页
-	private int pageSize;            //页的大小
+	protected int pageNO;              //当前页
+	protected int pageSize;            //页的大小
 	
 	
 	public abstract String listUI();
