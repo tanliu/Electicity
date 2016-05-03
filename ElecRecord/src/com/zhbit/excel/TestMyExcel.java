@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.text.entity.excel.TestEntity;
+import com.zhbit.services.system.impl.SystemDllServicesImpl;
 
 public class TestMyExcel {
 	
@@ -44,6 +45,10 @@ public class TestMyExcel {
 
 	}
 	
+	@Test
+	public void tet(){
+		System.out.println(SystemDllServicesImpl.class.getCanonicalName());
+	}
 	
 	@Test
 	public void te() throws Exception{

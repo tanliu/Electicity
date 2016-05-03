@@ -59,4 +59,14 @@ public interface BaseServices<T> {
 	public PageUtils getPageUtils(QueryUtils queryUtils, int pageNO,
 			int pageSize);
 	
+	/**
+	 * 方法描述:能过某个字段查找对象
+	 * @param queryUtils
+	 * @return
+	 */
+	public List<T> findObjectByFields(QueryUtils queryUtils);
+
+	
+	
+
 }

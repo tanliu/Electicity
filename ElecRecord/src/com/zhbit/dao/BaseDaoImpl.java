@@ -124,4 +124,21 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		return null;
 	}
 
+	@Override
+	public List<T> findObjectByFields(QueryUtils queryUtils) {
+		System.out.println(queryUtils.getListQueryHql());
+		Query query=getSession().createQuery(queryUtils.getListQueryHql());
+		List<Object> parameters=queryUtils.getParameters();
+		if(parameters!=null){
+			int i=0;
+			for (Object param :parameters) {
+				for(Object object:parameters){
+					query.setParameter(i++, object);
+				}
+			}
+		}
+		List<T> lists=query.list();
+		return lists;
+	}
+
 }

@@ -61,4 +61,11 @@ public class BaseServicesImpl<T> implements BaseServices<T> {
 		return baseDao.getPageUtils(queryUtils, pageNO, pageSize);
 	}
 
+	@Override
+	public List<T> findObjectByFields(QueryUtils queryUtils) {
+		// TODO Auto-generated method stub
+		return baseDao.findObjectByFields(queryUtils);
+	}
+   
+
 }

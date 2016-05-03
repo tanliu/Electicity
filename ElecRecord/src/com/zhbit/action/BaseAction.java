@@ -4,6 +4,12 @@
 package com.zhbit.action;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.zhbit.util.PageUtils;
@@ -19,12 +25,14 @@ import com.zhbit.util.PageUtils;
  * 修改备注： 
  * @version 
  */
-public abstract class BaseAction extends ActionSupport{
+public abstract class BaseAction extends ActionSupport implements ServletRequestAware,ServletResponseAware  {
 
 	protected String[] selectedRow;  //选择的行
 	protected PageUtils pageUtils;   //查询工具
 	protected int pageNO;              //当前页
 	protected int pageSize;            //页的大小
+	protected HttpServletRequest request;
+	protected HttpServletResponse response;
 	
 	
 	public abstract String listUI();
@@ -66,6 +74,15 @@ public abstract class BaseAction extends ActionSupport{
 	}
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response=response;
+	}
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+
+		this.request=request;
 	}
 	
 

@@ -49,7 +49,7 @@
 		<property name="mappingLocations">
 			<list>
 			    <value>classpath:com/text/entity/TestUser.hbm.xml</value>
-			   
+			    <value>classpath:com/zhbit/entity/SystemDll.hbm.xml</value>			   
 			</list>
 		</property>
 	</bean>
