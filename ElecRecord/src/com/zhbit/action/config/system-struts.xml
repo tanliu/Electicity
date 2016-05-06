@@ -17,6 +17,18 @@
 	          <param name="actionName">systemddl_listUI</param>
 	        </result>
          </action>
+         
+         <action name="organize_*" class="organizeAction" method="{1}">
+            <result name="listUI">/WEB-INF/jsp/system/systemdll.jsp</result>
+            <result name="editorUI">/WEB-INF/jsp/system/systemdll_editorUI.jsp</result>
+            <result name="addUI">/WEB-INF/jsp/system/organize_addUI.jsp</result>
+            <result name="add" type="redirectAction">
+	          <param name="actionName">systemddl_listUI</param>
+	        </result>
+            <result name="editor" type="redirectAction">
+	          <param name="actionName">systemddl_listUI</param>
+	        </result>
+         </action>
 	</package>
 
 </struts>

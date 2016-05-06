@@ -1,5 +1,5 @@
 body {
-	font-family: '寰蒋闆呴粦';
+	font-family: '微软雅黑';
 }
 .title {
 	line-height: 33px;
@@ -12,11 +12,11 @@ body {
 	padding-left: 22px;
 	font-weight: bold;
 	font-size: 14px;
-	font-family: '瀹嬩綋';
+	font-family: '宋体';
 	color: #000000;
 	background: url(../images/titleico.png) no-repeat left center;
 }
-/*琛ㄥ崟涓讳綋*/
+/*表单主体*/
 .main {
 	padding-top: 21px;
 	border: 1px solid #c1d3de;
@@ -37,7 +37,6 @@ body {
 	float: left;
 	margin-left:4px;
 }
-
 .main p input[type="text"] {
 	width: 240px;
 	height: 28px;
@@ -88,7 +87,7 @@ body {
 	float: left;
 	position: relative;
 	margin-left:4px;
-	width锛�00px;
+	width：300px;
 	}
 .main .select .select-wrap .select-title {
 	width: 240px;
@@ -109,7 +108,7 @@ body {
 	height: 28px;
 	background: url(../images/selectxl.png) no-repeat center center;
 }
-/*琛ㄥ崟鎸夐挳*/
+/*表单按钮*/
 .btn {
 	padding: 13px 0 80px 300px;
 	border: 1px solid #c1d3de;
@@ -187,7 +186,7 @@ legend {
 	font-weight:800;
     background:#fff;
 } 
-/*寮圭獥鍐呭鏍峰紡*/
+/*弹窗内容样式*/
 .dialog-content .buttons {
 	margin-top: 30px;
 }

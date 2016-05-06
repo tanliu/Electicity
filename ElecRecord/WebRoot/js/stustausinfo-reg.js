@@ -1,4 +1,4 @@
-<!--选择框的脚本-->
+<!--ѡ���Ľű�-->
 $(document.getElementById('select-title1')).on("click",function(){
 	$(document.getElementById('list1')).toggle();
 	return false;
@@ -89,78 +89,9 @@ $(document.getElementById('list10')).on("click","li",function(){
 	$(".select-title").find(document.getElementById('span10')).text(txt);
 });
 
-$(document.getElementById('select-title11')).on("click",function(){
-	$(document.getElementById('list11')).toggle();
-	return false;
-});
-$(document.getElementById('list11')).on("click","li",function(){
-	var txt = $(this).text();
-	$(".select-title").find(document.getElementById('span11')).text(txt);
-});
-
-$(document.getElementById('select-title12')).on("click",function(){
-	$(document.getElementById('list12')).toggle();
-	return false;
-});
-$(document.getElementById('list12')).on("click","li",function(){
-	var txt = $(this).text();
-	$(".select-title").find(document.getElementById('span12')).text(txt);
-});
-
-<!--清空功能的脚本-->
+<!--��չ��ܵĽű�-->
 function reset()
   {
   document.getElementById("myForm").reset();
   }
 showRemind('input[type=text], textarea','placeholder');
-
-<!--实现清空弹出框的脚本-->
-
-$('.clearDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:400,
-	height:200
-	
-});
-
-$('.clear').click(function(){
-	$('.clearDialog').Dialog('open');
-	$("input").each(function() {
-		$(this).val("");
-	});
-});
-
-
-
-$('.clearDialog input[type=button]').click(function(e) {
-    $('.clearDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		reset();
-	}
-});
-
-<!--实现保存弹出框的脚本-->
-
-$('.saveDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:400,
-	height:200
-	
-});
-
-$('.save').click(function(){
-	$('.saveDialog').Dialog('open');
-});
-
-
-
-$('.saveDialog input[type=button]').click(function(e) {
-    $('.saveDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		reset();
-	}
-});
