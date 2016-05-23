@@ -195,6 +195,7 @@ $(".select-list").on("click","li",function(){
 	    $("#addtype").append($input);
 	    $("#addtype").show();
 	}else{
+		//记录当前操作方法是更改
 	   method="editor";
 	   $("#addtype").hide();
 	   var $input=$("<input type='text' id='type' name='systemDll.keyword'/>");

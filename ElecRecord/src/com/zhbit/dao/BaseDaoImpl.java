@@ -138,6 +138,9 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			}
 		}
 		List<T> lists=query.list();
+		if(lists.size()==0){ //当没有结果集的时候，为空
+			return null;
+		}
 		return lists;
 	}
 

@@ -13,6 +13,8 @@ package com.zhbit.entity;
 public class SystemDll implements java.io.Serializable {
 
 
+
+	private static final long serialVersionUID = 1L;
 	private String seqId;   //标识
 	private String keyword;  //类型名称
 	private Integer ddlCode; //数据代码

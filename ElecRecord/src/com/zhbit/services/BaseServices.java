@@ -65,6 +65,12 @@ public interface BaseServices<T> {
 	 * @return
 	 */
 	public List<T> findObjectByFields(QueryUtils queryUtils);
+	
+	/**
+	 * 方法描述:查找所有的信息
+	 * @return
+	 */
+	public List<T> findAllObject(QueryUtils queryUtils);
 
 	
 	

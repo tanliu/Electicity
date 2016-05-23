@@ -18,8 +18,8 @@ package com.zhbit.entity;
 public class Organization  implements java.io.Serializable {
 
 
-
-     private String orgId;  
+	private static final long serialVersionUID = 1L;
+	private String orgId;  
      private String orgName;
      private String parentId;
      private String parentIds;
@@ -29,7 +29,7 @@ public class Organization  implements java.io.Serializable {
      private String tell;
      private String fax;
      private String email;
-     private String state;
+     private String state;   //状态
 
 
 //--------------------------constructor---------------------

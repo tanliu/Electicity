@@ -63,8 +63,12 @@ public class BaseServicesImpl<T> implements BaseServices<T> {
 
 	@Override
 	public List<T> findObjectByFields(QueryUtils queryUtils) {
-		// TODO Auto-generated method stub
 		return baseDao.findObjectByFields(queryUtils);
+	}
+
+	@Override
+	public List<T> findAllObject(QueryUtils queryUtils) {
+		return this.findObjectByFields(queryUtils);
 	}
    
 

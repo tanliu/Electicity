@@ -11,7 +11,6 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 import com.zhbit.util.PageUtils;
 
 /** 
@@ -27,6 +26,8 @@ import com.zhbit.util.PageUtils;
  */
 public abstract class BaseAction extends ActionSupport implements ServletRequestAware,ServletResponseAware  {
 
+
+	private static final long serialVersionUID = 1L;
 	protected String[] selectedRow;  //选择的行
 	protected PageUtils pageUtils;   //查询工具
 	protected int pageNO;              //当前页
