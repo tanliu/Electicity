@@ -47,7 +47,7 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 	//--------------------------------getter&setter---------------------------
 	
 	//默认页的大小
-	public static int DEFAULT_PAGE_SIZE=3;
+	public static int DEFAULT_PAGE_SIZE=2;
 	
 	public PageUtils getPageUtils() {
 		return pageUtils;
@@ -64,6 +64,9 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 
 
 	public int getPageNO() {
+		if(pageNO<1){
+			pageNO=1;
+		}
 		return pageNO;
 	}
 	public void setPageNO(int pageNO) {

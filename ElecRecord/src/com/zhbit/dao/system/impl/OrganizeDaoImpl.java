@@ -3,6 +3,8 @@
  */
 package com.zhbit.dao.system.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.zhbit.dao.BaseDaoImpl;
@@ -23,4 +25,12 @@ import com.zhbit.entity.Organization;
 @Repository(value=OrganizeDao.DAO_NAME)
 public class OrganizeDaoImpl extends BaseDaoImpl<Organization> implements OrganizeDao {
 
+
+
+	@Override
+	public void saveOrUpdateAll(List<Organization> organizations) {
+		// TODO Auto-generated method stub
+		getHibernateTemplate().saveOrUpdateAll(organizations);
+		
+	}
 }

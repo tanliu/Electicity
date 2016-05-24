@@ -17,7 +17,7 @@
 			<tr id="1">
 				<td class="num">1</td>
 				<td class="name" align='center'><input type="text" value=""
-					size="50" name="systemDll.ddlName" />
+					size="50" name="ddlNames" />
 				<td class="operate" align='center'><a
 					href="javascript:delTableRow(1);" class="del">删除</a></td>
 			</tr>

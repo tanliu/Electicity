@@ -3,8 +3,11 @@
  */
 package com.zhbit.services.system.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.BaseDao;
@@ -12,6 +15,9 @@ import com.zhbit.dao.system.OrganizeDao;
 import com.zhbit.entity.Organization;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.system.OrganizeServices;
+import com.zhbit.util.QueryUtils;
+
+import freemarker.template.utility.StringUtil;
 
 /** 
  * 项目名称：ElecRecord
@@ -32,6 +38,28 @@ public class OrganizeServicesImpl extends BaseServicesImpl<Organization> impleme
     public void setOrganizeDao(OrganizeDao organizeDao) {
     	super.setBaseDao(organizeDao);
 		this.organizeDao = organizeDao;
+		
+	}
+	@Override
+	public void editorChild(String oldparentId, Organization organize) {
+		//查找到旧结点的所有父结点
+		Organization oldOrganize=findObjectById(oldparentId);
+		//查找到新的父结点的所有结点
+		Organization newOrganize=findObjectById(organize.getParentId());
+		//查找所有含有与旧结点想同的子结点
+		QueryUtils queryUtils=new QueryUtils(Organization.class,"o");
+		queryUtils.addCondition("o.parentIds like ?", "%"+oldOrganize.getParentIds()+"%");
+		List<Organization> organizations=this.findObjectByFields(queryUtils);
+		//遍历替换所有子结点
+		for (Organization organization : organizations) {
+			String parentIds=organization.getParentIds();
+			if(!StringUtils.isEmpty(parentIds)){
+				parentIds.replace(oldOrganize.getParentIds(), newOrganize.getParentIds());
+				organization.setParentIds(parentIds);
+			}
+		}
+		organizeDao.saveOrUpdateAll(organizations);
+		
 		
 	}
 }

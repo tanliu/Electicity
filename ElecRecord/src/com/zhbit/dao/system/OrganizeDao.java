@@ -1,5 +1,7 @@
 package com.zhbit.dao.system;
 
+import java.util.List;
+
 import com.zhbit.dao.BaseDao;
 import com.zhbit.entity.Organization;
 
@@ -16,4 +18,10 @@ import com.zhbit.entity.Organization;
  */ 
 public interface OrganizeDao extends BaseDao<Organization> {
 	public static final String DAO_NAME="com.zhbit.dao.system.impl.OrganizeDaoImpl";
+	
+	
+	/**
+	 * 方法描述:批量保存、更新数据
+	 */
+	public void saveOrUpdateAll(List<Organization> organizations);
 }

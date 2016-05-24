@@ -60,6 +60,7 @@ public class SystemDllAction extends BaseAction {
 	@Override
 	public String editorUI() {
 		List<SystemDll> systemDlls = null;
+		//查询所有keyword
 		if (systemDll != null&&!"--请选择--".equals(systemDll.getKeyword())) {
 			QueryUtils queryUtils = new QueryUtils(SystemDll.class, "s");
 			queryUtils.addCondition("s.keyword= ?", systemDll.getKeyword());

@@ -16,4 +16,11 @@ import com.zhbit.services.BaseServices;
  */ 
 public interface OrganizeServices extends BaseServices<Organization> {
 	public static final String SERVICE_NAME="com.zhbit.services.system.impl.OrganizeServicesImpl";
+
+	/**
+	 * 方法描述:更改了结点数据
+	 * @param oldparentId
+	 * @param organize
+	 */
+	void editorChild(String oldparentId, Organization organize);
 }
