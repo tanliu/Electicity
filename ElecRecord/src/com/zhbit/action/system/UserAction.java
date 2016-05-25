@@ -3,6 +3,8 @@
  */
 package com.zhbit.action.system;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.mysql.fabric.xmlrpc.base.Data;
 import com.zhbit.action.BaseAction;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.SystemDll;
@@ -17,6 +20,7 @@ import com.zhbit.entity.User;
 import com.zhbit.services.system.OrganizeServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.services.system.UserServices;
+import com.zhbit.util.EncryptUtils;
 /** 
  * 项目名称：ElecRecord
  * 类名称：UserAction 
@@ -61,7 +65,10 @@ public class UserAction extends BaseAction {
 	@Override
 	public String add() {
 		//设置用户创建时间
+		user.setCreateTime(new Timestamp(new Date().getTime()));
 		//对用户数据进行加密处理
+		user.setPassword(EncryptUtils.MD5Encrypt(user.getPassword()));
+		userServices.save(user);
 		return "add";
 	}
 
