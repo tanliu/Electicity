@@ -7,7 +7,7 @@
 
 	<!-- 配置全局结果及异常映射 -->
 	<package name="system" namespace="/system" extends="struts-default">
-	  <!-- 数据字典的管理 -->
+	
          <action name="systemddl_*" class="com.zhbit.action.system.SystemDllAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/system/systemdll.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/system/systemdll_editorUI.jsp</result>
