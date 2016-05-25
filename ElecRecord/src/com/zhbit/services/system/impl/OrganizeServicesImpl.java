@@ -42,19 +42,22 @@ public class OrganizeServicesImpl extends BaseServicesImpl<Organization> impleme
 	}
 	@Override
 	public void editorChild(String oldparentId, Organization organize) {
+		
 		//查找到旧结点的所有父结点
-		Organization oldOrganize=findObjectById(oldparentId);
+		Organization oldOrganize=findObjectById(organize.getOrgId());
 		//查找到新的父结点的所有结点
 		Organization newOrganize=findObjectById(organize.getParentId());
-		//查找所有含有与旧结点想同的子结点
+		//查找所有含有与旧结点相同的子结点
 		QueryUtils queryUtils=new QueryUtils(Organization.class,"o");
 		queryUtils.addCondition("o.parentIds like ?", "%"+oldOrganize.getParentIds()+"%");
 		List<Organization> organizations=this.findObjectByFields(queryUtils);
+		String replace=oldOrganize.getParentIds();
 		//遍历替换所有子结点
 		for (Organization organization : organizations) {
 			String parentIds=organization.getParentIds();
+			
 			if(!StringUtils.isEmpty(parentIds)){
-				parentIds.replace(oldOrganize.getParentIds(), newOrganize.getParentIds());
+				parentIds=parentIds.replace(replace, newOrganize.getParentIds()+","+newOrganize.getOrgId());
 				organization.setParentIds(parentIds);
 			}
 		}

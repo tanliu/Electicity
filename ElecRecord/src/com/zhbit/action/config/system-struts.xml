@@ -7,6 +7,7 @@
 
 	<!-- 配置全局结果及异常映射 -->
 	<package name="system" namespace="/system" extends="struts-default">
+	  <!-- 数据字典的管理 -->
          <action name="systemddl_*" class="com.zhbit.action.system.SystemDllAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/system/systemdll.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/system/systemdll_editorUI.jsp</result>
@@ -17,7 +18,7 @@
 	          <param name="actionName">systemddl_listUI</param>
 	        </result>
          </action>
-         
+         <!-- 部门信息管理  -->
          <action name="organize_*" class="organizeAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/system/organize_listUI.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/system/organize_editorUI.jsp</result>
@@ -27,6 +28,18 @@
 	        </result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">organize_listUI</param>
+	        </result>
+         </action>
+         <!-- 用户管理管理 -->
+         <action name="user_*" class="userAction" method="{1}">
+            <result name="listUI">/WEB-INF/jsp/system/user_listUI.jsp</result>
+            <result name="editorUI">/WEB-INF/jsp/system/user_editorUI.jsp</result>
+            <result name="addUI">/WEB-INF/jsp/system/user_addUI.jsp</result>
+            <result name="add" type="redirectAction">
+	          <param name="actionName">user_listUI</param>
+	        </result>
+            <result name="editor" type="redirectAction">
+	          <param name="actionName">user_listUI</param>
 	        </result>
          </action>
 	</package>

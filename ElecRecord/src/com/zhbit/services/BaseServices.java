@@ -56,21 +56,58 @@ public interface BaseServices<T> {
 	 * @param pageSize 页码大小
 	 * @return
 	 */
+	@Deprecated
 	public PageUtils getPageUtils(QueryUtils queryUtils, int pageNO,
 			int pageSize);
 	
 	/**
-	 * 方法描述:能过某个字段查找对象
+	 * 方法描述:获取分布工具
+	 * @param queryUtils 查询工具
+	 * @param pageNO 当前页
+	 * @param pageSize 页码大小
+	 * @return
+	 */
+	public PageUtils getPageUtils(String[] fields,Object[] params,String proterty,String order, int pageNO,
+			int pageSize);
+	
+	
+	
+	/**
+	 * 方法描述:通过查询工具查询
 	 * @param queryUtils
 	 * @return
 	 */
+	@Deprecated
 	public List<T> findObjectByFields(QueryUtils queryUtils);
+	/**
+	 * 方法描述:通过某个字段查找对象
+	 * @param fields
+	 * @param params
+	 * @return
+	 */
+	public List<T> findObjectByFields(String[] fields,Object[] params);
 	
 	/**
 	 * 方法描述:查找所有的信息
 	 * @return
 	 */
+	@Deprecated
 	public List<T> findAllObject(QueryUtils queryUtils);
+	
+	/**
+	 * 方法描述:查找所有的信息
+	 * @return
+	 */
+	public List<T> findAllObject();
+
+	/**
+	 * 方法描述:查找所有的信息后有一定的排序
+	 * @param proterty
+	 * @param order
+	 * @return
+	 */
+	public List<T> findAllObject(String proterty,String order);
+
 
 	
 	
