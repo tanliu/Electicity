@@ -8,10 +8,11 @@
 	<!-- 配置全局结果及异常映射 -->
 	<package name="stustatus" namespace="/stustatus" extends="struts-default">
          <action name="stustatus_*" class="com.zhbit.action.studentstatus.StuStatusAction" method="{1}">
-            <result name="listUI">/WEB-INF/jsp/stustatus/systemdll.jsp</result>
+            <result name="listUI">/WEB-INF/jsp/stustatus/stustausinfo_listUI.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/studentstatus/stustausinfo_editorUI.jsp</result>
+             <result name="addUI">/WEB-INF/jsp/studentstatus/stustausinfo_addUI.jsp</result>
             <result name="add" type="redirectAction">
-	          <param name="actionName">systemddl_listUI</param>
+	         
 	        </result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">systemddl_listUI</param>
