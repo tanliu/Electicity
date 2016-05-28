@@ -24,7 +24,7 @@
 		<div class="main">		
 			<p class="short-input ue-clear">
 				<label>用户编号：</label> 
-				<s:textfield  name="user.employNo" class="strutsinput noNull" ></s:textfield>
+				<s:textfield id="vilidation"  name="user.employNo" class="strutsinput noNull" ></s:textfield>
 				<label>用户名称：</label>
 				<s:textfield  name="user.employName" class="strutsinput"></s:textfield>						
 			</p>
@@ -93,6 +93,31 @@
 <%-- <!-- 引入弹出框 -->
 <jsp:include page="/common/dialog.jsp"></jsp:include> --%>
 
+<script type="text/javascript">
+$(function($){
+	$("#vilidation").blur(function(){
+		$.ajax({
+	        url:"${basePath}system/user_vilidationUserID.action",
+	    	data:$("#myForm").serialize(),
+	    	type:"post",
+	    	//dataType:"json",//返回数据类型
+	    	success: function(data){
+	    		//data为0时表示数据库中已经存在数据了
+	    		if(data=="0"){
+	    			$("#vilidation").focus();
+	    			alert("此用户编号已经存在");	    			
+	    		}
+	    	},
+	        error:function(){
+
+	        }
+	    
+	    });
+		
+	} );
+});
+
+</script>
 </body>
 
 </html>

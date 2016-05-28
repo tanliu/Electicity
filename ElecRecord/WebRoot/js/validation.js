@@ -12,6 +12,7 @@ function isNull(){
 	  $(".noNull").each(function(i){ 
 		  //获取指定非空的属性的值
 		   var txt=$(this).val();
+		   txt=txt.trim();
 		   if(txt==""){//当值为空时
 			  /*var $label=$(this).prev("label").text();//获取输入框前一个label的名称
 			  $label=$label.replace("：","");

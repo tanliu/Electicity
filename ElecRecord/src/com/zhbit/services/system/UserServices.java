@@ -19,4 +19,12 @@ public interface UserServices extends BaseServices<User> {
    public final static String SERVER_NAME="com.zhbit.services.system.impl.UserServicesImpl";
    
    public PageUtils queryList(User user,int pageNO,int pageSize);
+
+    /**
+     * 方法描述:修改密码
+     * @param user 用户信息
+     * @param confirmpwd 确认密码
+     * @return
+     */
+    public boolean editorPwd(User user, String confirmpwd);
 }

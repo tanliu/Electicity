@@ -94,12 +94,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 					}
 				}
 			}
-			//设置分页
-			if(pageNO<1)pageNO=1;
-			query.setFirstResult((pageNO-1)*pageSize);
-			query.setMaxResults(pageSize);
-			//获取分页后的数据
-			List<T> items=query.list();
 			
 			//获取总记录数
 			Query countquery=getSession().createQuery(queryUtils.getCountQueryHql());		
@@ -112,8 +106,22 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			
 			//获取总页数
 			long totalCount=(Long) countquery.uniqueResult();
+			PageUtils pageUtils=new PageUtils(totalCount,pageNO, pageSize);
+			//设置分页
+			if(pageNO<1)pageNO=1; //如果分页于1时，则页码为1
+			if(pageNO>pageUtils.getTotalPageCount()){
+				pageNO=pageUtils.getTotalPageCount(); //如果页码大小最大页码时，就取最大页码
+				pageUtils.setPageNo(pageNO);
+			}
+			query.setFirstResult((pageNO-1)*pageSize);
+			query.setMaxResults(pageSize);
+			//获取分页后的数据
+			List<T> items=query.list();
+			pageUtils.setItems(items);
+			
+
 			//返回一个分布工具
-			return new PageUtils(totalCount,pageNO, pageSize, items);
+			return pageUtils;
 			
 			
 		}

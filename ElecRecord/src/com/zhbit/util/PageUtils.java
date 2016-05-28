@@ -41,6 +41,19 @@ public class PageUtils {
 			this.pageNo = 0;
 		}
 	}
+	//计算总页数
+	public PageUtils(long totalCount, int pageNo, int pageSize) {		
+		this.totalCount = totalCount;
+		this.pageSize = pageSize;
+		if(totalCount != 0){
+			//计算总页数
+			int tem = (int)totalCount/pageSize;
+			this.totalPageCount = (totalCount%pageSize==0)?tem:(tem+1);
+			this.pageNo = pageNo;
+		} else {
+			this.pageNo = 0;
+		}
+	}
 	
 	public long getTotalCount() {
 		return totalCount;
@@ -70,7 +83,7 @@ public class PageUtils {
 		return items;
 	}
 	public void setItems(List items) {
-		this.items = items;
+		this.items = items==null?new ArrayList():items;
 	}
 	
 }
