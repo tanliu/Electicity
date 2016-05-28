@@ -6,8 +6,7 @@
 
 	<!-- 配置全局结果及异常映射 -->
 	<package name="polstatus" namespace="/polstatus" extends="struts-default">
-	 
-         <!-- 党团关系信息管理  -->
+	          <!-- 党团关系信息管理  -->
          <action name="polstatus_*" class="com.zhbit.action.polstatus.PolstatusAction" method="{1}">
             <result name="editorUI">/WEB-INF/jsp/polstatus/partyinfo_editorUI.jsp</result>
              <result name="listUI">/WEB-INF/jsp/polstatus/partyinfo_listUI.jsp</result>
