@@ -2,6 +2,7 @@ package com.zhbit.services.system;
 
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServices;
+import com.zhbit.util.PageUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -16,4 +17,6 @@ import com.zhbit.services.BaseServices;
  */ 
 public interface UserServices extends BaseServices<User> {
    public final static String SERVER_NAME="com.zhbit.services.system.impl.UserServicesImpl";
+   
+   public PageUtils queryList(User user,int pageNO,int pageSize);
 }

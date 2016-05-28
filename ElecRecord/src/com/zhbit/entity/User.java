@@ -8,7 +8,7 @@ public class User implements java.io.Serializable {
 
 	// Fields
 
-	private String userId;
+	private String userId;   //用户id
 	private Organization organization;
 	private String employNo;
 	private String employName;

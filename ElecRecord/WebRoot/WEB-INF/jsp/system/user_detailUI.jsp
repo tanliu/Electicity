@@ -21,23 +21,25 @@
 		<h2>添加用户</h2>
 	</div>
 	<form id="myForm">	
+		<s:textfield  name="user.employNo" class="strutsinput noNull" readonly="true"></s:textfield>
+	    
 		<div class="main">		
 			<p class="short-input ue-clear">
 				<label>用户编号：</label> 
-				<s:textfield  name="user.employNo" class="strutsinput noNull" ></s:textfield>
+				<s:textfield  name="user.employNo" class="strutsinput noNull" readonly="true"></s:textfield>
 				<label>用户名称：</label>
 				<s:textfield  name="user.employName" class="strutsinput"></s:textfield>						
 			</p>
 			<div class="short-input select ue-clear">				
 				<div class="select-wrap">
 				<label>联系电话：</label>
-					<s:textfield value="" name="user.tell" class="strutsinput tell"></s:textfield>
+					<s:textfield  name="user.tell" class="strutsinput tell"></s:textfield>
 				</div>
 				<label>所属机构：</label>
-				<input class="noNull" hidden="hidden" value="" name="user.organization.orgId">
+				<input class="noNull" hidden="hidden" value='<s:property value='user.organization.orgId'/>' name="user.organization.orgId">
 				<div class="select-wrap">
 				<div class="select-title">
-					<span id="span1">请选择</span><i class="icon"></i>
+					<span id="span1"><s:property value='user.organization.orgName'/></span><i class="icon"></i>
 					</div>
 					<ul class="select-list" >
 					    <li id="">请选择</li>
@@ -53,10 +55,10 @@
 					<s:password value="" name="user.password" class="strutsinput"></s:password>
 				</div>
 				<label>用户类型：</label>
-				<input class="noNull"  hidden="hidden" value="" name="user.userType">
+				<input class="noNull"  hidden="hidden" value="<s:property value="user.userType"/>" name="user.userType">
 				<div class="select-wrap">
 				<div class="select-title" >
-					<span >请选择</span><i class="icon"></i>
+					<span ><s:property value="user.userType"/></span><i class="icon"></i>
 					</div>
 					<ul class="select-list" id="list1">
 					    <li id="">请选择</li>
@@ -69,22 +71,21 @@
 			
 			<p class="short-input ue-clear">
 				<label>联系地址：</label> 
-				<s:textfield value="" name="user.address" class="strutsinput"></s:textfield>
+				<s:textfield  name="user.address" class="strutsinput"></s:textfield>
 				<label>E_mail地址：</label>
-				<s:textfield value="" name="user.email" class="strutsinput email"></s:textfield>			
+				<s:textfield  name="user.email" class="strutsinput email"></s:textfield>			
 				
 			</p>
 
 			<p class="short-input ue-clear" >
 				<label>性别：</label>
-				<s:radio list="#{'1':'男','0':'女'}" name="user.sex" value="1"  cssStyle="width:25px;" />	
-				
+				<s:radio list="#{'1':'男','0':'女'}" name="user.sex"   cssStyle="width:25px;" />	
 				<label>状态：</label>
-				<s:radio list="#{'1':'激活','0':'禁用'}" name="user.status" value="1"  cssStyle="width:25px;" />	
+				<s:radio list="#{'1':'激活','0':'禁用'}" name="user.status"   cssStyle="width:25px;" />	
 			</p>
 
 	<div class="btn ue-clear">
-	<a href="javascript:add('myForm','post','${basePath}system/user_add.action')"  class="confirm save">确定</a> <a
+	<a href="javascript:editor('myForm','post','${basePath}system/user_editor.action')"  class="confirm save">确定</a> <a
 				href="javascript:back()" class="clear clear">返回</a>
 		</div>
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- 配置全局结果及异常映射 -->
+	<package name="stustatus" namespace="/stustatus" extends="struts-default">
+         <action name="stustatus_*" class="com.zhbit.action.studentstatus.StuStatusAction" method="{1}">
+            <result name="listUI">/WEB-INF/jsp/studentstatus/stustausinfo_listUI.jsp</result>
+            <result name="editorUI">/WEB-INF/jsp/studentstatus/stustausinfo_editorUI.jsp</result>
+             <result name="addUI">/WEB-INF/jsp/studentstatus/stustausinfo_addUI.jsp</result>
+            <result name="add" type="redirectAction">
+	         
+	        </result>
+            <result name="editor" type="redirectAction">
+	          <param name="actionName">systemddl_listUI</param>
+	        </result>
+         </action>
+        
+        
+	</package>
+
+</struts>

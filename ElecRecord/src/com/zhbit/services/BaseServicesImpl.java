@@ -79,7 +79,7 @@ public class BaseServicesImpl<T> implements BaseServices<T> {
 		QueryUtils queryUtils=new QueryUtils(entityClass, "entity");
 		if(fields!=null&&fields.length>0&&params!=null&&params.length>0){
 			for(int i=0;i<fields.length;i++){
-			queryUtils.addCondition("entity."+fields[i]+"=?", params[i]);
+			queryUtils.addCondition("entity."+fields[i], params[i]);
 			}
 		}
 		return baseDao.findObjectByFields(queryUtils);
@@ -103,12 +103,12 @@ public class BaseServicesImpl<T> implements BaseServices<T> {
 		//添加查询条件
 		if(fields!=null&&fields.length>0&&params!=null&&params.length>0&&fields.length==params.length){
 			for(int i=0;i<fields.length;i++){
-				queryUtils.addCondition("entity."+fields[i]+"=?", params[i]);
+				queryUtils.addCondition("entity."+fields[i], params[i]);
 			}
 		}
 		//添加排序
 		if(!StringUtils.isEmpty(proterty)&&!StringUtils.isEmpty(order)){
-			queryUtils.addOrderByProperty(proterty, order);
+			queryUtils.addOrderByProperty("entity."+proterty, order);
 		}
 		
 		return baseDao.getPageUtils(queryUtils, pageNO, pageSize);
