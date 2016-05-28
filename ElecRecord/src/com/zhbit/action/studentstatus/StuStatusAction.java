@@ -49,7 +49,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String listUI() {
 		// TODO Auto-generated method stub
-		return null;
+		return "listUI";
 	}
 
 	/**
