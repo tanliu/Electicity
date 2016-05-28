@@ -30,14 +30,18 @@
 	          <param name="actionName">organize_listUI</param>
 	        </result>
          </action>
-         <!-- 用户管理管理 -->
+         <!-- 用户管理 -->
          <action name="user_*" class="userAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/system/user_listUI.jsp</result>
-            <result name="editorUI">/WEB-INF/jsp/system/user_editorUI.jsp</result>
+            <result name="detailUI">/WEB-INF/jsp/system/user_detailUI.jsp</result>
             <result name="addUI">/WEB-INF/jsp/system/user_addUI.jsp</result>
             <result name="add" type="redirectAction">
 	          <param name="actionName">user_listUI</param>
 	        </result>
+            <result name="delete" type="redirectAction">
+	          <param name="actionName">user_listUI</param>
+	        </result>
+            <result name="editorUI">/WEB-INF/jsp/system/user_editorUI.jsp</result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">user_listUI</param>
 	        </result>

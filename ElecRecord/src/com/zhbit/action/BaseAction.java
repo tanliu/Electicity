@@ -43,6 +43,7 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 	public abstract String editorUI();
 	public abstract String editor();
     public abstract String deleteAll();
+    //public abstract String detailUI();
 	
 	//--------------------------------getter&setter---------------------------
 	

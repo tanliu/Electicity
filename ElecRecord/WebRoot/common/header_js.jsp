@@ -7,7 +7,9 @@
 <script type="text/javascript" src="${basePath}js/common.js"></script>
 <script type="text/javascript" src="${basePath}js/select.js"></script>
 <script type="text/javascript" src="${basePath}js/button.js"></script>
-<script type="text/javascript" src="js/jquery.pagination.js"></script>
+<script type="text/javascript" src="${basePath}js/validation.js"></script>
+
+
 <link rel="stylesheet" href="${basePath}css/base.css" />
 <link rel="stylesheet" href="${basePath}css/struts.css" />
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />

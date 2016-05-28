@@ -14,7 +14,7 @@ $(document).ready(function(){
 		var txt = $(this).text();
 		var txtId=$(this).attr("id");
 		//把值保存到input中去
-		$(this).parent().parent().next("input").val(txtId);
+		$(this).parent().parent().prev("input").val(txtId);
 		$(this).parent($(".select-list")).siblings($(".select-title")).find("span").text(txt);
 		var idname=$(this).parent($(".select-list")).siblings($(".select-title")).attr("id");
 	})

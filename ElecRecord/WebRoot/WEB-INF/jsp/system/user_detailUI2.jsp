@@ -24,7 +24,7 @@
 		<div class="main">		
 			<p class="short-input ue-clear">
 				<label>用户编号：</label> 
-				<s:textfield  name="user.employNo" class="strutsinput noNull" ></s:textfield>
+				<s:textfield  name="user.employNo" class="strutsinput" readonly="true" ></s:textfield>
 				<label>用户名称：</label>
 				<s:textfield  name="user.employName" class="strutsinput"></s:textfield>						
 			</p>
@@ -69,16 +69,15 @@
 			
 			<p class="short-input ue-clear">
 				<label>联系地址：</label> 
-				<s:textfield value="" name="user.address" class="strutsinput"></s:textfield>
+				<s:textfield  name="user.address" class="strutsinput"></s:textfield>
 				<label>E_mail地址：</label>
-				<s:textfield value="" name="user.email" class="strutsinput email"></s:textfield>			
+				<s:textfield  name="user.email" class="strutsinput email"></s:textfield>			
 				
 			</p>
 
 			<p class="short-input ue-clear" >
 				<label>性别：</label>
 				<s:radio list="#{'1':'男','0':'女'}" name="user.sex" value="1"  cssStyle="width:25px;" />	
-				
 				<label>状态：</label>
 				<s:radio list="#{'1':'激活','0':'禁用'}" name="user.status" value="1"  cssStyle="width:25px;" />	
 			</p>
@@ -90,8 +89,7 @@
 
 </div>
 	</form>
-<%-- <!-- 引入弹出框 -->
-<jsp:include page="/common/dialog.jsp"></jsp:include> --%>
+
 
 </body>
 
