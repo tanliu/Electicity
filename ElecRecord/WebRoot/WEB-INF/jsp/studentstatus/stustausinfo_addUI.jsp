@@ -33,6 +33,8 @@
     <div class="short-input select ue-clear" >
    
     	<label>性别：</label>
+    	<input  hidden="hidden" value="" name="stuStatus.sex">
+      
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -41,7 +43,6 @@
                 <li id="女">女</li>
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.sex">
         
     </div>
     <p class="short-input ue-clear">
@@ -53,11 +54,13 @@
       </p>
       
       <div class="short-input select ue-clear" >
-    	<label>学生类别：</label>
+    	
     	<div class="select-wrap" >
+    	<label>学生类别：</label>
         <input type="text" placeholder="请输入学生类别" name="stuStatus.studentCategory"/> 
         </div>
         <label>学年：</label>
+        <input  hidden="hidden" value="" name="stuStatus.academicYear">
       <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -69,13 +72,14 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="" name="stuStatus.academicYear">
+				
     </div>
       
      
   
       <div class="short-input select ue-clear" >
     	<label>学期：</label>
+    	 <input  hidden="hidden" value="" name="stuStatus.term">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -84,7 +88,7 @@
                 <li id="2">2</li>
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.term">
+
     </div>
     
      
@@ -132,11 +136,13 @@
     <fieldset>
     <legend>学生异动前信息</legend>
    <div class="short-input select ue-clear" >
-    	<label>转出前学校名称：</label>
+    	
     	 <div class="select-wrap" >
+    	 <label>转出前学校名称：</label>
         <input type="text" placeholder="请输入学生转出前学校名称" name="stuStatus.zxqschool"/>
         </div>
         <label>转出前所在年级：</label>
+        <input  hidden="hidden" value="" name="stuStatus.zxqgrade">
          <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -147,10 +153,11 @@
                 <li id="大四">大四</li>
             </ul>
         </div>
-         <input  hidden="hidden" value="" name="stuStatus.zxqgrade">
+         
     </div>
      <div class="short-input select ue-clear" >
         <label>转出前专业：</label>
+        <input  hidden="hidden" value="" name="stuStatus.zxqmajor">
          <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -162,8 +169,9 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="" name="stuStatus.zxqmajor">
+				
         <label>异动前学院：</label>
+        <input  hidden="hidden" value="" name="stuStatus.ydqcollege">
          <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -175,15 +183,17 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="" name="stuStatus.ydqcollege">
+				
        </div>
    
    <div class="short-input select ue-clear" >
-        <label>异动前系：</label>
+        
         <div class="select-wrap" >
+        <label>异动前系：</label>
         <input type="text" placeholder="请输入学生异动前系" name="stuStatus.ydqdepartment"/> 
         </div>
        <label>异动前专业：</label>
+       <input  hidden="hidden" value="" name="stuStatus.ydqmajor">
         <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -195,11 +205,12 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="" name="stuStatus.ydqmajor">
+				
     </div>
     <div class="short-input select ue-clear" >
     	
         <label>异动前学制：</label>
+        <input  hidden="hidden" value="" name="stuStatus.ydqlength">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -210,9 +221,10 @@
                 <li id="4">4</li>
             </ul>
         </div>
-         <input  hidden="hidden" value="" name="stuStatus.ydqlength">
-        <label>异动前行政班：</label>
+         
+        
         <div class="select-wrap">
+        <label>异动前行政班：</label>
         <input type="text" placeholder="请输入异动前行政班" name="stuStatus.ydqclassName"/> 
        </div>
     </div>
@@ -227,6 +239,7 @@
     
        <div class="short-input select ue-clear">
       <label>异动前所在年级：</label>
+      <input  hidden="hidden" value="" name="stuStatus.ydqgrade">
        <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -237,9 +250,10 @@
                 <li id="大四">大四</li>
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.ydqgrade">
-      <label>异动前专业代码：</label>
+        
+      
       <div class="select-wrap">
+      <label>异动前专业代码：</label>
       <input type="text" placeholder="请输入异动前专业业代码" name="stuStatus.ydqmajorCode"/> 
       </div>
      </div>
@@ -252,6 +266,7 @@
     
      <div class="short-input select ue-clear" >
     	<label>异动前学籍状态：</label>
+    	<input  hidden="hidden" value="" name="stuStatus.ydqschoolStatus">
          <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -261,8 +276,9 @@
          
             </ul>
         </div>
-         <input  hidden="hidden" value="" name="stuStatus.ydqschoolStatus">
+         
         <label>异动前是否在校：</label>
+         <input  hidden="hidden" value="" name="stuStatus.ydqinSchool">
          <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -272,11 +288,12 @@
          
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.ydqinSchool">
+       
     </div>
      
     <div class="short-input select ue-clear" >
     	<label>异动前是否注册：</label>
+    	 <input  hidden="hidden" value="" name="stuStatus.ydqisRegiste">
          <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -286,8 +303,9 @@
          
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.ydqisRegiste">
+       
         <label>异动前学历层次：</label>
+         <input  hidden="hidden" value="" name="stuStatus.ydqeducation">
       <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -297,18 +315,20 @@
          
             </ul>
         </div>
-         <input  hidden="hidden" value="" name="stuStatus.ydqeducation">
+        
     </div>
       
      </fieldset>
       <fieldset>
     <legend>学生异动后信息</legend>
     <div class="short-input select ue-clear" >
-    	<label>转出后学校名称：</label>
+    	
     	 <div class="select-wrap" >
+    	 <label>转出后学校名称：</label>
         <input type="text" placeholder="请输入学生转出后学校名称" name="stuStatus.zchschool"/>
         </div>
         <label>转出后所在年级：</label>
+        <input  hidden="hidden" value="" name="stuStatus.zchgrade">
          <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -319,10 +339,11 @@
                 <li id="大四">大四</li>
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.zchgrade">
+        
     </div>
      <div class="short-input select ue-clear" >
         <label>转出后专业：</label>
+        <input  hidden="hidden" value="" name="stuStatus.zchmajor">
          <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -334,8 +355,9 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="" name="stuStatus.zchmajor">
+				
         <label>异动后学院：</label>
+        <input  hidden="hidden" value="" name="stuStatus.ydhcollege">
          <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -347,15 +369,17 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="" name="stuStatus.ydhcollege">
+				
        </div>
    
   <div class="short-input select ue-clear" >
-        <label>异动后系：</label>
+       
         <div class="select-wrap">
+         <label>异动后系：</label>
         <input type="text" placeholder="请输入学生异动后系" name="stuStatus.ydhdepartment"/> 
         </div>
        <label>异动后专业：</label>
+       <input  hidden="hidden" value="" name="stuStatus.ydhmajor">
         <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -367,11 +391,12 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="" name="stuStatus.ydhmajor">
+				
     </div>
     <div class="short-input select ue-clear" >
     	
         <label>异动后学制：</label>
+         <input  hidden="hidden" value="" name="stuStatus.ydhlength">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -382,9 +407,10 @@
                 <li id="4">4</li>
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.ydhlength">
-        <label>异动后行政班：</label>
+       
+       
         <div class="select-wrap">
+         <label>异动后行政班：</label>
         <input type="text" placeholder="请输入异动后行政班" name="stuStatus.tansactionClass"/> 
        </div>
     </div>
@@ -398,6 +424,7 @@
     
      <div class="short-input select ue-clear">
       <label>异动后所在年级：</label>
+        <input  hidden="hidden" value="" name="stuStatus.ydhgrade">
        <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -408,9 +435,10 @@
                 <li id="大四">大四</li>
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.ydhgrade">
-      <label>异动后专业代码：</label>
+      
+      
       <div class="select-wrap">
+      <label>异动后专业代码：</label>
       <input type="text" placeholder="请输入异动后专业代码" name="stuStatus.ydhmajorCode"/> 
       </div>
      </div>
@@ -422,6 +450,7 @@
      
      <div class="short-input select ue-clear" >
     	<label>异动后学籍状态：</label>
+    	<input  hidden="hidden" value="" name="stuStatus.ydhschoolStatus">
       <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -431,8 +460,9 @@
          
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.ydhschoolStatus">
+        
         <label>异动后是否在校：</label>
+        <input  hidden="hidden" value="" name="stuStatus.ydhinSchool">
        <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -442,11 +472,12 @@
          
             </ul>
         </div>
-         <input  hidden="hidden" value="" name="stuStatus.ydhinSchool">
+         
     </div>
     
     <div class="short-input select ue-clear" >
     	<label>异动后是否注册：</label>
+    	<input  hidden="hidden" value="" name="stuStatus.ydhisRegiste">
          <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -455,8 +486,9 @@
                 <li id="0">否</li>
             </ul>
         </div>
-         <input  hidden="hidden" value="" name="stuStatus.ydhisRegiste">
+         
         <label>异动后学历层次：</label>
+          <input  hidden="hidden" value="" name="stuStatus.ydheducation">
          <div class="select-wrap" >
         	<div class="select-title " ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -466,7 +498,7 @@
          
             </ul>
         </div>
-        <input  hidden="hidden" value="" name="stuStatus.ydheducation">
+      
     </div>
       
      

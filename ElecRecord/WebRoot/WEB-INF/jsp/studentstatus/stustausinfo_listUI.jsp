@@ -64,28 +64,27 @@ table thead tr th{
     	<thead>
         	<tr>
 			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
-            	<th width="16%" class="num">用户编号</th>
-				<!-- <th class="class">上级机构</th> -->
-                <th width="15%" >用户名称</th>
-				<th width="15%" >所属机构</th>
-				<th width="8%" align="center">联系人电话</th>
-				<th width="8%" >用户类型</th>
-				<th width="8%" align="center">性别</th>
-				<th width="8%" >状态</th>
+            	<th width="16%" class="num">学号</th>
+                <th width="15%" >姓名</th>
+				<th width="15%" >性别</th>
+				<th width="8%" align="center">身份证号</th>
+				<th width="8%" >考生号</th>
+				<th width="8%" align="center">学生类别</th>
+				<th width="8%" >查看详情</th>
 				<th width="5%">编辑</th>				
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="user">
         	<tr>
-			 <td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#user.userId'/>' /></td>
-            	<td><a href="javascript:detail('<s:property value='#user.userId'/>')"><s:property value="#user.employNo"/></a></td>
-				<td ><s:property value="#user.employName"/></td>
-				<td><s:property value="#user.organization.orgName"/></td>
-				<td><s:property value="#user.tell"/></td>
-				<td><s:property value="#user.userType"/></td>
-				<td><s:property value="#user.sex? '男':'女'"/></td>
-				<td><s:property value="#user.status? '激活':'关闭' "/></td>
+			 <td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#'/>' /></td>
+            	<td><a href="javascript:detail('<s:property value='#'/>')"><s:property value="#"/></a></td>
+				<td ><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><a href="查看详情"></a></td>
 				<td><a href="javascript:editor('<s:property value='#user.userId'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>          
