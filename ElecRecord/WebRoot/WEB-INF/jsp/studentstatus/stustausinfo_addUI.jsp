@@ -512,7 +512,7 @@
 </div>
 
 <div class="btn ue-clear">
-	<a href="javascript:add('myForm','post','${basePath}/stustatus/stustatus_add.action')" class="confirm save">确定</a>
+	<a href="javascript:add('myForm','post','${basePath}stustatus/stustatus_add.action')" class="confirm save">确定</a>
     <a href="javascript:;" class="clear clear" >返回</a>
 </div>
 
