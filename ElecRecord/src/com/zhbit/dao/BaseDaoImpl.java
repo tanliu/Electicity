@@ -118,12 +118,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			//获取分页后的数据
 			List<T> items=query.list();
 			pageUtils.setItems(items);
-			
-
 			//返回一个分布工具
 			return pageUtils;
-			
-			
 		}
 		
 		

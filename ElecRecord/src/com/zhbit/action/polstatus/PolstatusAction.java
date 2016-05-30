@@ -4,11 +4,13 @@ import java.sql.Timestamp;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.util.QueryUtils;
+import com.zhbit.entity.Organization;
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.services.polstatus.PolstatusServices;
 
@@ -45,7 +47,9 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String listUI() {
 			// TODO Auto-generated method stub
-			return null;
+			
+			pageUtils=polstatusServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), getPageSize());//getPageNO() getPageSize()	
+			return "listUI";
 		}
 		@Override
 		public String addUI() {
@@ -69,12 +73,15 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String editorUI() {
 			// TODO Auto-generated method stub
+			politicalstatus=polstatusServices.findObjectById(politicalstatus.getId());
+			request.setAttribute("politicalstatus", politicalstatus);
 			return "editorUI";
 		}
 		@Override
 		public String editor() {
 			// TODO Auto-generated method stub
-			return null;
+			polstatusServices.update(politicalstatus);
+			return "editor";
 		}
 		@Override
 		public String deleteAll() {
