@@ -49,6 +49,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String listUI() {
 		// TODO Auto-generated method stub
+		
 		return "listUI";
 	}
 
@@ -61,7 +62,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 	public String addUI() {
 		// TODO Auto-generated method stub
 		//到数据字典查找类别
-			String[] fields={"keyword"};
+			String[] fields={"keyword=?"};
 			String[] params1={"学院名称"};
 			String[] params2={"学年"};
 			String[] params3={"专业"};

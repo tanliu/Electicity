@@ -27,7 +27,7 @@
 	          <param name="actionName">organize_listUI</param>
 	        </result>
             <result name="editor" type="redirectAction">
-	          <param name="actionName">organize_listUI</param>
+                  <param name="actionName">organize_listUI</param>
 	        </result>
          </action>
          <!-- 用户管理 -->
@@ -40,10 +40,18 @@
 	        </result>
             <result name="delete" type="redirectAction">
 	          <param name="actionName">user_listUI</param>
+	          <param name="queryWay">${queryWay}</param>
+	          <param name="querycon">${querycon}</param>
+	          <param name="pageNO">${pageNO}</param>
+	          <param name="encode">true</param>	          
 	        </result>
             <result name="editorUI">/WEB-INF/jsp/system/user_editorUI.jsp</result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">user_listUI</param>
+	          <param name="queryWay">${queryWay}</param>
+	          <param name="querycon">${querycon}</param>
+	          <param name="pageNO">${pageNO}</param>
+	          <param name="encode">true</param>
 	        </result>
          </action>
 	</package>

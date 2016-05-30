@@ -10,6 +10,7 @@ import com.zhbit.dao.system.UserDao;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.system.UserServices;
+import com.zhbit.util.EncryptUtils;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -32,6 +33,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 		super.setBaseDao(userDao);
 		this.userDao = userDao;
 	}
+	
 	@Override
 	public PageUtils queryList(User user, int pageNO, int pageSize) {
 		String[] fields=null;
@@ -51,5 +53,19 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 		// TODO Auto-generated method stub
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
 	}
+
+	@Override
+	public boolean editorPwd(User user, String confirmpwd) {
+		Boolean isEditor=false;//表示是否修改成功
+		if(!StringUtils.isEmpty(user.getPassword())&&user.getPassword().endsWith(confirmpwd)){//判断两个密码是否相等
+			if(!StringUtils.isEmpty(user.getUserId())){
+				User temp=userDao.findObjectById(user.getUserId());
+				temp.setPassword(EncryptUtils.MD5Encrypt(user.getPassword()));
+				isEditor=true;
+			}			
+		}
+		return isEditor;
+	}
+	
 	
 }

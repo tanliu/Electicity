@@ -3,7 +3,7 @@
 <html>
 <head>
     
-<title>添加用户信息</title>
+<title>用户信息列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -12,7 +12,6 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
-<title>添加用户信息</title>
 <style type="text/css">
 table tbody tr td{
 	 text-align: center;
@@ -28,14 +27,14 @@ table thead tr th{
 	var queryAction="${basePath}system/user_listUI.action";
 	var deleteAction="${basePath}system/user_delete.action";
 	function query(){
-		alert("--------------------");
-		var $radio=$("input[type=radio]:checked");
-	 	var $condition=$("#condition");
+		/* alert("--------------------"); */
+		/* var $radio=$("input[type=radio]:checked"); */
+/* 	 	var $condition=$("#condition");
 	 	if($radio.val()=="用户编号"){
 	 		$condition.attr("name","user.employNo"); 		
 	 	}else{
 	 		$condition.attr("name","user.employName"); 			
-	 	}
+	 	} */
 	 	//--------------提交信息------------------
 	  	$("#pageNo").val(1);
 
@@ -50,6 +49,16 @@ table thead tr th{
  		$("#queryForm").attr("action",deleteAction);
 	 	$("#queryForm").submit();  
 	} 
+ 	function editor(id){
+ 		var url="${basePath}system/user_editorUI.action?user.userId="+id;
+ 		$("#queryForm").attr("action",url);
+	 	$("#queryForm").submit();  
+	} 
+ 	function detail(id){
+ 		var url="${basePath}system/user_detailUI.action?user.userId="+id;
+ 		
+ 		window.open(url) ; //打开窗口
+ 	}
 </script>
 
 </head>
@@ -64,12 +73,8 @@ table thead tr th{
         <div class="conditions staff ue-clear">
             <label>机构名称：</label>
             <!-- 如果employNo的值是空时，表示上一页的查询条件是以用户的方式查询 -->
-            <s:if test="user.employNo==null">
-            <s:textfield id="condition" name="user.employName"></s:textfield>
-            </s:if>
-            <s:else>
-            <s:textfield id="condition" name="user.employNo"></s:textfield>            
-            </s:else>
+            <s:textfield id="condition" name="querycon"></s:textfield>            
+
         </div>
     </div>
 	<div class="query-conditions ue-clear">
@@ -115,14 +120,14 @@ table thead tr th{
            <s:iterator value="pageUtils.items" var="user">
         	<tr>
 			 <td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#user.userId'/>' /></td>
-            	<td><a href="${basePath}system/user_detailUI.action?user.userId=<s:property value='#user.userId'/>"><s:property value="#user.employNo"/></a></td>
+            	<td><a href="javascript:detail('<s:property value='#user.userId'/>')"><s:property value="#user.employNo"/></a></td>
 				<td ><s:property value="#user.employName"/></td>
 				<td><s:property value="#user.organization.orgName"/></td>
 				<td><s:property value="#user.tell"/></td>
 				<td><s:property value="#user.userType"/></td>
 				<td><s:property value="#user.sex? '男':'女'"/></td>
 				<td><s:property value="#user.status? '激活':'关闭' "/></td>
-				<td><a href="${basePath}system/user_editorUI.action?user.userId=<s:property value='#user.userId'/>"><img src="../images/edtico.png"/></a></td>
+				<td><a href="javascript:editor('<s:property value='#user.userId'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>          
         </tbody>
@@ -130,33 +135,4 @@ table thead tr th{
 </div>
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 </form>
-
-<!--  <script type="text/javascript">
-function doSelectAll(){
-	$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
-}
-function query(){	
-	var $radio=$("input[type=radio]:checked");
- 	var $condition=$("#condition");
- 	if($radio.val()=="用户编号"){
- 		$condition.attr("name","user.employNo"); 		
- 	}else{
- 		$condition.attr("name","user.employName"); 			
- 	}
- 	//--------------提交信息------------------
-  	$("#pageNo").val(1);
-
-  	$("#queryForm").attr("action",queryAction);
- 	$("#queryForm").submit(); 
-	
-}
-/**
- * 删除信息
- */
-function delete(){
-	var $form=$("#queryForm");
-	$form.attr("action",deleteAction);
- 	$("#queryForm").submit(); 
-}
-</script>  -->
 </body>

@@ -6,7 +6,15 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="${basePath}css/base.css" />
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
-
+<link rel="stylesheet" href="${basePath}css/alter.css" />
+<style type="text/css">
+table tbody tr td{
+	 text-align: center;
+}
+table thead tr th{
+	 text-align: center;
+}
+</style>
 <title>学生学籍异动信息</title>
 </head>
 
@@ -27,62 +35,65 @@
         <div class="conditions operate-time ue-clear">
             <label>学期：</label>
             <div class="select-wrap">
-                <div class="select-title ue-clear"><span>1</span><i class="icon"></i></div>
+                <div class="select-title ue-clear"><span>请选择</span><i class="icon"></i></div>
                 <ul class="select-list">
-                    <li>1</li>
-                    
+                <li id="">请选择</li>
+                    <li id="1">1</li>
+                    <li id="2">2</li>
                 </ul>
-            </div>
-            
+            </div>       
         </div>
        
-        <div class="conditions staff ue-clear">
+        <div class="conditions staff ue-clear" >
             <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" />
-        </div>
+            <input type="text" placeholder="请输入学生学号进行查询" style="width:223px"/>
     </div>
-    
+  
+   </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:;" class="confirm">查询</a>
-        <a href="javascript:;" class="clear">清空条件</a> 
     </div>
 </div>
 <div class="table-operate ue-clear">
 	<a href="javascript:;" class="add">添加</a>
     <a href="javascript:;" class="del">删除</a>
-    
 </div>
+
 <div class="table-box">
 	<table>
     	<thead>
         	<tr>
-            	<th class="num">学号</th>
-                <th class="name">姓名</th>
-                <th class="process">性别</th>
-                <th class="node">身份证号</th>
-                <th class="time">考生号</th>
-                <th class="operate">操作</th>
+			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+            	<th width="16%" class="num">学号</th>
+                <th width="15%" >姓名</th>
+				<th width="15%" >性别</th>
+				<th width="8%" align="center">身份证号</th>
+				<th width="8%" >考生号</th>
+				<th width="8%" align="center">学生类别</th>
+				<th width="8%" >查看详情</th>
+				<th width="5%">编辑</th>				
             </tr>
         </thead>
         <tbody>
+           <s:iterator value="pageUtils.items" var="user">
         	<tr>
-            	<td class="num">1</td>
-                <td class="name">admin</td>
-                <td class="process">收文</td>
-                <td class="node">登记</td>
-                <td class="time">未完成</td>
-                <td class="operate"><a href="javascript:;">查看详情</a></td>
-            </tr>
-            
+			 <td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#'/>' /></td>
+            	<td><a href="javascript:detail('<s:property value='#'/>')"><s:property value="#"/></a></td>
+				<td ><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><s:property value="#"/></td>
+				<td><a href="查看详情"></a></td>
+				<td><a href="javascript:editor('<s:property value='#user.userId'/>')"><img src="../images/edtico.png"/></a></td>
+            </tr> 
+            </s:iterator>          
         </tbody>
     </table>
 </div>
-<div class="pagination ue-clear"></div>
+<jsp:include page="/common/pagination.jsp"></jsp:include>
+
 </body>
 
-<script type="text/javascript">
 
-
-showRemind('input[type=text], textarea','placeholder');
-</script>
 </html>

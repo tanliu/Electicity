@@ -14,6 +14,24 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
+<style type="text/css">
+.main {
+	padding-top: 21px;
+	border: 0px solid #c1d3de;
+	border-top: none;
+	border-bottom: none;
+}
+.main p input[type="password"] {
+	width: 240px;
+	height: 28px;
+    line-height:28px;
+	padding: 0 10px;
+	border: 1px solid #c5d6e0;
+	outline: none;
+	background: url(../images/inputbg.png) repeat-x;
+}
+</style>	
+
 <title>添加用户</title>
 </head>
 <body>
@@ -22,7 +40,9 @@
 	</div>
 	<form id="myForm">	
 		<s:hidden name="user.userId"></s:hidden>
-	    
+	    <s:hidden name="queryWay"></s:hidden>
+	    <s:hidden name="pageNO"></s:hidden>
+	    <s:hidden name="querycon"></s:hidden>
 		<div class="main">		
 			<p class="short-input ue-clear">
 				<label>用户编号：</label> 
@@ -92,61 +112,101 @@
 </div>
 	</form>
 	
+<!-- 修改密码弹出框的设置 -->
 
-	
-	<div class="clearDialog">
-    <div class="dialog-content">
-        <div class="ui-dialog-icon"></div>
-        <div class="ui-dialog-text">
-             <input type="button" class="button long2 ok" value="确定" />
-              <input type="button" class="button long2 normal" value="取消" />
-            
-            <div class="buttons">
+<div class="alertPassword" >
+	<div class="dialog-content">    	
+        <div class="ui-dialog-text" style="width: 400px;">
+        <form id="pwdForm" action="${basePath}system/user_editorPwd.action" method="post">
+            <s:hidden name="user.userId"></s:hidden>
+        	<div class="main" align="left" >        		
+			<p class="short-input ue-clear" align="left">
+			    <label style="float: none;">新&nbsp;密&nbsp;码&nbsp;：</label>
+			    <input id="newpwd" type="text" style="float: none;" name="user.password"><br><br>
+				<label style="float: none;">确认密码：</label>
+			    <input id="confirmpwd" type="text" style="float: none;" name="confirmpwd">				    							
+			</p>
+			</div>
+          </form>  
+            <div class="buttons" align="center">
                 <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="取消" />
+                <input type="button" class="button long2 normal" value="返回" />
             </div>
         </div>
         </div>
 </div>
-<script type="text/javascript" src="${Path}js/core.js"></script>
-<script type="text/javascript" src="${Path}js/jquery.dialog.js"></script>
 <script type="text/javascript">
 $(function($){
-	$(".clearDialog").Dialog({
-		title:'提示信息',
-		autoOpen: true,
+	$(".alertPassword").Dialog({
+		title:'修改密码',
+		autoOpen: false,
 		width:400,
-		height:200
+		height:250
 		
 	});
 });
-
-$('.clear').click(function(){
-	$('.clearDialog').Dialog('open');
-});
-
-
-
-$('.clearDialog input[type=button]').click(function(e) {
-    $('.clearDialog').Dialog('close');
+$('.alertPassword input[type=button]').click(function(e) {
 	
-	if($(this).hasClass('ok')){
-		reset();
+	
+    
+	
+	if($(this).hasClass('ok')){  //确认提交
+		
+		//判断输入信息是否有校
+		var $newpwd=$("#newpwd").val();
+		var $confirmpwd=$("#confirmpwd").val();
+		var canSubmit=$newpwd==$confirmpwd&&$newpwd!="" ? true:false;
+		//把提示信息显示出来;
+		if(!canSubmit){
+			$("#pwdErrorInfo").remove();
+			var $p="<p id='pwdErrorInfo' style='color:red;'>--&gt两次输入的密码不相同，请重新输入！</p>"
+			$("#pwdForm .main").append($p);
+		}
+		if(canSubmit){
+			var url=$("#pwdForm").attr("action");
+			$.ajax({
+		        url:url,
+		    	data:$("#pwdForm").serialize(),
+		    	type:"post",
+		    	//dataType:"json",//返回数据类型
+		    	success: function(data){
+		    		$("#pwdErrorInfo").remove();
+                     if(data=="1"){
+                    	 var $p="<p id='pwdErrorInfo' style='color:blue;'>--&gt修改密码成功！</p>"                 		
+                     }else if(data=="0"){
+                    	 var $p="<p id='pwdErrorInfo' style='color:red;'>--&gt修改密码失败！</p>"    
+                     }
+                 	$("#pwdForm .main").append($p);
+		    	},
+		        error:function(){
+		        	$("#pwdErrorInfo").remove();                    
+                   	 var $p="<p id='pwdErrorInfo' style='color:blue;'>--&gt服务器出错，技术人员正在抢修中....！</p>";              		
+                 
+                	$("#pwdForm .main").append($p);
+		        }
+		    
+		    });
+		}
+
+		
+	}else{
+		$('.alertPassword').Dialog('close');
 	}
 });
-<%-- <!-- 引入弹出框 -->
-<jsp:include page="/common/dialog.jsp"></jsp:include> --%>
 
+ </script>
 </body>
 <script type="text/javascript">
 //修改密码的方法
 $(function($){
 $("#password").focus(function(){
-  alert("-----------");
+	$('.alertPassword').Dialog('open');
 });
 	
 });
 </script>
+<script type="text/javascript" src="${basePath}js/core.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
 
 </html>
 
