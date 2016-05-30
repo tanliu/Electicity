@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
 
@@ -14,39 +15,47 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
-<title>党团关系基本信息修改</title>
+<link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<title>党团关系基本信息添加</title>
 </head>
 <body>
 
-<div class="title"><h2>党团关系基本信息修改</h2></div>
+<div class="title"><h2>添加党团关系基本信息</h2></div>
 <form id="myForm" method="post">
- 
+        
 	    <input hidden="hidden" value="<s:property value="1"/>" name="politicalstatus.stuId">
-	    <input hidden="hidden" value="<s:property value="罗吉林 "/>" name="politicalstatus.creator">
+	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="politicalstatus.creator">
 	   
+	  
 <div class="main">
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" name="politicalstatus.studentNO" placeholder="请输入学号" /> 
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号" /> 
         <label>姓名：</label>
         <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名" /> 
        
     </p>
     
      <div class="short-input select ue-clear" >
-    	<label>政治面貌：</label>
-        <div class="select-wrap" >
-        	<div class="select-title " id="select-title1"><span id="span1">共青团员</span><i class="icon"></i></div>
-            <ul class="select-list" id="list1">
-            	<li>共青团员</li>
-               <li>党员</li>
-               <li>群众</li>
+        
+        <label>政治面貌：</label>
+        <input  hidden="hidden" value="" name="politicalstatus.politicalStatus">
+        <div class="select-wrap">
+        	<div class=" select-title ue-clear" ><span >共青团员</span><i class="icon"></i></div>
+            <ul class="select-list" >
+                <li id="共青团员">共青团员</li>
+            	<li id="党员">党员</li>
+                <li id="群众">群众</li>
+             
             </ul>
-        </div> 
+        </div>
+        
+        
+        
         <label>入党日期：</label>
         <div class="select-wrap" >
-        	<!-- <input type="text" name="politicalstatus.joinDate" placeholder="请输入入党日期，如19940501" />  -->
-        	<input type="text"  placeholder="请输入入党日期，如19940501" /> 
+        	 
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" placeholder="请选择日期" name="politicalstatus.joinDate"/>
         </div>
     </div>
 
@@ -64,4 +73,6 @@
 </div>
 </form>
 </body>
+
+<script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
 </html>
