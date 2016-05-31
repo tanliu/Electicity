@@ -3,6 +3,8 @@
  */
 package com.zhbit.services.system;
 
+import java.util.List;
+
 import com.zhbit.entity.Authority;
 import com.zhbit.services.BaseServices;
 
@@ -21,4 +23,6 @@ public interface AuthorityServices extends BaseServices<Authority> {
   public static final String SERVICE_NAME="";
 
   void saveAuthoity(Authority authority);
+
+
 }

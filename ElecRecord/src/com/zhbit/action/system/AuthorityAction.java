@@ -3,12 +3,16 @@
  */
 package com.zhbit.action.system;
 
+import java.util.List;
+
 import javax.annotation.Resource;
+import javax.swing.plaf.TreeUI;
 
 import org.apache.tomcat.jni.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zhbit.action.BaseAction;
 import com.zhbit.entity.Authority;
@@ -40,6 +44,14 @@ public class AuthorityAction extends BaseAction {
 
 	public String tree(){
 		return "tree";
+	}
+	
+	public String treeData(){
+		//查找数据
+		List<Authority> authorities=authorityServices.findAllObject();
+		//推到栈顶
+		ActionContext.getContext().getValueStack().push(authorities);
+		return "treeData";
 	}
 	
 	@Override

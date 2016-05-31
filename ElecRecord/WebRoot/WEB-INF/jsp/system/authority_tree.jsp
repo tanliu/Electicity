@@ -98,8 +98,8 @@
 		
 	}
 	function onClick(event, treeId, treeNode, clickFlag) {
-		window.parent.add.location.href="ElecRecord/system/authority_addUI.action?authority.parentId="+treeNode.id;
-		window.parent.editor.location.href="ElecRecord/system/authority_editorUI.action?authority.parentId="+treeNode.id;
+		window.parent.add.location.href="${basePath}system/authority_addUI.action?authority.parentId="+treeNode.id;
+		window.parent.editor.location.href="${basePath}system/authority_editorUI.action?authority.parentId="+treeNode.id;
 
 	}
 
@@ -134,13 +134,30 @@
     
 
 
-	$(document).ready(function(){
-		var t = $("#tree");
+	$(document).ready(function(){  //异步加载
+		
+		$.ajax({
+			url:"${basePath}system/authority_treeData.action",
+			type:"post",
+			dataType:"json",//返回数据类型
+	    	success: function(data){
+	    		
+	    		var dataObj=eval(data);//转换为json对象
+	    		alert(dataObj.length);//输出root的子对象数量
+	    		for(var i=0;i<dataObj.length;i++){
+	    			
+	    		}
+
+	    	},
+	        error:function(){alert("失败！");}
+			
+		});
+/* 		var t = $("#tree");
 		t = $.fn.zTree.init(t, setting, zNodes);
 		demoIframe = $("#testIframe");
 		demoIframe.bind("load", loadReady);
 		var zTree = $.fn.zTree.getZTreeObj("tree");
-		zTree.selectNode(zTree.getNodeByParam("id", 101));
+		zTree.selectNode(zTree.getNodeByParam("id", 101)); */
 
 	});
 
