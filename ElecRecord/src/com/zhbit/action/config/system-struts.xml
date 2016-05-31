@@ -54,6 +54,23 @@
 	          <param name="encode">true</param>
 	        </result>
          </action>
+         <!-- 权限管理 -->
+         <action name="authority_*" class="authorityAction" method="{1}">
+            <result name="listUI">/WEB-INF/jsp/system/authority_listUI.jsp</result>
+            <result name="detailUI">/WEB-INF/jsp/system/authority_detailUI.jsp</result>
+            <result name="addUI">/WEB-INF/jsp/system/authority_addUI.jsp</result>
+            <result name="tree">/WEB-INF/jsp/system/authority_tree.jsp</result>
+            <result name="add" type="redirectAction">
+	          <param name="actionName">authority_listUI</param>
+	        </result>
+            <result name="delete" type="redirectAction">
+	          <param name="actionName">authority_listUI</param>       
+	        </result>
+            <result name="editorUI">/WEB-INF/jsp/system/authority_editorUI.jsp</result>
+            <result name="editor" type="redirectAction">
+	          <param name="actionName">authority_listUI</param>
+	        </result>
+         </action>
 	</package>
 
 </struts>
