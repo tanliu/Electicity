@@ -50,7 +50,7 @@ table thead tr th{
   </div>
    </div>
     <div class="query-btn ue-clear">
-    	<a href="javascript:;" class="confirm">查询</a>
+    	<a href="javascript:query()" class="confirm">查询</a>
     </div>
 </div>
 <div class="table-operate ue-clear">
@@ -118,5 +118,15 @@ function doSelectAll(){
                     .end();
         });
 	})
+	
+	//查询数据时向listUI提交查询条件
+	function query(){
+		
+	 	//--------------提交信息------------------
+	  	$("#pageNo").val(1);
+
+	  	$("#queryForm").attr("action",queryAction);
+	 	$("#queryForm").submit(); 
+	}
  </script>
  <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>

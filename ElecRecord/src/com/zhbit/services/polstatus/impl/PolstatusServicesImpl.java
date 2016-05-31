@@ -1,14 +1,18 @@
 package com.zhbit.services.polstatus.impl;
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.polstatus.PolstatusDao;
 import com.zhbit.dao.system.OrganizeDao;
 import com.zhbit.entity.Politicalstatus;
+import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.polstatus.PolstatusServices;
+import com.zhbit.util.PageUtils;
+import com.zhbit.util.QueryUtils;
 
 
 /** 
@@ -32,9 +36,35 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 		this.polstatusDao = polstatusDao;
 		
 	}
+	//调用Dao层的增加信息的add方法
 	public String add(Politicalstatus politicalstatus){
 		polstatusDao.add(politicalstatus);
 		return null;
+	}
+	
+	//继承Services接口的queryList方法，实现数据查询
+	@Override
+	public PageUtils queryList(Politicalstatus politicalstatus, int pageNO, int pageSize) {
+		String[] fields=null;
+		String[] params=null;
+		//排序条件，根据创建时间去排序查出来的结果集
+		String proterty="createTime";				
+		if(politicalstatus!=null){ //判定politicalstatus不为空时
+			//&& !StringUtils.isEmpty(politicalstatus.getJoinDate())
+			if(!StringUtils.isEmpty(politicalstatus.getStuName()) && !StringUtils.isEmpty(politicalstatus.getStudentNo())){ //查询条件是学号
+				//查询语句组合
+				fields=new String[]{"stuName=?","studentNo=?","joinDate=?"};
+				params=new String[]{politicalstatus.getStuName(),politicalstatus.getStudentNo()};
+			}
+			//else if(!StringUtils.isEmpty(politicalstatus.getStuName())){ //查询条件是学生姓名
+			//	fields=new String[]{"stuName like ?"};
+				//params=new String[]{"%"+politicalstatus.getStuName()+"%"};
+				
+			//}
+			
+		}
+		// TODO Auto-generated method stub
+		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
 	}
 	
 }

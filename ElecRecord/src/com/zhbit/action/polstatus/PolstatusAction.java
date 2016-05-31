@@ -1,5 +1,6 @@
 package com.zhbit.action.polstatus;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 
 import javax.annotation.Resource;
@@ -9,9 +10,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.QueryUtils;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.Politicalstatus;
+import com.zhbit.entity.User;
 import com.zhbit.services.polstatus.PolstatusServices;
 
 /** 
@@ -33,6 +36,9 @@ public class PolstatusAction extends BaseAndExcelAction{
 	@Resource(name=PolstatusServices.SERVICES_NAME)
 	PolstatusServices polstatusServices;
 	
+	private String queryWay; //查询的方式
+	private String confirmpwd; //确认密码
+	private String querycon;//查询的条件
 
 		@Override
 		public String importExcel() {
@@ -46,12 +52,16 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String listUI() {
-			
+			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
+			request.setAttribute("querycon", politicalstatus);
+			//调用方法，将查询结果显示
+			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
+			return "listUI";
 			// TODO Auto-generated method stub
 			//setPageSize(5);设置页面显示条数
 			//直接调用baseDao接口里面的getPageUtils方法将数据库的所有数据显示在list列表中
-			pageUtils=polstatusServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), getPageSize());//getPageNO() getPageSize()	
-			return "listUI";
+		//	pageUtils=polstatusServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), getPageSize());//getPageNO() getPageSize()	
+			//return "listUI";
 		}
 		@Override
 		public String addUI() {
