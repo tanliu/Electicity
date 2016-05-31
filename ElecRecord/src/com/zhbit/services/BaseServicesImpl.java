@@ -79,7 +79,9 @@ public class BaseServicesImpl<T> implements BaseServices<T> {
 		QueryUtils queryUtils=new QueryUtils(entityClass, "entity");
 		if(fields!=null&&fields.length>0&&params!=null&&params.length>0){
 			for(int i=0;i<fields.length;i++){
-			queryUtils.addCondition("entity."+fields[i], params[i]);
+			if(!StringUtils.isEmpty(fields[i])&&!StringUtils.isEmpty((String)(params[i]))){
+				queryUtils.addCondition("entity."+fields[i], params[i]);				
+			}
 			}
 		}
 		return baseDao.findObjectByFields(queryUtils);
