@@ -100,7 +100,7 @@ public class UserAction extends BaseAction {
 
 	@Override
 	public String add() {
-		//设置用户创建时间
+		//设置用户创建时间 
 		user.setCreateTime(new Timestamp(new Date().getTime()));
 		//对用户数据进行加密处理
 		user.setPassword(EncryptUtils.MD5Encrypt(user.getPassword()));

@@ -54,13 +54,21 @@ $(function(){
 var queryAction="${basePath}stustatus/stustatus_listUI.action";
 var deleteAction="${basePath}stustatus/stustatus_delete.action";
 
-//进入编辑页面的路径
+//向stustatus_editorUI.action提交信息
 function editor(id){
 		var url="${basePath}stustatus/stustatus_editorUI.action?stuStatus.id="+id;
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
 
+//向stustatus_listUI.action提交信息
+function query(){
+	
+	  	$("#pageNo").val(1);
+
+	  	$("#queryForm").attr("action",queryAction);
+	 	$("#queryForm").submit(); 
+	}
  </script>
 <title>学生学籍异动信息</title>
 </head>
@@ -72,9 +80,9 @@ function editor(id){
 	<div class="query-conditions ue-clear">
         <div class="conditions name ue-clear">
            <label>学年：</label>
-        <input  hidden="hidden" value="" name="stuStatus.academicYear">
+        <input  hidden="hidden" value="${queryCon.academicYear}" name="stuStatus.academicYear">
       <div class="select-wrap">
-				<div class="select-title ue-clear" ><span id="span1">请选择</span><i class="icon"></i></div>
+				<div class="select-title ue-clear" ><span id="span1" >${queryCon.academicYear}</span><i class="icon"></i></div>
 					<ul class="select-list" >
 					 <li id="">请选择</li>
 					    <s:iterator value="#request.years" var="years">
@@ -83,16 +91,18 @@ function editor(id){
 					</ul>					
 				</div>
         </div>
-        
-         <div class="conditions staff ue-clear">
+                                                               
+       
+       <div class="conditions staff ue-clear">
             <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" style="width:223px"/>
+            <input type="text" placeholder="请输入学生学号进行查询" name="stuStatus.studentNo" value="${queryCon.studentNo}" style="width:223px"/>
         </div>
         
         <div class="conditions name ue-clear">
             <label>学期：</label>
+            <input  hidden="hidden" value="${queryCon.term}" name="stuStatus.term">
             <div class="select-wrap">
-                <div class="select-title ue-clear"><span>请选择</span><i class="icon"></i></div>
+                <div class="select-title ue-clear"><span>${queryCon.term}</span><i class="icon"></i></div>
                 <ul class="select-list">
                 <li id="">请选择</li>
                     <li id="1">1</li>
@@ -101,12 +111,10 @@ function editor(id){
             </div>
             
         </div>
-       
-       
     </div>
     
     <div class="query-btn ue-clear">
-    	<a href="javascript:;" class="confirm">查询</a>
+    	<a href="javascript:query()" class="confirm">查询</a>
     </div>
 </div>
 

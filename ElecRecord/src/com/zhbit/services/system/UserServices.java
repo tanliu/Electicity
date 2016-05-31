@@ -1,5 +1,6 @@
 package com.zhbit.services.system;
 
+import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServices;
 import com.zhbit.util.PageUtils;
@@ -27,4 +28,5 @@ public interface UserServices extends BaseServices<User> {
      * @return
      */
     public boolean editorPwd(User user, String confirmpwd);
+    
 }

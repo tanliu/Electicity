@@ -1,5 +1,7 @@
 package com.zhbit.action.studentstatus;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,7 +10,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sun.org.apache.xerces.internal.util.Status;
-import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.SystemDll;
@@ -31,6 +32,10 @@ import com.zhbit.util.QueryUtils;
 @Scope(value="prototype")
 public class StuStatusAction extends BaseAndExcelAction {
 
+	/**
+	 * 添加默认的UID
+	 */
+	private static final long serialVersionUID = 1L;
 	StuStatus stuStatus;
 	@Resource(name=StuStatusServices.SERVICE_NAME)
 	StuStatusServices stuStatusServices;
@@ -57,8 +62,11 @@ public class StuStatusAction extends BaseAndExcelAction {
 		List<SystemDll> years=systeDllServices.findObjectByFields(fields,params1);
 		
 		request.setAttribute("years", years);
+		//将传过来的参数进行回显
+		request.setAttribute("queryCon",stuStatus );
 		
-		pageUtils=stuStatusServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), 5);
+		pageUtils=stuStatusServices.queryList(stuStatus, getPageNO(), getPageSize());
+		
 		return "listUI";
 	}
 
@@ -92,8 +100,11 @@ public class StuStatusAction extends BaseAndExcelAction {
 
 	@Override
 	public String add() {
-		//利用save方法将新添加的学籍异动信息添加到数据库中
 		
+		//设定创建时间为当前时间
+		Timestamp createtime = new Timestamp(System.currentTimeMillis());
+		stuStatus.setCreateTime(createtime);
+		//利用save方法将新添加的学籍异动信息添加到数据库中
 		stuStatusServices.save(stuStatus);
 		
 		return "add";
@@ -115,6 +126,23 @@ public class StuStatusAction extends BaseAndExcelAction {
 		// TODO Auto-generated method stub
 		//通过传过来的参数值获取对应的学籍信息
 		stuStatus=stuStatusServices.findObjectById(stuStatus.getId());
+		
+		//到数据字典查找类别
+		String[] fields={"keyword=?"};
+		String[] params1={"学院名称"};
+		String[] params2={"学年"};
+		String[] params3={"专业"};
+		//查找学院类别	
+		List<SystemDll> colleges=systeDllServices.findObjectByFields(fields, params1);
+		//查找学年
+		List<SystemDll> years=systeDllServices.findObjectByFields(fields, params2);
+		//查找专业
+		List<SystemDll> majors=systeDllServices.findObjectByFields(fields, params3);
+		
+		//将查询到的信息推送到前台显示
+		request.setAttribute("colleges", colleges);	
+		request.setAttribute("years", years);
+		request.setAttribute("majors", majors);
 		
 		request.setAttribute("stuStatus", stuStatus);
 		

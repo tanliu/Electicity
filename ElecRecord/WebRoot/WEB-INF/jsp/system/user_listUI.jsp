@@ -119,7 +119,7 @@ table thead tr th{
         <tbody>
            <s:iterator value="pageUtils.items" var="user">
         	<tr>
-			 <td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#user.userId'/>' /></td>
+			 <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#user.userId'/>' /></th>
             	<td><a href="javascript:detail('<s:property value='#user.userId'/>')"><s:property value="#user.employNo"/></a></td>
 				<td ><s:property value="#user.employName"/></td>
 				<td><s:property value="#user.organization.orgName"/></td>
