@@ -96,21 +96,17 @@ function query(){
        <div class="conditions staff ue-clear">
             <label>学号：</label>
             <input type="text" placeholder="请输入学生学号进行查询" name="stuStatus.studentNo" value="${queryCon.studentNo}" style="width:223px"/>
-        </div>
-        
-        <div class="conditions name ue-clear">
-            <label>学期：</label>
-            <input  hidden="hidden" value="${queryCon.term}" name="stuStatus.term">
-            <div class="select-wrap">
-                <div class="select-title ue-clear"><span>${queryCon.term}</span><i class="icon"></i></div>
-                <ul class="select-list">
-                <li id="">请选择</li>
-                    <li id="1">1</li>
-                    <li id="2">2</li>
-                </ul>
-            </div>
             
         </div>
+        
+        <div class="conditions staff ue-clear">
+            <label>姓名：</label>
+            <input type="text" placeholder="请输入学生姓名进行查询" name="stuStatus.stuName" value="${queryCon.stuName}" style="width:223px"/>
+            
+        </div>
+        
+       
+        
     </div>
     
     <div class="query-btn ue-clear">
