@@ -44,7 +44,7 @@
         </div>
         <label>入党日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" placeholder="请选择日期" name="politicalstatus.joinDate"/>
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期" name="politicalstatus.joinDate"/>
         </div>
     </div>
 

@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="${basePath}css/jquery.dialog.css" />
 <!-- 行之间的显示效果与选中行的效果 -->
 <style type="text/css">
         .even{ background:#FFF;color:#000;}  /* 偶数行样式*/
@@ -32,39 +34,27 @@ table thead tr th{
 <div class="query">
 	<div class="query-conditions ue-clear">
         <div class="conditions name ue-clear">
-            <label>学年：</label>
-            <div class="select-wrap">
-                <div class="select-title ue-clear"><span></span><i class="icon"></i></div>
-                <ul class="select-list">
-                    <li>2014-2015</li>
-                    
-                </ul>
-            </div>
+            <label>姓名：</label>
+        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询"  />
         </div>
-        <div class="conditions operate-time ue-clear">
-            <label>学期：</label>
-            <div class="select-wrap">
-                <div class="select-title ue-clear"><span>请选择</span><i class="icon"></i></div>
-                <ul class="select-list">
-                <li id="">请选择</li>
-                    <li id="1">1</li>
-                    <li id="2">2</li>
-                </ul>
-            </div>       
-        </div>
-       
-        <div class="conditions staff ue-clear" >
-            <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" style="width:223px"/>
+        
+         <div class="conditions staff ue-clear" >
+          <label>学号：</label>
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" />
     </div>
-  
+     <div class="conditions staff ue-clear" >
+         <label>入党日期：</label>
+        <div class="select-wrap" > 
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期进行查询" name="politicalstatus.joinDate"/>
+        </div>
+  </div>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:;" class="confirm">查询</a>
     </div>
 </div>
 <div class="table-operate ue-clear">
-	<a href="javascript:;" class="add">添加</a>
+	<a href="${basePath}polstatus/polstatus_addUI.action" class="add">添加</a>
     <a href="javascript:;" class="del">删除</a>
 </div>
 
@@ -87,7 +77,7 @@ table thead tr th{
 			 <td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#'/>' /></td>
               	<td><a href="javascript:detail('<s:property value='#political.id'/>')"><s:property value="#political.studentNo"/></a></td>
 				<td ><s:property value="#political.stuName"/></td>
-				<td><s:property value="#political.joinDate"/></td>
+				<td><s:date name="#political.joinDate" format="yyyy-MM-dd"></s:date></td>
 				<td><s:property value="#political.politicalStatus"/></td>
 				<td><s:property value="#political.memo"/></td>
 				<!-- 跳转到editor对应的action。并将对应的查询条件数据传到action -->
@@ -106,7 +96,10 @@ table thead tr th{
 <!-- action之间的跳转 ，用于换页-->
 var queryAction="${basePath}polstatus/polstatus_listUI.action";
 var deleteAction="${basePath}polstatus/polstatus_delete.action";
-
+/* 批量选中*/
+function doSelectAll(){
+	$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
+} 
 	$(function(){
       
         $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
@@ -126,3 +119,4 @@ var deleteAction="${basePath}polstatus/polstatus_delete.action";
         });
 	})
  </script>
+ <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>

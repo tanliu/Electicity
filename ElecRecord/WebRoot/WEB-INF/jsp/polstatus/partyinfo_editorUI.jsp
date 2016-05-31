@@ -36,19 +36,18 @@
      <div class="short-input select ue-clear" >
         
         <label>政治面貌：</label>
-        <input  hidden="hidden"  name="politicalstatus.politicalStatus">
+        <input  hidden="hidden"  value="<s:property value="politicalstatus.politicalStatus"/>" name="politicalstatus.politicalStatus">
         <div class="select-wrap">
-        	<div class=" select-title ue-clear" seleted="ture"><span >${politicalstatus.politicalStatus}</span><i class="icon"></i></div>
+        	<div class=" select-title ue-clear"><span>${politicalstatus.politicalStatus}</span><i class="icon"></i></div>
             <ul class="select-list" >
                 <li id="共青团员">共青团员</li>
             	<li id="党员">党员</li>
                 <li id="群众">群众</li>
-             
             </ul>
         </div>
         <label>入党日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" placeholder="请选择日期" name="politicalstatus.joinDate" value="${politicalstatus.joinDate}"/>
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly"  placeholder="请选择日期" name="politicalstatus.joinDate" value="<s:date name="politicalstatus.joinDate" format="yyyy-MM-dd"></s:date>" />
         </div>
     </div>
 

@@ -46,8 +46,10 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String listUI() {
-			// TODO Auto-generated method stub
 			
+			// TODO Auto-generated method stub
+			//setPageSize(5);设置页面显示条数
+			//直接调用baseDao接口里面的getPageUtils方法将数据库的所有数据显示在list列表中
 			pageUtils=polstatusServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), getPageSize());//getPageNO() getPageSize()	
 			return "listUI";
 		}
@@ -59,10 +61,10 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String add() {
 			// TODO Auto-generated method stub
-			//获取当前时间并插入数据库
+			//获取当前时间作为createtime列的值并插入数据库
 			Timestamp time = new Timestamp(System.currentTimeMillis());
 			politicalstatus.setCreateTime(time);
-			polstatusServices.add(politicalstatus);//调用services层的add()方法
+			polstatusServices.add(politicalstatus);//调用services层的add()方法保存数据
 			return "add";
 		}
 		@Override
@@ -73,6 +75,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String editorUI() {
 			// TODO Auto-generated method stub
+			//直接调用baseDao接口里面的findObjectById方法根据id去查找数据
 			politicalstatus=polstatusServices.findObjectById(politicalstatus.getId());
 			request.setAttribute("politicalstatus", politicalstatus);
 			return "editorUI";
@@ -80,6 +83,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String editor() {
 			// TODO Auto-generated method stub
+			//直接调用baseDao接口里面的update方法更新修改后的数据
 			polstatusServices.update(politicalstatus);
 			return "editor";
 		}
@@ -88,14 +92,13 @@ public class PolstatusAction extends BaseAndExcelAction{
 			// TODO Auto-generated method stub
 			return null;
 		}
+		
+		
+		//--------------------------实体类getter&setter--------------------
 		public Politicalstatus getPoliticalstatus() {
 			return politicalstatus;
 		}
 		public void setPoliticalstatus(Politicalstatus politicalstatus) {
 			this.politicalstatus = politicalstatus;
 		}
-
-		//--------------------------getter&setter--------------------
-
-
 }
