@@ -1,6 +1,7 @@
 package com.zhbit.services.polstatus;
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.services.BaseServices;
+import com.zhbit.util.PageUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -22,5 +23,7 @@ public interface PolstatusServices extends BaseServices<Politicalstatus> {
 	 * 定义add增加信息
 	 */
 	public String add(Politicalstatus politicalstatus);
-
+    
+	//定义数据查询的方法
+	public PageUtils queryList(Politicalstatus politicalstatus, int pageNO, int pageSize);
 }
