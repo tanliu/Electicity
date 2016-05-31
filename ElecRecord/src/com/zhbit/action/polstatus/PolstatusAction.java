@@ -1,5 +1,7 @@
 package com.zhbit.action.polstatus;
 
+import java.sql.Timestamp;
+
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
@@ -53,6 +55,9 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String add() {
 			// TODO Auto-generated method stub
+			//获取当前时间并插入数据库
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			politicalstatus.setCreateTime(time);
 			polstatusServices.add(politicalstatus);//调用services层的add()方法
 			return "add";
 		}

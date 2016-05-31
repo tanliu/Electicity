@@ -12,10 +12,10 @@
             <result name="editorUI">/WEB-INF/jsp/studentstatus/stustausinfo_editorUI.jsp</result>
              <result name="addUI">/WEB-INF/jsp/studentstatus/stustausinfo_addUI.jsp</result>
             <result name="add" type="redirectAction">
-	         
+	         <param name="actionName">stustatus_listUI</param>
 	        </result>
             <result name="editor" type="redirectAction">
-	          <param name="actionName">systemddl_listUI</param>
+	          <param name="actionName">stustatus_listUI</param>
 	        </result>
          </action>
         

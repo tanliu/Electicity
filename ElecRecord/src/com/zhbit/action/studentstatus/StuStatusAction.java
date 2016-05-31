@@ -7,12 +7,14 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sun.org.apache.xerces.internal.util.Status;
 import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.services.system.SystemDllServices;
+import com.zhbit.util.QueryUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -49,6 +51,14 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String listUI() {
 		// TODO Auto-generated method stub
+		//查询学年信息并推送到前台进行显示
+		String[] fields={"keyword=?"};
+		String[] params1={"学年"};
+		List<SystemDll> years=systeDllServices.findObjectByFields(fields,params1);
+		
+		request.setAttribute("years", years);
+		
+		pageUtils=stuStatusServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), 5);
 		return "listUI";
 	}
 
@@ -61,7 +71,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 	public String addUI() {
 		// TODO Auto-generated method stub
 		//到数据字典查找类别
-			String[] fields={"keyword"};
+			String[] fields={"keyword=?"};
 			String[] params1={"学院名称"};
 			String[] params2={"学年"};
 			String[] params3={"专业"};
@@ -86,7 +96,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 		
 		stuStatusServices.save(stuStatus);
 		
-		return null;
+		return "add";
 	}
 
 	@Override
@@ -103,6 +113,11 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String editorUI() {
 		// TODO Auto-generated method stub
+		//通过传过来的参数值获取对应的学籍信息
+		stuStatus=stuStatusServices.findObjectById(stuStatus.getId());
+		
+		request.setAttribute("stuStatus", stuStatus);
+		
 		return "editorUI";
 	}
 
@@ -110,7 +125,8 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String editor() {
 		// TODO Auto-generated method stub
-		return null;
+		stuStatusServices.update(stuStatus);
+		return "editor";
 	}
 
 	@Override
