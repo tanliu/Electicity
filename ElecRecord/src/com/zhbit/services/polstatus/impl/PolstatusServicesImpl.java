@@ -48,20 +48,21 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 		String[] fields=null;
 		String[] params=null;
 		//排序条件，根据创建时间去排序查出来的结果集
-		String proterty="createTime";				
+		String proterty="createTime";	
+		String protertyjoinDate="joinDate";
 		if(politicalstatus!=null){ //判定politicalstatus不为空时
-			//&& !StringUtils.isEmpty(politicalstatus.getJoinDate())
-			if(!StringUtils.isEmpty(politicalstatus.getStuName()) && !StringUtils.isEmpty(politicalstatus.getStudentNo())){ //查询条件是学号
+			////多个查询条件组合
+			if(!StringUtils.isEmpty(politicalstatus.getStuName())){ 
 				//查询语句组合
-				fields=new String[]{"stuName=?","studentNo=?","joinDate=?"};
-				params=new String[]{politicalstatus.getStuName(),politicalstatus.getStudentNo()};
+				fields=new String[]{"stuName like ?"};
+				params=new String[]{"%"+politicalstatus.getStuName()+"%"};
+			}else if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){
+				fields=new String[]{"studentNo=?"};
+				params=new String[]{politicalstatus.getStudentNo()};
+			}else if(politicalstatus.getJoinDate()!=null){
+				fields=new String[]{"joinDate=?"};
+				params=new String[]{politicalstatus.getJoinDate().toString()};
 			}
-			//else if(!StringUtils.isEmpty(politicalstatus.getStuName())){ //查询条件是学生姓名
-			//	fields=new String[]{"stuName like ?"};
-				//params=new String[]{"%"+politicalstatus.getStuName()+"%"};
-				
-			//}
-			
 		}
 		// TODO Auto-generated method stub
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);

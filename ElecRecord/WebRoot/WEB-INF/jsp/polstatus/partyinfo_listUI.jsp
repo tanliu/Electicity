@@ -35,17 +35,17 @@ table thead tr th{
 	<div class="query-conditions ue-clear">
         <div class="conditions name ue-clear">
             <label>姓名：</label>
-        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询"  />
+        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询" value="${politicalstatus.stuName}" />
         </div>
         
          <div class="conditions staff ue-clear" >
           <label>学号：</label>
-        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" />
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${politicalstatus.studentNo}"/>
     </div>
      <div class="conditions staff ue-clear" >
          <label>入党日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期进行查询" name="politicalstatus.joinDate"/>
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期进行查询" name="politicalstatus.joinDate" value="<s:date name="politicalstatus.joinDate" format="yyyy-MM-dd"></s:date>"/>
         </div>
   </div>
    </div>

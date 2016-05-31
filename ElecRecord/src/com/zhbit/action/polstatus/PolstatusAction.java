@@ -57,11 +57,9 @@ public class PolstatusAction extends BaseAndExcelAction{
 			//调用方法，将查询结果显示
 			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
 			return "listUI";
-			// TODO Auto-generated method stub
+			
 			//setPageSize(5);设置页面显示条数
-			//直接调用baseDao接口里面的getPageUtils方法将数据库的所有数据显示在list列表中
-		//	pageUtils=polstatusServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), getPageSize());//getPageNO() getPageSize()	
-			//return "listUI";
+		
 		}
 		@Override
 		public String addUI() {
