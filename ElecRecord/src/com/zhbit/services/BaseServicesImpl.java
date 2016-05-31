@@ -105,7 +105,9 @@ public class BaseServicesImpl<T> implements BaseServices<T> {
 		//添加查询条件
 		if(fields!=null&&fields.length>0&&params!=null&&params.length>0&&fields.length==params.length){
 			for(int i=0;i<fields.length;i++){
-				queryUtils.addCondition("entity."+fields[i], params[i]);
+				if(!StringUtils.isEmpty(fields[i])&&!StringUtils.isEmpty((String)(params[i]))){
+					queryUtils.addCondition("entity."+fields[i], params[i]);				
+				}
 			}
 		}
 		//添加排序

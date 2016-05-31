@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.stuentstatus.StuStatusDao;
 import com.zhbit.entity.StuStatus;
+import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.util.PageUtils;
@@ -35,5 +37,26 @@ public class StuStatusServicesImpl extends BaseServicesImpl<StuStatus> implement
 		this.stuStatusDao = stuStatusDao;
 	}
 	
+	/**
+		 * 方法描述:此方法用于根据用户选择的查询条件返回相应的查询结果
+		 * @param
+		 * @param 
+		 */
+	@Override
+	public PageUtils queryList(StuStatus stuStatus, int pageNO, int pageSize) {
+		String[] fields=null;
+		String[] params=null;
+		String proterty="createTime";		
+		if(stuStatus!=null){ //当stuStatus不为空时
+			if(!StringUtils.isEmpty(stuStatus.getAcademicYear())){
+				fields=new String[]{"academicYear=?","term=?","studentNo=?"};
+				params=new String[]{stuStatus.getAcademicYear(),stuStatus.getTerm(),stuStatus.getStudentNo()};
+			}
+			
+		}
+		// TODO Auto-generated method stub
+		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
+	}
 
+	
 }
