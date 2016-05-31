@@ -112,13 +112,13 @@
      <p class="short-input ue-clear">
     	<label>异动时间：</label>
     	
-        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" name="stuStatus.tansactionDate" value="${stuStatus.tansactionDate}">
+        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="stuStatus.tansactionDate" value="<s:date format="yyyy-MM-dd" name="stuStatus.tansactionDate"/>">
         <label>行文时间：</label>
-        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" name="stuStatus.handleDate" value="${stuStatus.handleDate}"/>
+        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="stuStatus.handleDate" value="<s:date format="yyyy-MM-dd" name="stuStatus.handleDate"/>"/>
     </p>
     <p class="short-input ue-clear">
     	<label>撤消时间：</label>
-        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" name="stuStatus.cancelDate" value="${stuStatus.cancelDate}"/>
+        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="stuStatus.cancelDate" value="<s:date format="yyyy-MM-dd" name="stuStatus.cancelDate"/>"/>
         <label>异动说明：</label>
         <input type="text" placeholder="异动说明" name="stuStatus.tansactionMemo" value="${stuStatus.tansactionMemo}"/>
     </p>
@@ -126,7 +126,8 @@
     	<label>操作人：</label>
         <input type="text" placeholder="请输入操作人姓名" name="stuStatus.operator" value="${stuStatus.operator}"/> 
         <label>操作时间：</label>
-        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" name="stuStatus.operatorTime" value="${stuStatus.operatorTime}"/>
+        
+        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="stuStatus.operatorTime" value="<s:date format="yyyy-MM-dd" name="stuStatus.operatorTime"/>"/>
        
     </p>
     <p class="short-input ue-clear">

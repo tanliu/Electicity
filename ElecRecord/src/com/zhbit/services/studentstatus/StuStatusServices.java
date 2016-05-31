@@ -2,6 +2,7 @@ package com.zhbit.services.studentstatus;
 
 import com.zhbit.entity.StuStatus;
 import com.zhbit.services.BaseServices;
+import com.zhbit.util.PageUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -16,4 +17,6 @@ import com.zhbit.services.BaseServices;
  */ 
 public interface StuStatusServices extends BaseServices<StuStatus> {
 	public static final String SERVICE_NAME="com.zhbit.dao.studentstatus.impl.StuStatusServicesImpl";
+	
+	  public PageUtils queryList(StuStatus stuStatus, int pageNO, int pageSize);
 }
