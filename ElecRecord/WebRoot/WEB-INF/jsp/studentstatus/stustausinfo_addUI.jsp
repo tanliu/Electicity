@@ -17,6 +17,10 @@
 <div class="title"><h2>添加学籍异动信息</h2></div>
 <form id="myForm">
 <div class="main">
+ 	 <input type="hidden" name="query_academicYear" value="${queryCon.academicYear}">
+	 <input type="hidden" name="query_studentNo" value="${queryCon.studentNo}">
+	 <input type="hidden" name="query_stuName" value="${queryCon.stuName}">
+     <s:hidden name="pageNO"></s:hidden>
 	<!-- 这里先将stuid设定死，用于测试 -->
 	<input type="hidden" name="stuStatus.stuId" value="0145214"/>
 	<fieldset >
@@ -513,7 +517,7 @@
 
 <div class="btn ue-clear">
 	<a href="javascript:add('myForm','post','${basePath}stustatus/stustatus_add.action')" class="confirm save">确定</a>
-    <a href="javascript:;" class="clear clear" >返回</a>
+    <a href="javascript:back()" class="clear clear" >返回</a>
 </div>
 
 

@@ -13,10 +13,18 @@
              <result name="addUI">/WEB-INF/jsp/studentstatus/stustausinfo_addUI.jsp</result>
             <result name="add" type="redirectAction">
 	         <param name="actionName">stustatus_listUI</param>
+	          <param name="stuStatus.studentNo">${stuStatus.studentNo}</param>
+	          <param name="stuStatus.stuName">${stuStatus.stuName}</param>
+	          <param name="stuStatus.academicYear">${stuStatus.academicYear}</param>
+	          <param name="pageNO">${pageNO}</param>
 	        </result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">stustatus_listUI</param>
-	        </result>
+	          <param name="stuStatus.studentNo">${stuStatus.studentNo}</param>
+	          <param name="stuStatus.stuName">${stuStatus.stuName}</param>
+	          <param name="stuStatus.academicYear">${stuStatus.academicYear}</param>
+	          <param name="pageNO">${pageNO}</param>
+	          </result>
          </action>
         
         
