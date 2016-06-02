@@ -60,8 +60,7 @@
                 <column name="authority_id" length="32">
                     <comment>权限ID</comment>
                 </column>
-            </key>
-            
+            </key>            
             <one-to-many class="com.zhbit.entity.RoleAuthority" />
         </set> 
     </class>
