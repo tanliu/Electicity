@@ -62,13 +62,13 @@
                 <comment>用户类型</comment>
             </column>
         </property>
-<!--         <set name="tbSysUserRoles" inverse="true">
+         <set name="userRoles" inverse="true">
             <key>
                 <column name="user_id" length="32">
                     <comment>标识ID</comment>
                 </column>
             </key>
-            <one-to-many class="TbSysUserRole" />
-        </set> -->
+            <one-to-many class="com.zhbit.entity.UserRole" />
+        </set> 
     </class>
 </hibernate-mapping>

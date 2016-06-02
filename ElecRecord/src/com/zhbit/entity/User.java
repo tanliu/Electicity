@@ -20,7 +20,7 @@ public class User implements java.io.Serializable {
 	private String email;
 	private String password;
 	private String userType;
-	//private Set userRoles = new HashSet(0);
+	private Set userRoles = new HashSet(0);
 
 
 	public User() {
@@ -29,7 +29,7 @@ public class User implements java.io.Serializable {
 	public User(Organization organization, String employNo,
 			String employName, Timestamp createTime, Integer sex, String tell,
 			Integer status, String address, String email, String password,
-			String userType/*, Set userRoles*/) {
+			String userType, Set userRoles) {
 		this.organization = organization;
 		this.employNo = employNo;
 		this.employName = employName;
@@ -41,13 +41,11 @@ public class User implements java.io.Serializable {
 		this.email = email;
 		this.password = password;
 		this.userType = userType;
-		//this.userRoles = userRoles;
+		this.userRoles = userRoles;
 	}
 
-	// Property accessors
-
 	public String getUserId() {
-		return this.userId;
+		return userId;
 	}
 
 	public void setUserId(String userId) {
@@ -55,7 +53,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public Organization getOrganization() {
-		return this.organization;
+		return organization;
 	}
 
 	public void setOrganization(Organization organization) {
@@ -63,7 +61,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getEmployNo() {
-		return this.employNo;
+		return employNo;
 	}
 
 	public void setEmployNo(String employNo) {
@@ -71,7 +69,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getEmployName() {
-		return this.employName;
+		return employName;
 	}
 
 	public void setEmployName(String employName) {
@@ -79,7 +77,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public Timestamp getCreateTime() {
-		return this.createTime;
+		return createTime;
 	}
 
 	public void setCreateTime(Timestamp createTime) {
@@ -87,7 +85,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public Integer getSex() {
-		return this.sex;
+		return sex;
 	}
 
 	public void setSex(Integer sex) {
@@ -95,7 +93,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getTell() {
-		return this.tell;
+		return tell;
 	}
 
 	public void setTell(String tell) {
@@ -103,7 +101,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public Integer getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(Integer status) {
@@ -111,7 +109,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getAddress() {
-		return this.address;
+		return address;
 	}
 
 	public void setAddress(String address) {
@@ -119,7 +117,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
@@ -127,7 +125,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
@@ -135,19 +133,24 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getUserType() {
-		return this.userType;
+		return userType;
 	}
 
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
-/*	public Set getTbSysUserRoles() {
-		return this.userRoles;
+	public Set getUserRoles() {
+		return userRoles;
 	}
 
-	public void setTbSysUserRoles(Set userRoles) {
+	public void setUserRoles(Set userRoles) {
 		this.userRoles = userRoles;
 	}
-*/
+
+
+
+
+
+
 }

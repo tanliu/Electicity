@@ -3,10 +3,11 @@
  */
 package com.zhbit.action.system;
 
+import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-
 import com.opensymphony.xwork2.ActionSupport;
+import com.zhbit.services.system.RoleServices;
 
 /** 
  * 项目名称：ElecRecord
@@ -22,6 +23,9 @@ import com.opensymphony.xwork2.ActionSupport;
 @Controller(value="roleAction")
 @Scope(value="prototype")
 public class RoleAction extends ActionSupport {
+	
+	@Resource(name=RoleServices.SEVICES_NAME)
+	RoleServices roleServices;
 	
 	public String listUI(){
 		return "listUI";
