@@ -57,11 +57,11 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 			////多个查询条件组合
 			if(!StringUtils.isEmpty(politicalstatus.getStuName())){ 
 				//查询语句组合
-				fields=new String[]{"stuName like ?"};
-				params=new String[]{"%"+politicalstatus.getStuName()+"%"};
+				fields=new String[]{"stuName like ?","studentNo=?"};
+				params=new String[]{"%"+politicalstatus.getStuName()+"%",politicalstatus.getStudentNo()};
 			}else if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){
-				fields=new String[]{"studentNo=?"};
-				params=new String[]{politicalstatus.getStudentNo()};
+				fields=new String[]{"studentNo=?","stuName like ?",};
+				params=new String[]{politicalstatus.getStudentNo(),"%"+politicalstatus.getStuName()+"%"};
 			}//else if(politicalstatus.getJoinDate()!=null){
 				//politicalstatus.setJoinDate(new Timestamp(new Date().getTime()));
 			//	String time=politicalstatus.getJoinDate();

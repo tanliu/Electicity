@@ -35,10 +35,9 @@ public class PolstatusAction extends BaseAndExcelAction{
 	private static final long serialVersionUID = 1L;
 	@Resource(name=PolstatusServices.SERVICES_NAME)
 	PolstatusServices polstatusServices;
-	
-	private String queryWay; //查询的方式
-	private String confirmpwd; //确认密码
-	private String querycon;//查询的条件
+	//定义查询的条件
+	private String query_stuName;
+	private String query_studentNo;
 
 		@Override
 		public String importExcel() {
@@ -52,14 +51,22 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String listUI() {
+			//对传来的查询条件进行编码
+			if(politicalstatus!=null){
+				try {
+					politicalstatus.setStuName(DecodeUtils.decodeUTF(politicalstatus.getStuName()));
+					politicalstatus.setStudentNo(DecodeUtils.decodeUTF(politicalstatus.getStudentNo()));
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					System.out.println("编码时出错");
+			}
+			}
 			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 			request.setAttribute("querycon", politicalstatus);
 			//调用方法，将查询结果显示
 			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
 			return "listUI";
-			
 			//setPageSize(5);设置页面显示条数
-		
 		}
 		@Override
 		public String addUI() {
@@ -68,7 +75,6 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String add() {
-			// TODO Auto-generated method stub
 			//获取当前时间作为createtime列的值并插入数据库
 			Timestamp time = new Timestamp(System.currentTimeMillis());
 			politicalstatus.setCreateTime(time);
@@ -82,7 +88,8 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String editorUI() {
-			// TODO Auto-generated method stub
+			//保存查询条件
+			request.setAttribute("querycon", politicalstatus);
 			//直接调用baseDao接口里面的findObjectById方法根据id去查找数据
 			politicalstatus=polstatusServices.findObjectById(politicalstatus.getId());
 			request.setAttribute("politicalstatus", politicalstatus);
@@ -90,9 +97,12 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String editor() {
-			// TODO Auto-generated method stub
 			//直接调用baseDao接口里面的update方法更新修改后的数据
 			polstatusServices.update(politicalstatus);
+			//返回列表页面的时候 将查询条件也传回列表页面
+			politicalstatus.setStudentNo(request.getParameter("query_studentNo"));
+			politicalstatus.setStuName(request.getParameter("query_stuName"));
+			request.setAttribute("politicalstatus",politicalstatus);
 			return "editor";
 		}
 		@Override
@@ -108,5 +118,17 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		public void setPoliticalstatus(Politicalstatus politicalstatus) {
 			this.politicalstatus = politicalstatus;
+		}
+		public String getQuery_stuName() {
+			return query_stuName;
+		}
+		public void setQuery_stuName(String query_stuName) {
+			this.query_stuName = query_stuName;
+		}
+		public String getQuery_studentNo() {
+			return query_studentNo;
+		}
+		public void setQuery_studentNo(String query_studentNo) {
+			this.query_studentNo = query_studentNo;
 		}
 }

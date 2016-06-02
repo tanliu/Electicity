@@ -61,9 +61,9 @@
       
       <div class="short-input select ue-clear" >
     	
-    	<div class="select-wrap" >
-    	<label>学生类别：</label>
-        <input type="text" placeholder="请输入学生类别" name="stuStatus.studentCategory" value="${stuStatus.studentCategory}"/> 
+    	<div >
+    	<label >学生类别：</label>
+        <input class="select-wrap " type="text" placeholder="请输入学生类别" name="stuStatus.studentCategory" value="${stuStatus.studentCategory}"/> 
         </div>
         <label>学年：</label>
         <input  hidden="hidden" value="<s:property value="stuStatus.academicYear"/>" name="stuStatus.academicYear" >
@@ -145,9 +145,9 @@
     <legend>学生异动前信息</legend>
    <div class="short-input select ue-clear" >
     	
-    	 <div class="select-wrap" >
+    	 <div >
     	 <label>转出前学校名称：</label>
-        <input type="text" placeholder="请输入学生转出前学校名称" name="stuStatus.zxqschool" value="${stuStatus.zxqschool}"/>
+        <input type="text" class="select-wrap"  placeholder="请输入学生转出前学校名称" name="stuStatus.zxqschool" value="${stuStatus.zxqschool}"/>
         </div>
         <label>转出前所在年级：</label>
         <input  hidden="hidden" value="<s:property value="stuStatus.zxqgrade"/>" name="stuStatus.zxqgrade">
@@ -196,9 +196,9 @@
    
    <div class="short-input select ue-clear" >
         
-        <div class="select-wrap" >
+        <div  >
         <label>异动前系：</label>
-        <input type="text" placeholder="请输入学生异动前系" name="stuStatus.ydqdepartment" value="${stuStatus.ydqdepartment}"/> 
+        <input class="select-wrap" type="text" placeholder="请输入学生异动前系" name="stuStatus.ydqdepartment" value="${stuStatus.ydqdepartment}"/> 
         </div>
        <label>异动前专业：</label>
        <input  hidden="hidden" value="<s:property value="stuStatus.ydqmajor"/>" name="stuStatus.ydqmajor">
@@ -231,9 +231,9 @@
         </div>
          
         
-        <div class="select-wrap">
+        <div >
         <label>异动前行政班：</label>
-        <input type="text" placeholder="请输入异动前行政班" name="stuStatus.ydqclassName" value="${stuStatus.ydqclassName}"/> 
+        <input type="text" class="select-wrap" placeholder="请输入异动前行政班" name="stuStatus.ydqclassName" value="${stuStatus.ydqclassName}"/> 
        </div>
     </div>
    
@@ -260,9 +260,9 @@
         </div>
         
       
-      <div class="select-wrap">
+      <div >
       <label>异动前专业代码：</label>
-      <input type="text" placeholder="请输入异动前专业业代码" name="stuStatus.ydqmajorCode" value="${stuStatus.ydqmajorCode}"/> 
+      <input type="text" class="select-wrap" placeholder="请输入异动前专业业代码" name="stuStatus.ydqmajorCode" value="${stuStatus.ydqmajorCode}"/> 
       </div>
      </div>
      
@@ -331,9 +331,9 @@
     <legend>学生异动后信息</legend>
     <div class="short-input select ue-clear" >
     	
-    	 <div class="select-wrap" >
+    	 <div  >
     	 <label>转出后学校名称：</label>
-        <input type="text" placeholder="请输入学生转出后学校名称" name="stuStatus.zchschool" value="${stuStatus.zchschool}"/>
+        <input type="text" class="select-wrap" placeholder="请输入学生转出后学校名称" name="stuStatus.zchschool" value="${stuStatus.zchschool}"/>
         </div>
         <label>转出后所在年级：</label>
         <input  hidden="hidden" value="<s:property value="stuStatus.zchgrade"/>" name="stuStatus.zchgrade">
@@ -382,9 +382,9 @@
    
   <div class="short-input select ue-clear" >
        
-        <div class="select-wrap">
+        <div >
          <label>异动后系：</label>
-        <input type="text" placeholder="请输入学生异动后系" name="stuStatus.ydhdepartment" value="${stuStatus.ydhdepartment}"/> 
+        <input type="text" class="select-wrap" placeholder="请输入学生异动后系" name="stuStatus.ydhdepartment" value="${stuStatus.ydhdepartment}"/> 
         </div>
        <label>异动后专业：</label>
        <input  hidden="hidden" value="<s:property value="stuStatus.ydhmajor"/>" name="stuStatus.ydhmajor">
@@ -417,9 +417,9 @@
         </div>
        
        
-        <div class="select-wrap">
+        <div >
          <label>异动后行政班：</label>
-        <input type="text" placeholder="请输入异动后行政班" name="stuStatus.tansactionClass" value="${stuStatus.tansactionClass}"/> 
+        <input type="text" class="select-wrap" placeholder="请输入异动后行政班" name="stuStatus.tansactionClass" value="${stuStatus.tansactionClass}"/> 
        </div>
     </div>
    
@@ -445,9 +445,9 @@
         </div>
       
       
-      <div class="select-wrap">
+      <div >
       <label>异动后专业代码：</label>
-      <input type="text" placeholder="请输入异动后专业代码" name="stuStatus.ydhmajorCode" value="${stuStatus.ydhmajorCode}"/> 
+      <input type="text" class="select-wrap" placeholder="请输入异动后专业代码" name="stuStatus.ydhmajorCode" value="${stuStatus.ydhmajorCode}"/> 
       </div>
      </div>
      

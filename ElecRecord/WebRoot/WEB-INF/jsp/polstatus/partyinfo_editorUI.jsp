@@ -20,12 +20,16 @@
 <div class="title"><h2>修改党团关系基本信息</h2></div>
 <form id="myForm" method="post">
         
-	    <input hidden="hidden" value="<s:property value="1"/>" name="politicalstatus.stuId">
-	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="politicalstatus.creator">
-	   <input hidden="hidden" value="<s:property value="politicalstatus.id"/>" name="politicalstatus.id">
+    <input hidden="hidden" value="<s:property value="politicalstatus.stuId"/>" name="politicalstatus.stuId"> 
+ 	    <input hidden="hidden" value="<s:property value="politicalstatus.creator"/>" name="politicalstatus.creator"> 
+	   <input hidden="hidden" name="politicalstatus.id" value="${politicalstatus.id}" > 
 	  
 	  
-	    <input hidden name="querycon" value="<s:property value="politicalstatus"/>" >
+	    <input type="hidden" name="query_studentNo" value="${querycon.studentNo}">
+	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">
+	    <s:hidden name="pageNO"></s:hidden>
+	    
+	    
 	  
 <div class="main">
     <p class="short-input ue-clear">

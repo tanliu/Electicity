@@ -244,6 +244,12 @@ body {
 .table-operate a.edit {
 	background: url(../images/edtico.png) no-repeat left 9px;
 }
+.table-operate a.import {
+	background: url(../images/impico.png) no-repeat left 9px;
+}
+.table-operate a.upload {
+	background: url(../images/uplico.png) no-repeat left 9px;
+}
 .table-operate a.count {
 	background: url(../images/tjico.png) no-repeat left 9px;
 }

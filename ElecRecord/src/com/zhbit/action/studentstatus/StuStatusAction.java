@@ -1,5 +1,6 @@
 package com.zhbit.action.studentstatus;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -15,6 +16,7 @@ import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.services.system.SystemDllServices;
+import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -42,7 +44,12 @@ public class StuStatusAction extends BaseAndExcelAction {
 	StuStatusServices stuStatusServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
-	@Override
+	private String  query_academicYear;
+	private String  query_studentNo;
+	private String  query_stuName;
+	
+
+	@Override 
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		return null;
@@ -63,6 +70,17 @@ public class StuStatusAction extends BaseAndExcelAction {
 		List<SystemDll> years=systeDllServices.findObjectByFields(fields,params1);
 		request.setAttribute("years", years);
 		
+		//对传来的查询条件进行编码
+		if(stuStatus!=null){
+			try {
+				stuStatus.setStuName(DecodeUtils.decodeUTF(stuStatus.getStuName()));
+				stuStatus.setAcademicYear(DecodeUtils.decodeUTF(stuStatus.getAcademicYear()));
+				stuStatus.setStudentNo(DecodeUtils.decodeUTF(stuStatus.getStudentNo()));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				System.out.println("编码时出错");
+		}
+		}
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",stuStatus);
 		
@@ -174,10 +192,11 @@ public class StuStatusAction extends BaseAndExcelAction {
 		stuStatusServices.update(stuStatus);
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
+	
 		stuStatus.setAcademicYear(request.getParameter("query_academicYear"));
 		stuStatus.setStudentNo(request.getParameter("query_studentNo"));
 		stuStatus.setStuName(request.getParameter("query_stuName"));
-		
+	
 		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
 		request.setAttribute("stuStatus",stuStatus);
 		
@@ -198,7 +217,29 @@ public class StuStatusAction extends BaseAndExcelAction {
 	public void setStuStatus(StuStatus stuStatus) {
 		this.stuStatus = stuStatus;
 	}
-	
+	public String getQuery_academicYear() {
+		return query_academicYear;
+	}
+
+	public void setQuery_academicYear(String query_academicYear) {
+		this.query_academicYear = query_academicYear;
+	}
+
+	public String getQuery_studentNo() {
+		return query_studentNo;
+	}
+
+	public void setQuery_studentNo(String query_studentNo) {
+		this.query_studentNo = query_studentNo;
+	}
+
+	public String getQuery_stuName() {
+		return query_stuName;
+	}
+
+	public void setQuery_stuName(String query_stuName) {
+		this.query_stuName = query_stuName;
+	}
 
 	
 }
