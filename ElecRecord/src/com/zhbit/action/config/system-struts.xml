@@ -6,7 +6,7 @@
 <struts>
 
 	<!-- 配置全局结果及异常映射 -->
-	<package name="system" namespace="/system" extends="struts-default">
+	<package name="system" namespace="/system" extends="json-default">
 	
          <action name="systemddl_*" class="com.zhbit.action.system.SystemDllAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/system/systemdll.jsp</result>
@@ -23,11 +23,15 @@
             <result name="listUI">/WEB-INF/jsp/system/organize_listUI.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/system/organize_editorUI.jsp</result>
             <result name="addUI">/WEB-INF/jsp/system/organize_addUI.jsp</result>
-            <result name="add" type="redirectAction">
-	          <param name="actionName">organize_listUI</param>
+            <result name="tree">/WEB-INF/jsp/system/organize_tree.jsp</result>
+            <result name="treeData" type="json">
+				<param name="includeProperties">\[\d+\]\.orgId,\[\d+\]\.parentId,\[\d+\]\.orgName</param>
+            </result>
+            <result name="editor" type="json">
+	          <param name="includeProperties">orgId,parentId,orgName</param>
 	        </result>
-            <result name="editor" type="redirectAction">
-                  <param name="actionName">organize_listUI</param>
+            <result name="add" type="json">
+	          <param name="includeProperties">orgId,parentId,orgName</param>
 	        </result>
          </action>
          <!-- 用户管理 -->
@@ -60,16 +64,24 @@
             <result name="detailUI">/WEB-INF/jsp/system/authority_detailUI.jsp</result>
             <result name="addUI">/WEB-INF/jsp/system/authority_addUI.jsp</result>
             <result name="tree">/WEB-INF/jsp/system/authority_tree.jsp</result>
-            <result name="add" type="redirectAction">
-	          <param name="actionName">authority_listUI</param>
+            <result name="treeData" type="json">
+				<param name="includeProperties">\[\d+\]\.authorityId,\[\d+\]\.parentId,\[\d+\]\.authorityName</param>
+            </result>
+            <result name="add" type="json">
+	          <param name="includeProperties">authorityId,parentId,authorityName</param>
 	        </result>
             <result name="delete" type="redirectAction">
-	          <param name="actionName">authority_listUI</param>       
+	          <param name="actionName">authority_editorUI</param>       
 	        </result>
             <result name="editorUI">/WEB-INF/jsp/system/authority_editorUI.jsp</result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">authority_listUI</param>
 	        </result>
+         </action>
+         <!-- 角色管理 -->
+         <action name="role_*" class="roleAction" method="{1}">
+            <result name="listUI">/WEB-INF/jsp/system/role_listUI.jsp</result>
+
          </action>
 	</package>
 

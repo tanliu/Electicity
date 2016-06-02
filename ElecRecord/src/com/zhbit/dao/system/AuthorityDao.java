@@ -3,6 +3,8 @@
  */
 package com.zhbit.dao.system;
 
+import java.util.List;
+
 import com.zhbit.dao.BaseDao;
 import com.zhbit.entity.Authority;
 
@@ -19,4 +21,11 @@ import com.zhbit.entity.Authority;
  */
 public interface AuthorityDao extends BaseDao<Authority> {
 	public static final String DAO_NAME="com.zhbit.dao.system.impl.AuthorityDaoImpl";
+
+	/**
+	 * 方法描述:查找本结点和所有子结点
+	 * @param authorityId
+	 * @return
+	 */
+	List<Authority> findNodeAndChild(String authorityId);
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 import org.zhbit.excel.service.ExportExcelService;
 import org.zhbit.excel.service.ImportTableService;
@@ -30,7 +32,10 @@ public class ExcelUtil {
      * @throws Exception
      */
     public static  <T> List<T> SimpleImportExcel(ExcelConfig config)throws Exception {
-    	HSSFWorkbook workbook = new HSSFWorkbook(config.getFio());   //创建工作本
+    	//HSSFWorkbook workbook = new HSSFWorkbook(config.getFio());   //创建工作本
+		boolean is03Excel=config.getFileName().matches("^.+\\.(?i)(xls)$");
+		Workbook workbook = is03Excel? new HSSFWorkbook(config.getFio()) : new XSSFWorkbook(config.getFio());
+
         Sheet sheet = workbook.getSheet(config.getSheetName());       //创建表
         ImportTableService tableService=new ImportTableService(sheet);   //解释表
         tableService.setStartRow(config.getStartRow());        //设置开始行

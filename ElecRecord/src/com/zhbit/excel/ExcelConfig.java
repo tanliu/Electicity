@@ -23,6 +23,7 @@ import org.zhbit.excel.annotation.Lang;
  */ 
 public class ExcelConfig {
 	
+	private String fileName;          //文件名
 	private String[] entityFiled;    //实体的属性
 	private int startRow=0;           //导入数据的开始行
 	private FileInputStream fio;      //文件输入流
@@ -34,21 +35,24 @@ public class ExcelConfig {
 	private String title;            //生成表格的标题
 	
 	//---------------------------------Constructor-----------------
-	public ExcelConfig(Class clazz,String sheetName,int startRow) {
+	public ExcelConfig(Class clazz,String sheetName,int startRow,String fileName) {
 		this.sheetName=sheetName;
 		this.clazz=clazz;
 		this.startRow=startRow;
+		this.fileName=fileName;
 	}
-	public ExcelConfig(Class clazz,String sheetName,int startRow,FileInputStream fis) {
+	public ExcelConfig(Class clazz,String sheetName,int startRow,FileInputStream fis,String fileName) {
 		this.sheetName=sheetName;
 		this.clazz=clazz;
 		this.startRow=startRow;
 		this.fio=fis;
+		this.fileName=fileName;
 	}
 	
-	public ExcelConfig(Class clazz,String sheetName) {
+	public ExcelConfig(Class clazz,String sheetName,String fileName) {
 		this.sheetName=sheetName;
 		this.clazz=clazz;
+		this.fileName=fileName;
 	}
 	
 	public ExcelConfig(Class clazz,String sheetName,OutputStream fos) {
@@ -83,6 +87,13 @@ public class ExcelConfig {
 		return entityFiled;
 	}
 	
+	
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public void setEntityFiled(String[] entityFiled) {
 		this.entityFiled = entityFiled;
 	}

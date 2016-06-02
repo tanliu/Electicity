@@ -4,6 +4,8 @@
 	pageContext.setAttribute("basePath", request.getContextPath() + "/");
 %>
 <script type="text/javascript" src="${basePath}js/jquery.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.js"></script>
+<%-- <script type="text/javascript" src="${basePath}js/tree/jquery-1.4.4.min.js"></script> --%>
 <script type="text/javascript" src="${basePath}js/common.js"></script>
 <script type="text/javascript" src="${basePath}js/select.js"></script>
 <script type="text/javascript" src="${basePath}js/button.js"></script>

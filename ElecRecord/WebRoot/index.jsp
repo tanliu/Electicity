@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <form name="form1" action="test/test_importExcel.action" method="post" enctype="multipart/form-data">
         <input name="excel" type="file"/>
         <input type="submit" value="提交">
-    
+        <a href="test/test_exportExcel.action">下载</a>
     </form>
    
   </body>
