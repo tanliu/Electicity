@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="${basePath}css/base.css" />
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
+<link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
+
 <style type="text/css">
 /*单元格样式*/
 table tbody tr td{
@@ -24,8 +26,12 @@ table thead tr th{
 
 </style>
 
+<script type="text/javascript" src="${basePath}js/core.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 
 <script type="text/javascript" >
+
 //选择框效果的JS
 function doSelectAll(){
 	$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
@@ -75,6 +81,8 @@ function query(){
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
+	
+
  </script>
 <title>学生学籍异动信息</title>
 </head>
@@ -128,7 +136,7 @@ function query(){
 <div class="table-operate ue-clear">
 	<a href="javascript:add()" class="add">添加</a>
     <a href="javascript:;" class="del">删除</a>
-    <a href="javascript:;" class="import">导入</a>
+    <a href="javascript:" class="import clear clear">导入</a>
     <a href="javascript:;" class="upload">上传</a>
 </div>
 
@@ -162,11 +170,51 @@ function query(){
         </tbody>
     </table>
 </div>
-
+</form>
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 
-</form>
+<div class="importDialog" align="center" >
+	<div class="dialog-content" align="center">   
+        <div class="ui-dialog-text" align="center">
+            <p class="dialog-content">请选择要导入的excel文件</p>
+            <form id="fileForm" action="${basePath}stustatus/stustatus_importExcel.action" method="post" enctype="multipart/form-data">
+            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel"  /></p>
+          </form>
+            <div class="buttons" align="center">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="返回" />
+            </div>
+        </div>
+        </div>
+</div>
+
 </body>
 
+<script type="text/javascript">
+<!--实现清空弹出框的脚本-->
+
+$('.importDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:250,
+	height:220
+	
+});
+
+$('.import').click(function(){
+	$('.importDialog').Dialog('open');
+});
+
+
+
+$('.importDialog input[type=button]').click(function(e) {
+    $('.importDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		var $form=$("#fileForm");
+		$("#fileForm").submit();
+	}
+});
+</script>
 
 </html>

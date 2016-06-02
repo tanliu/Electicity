@@ -121,7 +121,7 @@
     	<label>撤消时间：</label>
         <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="stuStatus.cancelDate"/>
         <label>异动说明：</label>
-        <input type="text" placeholder="异动说明" readonly="readonly" name="stuStatus.tansactionMemo"/>
+        <input type="text" placeholder="异动说明"  name="stuStatus.tansactionMemo"/>
     </p>
     <p class="short-input ue-clear">
     	<label>操作人：</label>
