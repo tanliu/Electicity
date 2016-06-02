@@ -1,4 +1,7 @@
 package com.zhbit.services.polstatus.impl;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +52,7 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 		String[] params=null;
 		//排序条件，根据创建时间去排序查出来的结果集
 		String proterty="createTime";	
-		String protertyjoinDate="joinDate";
+		
 		if(politicalstatus!=null){ //判定politicalstatus不为空时
 			////多个查询条件组合
 			if(!StringUtils.isEmpty(politicalstatus.getStuName())){ 
@@ -59,10 +62,13 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 			}else if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){
 				fields=new String[]{"studentNo=?"};
 				params=new String[]{politicalstatus.getStudentNo()};
-			}else if(politicalstatus.getJoinDate()!=null){
-				fields=new String[]{"joinDate=?"};
-				params=new String[]{politicalstatus.getJoinDate().toString()};
-			}
+			}//else if(politicalstatus.getJoinDate()!=null){
+				//politicalstatus.setJoinDate(new Timestamp(new Date().getTime()));
+			//	String time=politicalstatus.getJoinDate();
+				
+			//	fields=new String[]{"joinDate=?"};
+			//	params=new String[]{time};
+			//}
 		}
 		// TODO Auto-generated method stub
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);

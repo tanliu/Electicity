@@ -24,6 +24,9 @@
 	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="politicalstatus.creator">
 	   <input hidden="hidden" value="<s:property value="politicalstatus.id"/>" name="politicalstatus.id">
 	  
+	  
+	    <input hidden name="querycon" value="<s:property value="politicalstatus"/>" >
+	  
 <div class="main">
     <p class="short-input ue-clear">
     	<label>学号：</label>
@@ -60,10 +63,13 @@
 
 <div class="btn ue-clear">
 	
-	<a href="javascript:editor('myForm','post','${basePath}polstatus/polstatus_editor.action')"  class="confirm save">确定</a>
+	 <a href="javascript:editor('myForm','post','${basePath}polstatus/polstatus_editor.action') "  class="confirm save">确定</a> 
+  
     <a href="javascript:back()" class="clear clear" >返回</a>
 </div>
 </form>
 </body>
 <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
+
+
 </html>
