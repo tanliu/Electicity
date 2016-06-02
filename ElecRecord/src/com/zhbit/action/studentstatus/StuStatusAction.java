@@ -1,5 +1,6 @@
 package com.zhbit.action.studentstatus;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -15,6 +16,7 @@ import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.services.system.SystemDllServices;
+import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -63,6 +65,17 @@ public class StuStatusAction extends BaseAndExcelAction {
 		List<SystemDll> years=systeDllServices.findObjectByFields(fields,params1);
 		request.setAttribute("years", years);
 		
+		//对传来的查询条件进行编码
+		if(stuStatus!=null){
+			try {
+				stuStatus.setStuName(DecodeUtils.decodeUTF(stuStatus.getStuName()));
+				stuStatus.setAcademicYear(DecodeUtils.decodeUTF(stuStatus.getAcademicYear()));
+				stuStatus.setStudentNo(DecodeUtils.decodeUTF(stuStatus.getStudentNo()));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				System.out.println("编码时出错");
+		}
+		}
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",stuStatus);
 		
@@ -174,10 +187,11 @@ public class StuStatusAction extends BaseAndExcelAction {
 		stuStatusServices.update(stuStatus);
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
+	
 		stuStatus.setAcademicYear(request.getParameter("query_academicYear"));
 		stuStatus.setStudentNo(request.getParameter("query_studentNo"));
 		stuStatus.setStuName(request.getParameter("query_stuName"));
-		
+	
 		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
 		request.setAttribute("stuStatus",stuStatus);
 		
