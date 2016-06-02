@@ -1,6 +1,7 @@
 
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
+
 <html>
 <head>
 <meta charset="utf-8">
@@ -61,11 +62,16 @@ function editor(id){
  	$("#queryForm").submit();  
 } 
 
+//向stustatus_addUI.action提交信息
+function add(){
+		var url="${basePath}stustatus/stustatus_addUI.action";
+		$("#queryForm").attr("action",url);
+ 	$("#queryForm").submit();  
+} 
+
 //向stustatus_listUI.action提交信息
 function query(){
-	
 	  	$("#pageNo").val(1);
-
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
@@ -77,34 +83,39 @@ function query(){
 <div class="title"><h2>学生学籍异动信息</h2></div>
 <form id="queryForm" action="${basePath}stustatus/stustatus_listUI.action" method="post">
 <div class="query">
-	<div class="query-conditions ue-clear">
-        <div class="conditions name ue-clear">
+
+	<div class="query-conditions ue-clear" style="width:100%">
+                                                               
+       
+       <div class="conditions staff ue-clear" style="width:25%">
+            <label>学号：</label>
+            <input type="text" placeholder="请输入学生学号进行查询" name="stuStatus.studentNo" value="${queryCon.studentNo}" style="width:233px;height:30px" />
+            
+        </div>
+        
+         <div class="conditions staff ue-clear" style="width:25%">
+            <label>姓名：</label>
+            <input type="text" placeholder="请输入学生姓名进行查询" name="stuStatus.stuName" value="${queryCon.stuName}" style="width:233px;height:30px"/>
+            
+        </div>
+        
+        
+        
+        <div class="conditions name ue-clear" >
            <label>学年：</label>
         <input  hidden="hidden" value="${queryCon.academicYear}" name="stuStatus.academicYear">
-      <div class="select-wrap">
+      <div class="select-wrap" >
 				<div class="select-title ue-clear" ><span id="span1" >${queryCon.academicYear}</span><i class="icon"></i></div>
 					<ul class="select-list" >
-					 <li id="">请选择</li>
+					 <li id="" >请选择</li>
 					    <s:iterator value="#request.years" var="years">
-					      <li id="<s:property value='#years.ddlName'/>"><s:property value="#years.ddlName"/></li>
+					      <li id="<s:property value='#years.ddlName'/>" ><s:property value="#years.ddlName"/></li>
 					    </s:iterator>
 					</ul>					
 				</div>
         </div>
-                                                               
+        
        
-       <div class="conditions staff ue-clear">
-            <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" name="stuStatus.studentNo" value="${queryCon.studentNo}" style="width:223px"/>
-            
-        </div>
-        
-        <div class="conditions staff ue-clear">
-            <label>姓名：</label>
-            <input type="text" placeholder="请输入学生姓名进行查询" name="stuStatus.stuName" value="${queryCon.stuName}" style="width:223px"/>
-            
-        </div>
-        
        
         
     </div>
@@ -115,7 +126,7 @@ function query(){
 </div>
 
 <div class="table-operate ue-clear">
-	<a href="${basePath}stustatus/stustatus_addUI.action" class="add">添加</a>
+	<a href="javascript:add()" class="add">添加</a>
     <a href="javascript:;" class="del">删除</a>
     
 </div>
@@ -124,7 +135,7 @@ function query(){
 	<table>
     	<thead>
         	<tr>
-			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
             	<th width="20%" class="num">学号</th>
                 <th width="10%" >姓名</th>
 				<th width="5%" >性别</th>
