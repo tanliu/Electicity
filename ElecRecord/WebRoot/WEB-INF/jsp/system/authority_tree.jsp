@@ -60,8 +60,8 @@
 	};
 
 	var zNodes =[
-        {id:0, pId:0, name:"学生电子档案管理系统","target":"add", open:true},
-		{id:1, pId:0, name:"基本信息管理","target":"add", open:true},
+         {id:0, pId:0, name:"学生电子档案管理系统","target":"add", open:true},
+         /*{id:1, pId:0, name:"基本信息管理","target":"add", open:true},
 		{id:101, pId:1, name:"学生基本信息" },
 		{id:102, pId:1, name:"教师基本信息", file:"core/simpleData"},
 
@@ -90,7 +90,7 @@
 
 		{id:6, pId:0, name:"身份信v息管理", open:false},
 		{id:601, pId:6, name:"党团关系管理", file:"exhide/common"},
-		{id:602, pId:6, name:"学生职务信息管理", file:"exhide/checkbox"},
+		{id:602, pId:6, name:"学生职务信息管理", file:"exhide/checkbox"}, */
 
 	];
 
@@ -99,12 +99,11 @@
 	}
 	function onClick(event, treeId, treeNode, clickFlag) {
 		window.parent.add.location.href="${basePath}system/authority_addUI.action?authority.parentId="+treeNode.id;
-		window.parent.editor.location.href="${basePath}system/authority_editorUI.action?authority.parentId="+treeNode.id;
+		window.parent.editor.location.href="${basePath}system/authority_editorUI.action?authority.authorityId="+treeNode.id;
 
 	}
 
     function add(newNodes){
-       alert(newNodes[0].pId);
        var zTree = $.fn.zTree.getZTreeObj("tree");
        var node = zTree.getNodeByParam("id", newNodes[0].pId);
        //var newNodes = [ {id:103, pId:102, name:"教师基本信息", file:"core/simpleData"}, ];
@@ -114,15 +113,15 @@
 
    function deleteNode(id){
        var zTree = $.fn.zTree.getZTreeObj("tree");
-       var node = zTree.getNodeByParam("id", 102);
+       var node = zTree.getNodeByParam("id", id);
        var nodes =zTree.removeNode(node);
     }
     function editormyNode(newNodes){
-       alert(newNodes[0].pId);
+       
     	//获取结点，对结点信息更改
        var zTree = $.fn.zTree.getZTreeObj("tree");
        var node = zTree.getNodeByParam("id", newNodes[0].id);
-       node.name="editor success";
+       node.name=newNodes[0].name;
        //选择删除结点
        var nodes =zTree.removeNode(node);
        //取得新结点的父结点
@@ -142,22 +141,29 @@
 			dataType:"json",//返回数据类型
 	    	success: function(data){
 	    		
+	    		if(data!=null){
+	    		
 	    		var dataObj=eval(data);//转换为json对象
-	    		alert(dataObj.length);//输出root的子对象数量
+
+                //把数据输入到Znodes
 	    		for(var i=0;i<dataObj.length;i++){
-	    			
+		    		var val = {id:dataObj[i].authorityId, pId:dataObj[i].parentId, name:dataObj[i].authorityName, open:true};
+		    		zNodes.push(val); 
 	    		}
+	    		}
+	    		//加载树
+	     		var t = $("#tree");
+	    		t = $.fn.zTree.init(t, setting, zNodes);
+	    		demoIframe = $("#testIframe");
+	    		demoIframe.bind("load", loadReady);
+	    		var zTree = $.fn.zTree.getZTreeObj("tree");
+	    		//zTree.selectNode(zTree.getNodeByParam("id", 101)); 
 
 	    	},
 	        error:function(){alert("失败！");}
 			
 		});
-/* 		var t = $("#tree");
-		t = $.fn.zTree.init(t, setting, zNodes);
-		demoIframe = $("#testIframe");
-		demoIframe.bind("load", loadReady);
-		var zTree = $.fn.zTree.getZTreeObj("tree");
-		zTree.selectNode(zTree.getNodeByParam("id", 101)); */
+
 
 	});
 

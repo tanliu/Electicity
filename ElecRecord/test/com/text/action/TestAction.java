@@ -3,8 +3,11 @@
  */
 package com.text.action;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,9 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -29,6 +35,8 @@ import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.ExcelServices;
 import com.zhbit.services.ExcelServicesImpl;
+import com.zhbit.transform.BaseTransfrom;
+import com.zhbit.transform.TestTransform;
 
 /** 
  * 项目名称：ElecRecord
@@ -47,6 +55,8 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 	
 	@Resource(name="testServices")
 	TestServices testServices;
+	
+	
 
 	
 	public TestUser getUser() {
@@ -77,7 +87,7 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 	}
 	
 	
-	@Test
+	
 	public void tt(){
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 		TestServices testServices=(TestServices) ac.getBean("testServices");
@@ -89,7 +99,7 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 	}
 	
 	
-	@Test
+	
 	public void trasaction(){
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 		TestServices testServices=(TestServices) ac.getBean("testServices");
@@ -139,19 +149,30 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 		return null;
 	}
 
+	/**
+	 * 方法描述:
+	 * @return
+	 */
 	@Override
 	public String importExcel() {
-		//excelServices.createExcel(config);
-		System.out.println(excelFileName);
 		try {
-			ExcelConfig config=new ExcelConfig(TestEntity.class, "党团关系", 1, new FileInputStream(excel));
+			/**
+			 * arg01:excel实体
+			 * arg02:表名
+			 * arg03:表头的位置
+			 * arg04:上传文件的输入流
+			 * arg05:文件名
+			 */
+			ExcelConfig config=new ExcelConfig(TestEntity.class, "谭柳", 1, new FileInputStream(excel),excelFileName);
 			List<Object> lists=excelServices.parseExcel(config);
 			for (Object object : lists) {
 				TestEntity testEntity=(TestEntity) object;
 				System.out.println(testEntity.getName());
 			}
+			BaseTransfrom baseTransfrom=new TestTransform();
+			baseTransfrom.toDBEntity(lists);
+			//baseTransfrom.toExcelObj(lists);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "importExcel";
@@ -174,6 +195,23 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 			e.printStackTrace();
 		}
 
+	}
+	@Test
+	public void imp(){
+		try {
+			InputStream fiS=new FileInputStream(new File("C:\\Users\\Administrator\\Desktop\\谭柳的文件.xls"));
+			//HSSFWorkbook workbook=new HSSFWorkbook(fiS);
+			XSSFWorkbook workbook=new XSSFWorkbook(new File("C:\\Users\\Administrator\\Desktop\\入党.xlsx"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	

@@ -20,7 +20,7 @@ public class TestMyExcel {
     }
 	@Test
 	public void importExcel() throws FileNotFoundException{
-		ExcelConfig config=new ExcelConfig(TestEntity.class,"党团关系",2);
+		ExcelConfig config=new ExcelConfig(TestEntity.class,"党团关系",2,"");
 		config.setFio(new FileInputStream("D://党团关系信息表.xls"));
 		try {
 			List<TestEntity> lists=new ExcelUtil().SimpleImportExcel(config);
@@ -37,7 +37,7 @@ public class TestMyExcel {
 	}
 	@Test
 	public void ex() throws Exception{
-		ExcelConfig config=new ExcelConfig(TestEntity.class,"党团关系",2);
+		ExcelConfig config=new ExcelConfig(TestEntity.class,"党团关系",2,"");
 		config.setFos(new FileOutputStream("D://tan.xls"));
 		config.setEntitys(getpList());
 		new ExcelUtil().testSimpleVoExport(config);

@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.zhbit.action.BaseAction;
+import com.zhbit.entity.Authority;
 import com.zhbit.entity.Organization;
 import com.zhbit.services.system.OrganizeServices;
 import com.zhbit.util.PageUtils;
@@ -49,19 +51,32 @@ public class OrganizeAction extends BaseAction {
 	
 	@Override
 	public String listUI() {
-		QueryUtils queryUtils=new QueryUtils(Organization.class, "o");
-		if(organize!=null&&!StringUtils.isEmpty(organize.getOrgName())){  //当organize不为空，表示查询的时候 
-			queryUtils.addCondition("o.orgName like ? ", "%"+organize.getOrgName()+"%");
-		}
-		pageUtils=organizeServices.getPageUtils(queryUtils, pageNO, getPageSize());		
+		
 		return "listUI";
 	}
 
+	public String tree(){
+		return "tree";
+	}
+	public String treeData(){
+		//查找数据
+		List<Organization> organizations=organizeServices.findAllObject();
+		//推到栈顶
+		ActionContext.getContext().getValueStack().push(organizations);
+		return "treeData";
+	}
+	
 	@Override
 	public String addUI() {
-		QueryUtils queryUtils=new QueryUtils(Organization.class, "o");
-		List<Organization> organizations=organizeServices.findAllObject(queryUtils);
-		request.setAttribute("organizations", organizations);
+		//判断是否是最大结点
+		if(organize==null||StringUtils.isEmpty(organize.getParentId())||organize.getParentId().equals("0")){
+			organize=new Organization();
+			organize.setParentId("0");
+			organize.setOrgName("北京理工大学珠海学院");
+		}else{
+			Organization temp=organizeServices.findObjectById(organize.getParentId());
+			organize.setOrgName(temp.getOrgName());
+		}
 		return "addUI";
 	}
 
@@ -69,7 +84,7 @@ public class OrganizeAction extends BaseAction {
 	public String add() {
 		if(organize!=null){  //organize不为空
             //如果有父结点
-			if(!"".equals(organize.getParentId())){
+			if(!"0".equals(organize.getParentId())){
 				//查找父结点的所有交结点
 				QueryUtils queryUtils=new QueryUtils(Organization.class, "o");
 				queryUtils.addCondition("o.orgId=?", organize.getParentId());
@@ -86,6 +101,7 @@ public class OrganizeAction extends BaseAction {
 			//保存数据
 			organizeServices.save(organize);
 		}
+		ActionContext.getContext().getValueStack().push(organize);
 		return "add";
 	}
 
@@ -96,33 +112,34 @@ public class OrganizeAction extends BaseAction {
 
 	@Override
 	public String editorUI() {
-		//----------------------------------父结点数据---------------------
-		QueryUtils queryUtils=new QueryUtils(Organization.class, "o");
-		List<Organization> organizations=organizeServices.findAllObject(queryUtils);
-		request.setAttribute("organizations", organizations);
-		//----------------------------------当前机构的数据------------------
-		organize=organizeServices.findObjectById(organize.getOrgId());
-		//----------------------------------获取父结点名称
-		if(!StringUtils.isEmpty(organize.getParentId())){
-			for (Organization organization : organizations) {
-				if(organization.getOrgId().equals(organize.getParentId())){
-					parentName=organization.getOrgName();
-					break;
+		
+		if(organize!=null&&!StringUtils.isEmpty(organize.getOrgId())&&!organize.getOrgId().equals("0")){
+			organize=organizeServices.findObjectById(organize.getOrgId());
+			//----------------------------------父结点数据---------------------
+			QueryUtils queryUtils=new QueryUtils(Organization.class, "o");
+			List<Organization> organizations=organizeServices.findAllObject(queryUtils);
+			request.setAttribute("organizations", organizations);
+			//----------------------------------获取父结点名称
+			if(!StringUtils.isEmpty(organize.getParentId())){
+				for (Organization organization : organizations) {
+					if(organization.getOrgId().equals(organize.getParentId())){
+						parentName=organization.getOrgName();
+						break;
+					}
 				}
-			}
-		}		
+			}	
+		}
+		if(organize==null){
+			organize=new Organization();
+			organize.setOrgId("0");
+		}
 		return "editorUI";
 	}
 
 	@Override
 	public String editor() {
-		//更新
-		if(!StringUtils.isEmpty(oldparentId)&&!oldparentId.equals(organize.getParentId())){ //父结发生了变化
-			organizeServices.update(organize);
-		    organizeServices.editorChild(oldparentId,organize);	
-		}else{
-			organizeServices.update(organize);
-		}
+		organizeServices.editorNode(oldparentId,organize);
+		ActionContext.getContext().getValueStack().push(organize);
 		return "editor";
 	}
 

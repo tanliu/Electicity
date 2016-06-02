@@ -43,26 +43,48 @@ public class OrganizeServicesImpl extends BaseServicesImpl<Organization> impleme
 	@Override
 	public void editorChild(String oldparentId, Organization organize) {
 		
-		//查找到旧结点的所有父结点
-		Organization oldOrganize=findObjectById(organize.getOrgId());
-		//查找到新的父结点的所有结点
+		//被转的结点的子点结中的所有父结点中含有的父结点
+		String oldreplace=organize.getParentIds()+","+organize.getOrgId();
+		//查找到新的父结点的所有结点的串
+		String newreplace="0,"+organize.getOrgId();
 		Organization newOrganize=findObjectById(organize.getParentId());
-		//查找所有含有与旧结点相同的子结点
+		if(null!=newOrganize){
+			newreplace= newOrganize.getParentIds()+","+newOrganize.getOrgId()+","+organize.getOrgId();
+		}
+		//查找所有含有与旧结点相同的子结点		
 		QueryUtils queryUtils=new QueryUtils(Organization.class,"o");
-		queryUtils.addCondition("o.parentIds like ?", "%"+oldOrganize.getParentIds()+"%");
-		List<Organization> organizations=this.findObjectByFields(queryUtils);
-		String replace=oldOrganize.getParentIds();
+		queryUtils.addCondition("o.parentIds like ?", "%"+oldreplace+"%");
+		
+		List<Organization> organizations=this.findObjectByFields(queryUtils);		
+
 		//遍历替换所有子结点
 		for (Organization organization : organizations) {
-			String parentIds=organization.getParentIds();
-			
+			String parentIds=organization.getParentIds();			
 			if(!StringUtils.isEmpty(parentIds)){
-				parentIds=parentIds.replace(replace, newOrganize.getParentIds()+","+newOrganize.getOrgId());
+				parentIds=parentIds.replace(oldreplace, newreplace);
 				organization.setParentIds(parentIds);
 			}
 		}
-		organizeDao.saveOrUpdateAll(organizations);
+		//organizeDao.saveOrUpdateAll(organizations);
 		
 		
 	}
+	@Override
+	public void editorNode(String oldparentId, Organization organize) {
+		//更新
+		if(!StringUtils.isEmpty(oldparentId)&&!oldparentId.equals(organize.getParentId())){ //父结发生了变化
+		    this.editorChild(oldparentId,organize);	
+		    //更新自己的
+		    Organization temp=this.findObjectById(organize.getParentId());
+		    if(temp!=null){
+		    	organize.setParentIds(temp.getParentIds()+","+temp.getOrgId());
+		    }else{
+		    	organize.setParentIds("0");
+		    }
+		    this.update(organize);
+		}else{
+			this.update(organize);
+		}		
+	}
+	
 }

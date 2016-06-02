@@ -23,7 +23,7 @@
 		<h2>添加部门</h2>
 	</div>
 	<form id="myForm" method="post">
-	    <input hidden="hidden" value="<s:property value="organize.orgId"/>" name="organize.orgId">
+	    <input hidden="hidden" id="orgId" value="<s:property value="organize.orgId"/>" name="organize.orgId">
 	    <input hidden="hidden" value="<s:property value="organize.parentId"/>" name="oldparentId">
 	    <input hidden="hidden" value="<s:property value="organize.parentIds"/>" name="organize.parentIds">
 		<div class="main">
@@ -33,17 +33,20 @@
 					<s:textfield  name="organize.orgName" class="strutsinput"></s:textfield>
 				</div>
 				<label>父级机构：</label>
+				<input  hidden="hidden" value="<s:property value='organize.parentId'/>"  name="organize.parentId">
 				<div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1"><s:if test="parentName!=null"> <s:property value="parentName"/> </s:if><s:else>--没有父机构--</s:else></span><i class="icon"></i>
 					</div>
 					<ul class="select-list" id="list1">
+					    <li id="0">北京理工大学珠海学院</li>
 					    <s:iterator value="#request.organizations" var="organization">
+					      <s:if test="#organization.orgId!=organize.orgId">
 					      <li id="<s:property value='#organization.orgId'/>"><s:property value="#organization.orgName"/></li>
+					      </s:if>
 					    </s:iterator>
 					</ul>					
 				</div>
-				<input  hidden="hidden" value="<s:property value='organize.parentId'/>"  name="organize.parentId">
 			</div>
 			<p class="short-input ue-clear">
 				<label>详细地址：</label> 
@@ -75,14 +78,72 @@
 			</p>
 
 	<div class="btn ue-clear">
-	<a href="javascript:editor('myForm','post','${basePath}/system/organize_editor.action')"  class="confirm save">确定</a> <a
-				href="javascript:back()" class="clear clear">返回</a>
+	<a href="javascript:editororganize('myForm','post','${basePath}/system/organize_editor.action')"  class="confirm save">确定</a> 
 		</div>
 
 </div>
 	</form>
 
 </body>
+<script type="text/javascript">
+function editororganize(formID,type,url){
+	var id=$("#orgId").val();
+    if(id==""||id=="0"){
+    	alert("这是最大父结点，不可以修改！");
+    	return ;
+    }
+	var nullEL=isNull();
+	//判断是否为空
+	if(typeof(nullEL) != "undefined"){
+		nullEL.prev("label").addClass("warn");//提示
+		nullEL.focus();
+		return;
+	}
+	nullEL=isEmail();
+	//判断是否是Email
+	if(typeof(nullEL) != "undefined"){
+		nullEL.prev("label").addClass("warn");//提示
+		nullEL.focus();
+		return ;
+	}
+	//判断是否是电话号码
+	nullEL=isTell();
+	if(typeof(nullEL) != "undefined"){
+		alert(nullEL.prev("label").text());
+		nullEL.prev("label").addClass("warn");//提示
+		nullEL.focus();
+		return ;
+	}
+	if(typeof(nullEL) == "undefined"){//表示没有空的提示信息（表示通过）
+		$.ajax({
+        url:url,
+    	data:$("#"+formID).serialize(),
+    	type:type,
+    	async:true,
+    	dataType:"json",//返回数据类型
+    	success: function(data){
+              if(data!=0){
+            	//var newNodes = [ {id:103, pId:302, name:"教师基本信息", file:"core/simpleData"}, ];
+            	var newNodes = [];
+                //把数据输入到Znodes	
+		    	var val = {id:data.orgId, pId:data.parentId, name:data.orgName, open:true};
+		    	newNodes.push(val); 
+	    
+            	var $mytree=$(window.parent.privilige)[0];
+            	$mytree.editormyNode(newNodes);
+              }else{
+            	  alert("添加失败");
+              }
+              window.location.href="${basePath}system/organize_editorUI.action";
+              
+    	},
+        error:function(){alert("失败！");}
+    
+    });
+	}
+
+
+}</script>
 </html>
 
 

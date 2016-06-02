@@ -24,5 +24,11 @@ public interface AuthorityServices extends BaseServices<Authority> {
 
   void saveAuthoity(Authority authority);
 
+  /**
+ * 方法描述:删除权限结点
+ * @param authorityId
+ */
+void deleteNode(String authorityId);
+
 
 }

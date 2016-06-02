@@ -23,4 +23,11 @@ public interface OrganizeServices extends BaseServices<Organization> {
 	 * @param organize
 	 */
 	void editorChild(String oldparentId, Organization organize);
+
+	/**
+	 * 方法描述:更新一个结点
+	 * @param oldparentId
+	 * @param organize
+	 */
+	void editorNode(String oldparentId, Organization organize);
 }

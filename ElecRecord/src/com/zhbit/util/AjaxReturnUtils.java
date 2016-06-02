@@ -23,6 +23,7 @@ public class AjaxReturnUtils {
 
 	public static void returnResult(HttpServletResponse response, String result) {
 		response.setContentType("text/html");
+		response.setCharacterEncoding("utf-8");
 		ServletOutputStream outputStream;
 		try {
 			outputStream = response.getOutputStream();

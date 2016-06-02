@@ -25,15 +25,16 @@
 		<h2>修改权限操作</h2>
 	</div>
 	<form id="myForm">
-	    <s:hidden value='0' name="authority.parentId"></s:hidden>
+	    <s:hidden  name="authority.parentId"></s:hidden>
+	    <s:hidden id="authorityId" name="authority.authorityId"></s:hidden>
 		<div class="main">
 			<div class="short-input select ue-clear">
 				<label>权限名称：</label>
 				<div class="select-wrap">
-					<s:textfield value="" name="authority.authorityName" class="strutsinput"></s:textfield>
+					<s:textfield  name="authority.authorityName" class="strutsinput noNull"></s:textfield>
 				</div>
 				<label>模块名称：</label>
-				<s:textfield value="" name="authority.moduleName" class="strutsinput"></s:textfield>
+				<s:textfield  name="authority.moduleName" class="strutsinput noNull"></s:textfield>
 <%-- 				<input  hidden="hidden" value="" name="authority.moduleName">
 				<div class="select-wrap">
 				<div class="select-title" >
@@ -50,33 +51,149 @@
 			</div>
 			<p class="short-input ue-clear">
 				<label>权限类型：</label> 
-				<s:textfield value="" name="authority.authorityType" class="strutsinput"></s:textfield>
+				<s:textfield  name="authority.authorityType" class="strutsinput noNull"></s:textfield>
 				<label>访问地址：</label>
-				<s:textfield value="" name="authority.url" class="strutsinput"></s:textfield>			
+				<s:textfield   name="authority.url" class="strutsinput noNull"></s:textfield>			
 			</p>
 
 			<p class="short-input ue-clear">
 				<label>操作名称：</label> 
-				<s:textfield value="" name="authority.operation" class="strutsinput"></s:textfield>
+				<s:textfield   name="authority.operation" class="strutsinput noNull"></s:textfield>
 				<label>菜单排号：</label>
-				<s:textfield value="" name="authority.menuNo" class="strutsinput"></s:textfield>
+				<s:textfield   name="authority.menuNo" class="strutsinput noNull"></s:textfield>
 
 			</p>
 
 			<p class="short-input ue-clear">
 				<label>备注：</label> 
-				<s:textfield value="" name="authority.memo" class="strutsinput"></s:textfield>
+				<s:textfield   name="authority.memo" class="strutsinput"></s:textfield>
 
 			</p>
 
 
 	<div class="btn ue-clear">
-	<a href="javascript:add('myForm','post','${basePath}/system/authority_add.action')"  class="confirm save">增加权限</a> 
+	<a href="javascript:editorauthority('myForm','post','${basePath}/system/authority_editor.action')"  class="confirm save">增加权限</a> 
+	
 		</div>
 
 </div>
 	</form>
+		
+<!-- 删除权限弹出框的设置 -->
 
+<div class="alertPassword" align="center" >
+	<div class="dialog-content">   
+ 	
+        <div class="ui-dialog-text" align="center">
+            <p id="info" class="dialog-content">你确定要该权限？</p>
+            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
+          
+            <div class="buttons" align="center">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="返回" />
+            </div>
+        </div>
+        </div>
+</div>
+<script type="text/javascript" src="${basePath}js/core.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
+<script type="text/javascript">
+$(function($){
+	$(".alertPassword").Dialog({
+		title:'删除权限',
+		autoOpen: false,
+		width:250,
+		height:180,
+		position:[300,30]
+		
+	});
+});
+$('.alertPassword input[type=button]').click(function(e) {    
+	
+	if($(this).hasClass('ok')){  //确认提交
+		var id=$("#authorityId").val();
+		window.location.href="${basePath}system/authority_delete.action?authority.authorityId="+id;
+    	var $mytree=$(window.parent.privilige)[0];
+    	$mytree.deleteNode(id);
+	}
+	$('.alertPassword').Dialog('close');
+
+});
+
+ </script>
+<script type="text/javascript">
+function editorauthority(formID,type,url){
+	var id=$("#authorityId").val();
+    if(id==""||id=="0"){
+    	alert("这是最大父结点，不可以修改！");
+    	return ;
+    }
+	var nullEL=isNull();
+	//判断是否为空
+	if(typeof(nullEL) != "undefined"){
+		nullEL.prev("label").addClass("warn");//提示
+		nullEL.focus();
+		return;
+	}
+	nullEL=isEmail();
+	//判断是否是Email
+	if(typeof(nullEL) != "undefined"){
+		nullEL.prev("label").addClass("warn");//提示
+		nullEL.focus();
+		return ;
+	}
+	//判断是否是电话号码
+	nullEL=isTell();
+	if(typeof(nullEL) != "undefined"){
+		alert(nullEL.prev("label").text());
+		nullEL.prev("label").addClass("warn");//提示
+		nullEL.focus();
+		return ;
+	}
+	
+	if(typeof(nullEL) == "undefined"){//表示没有空的提示信息（表示通过）
+		$.ajax({
+        url:url,
+    	data:$("#"+formID).serialize(),
+    	type:type,
+    	async:true,
+    	dataType:"json",//返回数据类型
+    	success: function(data){
+              if(data!=0){
+            	//var newNodes = [ {id:103, pId:302, name:"教师基本信息", file:"core/simpleData"}, ];
+            	var newNodes = [];
+                //把数据输入到Znodes	    		
+		    	var val = {id:data.authorityId, pId:data.parentId, name:data.authorityName, open:true};
+		    	newNodes.push(val); 
+	    
+            	var $mytree=$(window.parent.privilige)[0];
+            	$mytree.editormyNode(newNodes);
+              }else{
+            	  alert("添加失败");
+              }
+              window.location.href="${basePath}system/authority_editorUI.action";
+              
+    	},
+        error:function(){alert("失败！");}
+    
+    });
+	}
+
+
+}
+function deleteauthority(formID,type,url){
+	
+	var id=$("#authorityId").val();
+    if(id==""||id=="0"){
+    	alert("这是最大父结点，不可以删除！");
+    	return ;
+    }
+    $('.alertPassword').Dialog('open');
+
+
+}
+
+</script>
 </body>
 </html>
 

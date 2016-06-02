@@ -42,12 +42,23 @@ public class AuthorityServicesImpl extends BaseServicesImpl<Authority> implement
 		if(!authority.getParentId().equals("0")){
 			//查找父结的所有父结点
 			Authority temp=authorityDao.findObjectById(authority.getParentId());
-			authority.setParentIds(temp.getParentIds()+","+temp.getParentId());
+			authority.setParentIds(temp.getParentIds()+","+temp.getAuthorityId());
 		}else{
 			authority.setParentIds(authority.getParentId());
 		}
 		//持久化权限结点
 		authorityDao.save(authority);
+		
+	}
+	@Override
+	public void deleteNode(String authorityId) {
+        //查询权限id为	authorityId的或者所有交权限中包括authorityId的
+		List<Authority> authorities=authorityDao.findNodeAndChild(authorityId);
+		//批量删除
+		if(authorities!=null&&authorities.size()>0){
+			//authorityDao.deleteObjectByCollection(authorities);
+		}
+		
 		
 	}
 

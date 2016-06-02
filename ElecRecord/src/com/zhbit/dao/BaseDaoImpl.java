@@ -134,9 +134,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		if(parameters!=null){
 			int i=0;
 			for (Object param :parameters) {
-				for(Object object:parameters){
-					query.setParameter(i++, object);
-				}
+					query.setParameter(i++, param);
 			}
 		}
 		List<T> lists=query.list();
