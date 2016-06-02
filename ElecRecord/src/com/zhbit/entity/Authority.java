@@ -20,7 +20,7 @@ public class Authority implements java.io.Serializable {
 	private String operation;
 	private String menuNo;
 	private String memo;
-/*	private Set tbSysRoleAuthorities = new HashSet(0);*/
+	private Set roleAuthorities = new HashSet(0);
 
 
 	public Authority() {
@@ -35,8 +35,8 @@ public class Authority implements java.io.Serializable {
 	/** full constructor */
 	public Authority(String parentId, String parentIds,
 			String authorityName, Integer authorityType, String moduleName,
-			String url, String operation, String menuNo, String memo/*,
-			Set tbSysRoleAuthorities*/) {
+			String url, String operation, String menuNo, String memo,
+			Set roleAuthorities) {
 		this.parentId = parentId;
 		this.parentIds = parentIds;
 		this.authorityName = authorityName;
@@ -46,7 +46,7 @@ public class Authority implements java.io.Serializable {
 		this.operation = operation;
 		this.menuNo = menuNo;
 		this.memo = memo;
-		//this.tbSysRoleAuthorities = tbSysRoleAuthorities;
+		this.roleAuthorities = roleAuthorities;
 	}
 
 
@@ -131,12 +131,15 @@ public class Authority implements java.io.Serializable {
 		this.memo = memo;
 	}
 
-/*	public Set getTbSysRoleAuthorities() {
-		return this.tbSysRoleAuthorities;
+	public Set getRoleAuthorities() {
+		return roleAuthorities;
 	}
 
-	public void setTbSysRoleAuthorities(Set tbSysRoleAuthorities) {
-		this.tbSysRoleAuthorities = tbSysRoleAuthorities;
-	}*/
+	public void setRoleAuthorities(Set roleAuthorities) {
+		this.roleAuthorities = roleAuthorities;
+	}
+
+	
+
 
 }
