@@ -16,6 +16,10 @@
 	        </result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">polstatus_listUI</param>
+	          
+	          <param name="querycon">${querycon}</param>
+	         
+	         
 	        </result>
          </action>
         

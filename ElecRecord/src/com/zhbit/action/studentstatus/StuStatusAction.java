@@ -15,6 +15,7 @@ import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.services.system.SystemDllServices;
+import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
 /** 
@@ -60,10 +61,10 @@ public class StuStatusAction extends BaseAndExcelAction {
 		String[] fields={"keyword=?"};
 		String[] params1={"学年"};
 		List<SystemDll> years=systeDllServices.findObjectByFields(fields,params1);
-		
 		request.setAttribute("years", years);
+		
 		//将传过来的参数进行回显
-		request.setAttribute("queryCon",stuStatus );
+		request.setAttribute("queryCon",stuStatus);
 		
 		pageUtils=stuStatusServices.queryList(stuStatus, getPageNO(), getPageSize());
 		
@@ -78,6 +79,9 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String addUI() {
 		// TODO Auto-generated method stub
+		//保存查询条件
+			request.setAttribute("queryCon", stuStatus);
+			
 		//到数据字典查找类别
 			String[] fields={"keyword=?"};
 			String[] params1={"学院名称"};
@@ -100,12 +104,20 @@ public class StuStatusAction extends BaseAndExcelAction {
 
 	@Override
 	public String add() {
-		
 		//设定创建时间为当前时间
 		Timestamp createtime = new Timestamp(System.currentTimeMillis());
 		stuStatus.setCreateTime(createtime);
+		
 		//利用save方法将新添加的学籍异动信息添加到数据库中
 		stuStatusServices.save(stuStatus);
+		
+		//保存成功后将Stustatus中的属性设定为查询条件
+		stuStatus.setAcademicYear(request.getParameter("query_academicYear"));
+		stuStatus.setStudentNo(request.getParameter("query_studentNo"));
+		stuStatus.setStuName(request.getParameter("query_stuName"));
+				
+		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
+		request.setAttribute("stuStatus",stuStatus);
 		
 		return "add";
 	}
@@ -124,6 +136,9 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String editorUI() {
 		// TODO Auto-generated method stub
+		//保存查询条件
+		request.setAttribute("queryCon", stuStatus);
+		
 		//通过传过来的参数值获取对应的学籍信息
 		stuStatus=stuStatusServices.findObjectById(stuStatus.getId());
 		
@@ -144,6 +159,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 		request.setAttribute("years", years);
 		request.setAttribute("majors", majors);
 		
+		//将查询得到的学籍信息推送到前台显示
 		request.setAttribute("stuStatus", stuStatus);
 		
 		return "editorUI";
@@ -153,7 +169,18 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String editor() {
 		// TODO Auto-generated method stub
+		
+		//使用update方法更新学籍信息
 		stuStatusServices.update(stuStatus);
+		
+		//保存成功后将Stustatus中的属性设定为查询条件
+		stuStatus.setAcademicYear(request.getParameter("query_academicYear"));
+		stuStatus.setStudentNo(request.getParameter("query_studentNo"));
+		stuStatus.setStuName(request.getParameter("query_stuName"));
+		
+		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
+		request.setAttribute("stuStatus",stuStatus);
+		
 		return "editor";
 	}
 

@@ -49,8 +49,16 @@ public class StuStatusServicesImpl extends BaseServicesImpl<StuStatus> implement
 		String proterty="createTime";		
 		if(stuStatus!=null){ //当stuStatus不为空时
 			if(!StringUtils.isEmpty(stuStatus.getAcademicYear())){
-				fields=new String[]{"academicYear=?","term=?","studentNo=?"};
-				params=new String[]{stuStatus.getAcademicYear(),stuStatus.getTerm(),stuStatus.getStudentNo()};
+				fields=new String[]{"academicYear=?","studentNo=?","stuName like ?"};
+				params=new String[]{stuStatus.getAcademicYear(),stuStatus.getStudentNo(),"%"+stuStatus.getStuName()+"%"};
+			}
+			else if(!StringUtils.isEmpty(stuStatus.getStudentNo())){
+				fields=new String[]{"studentNo=?","academicYear=?","stuName like ?"};
+				params=new String[]{stuStatus.getStudentNo(),stuStatus.getAcademicYear(),"%"+stuStatus.getStuName()+"%"};
+			}
+			else if(!StringUtils.isEmpty(stuStatus.getStuName())){
+				fields=new String[]{"stuName like ?","academicYear=?","studentNo=?"};
+				params=new String[]{"%"+stuStatus.getStuName()+"%",stuStatus.getAcademicYear(),stuStatus.getStudentNo()};
 			}
 			
 		}
