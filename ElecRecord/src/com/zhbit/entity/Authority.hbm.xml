@@ -55,12 +55,12 @@
                 <comment>备注</comment>
             </column>
         </property>
-         <set name=roleAuthorities inverse="true">
+         <set name="roleAuthorities" inverse="true">
             <key>
                 <column name="authority_id" length="32">
                     <comment>权限ID</comment>
                 </column>
-            </key>
+            </key>            
             <one-to-many class="com.zhbit.entity.RoleAuthority" />
         </set> 
     </class>
