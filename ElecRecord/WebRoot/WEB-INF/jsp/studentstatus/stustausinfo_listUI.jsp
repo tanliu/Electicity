@@ -128,7 +128,8 @@ function query(){
 <div class="table-operate ue-clear">
 	<a href="javascript:add()" class="add">添加</a>
     <a href="javascript:;" class="del">删除</a>
-    
+    <a href="javascript:;" class="import">导入</a>
+    <a href="javascript:;" class="upload">上传</a>
 </div>
 
 <div class="table-box">

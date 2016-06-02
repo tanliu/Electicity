@@ -44,7 +44,12 @@ public class StuStatusAction extends BaseAndExcelAction {
 	StuStatusServices stuStatusServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
-	@Override
+	private String  query_academicYear;
+	private String  query_studentNo;
+	private String  query_stuName;
+	
+
+	@Override 
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		return null;
@@ -212,7 +217,29 @@ public class StuStatusAction extends BaseAndExcelAction {
 	public void setStuStatus(StuStatus stuStatus) {
 		this.stuStatus = stuStatus;
 	}
-	
+	public String getQuery_academicYear() {
+		return query_academicYear;
+	}
+
+	public void setQuery_academicYear(String query_academicYear) {
+		this.query_academicYear = query_academicYear;
+	}
+
+	public String getQuery_studentNo() {
+		return query_studentNo;
+	}
+
+	public void setQuery_studentNo(String query_studentNo) {
+		this.query_studentNo = query_studentNo;
+	}
+
+	public String getQuery_stuName() {
+		return query_stuName;
+	}
+
+	public void setQuery_stuName(String query_stuName) {
+		this.query_stuName = query_stuName;
+	}
 
 	
 }
