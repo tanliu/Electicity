@@ -26,8 +26,6 @@ table thead tr th{
 </style>
 
 <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
- 
-
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
@@ -97,23 +95,24 @@ table thead tr th{
     </table>
     
 </div>
+<!-- 跳转页面  页码    （将这语句置于form表单之内  才能提交页码）-->
 <jsp:include page="/common/pagination.jsp"></jsp:include>
+</form>
 
 <div class="importDialog" align="center" >
 	<div class="dialog-content" align="center">   
         <div class="ui-dialog-text" align="center">
             <p class="dialog-content">请选择要导入的excel文件</p>
-            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="" value="" /></p>
-          
+            <form id="myform" action="${basePath}polstatus/polstatus_importExcel.action" method="post" enctype="multipart/form-data">
+            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel" value="" /></p>
+          </form>
             <div class="buttons" align="center">
-                <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="返回" />
+                <input type="button" class="button long2 ok"  value="确定" />
+                <input type="button" class="button long2 normal" value="取消 " />
             </div>
         </div>
         </div>
 </div>
-
-</form>
 </body>
 
 <script type="text/javascript">
@@ -138,11 +137,10 @@ $('.importDialog input[type=button]').click(function(e) {
     $('.importDialog').Dialog('close');
 	
 	if($(this).hasClass('ok')){
-		reset();
+		$("#myform").submit();
 	}
 });
 </script>
-</html>
 <script type="text/javascript" >
 <!-- action之间的跳转 ，用于换页-->
 var queryAction="${basePath}polstatus/polstatus_listUI.action";
@@ -185,10 +183,12 @@ function add(){
 
 //向stustatus_listUI.action提交信息
 function query(){
-	  	$("#pageNo").val(1);
+	 	$("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
 
  </script>
+</html>
+
  

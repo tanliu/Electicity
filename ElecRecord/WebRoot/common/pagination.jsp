@@ -45,6 +45,7 @@ function doNextorPrev(pageNO){
 	doGoPage();
 }
 function doGoPage(){
+	
 	$("#queryForm").attr("action",queryAction);
 	$("#queryForm").submit();
 }
