@@ -192,7 +192,6 @@ function query(){
 
 <script type="text/javascript">
 <!--实现清空弹出框的脚本-->
-
 $('.importDialog').Dialog({
 	title:'提示信息',
 	autoOpen: false,
@@ -200,7 +199,6 @@ $('.importDialog').Dialog({
 	height:220
 	
 });
-
 $('.import').click(function(){
 	$('.importDialog').Dialog('open');
 });
