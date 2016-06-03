@@ -27,6 +27,17 @@
 	          <param name="pageNO">${pageNO}</param>
 	          <param name="encode">true</param>
 	          </result>
+	          <result name="delete" type="redirectAction">
+	          <param name="actionName">stustatus_listUI</param>
+	          <param name="stuStatus.studentNo">${stuStatus.studentNo}</param>
+	          <param name="stuStatus.stuName">${stuStatus.stuName}</param>
+	          <param name="stuStatus.academicYear">${stuStatus.academicYear}</param>
+	          <param name="pageNO">${pageNO}</param>
+	          <param name="encode">true</param>
+	          </result>
+	           <result name="importExcel" type="redirectAction">
+	           <param name="actionName">stustatus_listUI</param>
+	           </result>
          </action>
         
         

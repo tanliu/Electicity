@@ -21,9 +21,12 @@ import com.zhbit.entity.excel.StuStaEntity;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.services.system.SystemDllServices;
+import com.zhbit.transform.StuStatusTransform;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
+import org.apache.commons.lang3.StringUtils;;
+
 
 /** 
  * 项目名称：ElecRecord
@@ -61,17 +64,21 @@ public class StuStatusAction extends BaseAndExcelAction {
 			ExcelConfig config=new ExcelConfig(StuStaEntity.class, "12131学籍异动", 2, new FileInputStream(excel),excelFileName);
 			List<Object> lists=excelServices.parseExcel(config);
 			
+		//将StuStaEntity的集合转换成StuStatus的集合
+			List<Object> stustauss=new StuStatusTransform().toDBEntity(lists);
 			
-			for (Object object : lists) {
-				StuStaEntity stuStaEntity=(StuStaEntity) object;
-				System.out.println(stuStaEntity.getStuName());
+			//将集合中的对象保存至数据库
+			for(Object object:stustauss){
+				StuStatus stuStatus=(StuStatus) object;
+				stuStatusServices.save(stuStatus);
 			}
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("将Excel的数据转换成StuStaEntity时出错");
 		}
 		
-		return null;
+		return "importExcel";
 	}
 
 	@Override
@@ -102,7 +109,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 		}
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",stuStatus);
-		
+		setPageSize(10);
 		pageUtils=stuStatusServices.queryList(stuStatus, getPageNO(), getPageSize());
 		
 		return "listUI";
@@ -149,9 +156,9 @@ public class StuStatusAction extends BaseAndExcelAction {
 		stuStatusServices.save(stuStatus);
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
-		stuStatus.setAcademicYear(request.getParameter("query_academicYear"));
-		stuStatus.setStudentNo(request.getParameter("query_studentNo"));
-		stuStatus.setStuName(request.getParameter("query_stuName"));
+		stuStatus.setAcademicYear(getQuery_academicYear());
+		stuStatus.setStudentNo(getQuery_studentNo());
+		stuStatus.setStuName(getQuery_stuName());
 				
 		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
 		request.setAttribute("stuStatus",stuStatus);
@@ -162,7 +169,16 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String delete() {
 		// TODO Auto-generated method stub
-		return null;
+		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
+		request.setAttribute("stuStatus",stuStatus);
+		
+		//先判断用户是否已经选中
+		
+		if(getSelectedRow()!=null){		
+		stuStatusServices.deleteObjectByIds(getSelectedRow());		
+		}
+		
+		return "delete";
 	}
 
 	/**
@@ -178,7 +194,25 @@ public class StuStatusAction extends BaseAndExcelAction {
 		
 		//通过传过来的参数值获取对应的学籍信息
 		stuStatus=stuStatusServices.findObjectById(stuStatus.getId());
-		
+		//对查询到的学籍状态等信息进行处理
+		if(!StringUtils.isEmpty(stuStatus.getYdqschoolStatus())){
+			stuStatus.setYdqschoolStatus(stuStatus.getYdqschoolStatus().equals("1")?"有":"无");
+		}
+		if(!StringUtils.isEmpty(stuStatus.getYdhschoolStatus())){
+			stuStatus.setYdhschoolStatus(stuStatus.getYdhschoolStatus().equals("1")?"有":"无");
+		}
+		if(!StringUtils.isEmpty(stuStatus.getYdqinSchool())){
+			stuStatus.setYdqinSchool(stuStatus.getYdqinSchool().equals("1")?"是":"否");
+		}
+		if(!StringUtils.isEmpty(stuStatus.getYdhinSchool())){
+			stuStatus.setYdhinSchool(stuStatus.getYdhinSchool().equals("1")?"是":"否");
+		}
+		if(!StringUtils.isEmpty(stuStatus.getYdqisRegiste())){
+			stuStatus.setYdqisRegiste(stuStatus.getYdqisRegiste().equals("1")?"是":"否");
+		}
+		if(!StringUtils.isEmpty(stuStatus.getYdhisRegiste())){
+			stuStatus.setYdhisRegiste(stuStatus.getYdhisRegiste().equals("1")?"是":"否");
+		}
 		//到数据字典查找类别
 		String[] fields={"keyword=?"};
 		String[] params1={"学院名称"};
@@ -260,5 +294,6 @@ public class StuStatusAction extends BaseAndExcelAction {
 		this.query_stuName = query_stuName;
 	}
 
+	
 	
 }

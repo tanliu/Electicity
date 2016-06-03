@@ -82,7 +82,12 @@ function query(){
 	 	$("#queryForm").submit(); 
 	}
 	
-
+//向stustatus_delUI.action提交信息
+function del(){
+		var url="${basePath}stustatus/stustatus_delete.action";
+		$("#queryForm").attr("action",url);
+ 		$("#queryForm").submit();  
+} 
  </script>
 <title>学生学籍异动信息</title>
 </head>
@@ -135,9 +140,8 @@ function query(){
 
 <div class="table-operate ue-clear">
 	<a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:;" class="del">删除</a>
+    <a href="javascript:del()" class="del">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
-    <a href="javascript:;" class="upload">上传</a>
 </div>
 
 <div class="table-box">
@@ -157,7 +161,9 @@ function query(){
         <tbody>
            <s:iterator value="pageUtils.items" var="stustatus">
         	<tr>
+        	
 			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#stustatus.id'/>'/></td>
+			
             	<td><a href="javascript:detail('<s:property value='#stustatus.id'/>')"><s:property value="#stustatus.studentNo"/></a></td>
 				<td ><s:property value="#stustatus.stuName"/></td>
 				<td><s:property value="#stustatus.sex"/></td>
@@ -169,9 +175,12 @@ function query(){
             </s:iterator>          
         </tbody>
     </table>
+    
 </div>
-</form>
+
+
 <jsp:include page="/common/pagination.jsp"></jsp:include>
+</form>
 
 <div class="importDialog" align="center" >
 	<div class="dialog-content" align="center">   
