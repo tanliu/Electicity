@@ -23,8 +23,6 @@
     <input hidden="hidden" value="<s:property value="politicalstatus.stuId"/>" name="politicalstatus.stuId"> 
  	    <input hidden="hidden" value="<s:property value="politicalstatus.creator"/>" name="politicalstatus.creator"> 
 	   <input hidden="hidden" name="politicalstatus.id" value="${politicalstatus.id}" > 
-	  
-	  
 	    <input type="hidden" name="query_studentNo" value="${querycon.studentNo}">
 	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">
 	    <s:hidden name="pageNO"></s:hidden>

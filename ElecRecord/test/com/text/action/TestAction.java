@@ -58,8 +58,6 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 	TestServices testServices;
 	
 	
-
-	
 	public TestUser getUser() {
 		return user;
 	}
@@ -98,8 +96,6 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 		System.out.println(user.getUsername());
 		testServices.test(user);		
 	}
-	
-	
 	
 	public void trasaction(){
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");

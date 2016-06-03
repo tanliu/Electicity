@@ -1,5 +1,7 @@
 package com.zhbit.action.studentstatus;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -11,9 +13,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sun.org.apache.xerces.internal.util.Status;
+import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.SystemDll;
+import com.zhbit.entity.excel.StuStaEntity;
+import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.util.DecodeUtils;
@@ -52,6 +57,20 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override 
 	public String importExcel() {
 		// TODO Auto-generated method stub
+		try {
+			ExcelConfig config=new ExcelConfig(StuStaEntity.class, "12131学籍异动", 2, new FileInputStream(excel),excelFileName);
+			List<Object> lists=excelServices.parseExcel(config);
+			
+			
+			for (Object object : lists) {
+				StuStaEntity stuStaEntity=(StuStaEntity) object;
+				System.out.println(stuStaEntity.getStuName());
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 

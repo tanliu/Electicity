@@ -1,7 +1,10 @@
 package com.zhbit.action.polstatus;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -9,13 +12,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.QueryUtils;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.entity.User;
+import com.zhbit.entity.excel.PolstatusExcel;
+import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.polstatus.PolstatusServices;
+import com.zhbit.transform.BaseTransfrom;
+import com.zhbit.transform.TestTransform;
 
 /** 
  * 项目名称：ElecRecord
@@ -42,7 +50,27 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String importExcel() {
 			// TODO Auto-generated method stub
-			return null;
+			try {
+				/**
+				 * arg01:excel实体
+				 * arg02:表名
+				 * arg03:表头的位置
+				 * arg04:上传文件的输入流
+				 * arg05:文件名
+				 */
+				ExcelConfig config=new ExcelConfig(PolstatusExcel.class, "党团关系", 1, new FileInputStream(excel),excelFileName);
+				List<Object> lists=excelServices.parseExcel(config);
+				for (Object object : lists) {
+					PolstatusExcel polstatusExcel=(PolstatusExcel) object;
+					System.out.println(polstatusExcel.getStudentNo());
+				}
+				//BaseTransfrom baseTransfrom=new TestTransform();
+				//baseTransfrom.toDBEntity(lists);
+				//baseTransfrom.toExcelObj(lists);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			return "importExcel";
 		}
 		@Override
 		public void exportExcel() {
@@ -51,6 +79,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String listUI() {
+			System.out.println(this.getPageNO()+"---------------------");
 			//对传来的查询条件进行编码
 			if(politicalstatus!=null){
 				try {
@@ -58,7 +87,6 @@ public class PolstatusAction extends BaseAndExcelAction{
 					politicalstatus.setStudentNo(DecodeUtils.decodeUTF(politicalstatus.getStudentNo()));
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
-					System.out.println("编码时出错");
 			}
 			}
 			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
