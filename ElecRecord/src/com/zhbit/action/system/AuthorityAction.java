@@ -49,8 +49,10 @@ public class AuthorityAction extends BaseAction {
 	}
 	
 	public String treeData(){
+		
 		//查找数据
-		List<Authority> authorities=authorityServices.findAllObject();
+		
+		List<Authority> authorities=authorityServices.getTreeData();
 		//推到栈顶
 		ActionContext.getContext().getValueStack().push(authorities);
 		return "treeData";
@@ -62,9 +64,11 @@ public class AuthorityAction extends BaseAction {
 			authority=new Authority();
 			authority.setParentId("0");
 			authority.setAuthorityName("学生电子档案管理系统");
+			authority.setAuthorityId("0");
 		}else{
 			Authority temp=authorityServices.findObjectById(authority.getParentId());
 			authority.setAuthorityName(temp.getAuthorityName());
+			authority.setAuthorityId(temp.getAuthorityId());
 		}
 		return "addUI";
 	}

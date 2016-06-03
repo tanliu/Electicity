@@ -30,5 +30,12 @@ public interface AuthorityServices extends BaseServices<Authority> {
  */
 void deleteNode(String authorityId);
 
+ /**
+ * 方法描述:获取树的数据
+ * @return
+ */
+ List<Authority> getTreeData();
+ 
+
 
 }

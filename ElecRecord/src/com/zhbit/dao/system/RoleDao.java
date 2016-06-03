@@ -3,6 +3,8 @@
  */
 package com.zhbit.dao.system;
 
+import java.util.List;
+
 import com.zhbit.dao.BaseDao;
 import com.zhbit.entity.Role;
 import com.zhbit.entity.RoleAuthority;
@@ -21,6 +23,24 @@ import com.zhbit.entity.UserRole;
  */
 public interface RoleDao extends BaseDao<Role> {
 	public static String DAO_NAME="com.zhbit.dao.system.impl.RoleDaoImpl";
+
+	/**
+	 * 方法描述:保存权限角色
+	 */
+	void saveRoleAuthority(RoleAuthority roleAuthority);
+
+	/**
+	 * 方法描述:查找到
+	 * @param roleId
+	 * @return
+	 */
+	List<RoleAuthority> getRoleAuthority(String roleId);
+
+	/**
+	 * 方法描述:删除指定角色号的角色权限
+	 * @param roleId
+	 */
+	void deleteRoleAuthority(List<RoleAuthority> roleAuthorities);
 	
 
 	

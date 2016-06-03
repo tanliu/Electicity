@@ -16,31 +16,40 @@ public class UserRole implements java.io.Serializable {
 
 
 	private String id;
-	private User user;
+	private String user;
 	private Role role;
 
 	public UserRole() {
+	}	
+
+	public UserRole(String user, Role role) {
+		super();
+		this.user = user;
+		this.role = role;
 	}
 
-	public UserRole(User user, Role role) {
+
+	public UserRole(String id, String user, Role role) {
+		super();
+		this.id = id;
 		this.user = user;
 		this.role = role;
 	}
 
 
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public User getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 
@@ -51,6 +60,7 @@ public class UserRole implements java.io.Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
 
  
 

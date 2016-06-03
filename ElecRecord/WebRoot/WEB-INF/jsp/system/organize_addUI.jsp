@@ -115,7 +115,7 @@ function addauthority(formID,type,url){
               }else{
             	  alert("添加失败");
               }
-              window.location.href="${basePath}system/authority_addUI.action";
+              window.location.href="${basePath}system/organize_addUI.action";
               
     	},
         error:function(){alert("失败！");}

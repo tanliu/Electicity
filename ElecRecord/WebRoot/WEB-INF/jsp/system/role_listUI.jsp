@@ -1,245 +1,112 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
-<%@taglib uri="/struts-tags"  prefix="s"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@include file="/common/header_js.jsp"%>
+<html>
+<head>
+    
+<title>用户信息列表</title>
+
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<link rel="stylesheet" type="text/css"
+	href="${basePath}css/jquery.dialog.css" />
 <style type="text/css">
-<!--
-fieldset div {
-	float:left;
-	width:24%;
-	text-align:left;
-	line-height:25px;
+table tbody tr td{
+	 text-align: center;
 }
-td div {
-	float:left;
-	width:24%;
-	text-align:left;
-	line-height:25px;
+table thead tr th{
+	 text-align: center;
 }
--->
 </style>
-<HTML>
-	<HEAD>
-		<title>角色权限管理</title>		
-		<LINK href="${pageContext.request.contextPath }/css/Style.css"  type="text/css" rel="stylesheet">
-		<script language="javascript" src="${pageContext.request.contextPath }/js/function.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath }/js/pub.js"></script>
-		<script language="javascript" src="${pageContext.request.contextPath }/js/tree/jquery-1.4.4.min.js"></script>
-		<script language="javascript">
-		  
-		function saveRole(){
-		   /**DOM对象*/
-           //document.Form2.roleID.value=document.Form1.roleID.value;
-		   //document.Form2.action="saveRole.do";
-		   //document.Form2.submit();
-		   /**Jquery对象*/
-		   $("input[name='roleID']").val($("select[name='roleID']").val());
-		   $("#Form2").attr("action","${pageContext.request.contextPath }/system/elecRoleAction_save.do");
-		   $("#Form2").submit();
-		}
-		
-       
-       function selectRole(){
-    	   /**DOM对象*/
-    	   /**
-          if(document.Form1.roleID.value=="0"){
-          
-             document.Form1.action="${pageContext.request.contextPath }/system/elecRoleAction_home.do";
-             document.Form1.submit();            
-          }else{
-            Pub.submitActionWithForm('Form2','./roleEdit.jsp','Form1');
-          }
-    	   */
-    	  /**jquery对象*/
-    	  if($("select[name='roleID']").val()=="0"){
-    		  $("#Form1").attr("action","${pageContext.request.contextPath }/system/elecRoleAction_home.do");
-   		      $("#Form1").submit();        
-          }else{
-              Pub.submitActionWithForm('Form2','${pageContext.request.contextPath }/system/elecRoleAction_edit.do','Form1');
-          }
-       }
-       /**
-	   function checkAllOper(oper){
-          var selectoper = document.getElementsByName("selectoper");
-          for(var i=0;i<selectoper.length;i++){
-          	selectoper[i].checked = oper.checked;
-          }
-       }
-	   function checkAllUser(user){
-          var selectuser = document.getElementsByName("selectuser");
-          for(var i=0;i<selectuser.length;i++){
-          	selectuser[i].checked = user.checked;
-          }
-       }
-       **/
-       /**
-       function displayuser(){
-			if(document.getElementById("dataUser").style.display == "none"){
-			    document.getElementById("userflag").innerText = "用户分配 关闭";
-				document.getElementById("dataUser").style.display = "";
-			}
-			else{
-				document.getElementById("userflag").innerText = "用户分配 打开";
-				document.getElementById("dataUser").style.display = "none";
-			}
-		}
-		function displaypermission(){
-			if(document.getElementById("dataPopedom").style.display == "none"){
-				document.getElementById("permissionflag").innerText = "权限分配 关闭";
-				document.getElementById("dataPopedom").style.display = "";
-			}
-			else{
-				document.getElementById("permissionflag").innerText = "权限分配 打开";
-				document.getElementById("dataPopedom").style.display = "none";
-			}
-		}
-		**/
-		function displayuser(){
-			if($("#dataUser").css("display")== "none"){
-			    $("#userflag").text("用户分配 关闭");
-				$("#dataUser").css("display","");
-			}
-			else{
-				 $("#userflag").text("用户分配 打开");
-				 $("#dataUser").css("display","none");
-			}
-		}
-		function displaypermission(){
-			if($("#dataPopedom").css("display") == "none"){
-				$("#permissionflag").text("权限分配 关闭");
-				$("#dataPopedom").css("display","");
-			}
-			else{
-				$("#permissionflag").text("权限分配 打开");
-				$("#dataPopedom").css("display","none");
-			}
-		}
-		//权限：全部选中/不选中
-		function checkAllOper(oper){
-			$("input[type='checkbox'][name='selectoper']").attr("checked",oper.checked);
-		}
-		//用户：全部选中/不选中
-		function checkAllUser(user){
-			$("input[type='checkbox'][name='selectuser']").attr("checked",user.checked);
-		}
-		//选中复选框，触发事件
-		function goSelect(id){
-			//按照_符号分隔
-			var array = id.split("_");
-			if(array[0] == array[1]){//此时说明操作的（父）节点
-				//选中父
-				if($("#"+id)[0].checked){
-					//子都选中
-					$("input[type='checkbox'][name='selectoper'][id^='"+array[0]+"']").attr("checked",true);
-				}
-				//取消父
-				else{
-					//子都取消
-					$("input[type='checkbox'][name='selectoper'][id^='"+array[0]+"']").attr("checked",false);
-				}
-			}
-			else{//说明此时操作的子设置中的一个(子)
-				//当选中子设置中的一个，则父一定被选中
-				if($("#"+id)[0].checked){
-					$("input[type='checkbox'][name='selectoper'][id^='"+array[0]+"'][id$='"+array[0]+"']").attr("checked",true);
-				}
-				//当取消子设置中的一个
-				else{
-					//先查找子设置的对象
-					var $check = $("input[type='checkbox'][name='selectoper'][id^='"+array[0]+"']:not([id$='"+array[0]+"'])");
-					//遍历子设置的对象
-					/**
-					 * flag:用于判断当前子设置的对象是否有被选中
-					 *   * flag=false，子对象都没有被选中，此时父要被取消
-					 *   * flag=true，子对象中至少有一个被选中，此时不做任何操作
-					 */
-					var flag = false;
-					$check.each(function(index,domEle){
-						if(domEle.checked){
-							flag = true;
-							return false;
-						}
-					})
-					if(!flag){
-						$("input[type='checkbox'][name='selectoper'][id^='"+array[0]+"'][id$='"+array[0]+"']").attr("checked",false);
-					}
-				}
-			}
-		}
-		</script>
-	</HEAD>
-		
-	<body>
-	 <Form name="Form1" id="Form1"  method="post" style="margin:0px;">
-			<table cellSpacing="1" cellPadding="0" width="90%" align="center" bgColor="#f5fafe" border="0">
-				<TBODY>
-					<tr>
-						<td class="ta_01" colspan=2 align="center" background="${pageContext.request.contextPath }/images/b-info.gif">
-							<font face="宋体" size="2"><strong>角色管理</strong></font>
-						</td>
-					</tr>	
-					<tr>
-					   <td class="ta_01" colspan=2 align="right" width="100%"  height=10>
-					   </td>
-					</tr>		
-					<tr>
-						<td class="ta_01" align="right" width="35%" >角色类型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-						<td class="ta_01" align="left"  width="65%" >
-<%-- 							<s:select list="#request.roleList" name="roleID" id="Form1_roleID"
-									  listKey="roleID" listValue="roleName"
-									  headerKey="0" headerValue="请选择"
-									  cssClass="bg" cssStyle="width:180px" onchange="selectRole()">
-							</s:select> --%>
-						</td>				
-					</tr>
-				    <tr>
-					   <td class="ta_01" align="right" colspan=2 align="right" width="100%"  height=10></td>
-					</tr>
-				</TBODY>
-			  </table>
-	 </form>
-	 
-	<form id="Form2" name="Form2" action="${pageContext.request.contextPath }/system/elecRoleAction_home.do" method="post" style="margin:0px;">
-	 
-	  <table cellSpacing="1" cellPadding="0" width="90%" align="center" bgColor="#f5fafe" border="0">
-		 <tr>
-		  <td>
-		   <fieldset style="width:100%; border : 1px solid #73C8F9;text-align:left;COLOR:#023726;FONT-SIZE: 12px;"><legend align="left">权限分配</legend>
-		 
-		     <table cellSpacing="0" cellPadding="0" width="90%" align="center" bgColor="#f5fafe" border="0">			 
-					  <tr>
-						 <td class="ta_01" colspan=2 align="left" width="100%" > 
-						 
-						        <table cellspacing="0" align="center" width="100%" cellpadding="1" rules="all" bordercolor="gray" border="1" 
-									style="BORDER-RIGHT:gray 1px solid; BORDER-TOP:gray 1px solid; BORDER-LEFT:gray 1px solid; WORD-BREAK:break-all; BORDER-BOTTOM:gray 1px solid; BORDER-COLLAPSE:collapse; BACKGROUND-COLOR:#f5fafe; WORD-WRAP:break-word">
-<%-- 										<s:if test="#request.popedomList!=null && #request.popedomList.size()>0">
-											<s:iterator value="#request.popedomList">
-												<tr onmouseover="this.style.backgroundColor = 'white'" onmouseout="this.style.backgroundColor = '#F5FAFE';">
-													<td class="ta_01"  align="left" width="18%" height="22" background="../images/tablehead.jpg" >
-														<input type="checkbox"  name="selectoper" id="<s:property value="mid"/>_<s:property value="mid"/>" value="" onClick='goSelect(this.id)' >
-														<s:property value="name"/>：
-													</td>
-													<td class="ta_01"  align="left" width="82%" height="22">
-														<s:if test="list!=null && list.size()>0">
-															<s:iterator value="list">
-																<div>
-																<input type="checkbox"  name="selectoper" id="<s:property value="pid"/>_<s:property value="mid"/>" value="" onClick='goSelect(this.id)' >
-																<s:property value="name"/>			
-																</div>
-															</s:iterator>
-														</s:if>
-													</td>
-												</tr>
-											</s:iterator>
-										</s:if>	 --%>
-						     	</table> 
-						     	
-						   </td>
-						</tr>						
-					 <input type="hidden" name="roleID" >						
-				 </table>	
-		        </fieldset>
-			  </td>
-			 </tr>					
-	  </table>			    
-	</Form>
-	</body>
-</HTML>
+<!-- ------------注意：设置全局变量时的代码----------------- -->
+<script type="text/javascript">
+//使用pagination.jsp的这个命名是支付宝死的
+
+	var queryAction="${basePath}system/role_listUI.action";
+	var deleteAction="${basePath}system/role_delete.action";
+	function query(){
+
+	 	//--------------提交信息------------------
+	  	$("#pageNo").val(1);
+
+	  	$("#queryForm").attr("action",queryAction);
+	 	$("#queryForm").submit(); 
+	}
+	function doSelectAll(){
+		$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
+	} 
+    
+ 	function deleteItem(){
+ 		$("#queryForm").attr("action",deleteAction);
+	 	$("#queryForm").submit();  
+	} 
+ 	function editor(id){
+ 		var url="${basePath}system/role_editorUI.action?role.roleId="+id;
+ 		$("#queryForm").attr("action",url);
+	 	$("#queryForm").submit();  
+	} 
+ 	function detail(id){
+ 		var url="${basePath}system/role_detailUI.action?role.roleId="+id;
+ 		
+ 		window.open(url) ; //打开窗口
+ 	}
+</script>
+
+</head>
+
+
+
+<body>
+<div class="title"><h2>角色信息列表</h2></div>
+<form id="queryForm" action="${basePath}system/role_listUI.action" method="post">
+<div class="query">
+	<div class="query-conditions ue-clear">
+        <div class="conditions staff ue-clear">
+            <label>角色名称：</label>
+            <!-- 如果employNo的值是空时，表示上一页的查询条件是以用户的方式查询 -->
+            <s:textfield id="condition" name="querycon"></s:textfield>            
+
+        </div>
+    </div>
+    
+    <div class="query-btn ue-clear">
+    	<a href="javascript:query()" class="confirm">查询</a>
+    </div>
+</div>
+
+<div class="table-operate ue-clear">
+	<a href="${basePath}system/role_addUI.action" class="add">添加</a>
+    <a href="javascript:deleteItem()" class="del">删除</a>
+<!--     <a href="javascript:;" class="count">统计</a>
+    <a href="javascript:;" class="check">审核</a> -->
+</div>
+<div class="table-box">
+	<table>
+    	<thead>
+        	<tr>
+			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+            	<th width="25%" class="num">角色名称</th>
+				<!-- <th class="class">上级机构</th> -->
+                <th width="25%" >创建时间</th>
+				<th width="25%" >备注</th>
+				<th width="15%">编辑</th>				
+            </tr>
+        </thead>
+        <tbody>
+           <s:iterator value="pageUtils.items" var="role">
+        	<tr>
+			 <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#role.roleId'/>' /></th>
+            	<td><a href="javascript:detail('<s:property value='#role.roleId'/>')"><s:property value="#role.roleName"/></a></td>
+				<td><s:date name="#role.createTime" format="yyyy:MM:dd HH:mm:ss"/> </td>
+				<td><s:property value="#role.memo"/></td>	            
+				<td><a href="javascript:editor('<s:property value='#role.roleId'/>')"><img src="../images/edtico.png"/></a></td>
+            </tr> 
+            </s:iterator>          
+        </tbody>
+    </table>
+</div>
+<jsp:include page="/common/pagination.jsp"></jsp:include>
+</form>
+</body>

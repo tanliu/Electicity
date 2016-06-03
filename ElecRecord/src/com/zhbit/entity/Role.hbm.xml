@@ -30,14 +30,6 @@
                 <comment>备注</comment>
             </column>
         </property>
-        <set name="roleAuthorities" inverse="true">
-            <key>
-                <column name="role_id" length="32">
-                    <comment>主键ID</comment>
-                </column>
-            </key>
-            <one-to-many class="com.zhbit.entity.RoleAuthority" />
-        </set>
         <set name="userRoles" inverse="true">
             <key>
                 <column name="role_id" length="32">

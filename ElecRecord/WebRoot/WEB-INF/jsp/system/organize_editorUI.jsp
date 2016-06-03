@@ -3,7 +3,7 @@
 <html>
 <head>
     
-<title>添加部门信息</title>
+<title>修改部门信息</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -13,14 +13,13 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
-<title>添加部门</title>
 </head>
 
 
 <body>
 
 	<div class="title">
-		<h2>添加部门</h2>
+		<h2>修改部门信息</h2>
 	</div>
 	<form id="myForm" method="post">
 	    <input hidden="hidden" id="orgId" value="<s:property value="organize.orgId"/>" name="organize.orgId">

@@ -56,16 +56,18 @@ public class OrganizeServicesImpl extends BaseServicesImpl<Organization> impleme
 		queryUtils.addCondition("o.parentIds like ?", "%"+oldreplace+"%");
 		
 		List<Organization> organizations=this.findObjectByFields(queryUtils);		
-
-		//遍历替换所有子结点
-		for (Organization organization : organizations) {
-			String parentIds=organization.getParentIds();			
-			if(!StringUtils.isEmpty(parentIds)){
-				parentIds=parentIds.replace(oldreplace, newreplace);
-				organization.setParentIds(parentIds);
+        
+		if(organizations!=null){
+			//遍历替换所有子结点
+			for (Organization organization : organizations) {
+				String parentIds=organization.getParentIds();			
+				if(!StringUtils.isEmpty(parentIds)){
+					parentIds=parentIds.replace(oldreplace, newreplace);
+					organization.setParentIds(parentIds);
+				}
 			}
+			//organizeDao.saveOrUpdateAll(organizations);			
 		}
-		//organizeDao.saveOrUpdateAll(organizations);
 		
 		
 	}

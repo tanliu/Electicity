@@ -14,6 +14,7 @@ import com.zhbit.dao.system.AuthorityDao;
 import com.zhbit.entity.Authority;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.system.AuthorityServices;
+import com.zhbit.util.QueryUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -56,10 +57,16 @@ public class AuthorityServicesImpl extends BaseServicesImpl<Authority> implement
 		List<Authority> authorities=authorityDao.findNodeAndChild(authorityId);
 		//批量删除
 		if(authorities!=null&&authorities.size()>0){
-			//authorityDao.deleteObjectByCollection(authorities);
+			authorityDao.deleteObjectByCollection(authorities);
 		}
 		
 		
+	}
+	@Override
+	public List<Authority> getTreeData() {
+		String proterty="menuNo";
+		String order=QueryUtils.ORDER_BY_ASC;
+		return this.findAllObject(proterty, order);
 	}
 
 
