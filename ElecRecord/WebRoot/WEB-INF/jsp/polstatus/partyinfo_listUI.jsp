@@ -24,6 +24,11 @@ table thead tr th{
 	 text-align: center;
 }
 </style>
+
+<script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
+<script type="text/javascript" src="${basePath}js/core.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
 <title>学生党团关系信息</title>
 </head>
 
@@ -32,15 +37,15 @@ table thead tr th{
 <!-- 跳转页面时表单提交数据，换页显示数据 -->
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
-	<div class="query-conditions ue-clear">
-        <div class="conditions name ue-clear">
+	<div class="query-conditions ue-clear" style="width:100%">
+        <div class="conditions name ue-clear" style="width:20%">
             <label>姓名：</label>
         <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" />
         </div>
         
-         <div class="conditions staff ue-clear" >
+         <div class="conditions staff ue-clear" style="width:20%">
           <label>学号：</label>
-        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${querycon.studentNo}"/>
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${querycon.studentNo}" />
     </div>
      <div class="conditions staff ue-clear" >
          <label>入党日期：</label>
@@ -54,8 +59,10 @@ table thead tr th{
     </div>
 </div>
 <div class="table-operate ue-clear">
-	<a href="${basePath}polstatus/polstatus_addUI.action" class="add">添加</a>
+	<a href="javascript:add()" class="add">添加</a>
     <a href="javascript:;" class="del">删除</a>
+    <a href="javascript:;" class="import clear clear">导入</a>
+    <a href="javascript:;" class="upload">上传</a>
 </div>
 
 <div class="table-box">
@@ -88,10 +95,52 @@ table thead tr th{
     </table>
     
 </div>
+<!-- 跳转页面  页码    （将这语句置于form表单之内  才能提交页码）-->
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 </form>
+
+<div class="importDialog" align="center" >
+	<div class="dialog-content" align="center">   
+        <div class="ui-dialog-text" align="center">
+            <p class="dialog-content">请选择要导入的excel文件</p>
+            <form id="myform" action="${basePath}polstatus/polstatus_importExcel.action" method="post" enctype="multipart/form-data">
+            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel" value="" /></p>
+          </form>
+            <div class="buttons" align="center">
+                <input type="button" class="button long2 ok"  value="确定" />
+                <input type="button" class="button long2 normal" value="取消 " />
+            </div>
+        </div>
+        </div>
+</div>
 </body>
-</html>
+
+<script type="text/javascript">
+
+<!--实现清空弹出框的脚本-->
+
+$('.importDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:250,
+	height:220
+	
+});
+
+$('.import').click(function(){
+	$('.importDialog').Dialog('open');
+});
+
+
+
+$('.importDialog input[type=button]').click(function(e) {
+    $('.importDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		$("#myform").submit();
+	}
+});
+</script>
 <script type="text/javascript" >
 <!-- action之间的跳转 ，用于换页-->
 var queryAction="${basePath}polstatus/polstatus_listUI.action";
@@ -134,10 +183,12 @@ function add(){
 
 //向stustatus_listUI.action提交信息
 function query(){
-	  	$("#pageNo").val(1);
+	 	$("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
-	
+
  </script>
- <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
+</html>
+
+ 
