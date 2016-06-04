@@ -21,6 +21,7 @@
 <form id="myForm" method="post">  
 	    <input hidden="hidden" value="<s:property value="1"/>" name="politicalstatus.stuId">
 	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="politicalstatus.creator">
+	    
 <div class="main">
     <p class="short-input ue-clear">
     	<label>学号：</label>

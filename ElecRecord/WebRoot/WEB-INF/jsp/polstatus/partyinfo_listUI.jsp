@@ -60,7 +60,7 @@ table thead tr th{
 </div>
 <div class="table-operate ue-clear">
 	<a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:del();" class="del">删除</a>
+    <a href="javascript:" class="del confirm save">删除</a>
     <a href="javascript:;" class="import clear clear">导入</a>
 <!--     <a href="javascript:;" class="upload">上传</a> -->
 </div>
@@ -114,6 +114,23 @@ table thead tr th{
         </div>
         </div>
 </div>
+
+<!--弹出删除提示框的窗口-->
+<div class="delDialog">
+	<div class="dialog-content">
+    	<div class="ui-deldialog-icon"></div>
+        <div class="ui-dialog-text">
+        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
+            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
+            
+            <div class="buttons">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="取消" />
+            </div>
+        </div>
+        </div>
+</div>
+
 </body>
 
 <script type="text/javascript">
@@ -150,8 +167,37 @@ $('.importDialog input[type=button]').click(function(e) {
 	
 });
 
+<!--实现删除提示框的脚本-->
 
+$('.delDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:400,
+	height:200
+	
+});
 
+$('.del').click(function(){
+	//在弹出前先判断是否已经选中了相关记录
+	var selectedRows=document.getElementsByName("selectedRow");
+	
+	var i=0;
+	var length=selectedRows.length;
+	
+	while(i<length){//如果有记录被选中，则弹出对话框
+		if(selectedRows[i++].checked){
+			$('.delDialog').Dialog('open');
+		}
+	}
+});
+
+$('.delDialog input[type=button]').click(function(e) {
+    $('.delDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		del();
+	}
+});
 
 </script>
 <script type="text/javascript" >
@@ -162,16 +208,23 @@ var deleteAction="${basePath}polstatus/polstatus_delete.action";
 function doSelectAll(){
 	$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
 } 
+//单击及双击的JS样式
 	$(function(){
-      
+      //单击
         $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
         $("tr:even").addClass("even"); /* 偶数行添加样式*/
 
        
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
-            window.open('.....html');
+        //双击得到当前行数据的id
+       	 var $id=$(this).children("td").children("input").val();
+       	//跳转到详情页
+       	window.open("${basePath}polstatus/polstatus_detailUI.action?politicalstatus.id="+$id);
         });
+        
+        
+        
         //点击改变选中样式
         $('tbody>tr').click(function() {
             $(this)
