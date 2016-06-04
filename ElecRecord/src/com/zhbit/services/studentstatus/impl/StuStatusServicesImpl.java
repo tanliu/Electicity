@@ -48,6 +48,14 @@ public class StuStatusServicesImpl extends BaseServicesImpl<StuStatus> implement
 		String[] params=null;
 		String proterty="createTime";		
 		if(stuStatus!=null){ //当stuStatus不为空时
+			//先去除学号和姓名中可能存在的空格
+			if(!StringUtils.isEmpty(stuStatus.getStuName())){
+				stuStatus.setStuName(stuStatus.getStuName().trim());
+			}
+			if(!StringUtils.isEmpty(stuStatus.getStudentNo())){
+				stuStatus.setStudentNo(stuStatus.getStudentNo().trim());
+			}
+			
 			if(!StringUtils.isEmpty(stuStatus.getAcademicYear())){
 				fields=new String[]{"academicYear=?","studentNo=?","stuName like ?"};
 				params=new String[]{stuStatus.getAcademicYear(),stuStatus.getStudentNo(),"%"+stuStatus.getStuName()+"%"};

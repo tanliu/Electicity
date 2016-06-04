@@ -126,22 +126,26 @@ public class StuStatusAction extends BaseAndExcelAction {
 		//保存查询条件
 			request.setAttribute("queryCon", stuStatus);
 			
-		//到数据字典查找类别
+			//到数据字典查找类别
 			String[] fields={"keyword=?"};
 			String[] params1={"学院名称"};
 			String[] params2={"学年"};
 			String[] params3={"专业"};
-		//查找学院类别	
+			String[] params4={"异动类别"};
+			//查找学院类别	
 			List<SystemDll> colleges=systeDllServices.findObjectByFields(fields, params1);
-		//查找学年
+			//查找学年
 			List<SystemDll> years=systeDllServices.findObjectByFields(fields, params2);
-		//查找专业
+			//查找专业
 			List<SystemDll> majors=systeDllServices.findObjectByFields(fields, params3);
+			//查找异动类别
+			List<SystemDll> tansactionTypes=systeDllServices.findObjectByFields(fields, params4);
 			
-		//将查询到的信息推送到前台显示
+			//将查询到的信息推送到前台显示
 			request.setAttribute("colleges", colleges);	
 			request.setAttribute("years", years);
 			request.setAttribute("majors", majors);
+			request.setAttribute("tansactionTypes", tansactionTypes);
 				
 		return "addUI";
 	}
@@ -218,17 +222,21 @@ public class StuStatusAction extends BaseAndExcelAction {
 		String[] params1={"学院名称"};
 		String[] params2={"学年"};
 		String[] params3={"专业"};
+		String[] params4={"异动类别"};
 		//查找学院类别	
 		List<SystemDll> colleges=systeDllServices.findObjectByFields(fields, params1);
 		//查找学年
 		List<SystemDll> years=systeDllServices.findObjectByFields(fields, params2);
 		//查找专业
 		List<SystemDll> majors=systeDllServices.findObjectByFields(fields, params3);
+		//查找异动类别
+		List<SystemDll> tansactionTypes=systeDllServices.findObjectByFields(fields, params4);
 		
 		//将查询到的信息推送到前台显示
 		request.setAttribute("colleges", colleges);	
 		request.setAttribute("years", years);
 		request.setAttribute("majors", majors);
+		request.setAttribute("tansactionTypes", tansactionTypes);
 		
 		//将查询得到的学籍信息推送到前台显示
 		request.setAttribute("stuStatus", stuStatus);
@@ -262,6 +270,35 @@ public class StuStatusAction extends BaseAndExcelAction {
 		return null;
 	}
 
+	public String detailUI(){
+		//通过传过来的参数值获取对应的学籍信息
+		stuStatus=stuStatusServices.findObjectById(stuStatus.getId());
+		
+		//对查询到的学籍状态等信息进行处理
+				if(!StringUtils.isEmpty(stuStatus.getYdqschoolStatus())){
+					stuStatus.setYdqschoolStatus(stuStatus.getYdqschoolStatus().equals("1")?"有":"无");
+				}
+				if(!StringUtils.isEmpty(stuStatus.getYdhschoolStatus())){
+					stuStatus.setYdhschoolStatus(stuStatus.getYdhschoolStatus().equals("1")?"有":"无");
+				}
+				if(!StringUtils.isEmpty(stuStatus.getYdqinSchool())){
+					stuStatus.setYdqinSchool(stuStatus.getYdqinSchool().equals("1")?"是":"否");
+				}
+				if(!StringUtils.isEmpty(stuStatus.getYdhinSchool())){
+					stuStatus.setYdhinSchool(stuStatus.getYdhinSchool().equals("1")?"是":"否");
+				}
+				if(!StringUtils.isEmpty(stuStatus.getYdqisRegiste())){
+					stuStatus.setYdqisRegiste(stuStatus.getYdqisRegiste().equals("1")?"是":"否");
+				}
+				if(!StringUtils.isEmpty(stuStatus.getYdhisRegiste())){
+					stuStatus.setYdhisRegiste(stuStatus.getYdhisRegiste().equals("1")?"是":"否");
+				}
+		
+		//将查询得到的学籍信息推送到前台显示
+		request.setAttribute("stuStatus", stuStatus);
+				
+		return "detailUI";
+	}
 	//------------------------------------getter&setter-----------------------------------
 	public StuStatus getStuStatus() {
 		return stuStatus;
