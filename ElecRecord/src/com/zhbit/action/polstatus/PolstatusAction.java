@@ -23,6 +23,7 @@ import com.zhbit.entity.excel.PolstatusExcel;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.polstatus.PolstatusServices;
 import com.zhbit.transform.BaseTransfrom;
+import com.zhbit.transform.PolstatusTransform;
 import com.zhbit.transform.TestTransform;
 
 /** 
@@ -43,7 +44,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 	private static final long serialVersionUID = 1L;
 	@Resource(name=PolstatusServices.SERVICES_NAME)
 	PolstatusServices polstatusServices;
-	//定义查询的条件
+	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
 	private String query_stuName;
 	private String query_studentNo;
 
@@ -62,8 +63,17 @@ public class PolstatusAction extends BaseAndExcelAction{
 				List<Object> lists=excelServices.parseExcel(config);
 				for (Object object : lists) {
 					PolstatusExcel polstatusExcel=(PolstatusExcel) object;
-					System.out.println(polstatusExcel.getStudentNo());
+					//System.out.println(polstatusExcel.getStudentNo());
 				}
+				
+				//将polstatusExcel的集合转换成Politicalstatus的集合
+				List<Object> Polstatus=new PolstatusTransform().toDBEntity(lists);
+				//将集合中的对象保存至数据库
+				for(Object object:Polstatus){
+					Politicalstatus politicalstatus=(Politicalstatus) object;
+					polstatusServices.add(politicalstatus);
+					//polstatusServices.save(politicalstatus);
+			}
 				//BaseTransfrom baseTransfrom=new TestTransform();
 				//baseTransfrom.toDBEntity(lists);
 				//baseTransfrom.toExcelObj(lists);
@@ -79,19 +89,20 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String listUI() {
-			System.out.println(this.getPageNO()+"---------------------");
-			//对传来的查询条件进行编码
+		
+			//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 			if(politicalstatus!=null){
 				try {
 					politicalstatus.setStuName(DecodeUtils.decodeUTF(politicalstatus.getStuName()));
 					politicalstatus.setStudentNo(DecodeUtils.decodeUTF(politicalstatus.getStudentNo()));
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
+					System.out.println("编码时出错 ");
 			}
 			}
 			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 			request.setAttribute("querycon", politicalstatus);
-			//调用方法，将查询结果显示
+			//调用方法，根据查询条件显示数据
 			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
 			return "listUI";
 			//setPageSize(5);设置页面显示条数
@@ -116,7 +127,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String editorUI() {
-			//保存查询条件
+			//将listUI界面传过来的查询条件保存
 			request.setAttribute("querycon", politicalstatus);
 			//直接调用baseDao接口里面的findObjectById方法根据id去查找数据
 			politicalstatus=polstatusServices.findObjectById(politicalstatus.getId());
@@ -127,7 +138,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 		public String editor() {
 			//直接调用baseDao接口里面的update方法更新修改后的数据
 			polstatusServices.update(politicalstatus);
-			//返回列表页面的时候 将查询条件也传回列表页面
+			//返回listUI页面的时候 将查询条件也传回列表页面
 			politicalstatus.setStudentNo(request.getParameter("query_studentNo"));
 			politicalstatus.setStuName(request.getParameter("query_stuName"));
 			request.setAttribute("politicalstatus",politicalstatus);

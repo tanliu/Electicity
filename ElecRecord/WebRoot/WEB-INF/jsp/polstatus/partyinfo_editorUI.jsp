@@ -23,6 +23,7 @@
     <input hidden="hidden" value="<s:property value="politicalstatus.stuId"/>" name="politicalstatus.stuId"> 
  	    <input hidden="hidden" value="<s:property value="politicalstatus.creator"/>" name="politicalstatus.creator"> 
 	   <input hidden="hidden" name="politicalstatus.id" value="${politicalstatus.id}" > 
+	   <!-- 将listUI传过来的查询条件赋值 -->
 	    <input type="hidden" name="query_studentNo" value="${querycon.studentNo}">
 	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">
 	    <s:hidden name="pageNO"></s:hidden>
@@ -32,7 +33,7 @@
 <div class="main">
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号" value="${politicalstatus.studentNo}"/> 
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号"  value="${politicalstatus.studentNo}"/> 
         <label>姓名：</label>
         <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名"  value="${politicalstatus.stuName}"/> 
        
@@ -43,7 +44,7 @@
         <label>政治面貌：</label>
         <input  hidden="hidden"  value="<s:property value="politicalstatus.politicalStatus"/>" name="politicalstatus.politicalStatus">
         <div class="select-wrap">
-        	<div class=" select-title ue-clear"><span>${politicalstatus.politicalStatus}</span><i class="icon"></i></div>
+        	<div class=" select-title ue-clear" ><span>${politicalstatus.politicalStatus}</span><i class="icon"></i></div>
             <ul class="select-list" >
                 <li id="共青团员">共青团员</li>
             	<li id="党员">党员</li>
@@ -52,7 +53,7 @@
         </div>
         <label>入党日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly"  placeholder="请选择日期" name="politicalstatus.joinDate" value="<s:date name="politicalstatus.joinDate" format="yyyy-MM-dd"></s:date>" />
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   placeholder="请选择日期" name="politicalstatus.joinDate" value="<s:date name="politicalstatus.joinDate" format="yyyy-MM-dd"></s:date>" />
         </div>
     </div>
 

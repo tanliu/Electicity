@@ -32,18 +32,17 @@ public class PolstatusExcel extends BaseExcelVo{
 	  @Lang(value="备注")
 		private String memo;
 	  
-	  @Lang(value="创建时间 ")
-		private String createTime;
+	 
 	  
 	  public PolstatusExcel(String studentNo,String stuName,String joinDate,String politicalStatus
-			  ,String memo,String createTime){
+			  ,String memo){
 		  super();
 		  this.studentNo=studentNo;
 		  this.stuName=stuName;
 		  this.joinDate=joinDate;
 		  this.politicalStatus=politicalStatus;
 		  this.memo=memo;
-		  this.createTime=createTime;
+		 
 	  }
 	  
 	  
@@ -93,13 +92,7 @@ public class PolstatusExcel extends BaseExcelVo{
 		this.memo = memo;
 	}
 
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
+	
 
 	public PolstatusExcel(){
 		  
