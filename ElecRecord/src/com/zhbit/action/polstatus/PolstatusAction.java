@@ -123,7 +123,14 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String delete() {
 			// TODO Auto-generated method stub
-			return null;
+			//将listUI界面传过来的查询条件保存
+			request.setAttribute("politicalstatus", politicalstatus);
+			//判断是否已经选中
+			//System.out.println(getSelectedRow()[0]);返回一个要被删除数据的集合
+			if(getSelectedRow()!=null){		
+				polstatusServices.deleteObjectByIds(getSelectedRow());		
+			}
+			return "delete";
 		}
 		@Override
 		public String editorUI() {
@@ -131,6 +138,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			request.setAttribute("querycon", politicalstatus);
 			//直接调用baseDao接口里面的findObjectById方法根据id去查找数据
 			politicalstatus=polstatusServices.findObjectById(politicalstatus.getId());
+			//将查询得到的数据返回前台
 			request.setAttribute("politicalstatus", politicalstatus);
 			return "editorUI";
 		}
