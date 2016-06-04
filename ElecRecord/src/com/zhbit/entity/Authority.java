@@ -20,23 +20,17 @@ public class Authority implements java.io.Serializable {
 	private String operation;
 	private String menuNo;
 	private String memo;
-	private Set roleAuthorities = new HashSet(0);
-
-
+	
+	
+	
+	
 	public Authority() {
+		super();
 	}
-
-	/** minimal constructor */
-	public Authority(String authorityName, Integer authorityType) {
-		this.authorityName = authorityName;
-		this.authorityType = authorityType;
-	}
-
-	/** full constructor */
-	public Authority(String parentId, String parentIds,
-			String authorityName, Integer authorityType, String moduleName,
-			String url, String operation, String menuNo, String memo,
-			Set roleAuthorities) {
+	public Authority(String authorityId, String parentId, String parentIds, String authorityName, Integer authorityType,
+			String moduleName, String url, String operation, String menuNo, String memo) {
+		super();
+		this.authorityId = authorityId;
 		this.parentId = parentId;
 		this.parentIds = parentIds;
 		this.authorityName = authorityName;
@@ -46,99 +40,69 @@ public class Authority implements java.io.Serializable {
 		this.operation = operation;
 		this.menuNo = menuNo;
 		this.memo = memo;
-		this.roleAuthorities = roleAuthorities;
 	}
-
-
-
 	public String getAuthorityId() {
-		return this.authorityId;
+		return authorityId;
 	}
-
 	public void setAuthorityId(String authorityId) {
 		this.authorityId = authorityId;
 	}
-
 	public String getParentId() {
-		return this.parentId;
+		return parentId;
 	}
-
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
-
 	public String getParentIds() {
-		return this.parentIds;
+		return parentIds;
 	}
-
 	public void setParentIds(String parentIds) {
 		this.parentIds = parentIds;
 	}
-
 	public String getAuthorityName() {
-		return this.authorityName;
+		return authorityName;
 	}
-
 	public void setAuthorityName(String authorityName) {
 		this.authorityName = authorityName;
 	}
-
 	public Integer getAuthorityType() {
-		return this.authorityType;
+		return authorityType;
 	}
-
 	public void setAuthorityType(Integer authorityType) {
 		this.authorityType = authorityType;
 	}
-
 	public String getModuleName() {
-		return this.moduleName;
+		return moduleName;
 	}
-
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
 	}
-
 	public String getUrl() {
-		return this.url;
+		return url;
 	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 	public String getOperation() {
-		return this.operation;
+		return operation;
 	}
-
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
-
 	public String getMenuNo() {
-		return this.menuNo;
+		return menuNo;
 	}
-
 	public void setMenuNo(String menuNo) {
 		this.menuNo = menuNo;
 	}
-
 	public String getMemo() {
-		return this.memo;
+		return memo;
 	}
-
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
 
-	public Set getRoleAuthorities() {
-		return roleAuthorities;
-	}
-
-	public void setRoleAuthorities(Set roleAuthorities) {
-		this.roleAuthorities = roleAuthorities;
-	}
-
+	
 	
 
 

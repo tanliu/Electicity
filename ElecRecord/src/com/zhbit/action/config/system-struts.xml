@@ -80,8 +80,22 @@
          </action>
          <!-- 角色管理 -->
          <action name="role_*" class="roleAction" method="{1}">
-            <result name="listUI">/WEB-INF/jsp/system/role_listUI.jsp</result>
-
+            <result name="{1}">/WEB-INF/jsp/system/role_{1}.jsp</result>
+             <result name="jsontree" type="json">
+				<param name="includeProperties">\[\d+\]\.authorityId,\[\d+\]\.parentId,\[\d+\]\.authorityName</param>
+            </result>
+             <result name="checkjson" type="json">
+				<param name="includeProperties">\[\d+\]\.authorityId</param>
+            </result>
+             <result name="listjson" type="json">
+				
+            </result>
+            <result name="list" type="redirectAction">
+              <param name="actionName">role_listUI</param>
+	          <param name="querycon">${querycon}</param>
+	          <param name="pageNO">${pageNO}</param>
+	          <param name="encode">true</param>
+            </result>
          </action>
 	</package>
 

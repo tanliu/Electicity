@@ -24,23 +24,25 @@ public class Role implements java.io.Serializable {
 	private Timestamp createTime;
 	private String roleNo;
 	private String memo;
-	private Set<RoleAuthority> roleAuthorities;
 	private Set<UserRole> userRoles;
 
 
 	public Role() {
 	}
 
+	
 
-	public Role(String roleName, Timestamp createTime, String roleNo,
-			String memo, Set<RoleAuthority> roleAuthorities, Set<UserRole> userRoles) {
+	public Role(String roleId, String roleName, Timestamp createTime, String roleNo, String memo,
+			Set<UserRole> userRoles) {
+		super();
+		this.roleId = roleId;
 		this.roleName = roleName;
 		this.createTime = createTime;
 		this.roleNo = roleNo;
 		this.memo = memo;
-		this.roleAuthorities = roleAuthorities;
 		this.userRoles = userRoles;
 	}
+
 
 
 	public String getRoleId() {
@@ -93,16 +95,6 @@ public class Role implements java.io.Serializable {
 	}
 
 
-	public Set<RoleAuthority> getRoleAuthorities() {
-		return roleAuthorities;
-	}
-
-
-	public void setRoleAuthorities(Set<RoleAuthority> roleAuthorities) {
-		this.roleAuthorities = roleAuthorities;
-	}
-
-
 	public Set<UserRole> getUserRoles() {
 		return userRoles;
 	}
@@ -111,9 +103,7 @@ public class Role implements java.io.Serializable {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-
-
-
+    
 
 
 

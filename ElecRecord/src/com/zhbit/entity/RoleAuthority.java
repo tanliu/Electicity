@@ -1,46 +1,51 @@
 package com.zhbit.entity;
 
-
 public class RoleAuthority implements java.io.Serializable {
 
-
 	private String id;
-	private Authority authority;
-	private Role role;
+	private String authorityId;
+	private String roleId;
 
 	public RoleAuthority() {
+
 	}
 
-	public RoleAuthority(Authority authority, Role role) {
-		this.authority = authority;
-		this.role = role;
+	public RoleAuthority(String id, String authorityId, String roleId) {
+		super();
+		this.id = id;
+		this.authorityId = authorityId;
+		this.roleId = roleId;
 	}
 
-
-	public Authority getAuthority() {
-		return authority;
+	public RoleAuthority(String authorityId, String roleId) {
+		super();
+		this.authorityId = authorityId;
+		this.roleId = roleId;
 	}
 
-	public void setAuthority(Authority authority) {
-		this.authority = authority;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
+	// --------------------getter&&setter-------------------------------------
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	public String getAuthorityId() {
+		return authorityId;
+	}
 
+	public void setAuthorityId(String authorityId) {
+		this.authorityId = authorityId;
+	}
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
 
 }

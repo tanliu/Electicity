@@ -50,10 +50,10 @@
 				</div> --%>
 			</div>
 			<p class="short-input ue-clear">
-				<label>权限类型：</label> 
-				<s:textfield  name="authority.authorityType" class="strutsinput noNull"></s:textfield>
 				<label>访问地址：</label>
-				<s:textfield   name="authority.url" class="strutsinput noNull"></s:textfield>			
+				<s:textfield  name="authority.url" class="strutsinput"></s:textfield>			
+				<label>权限类型：</label> 			
+				<s:radio list="#{'0':'菜单','1':'新增','2':'修改','3':'查询','4':'删除','5':'导出','6':'导入','7':'授权'}" name="authority.authorityType"  cssStyle="width:25px;" />	
 			</p>
 
 			<p class="short-input ue-clear">
@@ -73,6 +73,7 @@
 
 	<div class="btn ue-clear">
 	<a href="javascript:editorauthority('myForm','post','${basePath}/system/authority_editor.action')"  class="confirm save">增加权限</a> 
+	<a href="javascript:deleteauthority('myForm','post','${basePath}/system/authority_delete.action')"  class="confirm save">删除权限</a> 
 	
 		</div>
 

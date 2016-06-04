@@ -20,7 +20,7 @@ public class User implements java.io.Serializable {
 	private String email;
 	private String password;
 	private String userType;
-	private Set userRoles = new HashSet(0);
+	private Set<UserRole> userRoles = new HashSet(0);
 
 
 	public User() {
@@ -29,7 +29,7 @@ public class User implements java.io.Serializable {
 	public User(Organization organization, String employNo,
 			String employName, Timestamp createTime, Integer sex, String tell,
 			Integer status, String address, String email, String password,
-			String userType, Set userRoles) {
+			String userType, Set<UserRole> userRoles) {
 		this.organization = organization;
 		this.employNo = employNo;
 		this.employName = employName;
@@ -140,11 +140,11 @@ public class User implements java.io.Serializable {
 		this.userType = userType;
 	}
 
-	public Set getUserRoles() {
+	public Set<UserRole> getUserRoles() {
 		return userRoles;
 	}
 
-	public void setUserRoles(Set userRoles) {
+	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
 

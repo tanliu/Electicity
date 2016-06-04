@@ -9,13 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.mysql.fabric.xmlrpc.base.Data;
 import com.zhbit.action.BaseAction;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.SystemDll;
@@ -26,9 +24,6 @@ import com.zhbit.services.system.UserServices;
 import com.zhbit.util.AjaxReturnUtils;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.EncryptUtils;
-import com.zhbit.util.QueryUtils;
-
-import javassist.expr.NewArray;
 /** 
  * 项目名称：ElecRecord
  * 类名称：UserAction 

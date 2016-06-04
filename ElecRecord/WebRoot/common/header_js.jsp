@@ -12,7 +12,7 @@
 <script type="text/javascript" src="${basePath}js/validation.js"></script>
 
 
-<link rel="stylesheet" href="${basePath}css/base.css" />
+<link rel="stylesheet" href="${basePath}css/base.css" /> 
 <link rel="stylesheet" href="${basePath}css/struts.css" />
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link href="${basePath}css/skin1.css" rel="stylesheet" type="text/css" />

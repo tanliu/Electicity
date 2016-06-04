@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -192,7 +193,7 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 		}
 
 	}
-	@Test
+
 	public void imp(){
 		try {
 			InputStream fiS=new FileInputStream(new File("C:\\Users\\Administrator\\Desktop\\谭柳的文件.xls"));
@@ -208,6 +209,12 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void tr(){
+		String a=" tan ta ta ta ";
+		System.out.println(a.trim());
 	}
 
 	

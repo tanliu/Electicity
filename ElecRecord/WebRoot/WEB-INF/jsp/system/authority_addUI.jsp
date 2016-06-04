@@ -26,7 +26,7 @@
 	</div>
 	<form id="myForm">
 	    <s:hidden  name="authority.parentId"></s:hidden>
-	     
+	    <input type="hidden" id="authorityId" value="<s:property value="authority.authorityId"/>"> 
 		<div class="main">
 			<div class="short-input select ue-clear">
 				<label>权限名称：</label>
@@ -50,11 +50,35 @@
 				</div> --%>
 			</div>
 			<p class="short-input ue-clear">
-				<label>权限类型：</label> 
-				<s:textfield value="" name="authority.authorityType" class="strutsinput noNull"></s:textfield>
 				<label>访问地址：</label>
-				<s:textfield value="" name="authority.url" class="strutsinput noNull"></s:textfield>			
+				<s:textfield value="" name="authority.url" class="strutsinput"></s:textfield>			
+				<label>权限类型：</label> 			
+				<s:radio list="#{'0':'菜单','1':'新增','2':'修改','3':'查询','4':'删除','5':'导出','6':'导入','7':'授权'}" name="authority.authorityType" value="0"  cssStyle="width:25px;" />	
 			</p>
+<%-- 			<div class="short-input select ue-clear">				
+				<div class="select-wrap">
+				<label>访问地址：</label>
+					<s:textfield value="" name="authority.url" class="strutsinput noNull"></s:textfield>
+				</div>
+				<label>权限类型：</label>
+				<input class="noNull" hidden="hidden" value="" name="authority.url">
+				<div class="select-wrap">
+				<div class="select-title">
+					<span id="span1">请选择</span><i class="icon"></i>
+					</div>
+					<ul class="select-list" >
+					    <li id="">请选择</li>
+					    <li id="0">菜单</li>
+					    <li id="1">新增</li>
+					    <li id="2">修改</li>
+					    <li id="3">查询</li>
+					    <li id="4">删除</li>
+					    <li id="5">导出</li>
+					    <li id="6">导入</li>
+					    <li id="7">授权</li>
+					</ul>					
+				</div>
+			</div> --%>
 
 			<p class="short-input ue-clear">
 				<label>操作名称：</label> 
@@ -127,7 +151,7 @@ function addauthority(formID,type,url){
               }else{
             	  alert("添加失败");
               }
-              window.location.href="${basePath}system/authority_addUI.action";
+              window.location.href="${basePath}system/authority_addUI.action?authority.parentId="+$("#authorityId").val();
               
     	},
         error:function(){alert("失败！");}

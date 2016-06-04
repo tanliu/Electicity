@@ -26,6 +26,8 @@
 	<input type="hidden" name="stuStatus.stuId" value="${stuStatus.stuId}"/>
 	<!-- 将StuStatus传递给对应的editor方法 -->
 	<input type="hidden" name="stuStatus.id" value="${stuStatus.id}"/>
+	<!-- 记得将原先的创建时间返回 -->
+	<input type="hidden" name="stuStatus.createTime" value="${stuStatus.createTime}"/>
 	<fieldset >
     <legend>学生信息</legend>
      
@@ -276,7 +278,7 @@
     	<label>异动前学籍状态：</label>
     	<input  hidden="hidden" value="<s:property value="stuStatus.ydqschoolStatus"/>" name="stuStatus.ydqschoolStatus">
          <div class="select-wrap" >
-        	<div class="select-title " ><span ><s:property value="stuStatus.ydqschoolStatus?'有':'无'"/></span><i class="icon"></i></div>
+        	<div class="select-title " ><span ><s:property value="stuStatus.ydqschoolStatus"/></span><i class="icon"></i></div>
             <ul class="select-list" >
              <li id="">请选择</li>
             	<li id="1">有</li>
@@ -288,7 +290,7 @@
         <label>异动前是否在校：</label>
          <input  hidden="hidden" value="<s:property value="stuStatus.ydqinSchool"/>" name="stuStatus.ydqinSchool">
          <div class="select-wrap" >
-        	<div class="select-title " ><span ><s:property value="stuStatus.ydqinSchool?'是':'否'"/></span><i class="icon"></i></div>
+        	<div class="select-title " ><span ><s:property value="stuStatus.ydqinSchool"/></span><i class="icon"></i></div>
             <ul class="select-list" >
              <li id="">请选择</li>
             	<li id="1">是</li>
@@ -303,7 +305,7 @@
     	<label>异动前是否注册：</label>
     	 <input  hidden="hidden" value="<s:property value="stuStatus.ydqisRegiste"/>" name="stuStatus.ydqisRegiste">
          <div class="select-wrap" >
-        	<div class="select-title " ><span ><s:property value="stuStatus.ydqisRegiste?'是':'否'"/></span><i class="icon"></i></div>
+        	<div class="select-title " ><span ><s:property value="stuStatus.ydqisRegiste"/></span><i class="icon"></i></div>
             <ul class="select-list" >
              <li id="">请选择</li>
             	<li id="1">是</li>
@@ -460,7 +462,7 @@
     	<label>异动后学籍状态：</label>
     	<input  hidden="hidden" value="<s:property value="stuStatus.ydhschoolStatus"/>" name="stuStatus.ydhschoolStatus">
       <div class="select-wrap" >
-        	<div class="select-title " ><span ><s:property value="stuStatus.ydhschoolStatus?'有':'无'"/></span><i class="icon"></i></div>
+        	<div class="select-title " ><span ><s:property value="stuStatus.ydhschoolStatus"/></span><i class="icon"></i></div>
             <ul class="select-list" >
             <li id="">请选择</li>
             	<li id="1">有</li>
@@ -472,7 +474,7 @@
         <label>异动后是否在校：</label>
         <input  hidden="hidden" value="<s:property value="stuStatus.ydhinSchool"/>" name="stuStatus.ydhinSchool">
        <div class="select-wrap" >
-        	<div class="select-title " ><span ><s:property value="stuStatus.ydhinSchool?'是':'否'"/></span><i class="icon"></i></div>
+        	<div class="select-title " ><span ><s:property value="stuStatus.ydhinSchool"/></span><i class="icon"></i></div>
             <ul class="select-list" >
             <li id="">请选择</li>
             	<li id="1">是</li>
@@ -487,7 +489,7 @@
     	<label>异动后是否注册：</label>
     	<input  hidden="hidden" value="<s:property value="stuStatus.ydhisRegiste"/>" name="stuStatus.ydhisRegiste">
          <div class="select-wrap" >
-        	<div class="select-title " ><span ><s:property value="stuStatus.ydhisRegiste?'是':'否'"/></span><i class="icon"></i></div>
+        	<div class="select-title " ><span ><s:property value="stuStatus.ydhisRegiste"/></span><i class="icon"></i></div>
             <ul class="select-list" >
             <li id="">请选择</li>
             	<li id="1">是</li>
