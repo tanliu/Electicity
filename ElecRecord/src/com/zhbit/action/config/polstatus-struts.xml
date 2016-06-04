@@ -11,7 +11,12 @@
             <result name="editorUI">/WEB-INF/jsp/polstatus/partyinfo_editorUI.jsp</result>
              <result name="listUI">/WEB-INF/jsp/polstatus/partyinfo_listUI.jsp</result>
             <result name="addUI">/WEB-INF/jsp/polstatus/partyinfo_addUI.jsp</result>
-           <result name="importExcel">/WEB-INF/jsp/polstatus/partyinfo_listUI.jsp</result>   
+<!--            <result name="importExcel">/WEB-INF/jsp/polstatus/partyinfo_listUI.jsp</result>    -->
+            
+            
+             <result name="importExcel" type="redirectAction">
+	          <param name="actionName">polstatus_listUI</param>
+	        </result>
             
             <result name="add" type="redirectAction">
 	          <param name="actionName">polstatus_listUI</param>

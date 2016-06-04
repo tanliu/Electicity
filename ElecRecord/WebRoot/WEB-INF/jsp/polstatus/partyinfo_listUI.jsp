@@ -103,6 +103,7 @@ table thead tr th{
 	<div class="dialog-content" align="center">   
         <div class="ui-dialog-text" align="center">
             <p class="dialog-content">请选择要导入的excel文件</p>
+<!--          上传表格文件工具   enctype="multipart/form-data"  name必须等于"excel"-->
             <form id="myform" action="${basePath}polstatus/polstatus_importExcel.action" method="post" enctype="multipart/form-data">
             <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel" value="" /></p>
           </form>
