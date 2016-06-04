@@ -105,12 +105,27 @@
        <label>异动结果：</label>
       <input type="text" placeholder="请输入异动结果" name="stuStatus.ydresult"/>
     </p>
-    <p class="short-input ue-clear">
+    <div class="short-input select ue-clear">
     	<label>异动类别：</label>
-        <input type="text" placeholder="请输入异动类别" name="stuStatus.tansactionType"/>
+        <input hidden="hidden" name="stuStatus.tansactionType" value=""/>
+        <div class="select-wrap">
+				<div class="select-title" >
+					<span id="span1">请选择</span><i class="icon"></i>
+					</div>
+					<ul class="select-list" id="list1">
+					 <li id="">请选择</li>
+					    <s:iterator value="#request.tansactionTypes" var="tansactionTypes">
+					      <li id="<s:property value='#tansactionTypes.ddlName'/>"><s:property value="#tansactionTypes.ddlName"/></li>
+					    </s:iterator>
+					</ul>					
+				</div>
+	
+		<div>
         <label>异动原因：</label>
-        <input type="text" placeholder="请输入异动原因" name="stuStatus.tansactionReason"/>
-    </p>
+        <input type="text" class="select-wrap" placeholder="请输入异动原因" name="stuStatus.tansactionReason" value="${stuStatus.tansactionReason}"/>
+        </div>
+        
+    </div>
      <p class="short-input ue-clear">
     	<label>异动时间：</label>
         <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="stuStatus.tansactionDate"/>
