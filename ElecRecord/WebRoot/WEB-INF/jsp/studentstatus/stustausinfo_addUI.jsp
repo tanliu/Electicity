@@ -142,7 +142,7 @@
     	<label>操作人：</label>
         <input type="text" placeholder="请输入操作人姓名" name="stuStatus.operator"/> 
         <label>操作时间：</label>
-        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="stuStatus.operatorTime"/>
+        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" name="stuStatus.operatorTime"/>
        
     </p>
     <p class="short-input ue-clear">
