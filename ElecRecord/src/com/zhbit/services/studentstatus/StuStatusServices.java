@@ -19,4 +19,7 @@ public interface StuStatusServices extends BaseServices<StuStatus> {
 	public static final String SERVICE_NAME="com.zhbit.dao.studentstatus.impl.StuStatusServicesImpl";
 	
 	  public PageUtils queryList(StuStatus stuStatus, int pageNO, int pageSize);
+	  
+	  //用于去除前后字符串的方法
+	  public  StuStatus trimStustatus(StuStatus stuStatus);
 }

@@ -41,8 +41,8 @@ function doSelectAll(){
 //单击及双击的JS
 $(function(){
     
-    $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
-    $("tr:even").addClass("even"); /* 偶数行添加样式*/
+   $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
+   $("tr:even").addClass("even"); /* 偶数行添加样式*/
    
     //双击跳转到详情页面
     $('tbody>tr').dblclick(function() {

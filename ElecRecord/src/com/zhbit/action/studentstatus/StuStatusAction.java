@@ -157,6 +157,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 		stuStatus.setCreateTime(createtime);
 		
 		//利用save方法将新添加的学籍异动信息添加到数据库中
+		stuStatus=stuStatusServices.trimStustatus(stuStatus);//去除空格后再进行数据的存储
 		stuStatusServices.save(stuStatus);
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
@@ -250,10 +251,10 @@ public class StuStatusAction extends BaseAndExcelAction {
 		// TODO Auto-generated method stub
 		
 		//使用update方法更新学籍信息
+		stuStatus=stuStatusServices.trimStustatus(stuStatus);//去除空格后再进行数据的存储
 		stuStatusServices.update(stuStatus);
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
-	
 		stuStatus.setAcademicYear(request.getParameter("query_academicYear"));
 		stuStatus.setStudentNo(request.getParameter("query_studentNo"));
 		stuStatus.setStuName(request.getParameter("query_stuName"));
@@ -300,15 +301,17 @@ public class StuStatusAction extends BaseAndExcelAction {
 		return "detailUI";
 	}
 	//------------------------------------getter&setter-----------------------------------
+	
+	public String getQuery_academicYear() {
+		return query_academicYear;
+	}
+
 	public StuStatus getStuStatus() {
 		return stuStatus;
 	}
 
 	public void setStuStatus(StuStatus stuStatus) {
 		this.stuStatus = stuStatus;
-	}
-	public String getQuery_academicYear() {
-		return query_academicYear;
 	}
 
 	public void setQuery_academicYear(String query_academicYear) {
