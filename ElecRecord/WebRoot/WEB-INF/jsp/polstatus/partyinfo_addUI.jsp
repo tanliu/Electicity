@@ -21,6 +21,7 @@
 <form id="myForm" method="post">  
 	    <input hidden="hidden" value="<s:property value="1"/>" name="politicalstatus.stuId">
 	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="politicalstatus.creator">
+	    
 <div class="main">
     <p class="short-input ue-clear">
     	<label>学号：</label>
@@ -32,14 +33,14 @@
      <div class="short-input select ue-clear" >
         
         <label>政治面貌：</label>
-        <input  hidden="hidden" value="" name="politicalstatus.politicalStatus">
+        <input  hidden="hidden"  name="politicalstatus.politicalStatus">
         <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span >共青团员</span><i class="icon"></i></div>
+        	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
+                <li id="">请选择</li>
                 <li id="共青团员">共青团员</li>
             	<li id="党员">党员</li>
                 <li id="群众">群众</li>
-             
             </ul>
         </div>
         <label>入党日期：</label>

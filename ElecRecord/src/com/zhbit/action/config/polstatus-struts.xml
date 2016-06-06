@@ -11,8 +11,8 @@
             <result name="editorUI">/WEB-INF/jsp/polstatus/partyinfo_editorUI.jsp</result>
              <result name="listUI">/WEB-INF/jsp/polstatus/partyinfo_listUI.jsp</result>
             <result name="addUI">/WEB-INF/jsp/polstatus/partyinfo_addUI.jsp</result>
-<!--            <result name="importExcel">/WEB-INF/jsp/polstatus/partyinfo_listUI.jsp</result>    -->
-            
+
+            <result name="detailUI">/WEB-INF/jsp/polstatus/partyinfo_detailUI.jsp</result>
             
              <result name="importExcel" type="redirectAction">
 	          <param name="actionName">polstatus_listUI</param>
@@ -20,8 +20,19 @@
             
             <result name="add" type="redirectAction">
 	          <param name="actionName">polstatus_listUI</param>
+	           <param name="politicalstatus.stuName">${politicalstatus.stuName}</param> 
+	           <param name="politicalstatus.studentNo">${politicalstatus.studentNo}</param>
+	            <param name="encode">true</param>
 	        </result>
             <result name="editor" type="redirectAction">
+	          <param name="actionName">polstatus_listUI</param>
+	           <param name="politicalstatus.stuName">${politicalstatus.stuName}</param> 
+	           <param name="politicalstatus.studentNo">${politicalstatus.studentNo}</param>
+	         <!--   <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>-->
+	          <param name="pageNO">${pageNO}</param>
+	            <param name="encode">true</param>
+	        </result>
+	        <result name="delete" type="redirectAction">
 	          <param name="actionName">polstatus_listUI</param>
 	           <param name="politicalstatus.stuName">${politicalstatus.stuName}</param> 
 	           <param name="politicalstatus.studentNo">${politicalstatus.studentNo}</param>

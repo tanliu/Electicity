@@ -38,16 +38,16 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions name ue-clear" style="width:20%">
+        <div class="conditions name ue-clear" style="width:25%">
             <label>姓名：</label>
         <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" />
         </div>
         
-         <div class="conditions staff ue-clear" style="width:20%">
+         <div class="conditions name ue-clear" style="width:25%">
           <label>学号：</label>
         <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${querycon.studentNo}" />
     </div>
-     <div class="conditions staff ue-clear" >
+     <div class="conditions name ue-clear" style="width:30%">
          <label>入党日期：</label>
         <div class="select-wrap" > 
         	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期进行查询" name="politicalstatus.joinDate" value="<s:date name="querycon.joinDate" format="yyyy-MM-dd"></s:date>"/>
@@ -60,9 +60,9 @@ table thead tr th{
 </div>
 <div class="table-operate ue-clear">
 	<a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:;" class="del">删除</a>
+    <a href="javascript:" class="del confirm save">删除</a>
     <a href="javascript:;" class="import clear clear">导入</a>
-    <a href="javascript:;" class="upload">上传</a>
+<!--     <a href="javascript:;" class="upload">上传</a> -->
 </div>
 
 <div class="table-box">
@@ -81,8 +81,8 @@ table thead tr th{
         <tbody>
            <s:iterator value="pageUtils.items" var="political">
         	<tr>
-			 <td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#'/>' /></td>
-              	<td><a href="javascript:detail('<s:property value='#political.id'/>')"><s:property value="#political.studentNo"/></a></td>
+			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#political.id'/>'/></td>
+              	<td><s:property value="#political.studentNo"/></td>
 				<td ><s:property value="#political.stuName"/></td>
 				<td><s:date name="#political.joinDate" format="yyyy-MM-dd"></s:date></td>
 				<td><s:property value="#political.politicalStatus"/></td>
@@ -104,8 +104,8 @@ table thead tr th{
         <div class="ui-dialog-text" align="center">
             <p class="dialog-content">请选择要导入的excel文件</p>
 <!--          上传表格文件工具   enctype="multipart/form-data"  name必须等于"excel"-->
-            <form id="myform" action="${basePath}polstatus/polstatus_importExcel.action" method="post" enctype="multipart/form-data">
-            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel" value="" /></p>
+            <form  id="fileForm" action="${basePath}polstatus/polstatus_importExcel.action" method="post" enctype="multipart/form-data">
+            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel" value="" id="filename"/></p>
           </form>
             <div class="buttons" align="center">
                 <input type="button" class="button long2 ok"  value="确定" />
@@ -114,11 +114,28 @@ table thead tr th{
         </div>
         </div>
 </div>
+
+<!--弹出删除提示框的窗口-->
+<div class="delDialog">
+	<div class="dialog-content">
+    	<div class="ui-deldialog-icon"></div>
+        <div class="ui-dialog-text">
+        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
+            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
+            
+            <div class="buttons">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="取消" />
+            </div>
+        </div>
+        </div>
+</div>
+
 </body>
 
 <script type="text/javascript">
 
-<!--实现清空弹出框的脚本-->
+<!--实现上传文件弹出框的脚本-->
 
 $('.importDialog').Dialog({
 	title:'提示信息',
@@ -138,9 +155,50 @@ $('.importDialog input[type=button]').click(function(e) {
     $('.importDialog').Dialog('close');
 	
 	if($(this).hasClass('ok')){
-		$("#myform").submit();
+		//判断是否有选择文件
+		if(document.getElementById("filename").value){//在文件非空的条件下才允许向后台提交请求
+			$("#fileForm").submit();
+		}
+		else{
+			//alert('未选择文件!!!!');
+			$('.importDialog').Dialog('open');//如果用户未选择任何文件，那么窗口保持打开状态
+		}
+	}
+	
+});
+
+<!--实现删除提示框的脚本-->
+
+$('.delDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:400,
+	height:200
+	
+});
+
+$('.del').click(function(){
+	//在弹出前先判断是否已经选中了相关记录
+	var selectedRows=document.getElementsByName("selectedRow");
+	
+	var i=0;
+	var length=selectedRows.length;
+	
+	while(i<length){//如果有记录被选中，则弹出对话框
+		if(selectedRows[i++].checked){
+			$('.delDialog').Dialog('open');
+		}
 	}
 });
+
+$('.delDialog input[type=button]').click(function(e) {
+    $('.delDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		del();
+	}
+});
+
 </script>
 <script type="text/javascript" >
 <!-- action之间的跳转 ，用于换页-->
@@ -150,16 +208,23 @@ var deleteAction="${basePath}polstatus/polstatus_delete.action";
 function doSelectAll(){
 	$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
 } 
+//单击及双击的JS样式
 	$(function(){
-      
+      //单击
         $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
         $("tr:even").addClass("even"); /* 偶数行添加样式*/
 
        
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
-            window.open('.....html');
+        //双击得到当前行数据的id
+       	 var $id=$(this).children("td").children("input").val();
+       	//跳转到详情页
+       	window.open("${basePath}polstatus/polstatus_detailUI.action?politicalstatus.id="+$id);
         });
+        
+        
+        
         //点击改变选中样式
         $('tbody>tr').click(function() {
             $(this)
@@ -168,7 +233,7 @@ function doSelectAll(){
                     .end();
         });
 	})
-	//向stustatus_editorUI.action提交信息
+	//向polstatus_editorUI.action提交信息
 function editor(id){
 		var url="${basePath}polstatus/polstatus_editorUI.action?politicalstatus.id="+id;
 		$("#queryForm").attr("action",url);
@@ -182,13 +247,18 @@ function add(){
  	$("#queryForm").submit();  
 } 
 
-//向stustatus_listUI.action提交信息
+//向polstatus_listUI.action提交信息
 function query(){
 	 	$("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
-
+//向polstatus_delete().action提交信息
+function del(){
+		var url="${basePath}polstatus/polstatus_delete.action";
+		$("#queryForm").attr("action",url);
+ 		$("#queryForm").submit();  
+} 
  </script>
 </html>
 

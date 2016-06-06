@@ -72,7 +72,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 				for(Object object:Polstatus){
 					Politicalstatus politicalstatus=(Politicalstatus) object;
 					polstatusServices.add(politicalstatus);
-					//polstatusServices.save(politicalstatus);
+				
 			}
 				//BaseTransfrom baseTransfrom=new TestTransform();
 				//baseTransfrom.toDBEntity(lists);
@@ -103,13 +103,14 @@ public class PolstatusAction extends BaseAndExcelAction{
 			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 			request.setAttribute("querycon", politicalstatus);
 			//调用方法，根据查询条件显示数据
-			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
+			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), 5);	
 			return "listUI";
-			//setPageSize(5);设置页面显示条数
+			//getPageSize();设置页面显示信息条数 可以直接写getPageSize()，则默认为2条信息每页，也可以手动写数字，比如5，则为5条信息
 		}
 		@Override
 		public String addUI() {
 			// TODO Auto-generated method stub
+			
 			return "addUI";
 		}
 		@Override
@@ -123,7 +124,14 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String delete() {
 			// TODO Auto-generated method stub
-			return null;
+			//将listUI界面传过来的查询条件保存
+			request.setAttribute("politicalstatus", politicalstatus);
+			//判断是否已经选中
+			//System.out.println(getSelectedRow()[0]);返回一个要被删除数据的集合
+			if(getSelectedRow()!=null){		
+				polstatusServices.deleteObjectByIds(getSelectedRow());		
+			}
+			return "delete";
 		}
 		@Override
 		public String editorUI() {
@@ -131,6 +139,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			request.setAttribute("querycon", politicalstatus);
 			//直接调用baseDao接口里面的findObjectById方法根据id去查找数据
 			politicalstatus=polstatusServices.findObjectById(politicalstatus.getId());
+			//将查询得到的数据返回前台
 			request.setAttribute("politicalstatus", politicalstatus);
 			return "editorUI";
 		}
@@ -150,6 +159,15 @@ public class PolstatusAction extends BaseAndExcelAction{
 			return null;
 		}
 		
+		public String detailUI(){
+			//将listUI界面传过来的查询条件保存
+			//request.setAttribute("querycon", politicalstatus);
+			//直接调用baseDao接口里面的findObjectById方法根据id去查找数据
+			politicalstatus=polstatusServices.findObjectById(politicalstatus.getId());
+			//将查询得到的数据返回前台
+			request.setAttribute("politicalstatus", politicalstatus);
+			return "detailUI";
+		}
 		
 		//--------------------------实体类getter&setter--------------------
 		public Politicalstatus getPoliticalstatus() {

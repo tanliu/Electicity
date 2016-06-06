@@ -28,7 +28,8 @@
 	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">
 	    <s:hidden name="pageNO"></s:hidden>
 	    
-	    
+	    <!-- 将原先的创建时间返回 -->
+	  <input type="hidden" name="politicalstatus.createTime" value="${politicalstatus.createTime}"/>
 	  
 <div class="main">
     <p class="short-input ue-clear">
