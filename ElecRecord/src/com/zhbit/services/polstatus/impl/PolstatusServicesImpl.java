@@ -32,6 +32,7 @@ import com.zhbit.util.QueryUtils;
 @Service(value=PolstatusServices.SERVICES_NAME)
 public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> implements
     PolstatusServices{
+	//初始化Dao层
 	PolstatusDao polstatusDao;
 	@Resource(name=PolstatusDao.DAO_NAME)
 	 public void setPolstatusDao(PolstatusDao polstatusDao) {
@@ -54,6 +55,14 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 		String proterty="createTime";	
 		
 		if(politicalstatus!=null){ //判定politicalstatus不为空时
+			
+			//先去除学号和姓名中可能存在的空格
+			if(!StringUtils.isEmpty(politicalstatus.getStuName())){
+				politicalstatus.setStuName(politicalstatus.getStuName().trim());
+			}
+			if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){
+				politicalstatus.setStudentNo(politicalstatus.getStudentNo().trim());
+			}
 			////多个查询条件组合
 			if(!StringUtils.isEmpty(politicalstatus.getStuName())){ 
 				//查询语句组合

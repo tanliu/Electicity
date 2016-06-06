@@ -29,7 +29,7 @@ import com.zhbit.transform.TestTransform;
 /** 
  * 项目名称：ElecRecord
  * 类名称：PolstatusAction
- * 类描述： 部门模块的Action层
+ * 类描述： 党团关系模块的Action层
  * 创建人：罗吉林
  * 创建时间：2016年5月26日 上午11:04:48
  * 修改人：罗吉林
@@ -89,7 +89,6 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		@Override
 		public String listUI() {
-		
 			//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 			if(politicalstatus!=null){
 				try {
@@ -102,10 +101,12 @@ public class PolstatusAction extends BaseAndExcelAction{
 			}
 			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 			request.setAttribute("querycon", politicalstatus);
+			//设置页面显示信息条数
+			setPageSize(5);
 			//调用方法，根据查询条件显示数据
-			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), 5);	
+			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
 			return "listUI";
-			//getPageSize();设置页面显示信息条数 可以直接写getPageSize()，则默认为2条信息每页，也可以手动写数字，比如5，则为5条信息
+			//setPageSize(5);设置页面显示信息条数 可以直接写getPageSize()，则默认为2条信息每页，也可以手动写数字，比如5，则为5条信息
 		}
 		@Override
 		public String addUI() {
