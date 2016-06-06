@@ -20,4 +20,5 @@ public interface TutorServices extends BaseServices<Tutor> {
 	public static final String SERVICE_NAME="com.zhbit.services.tutor.impl.TutorServicesImpl";
 	
 	 public PageUtils queryList(Tutor tutor, int pageNO, int pageSize);
+	 
 }

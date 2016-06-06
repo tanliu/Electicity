@@ -1,5 +1,6 @@
 package com.zhbit.action.tutor;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.Tutor;
 import com.zhbit.services.tutor.TutorServices;
+import com.zhbit.util.DecodeUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -22,8 +24,7 @@ import com.zhbit.services.tutor.TutorServices;
  * 修改备注： 
  * @version 
  */ 
-@Controller("tutorAction")
-@Scope(value="prototype")
+
 public class TutorAction extends BaseAndExcelAction {
 
 	/**
@@ -49,9 +50,21 @@ public class TutorAction extends BaseAndExcelAction {
 	@Override
 	public String listUI() {
 		// TODO Auto-generated method stub
+		//对传来的查询条件进行编码
+				if(tutor!=null){
+					try {
+						tutor.setStuName(DecodeUtils.decodeUTF(tutor.getStuName()));
+						tutor.setStudentNo(DecodeUtils.decodeUTF(tutor.getStudentNo()));
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						System.out.println("编码时出错");
+				}
+				}
+			
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",tutor);
 		setPageSize(10);
+		
 		pageUtils=tutorServices.queryList(tutor, getPageNO(), getPageSize());
 		
 		return "listUI";
@@ -109,5 +122,7 @@ public class TutorAction extends BaseAndExcelAction {
 	public void setTutor(Tutor tutor) {
 		this.tutor = tutor;
 	}
+
+	
 	
 }

@@ -301,15 +301,17 @@ public class StuStatusAction extends BaseAndExcelAction {
 		return "detailUI";
 	}
 	//------------------------------------getter&setter-----------------------------------
+	
+	public String getQuery_academicYear() {
+		return query_academicYear;
+	}
+
 	public StuStatus getStuStatus() {
 		return stuStatus;
 	}
 
 	public void setStuStatus(StuStatus stuStatus) {
 		this.stuStatus = stuStatus;
-	}
-	public String getQuery_academicYear() {
-		return query_academicYear;
 	}
 
 	public void setQuery_academicYear(String query_academicYear) {
