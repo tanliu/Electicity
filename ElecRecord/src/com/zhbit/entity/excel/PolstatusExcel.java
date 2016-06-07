@@ -51,11 +51,13 @@ public class PolstatusExcel extends BaseExcelVo{
 	    private List<String> baseArray;
 	    @ExcelColumnGroup(type = InnerVo.class)
 	    private List<InnerVo> innerVoArray;
-	  
+	    
+//----------------get&set---------------------- 
 	  public String getStudentNo() {
 		return studentNo;
 	}
 
+	 
 	public void setStudentNo(String studentNo) {
 		this.studentNo = studentNo;
 	}
