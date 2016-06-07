@@ -158,7 +158,10 @@ public class StuStatusAction extends BaseAndExcelAction {
 		
 		//利用save方法将新添加的学籍异动信息添加到数据库中
 		stuStatus=stuStatusServices.trimStustatus(stuStatus);//去除空格后再进行数据的存储
-		stuStatusServices.save(stuStatus);
+		if(stuStatus!=null){//非空，进行存储
+			stuStatusServices.save(stuStatus);
+		}
+		
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
 		stuStatus.setAcademicYear(getQuery_academicYear());
@@ -174,11 +177,10 @@ public class StuStatusAction extends BaseAndExcelAction {
 	@Override
 	public String delete() {
 		// TODO Auto-generated method stub
-		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
+		
 		request.setAttribute("stuStatus",stuStatus);
 		
 		//先判断用户是否已经选中
-		
 		if(getSelectedRow()!=null){		
 		stuStatusServices.deleteObjectByIds(getSelectedRow());		
 		}
@@ -255,9 +257,9 @@ public class StuStatusAction extends BaseAndExcelAction {
 		stuStatusServices.update(stuStatus);
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
-		stuStatus.setAcademicYear(request.getParameter("query_academicYear"));
-		stuStatus.setStudentNo(request.getParameter("query_studentNo"));
-		stuStatus.setStuName(request.getParameter("query_stuName"));
+		stuStatus.setAcademicYear(getQuery_academicYear());
+		stuStatus.setStudentNo(getQuery_studentNo());
+		stuStatus.setStuName(getQuery_stuName());
 	
 		//这里不命名为queryCon，因为Struts中XML文件不支持无Get，Set方法的EL表达式
 		request.setAttribute("stuStatus",stuStatus);

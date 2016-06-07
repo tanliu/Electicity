@@ -9,22 +9,22 @@
 	<package name="tutor" namespace="/tutor" extends="struts-default">
          <action name="tutor_*" class="com.zhbit.action.tutor.TutorAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/tutor/tutorinfo_listUI.jsp</result>
-            <result name="editorUI">/WEB-INF/jsp/studentstatus/stustausinfo_editorUI.jsp</result>
+            <result name="editorUI">/WEB-INF/jsp/tutor/tutorinfo_editorUI.jsp</result>
              <result name="addUI">/WEB-INF/jsp/tutor/tutorinfo_addUI.jsp</result>
-              <result name="detailUI">/WEB-INF/jsp/studentstatus/tutorinfo_detailUI.jsp</result>
+              <result name="detailUI">/WEB-INF/jsp/tutor/tutorinfo_detailUI.jsp</result>
             <result name="add" type="redirectAction">
 	         <param name="actionName">tutor_listUI</param>
-<!-- 	          <param name="tutor.studentNo">${tutor.studentNo}</param> -->
-<!-- 	          <param name="tutor.stuName">${tutor.stuName}</param> -->
-<!-- 	          <param name="tutor.academicYear">${tutor.academicYear}</param> -->
-<!-- 	          <param name="pageNO">${pageNO}</param> -->
-<!-- 	           <param name="encode">true</param> -->
+	          <param name="tutor.studentNo">${tutor.studentNo}</param> 
+ 	          <param name="tutor.stuName">${tutor.stuName}</param> 
+	          <param name="tutor.guidDate">${tutor.guidDate}</param> 
+ 	          <param name="pageNO">${pageNO}</param> 
+	           <param name="encode">true</param> 
 	        </result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">tutor_listUI</param>
 	          <param name="tutor.studentNo">${tutor.studentNo}</param>
 	          <param name="tutor.stuName">${tutor.stuName}</param>
-	          <param name="tutor.academicYear">${tutor.academicYear}</param>
+	          <param name="tutor.guidDate">${tutor.guidDate}</param>
 	          <param name="pageNO">${pageNO}</param>
 	          <param name="encode">true</param>
 	          </result>
@@ -32,7 +32,7 @@
 	          <param name="actionName">tutor_listUI</param>
 	          <param name="tutor.studentNo">${tutor.studentNo}</param>
 	          <param name="tutor.stuName">${tutor.stuName}</param>
-	          <param name="tutor.academicYear">${tutor.academicYear}</param>
+	          <param name="tutor.guidDate">${tutor.guidDate}</param>
 	          <param name="pageNO">${pageNO}</param>
 	          <param name="encode">true</param>
 	          </result>

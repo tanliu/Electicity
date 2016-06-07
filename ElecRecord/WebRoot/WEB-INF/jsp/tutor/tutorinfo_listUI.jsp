@@ -40,9 +40,36 @@ function doSelectAll(){
 } 
 
 
+//单击及双击的JS
+$(function(){
+    
+   $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
+   $("tr:even").addClass("even"); /* 偶数行添加样式*/
+   
+    //双击跳转到详情页面
+    $('tbody>tr').dblclick(function() {
+    
+    	 var $id=$(this).children("td").children("input").val();
+    	
+    	window.open("${basePath}tutor/tutor_detailUI.action?tutor.id="+$id);
+
+     }  
+        
+    );
+    
+    //点击改变选中样式
+    $('tbody>tr').click(function() {
+        $(this)
+                .addClass('selected')
+                .siblings().removeClass('selected')
+                .end();
+    });
+})
+
 
 //以下路径用于访问Action
 var queryAction="${basePath}tutor/tutor_listUI.action";
+var deleteAction="${basePath}tutor/tutor_delete.action";
 
 //向stustatus_listUI.action提交信息
 function query(){
@@ -50,14 +77,34 @@ function query(){
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
+	
+//向stustatus_addUI.action提交信息
+function add(){
+		var url="${basePath}tutor/tutor_addUI.action";
+		$("#queryForm").attr("action",url);
+ 	$("#queryForm").submit();  
+} 
 
+//向stustatus_editorUI.action提交信息
+function editor(id){
+		var url="${basePath}tutor/tutor_editorUI.action?tutor.id="+id;
+		$("#queryForm").attr("action",url);
+ 		$("#queryForm").submit();  
+} 
+
+//向stustatus_delUI.action提交信息
+function del(){
+		var url="${basePath}tutor/tutor_delete.action";
+		$("#queryForm").attr("action",url);
+ 		$("#queryForm").submit();  
+} 
  </script>
 <title>辅导信息</title>
 </head>
 
 <body>
 <div class="title"><h2>辅导信息</h2></div>
-<form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="get">
+<form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="post">
 <div class="query">
 
 	<div class="query-conditions ue-clear" style="width:100%">                  
@@ -90,7 +137,7 @@ function query(){
 </div>
 
 <div class="table-operate ue-clear">
-	<a href="javascript:" class="add">添加</a>
+	<a href="javascript:add()" class="add">添加</a>
     <a href="javascript:" class="del confirm save">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
 </div>
@@ -109,15 +156,15 @@ function query(){
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="tutors">
+           <s:iterator value="pageUtils.items" var="tutor">
         	<tr>
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#tutors.id'/>'/></td>
-            	<td><s:property value="#tutors.studentNo"/></td>
-				<td ><s:property value="#tutors.stuName"/></td>
-				<td><s:property value="#tutors.className"/></td>
-				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#tutors.guidDate"/></td>
-				<td><s:property value="#tutors.guidAddress"/></td>
-				<td><a href=""><img src="../images/edtico.png"/></a></td>
+			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#tutor.id'/>'/></td>
+            	<td><s:property value="#tutor.studentNo"/></td>
+				<td ><s:property value="#tutor.stuName"/></td>
+				<td><s:property value="#tutor.className"/></td>
+				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#tutor.guidDate"/></td>
+				<td><s:property value="#tutor.guidAddress"/></td>
+				<td><a href="javascript:editor('<s:property value='#tutor.id'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>          
         </tbody>
@@ -127,9 +174,107 @@ function query(){
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 </form>
 
+<div class="importDialog" align="center" >
+	<div class="dialog-content" align="center">   
+        <div class="ui-dialog-text" align="center">
+            <p class="dialog-content">请选择要导入的excel文件</p>
+            <form id="fileForm" action="${basePath}tutor/tutor_importExcel.action" method="post" enctype="multipart/form-data">
+            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel"  id="filename"/></p>
+          </form>
+            <div class="buttons" align="center">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="返回" />
+            </div>
+        </div>
+        </div>
+</div>
 
+<!--弹出删除提示框的窗口-->
+<div class="delDialog">
+	<div class="dialog-content">
+    	<div class="ui-deldialog-icon"></div>
+        <div class="ui-dialog-text">
+        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
+            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
+            
+            <div class="buttons">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="取消" />
+            </div>
+        </div>
+        </div>
+</div>
 
 </body>
 
+<script type="text/javascript">
+<!--实现文本选择框的脚本-->
+
+$('.importDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:250,
+	height:220
+	
+});
+
+$('.import').click(function(){
+	$('.importDialog').Dialog('open');
+});
+
+
+
+$('.importDialog input[type=button]').click(function(e) {
+    $('.importDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		
+		if(document.getElementById("filename").value){//在文件非空的条件下才允许向后台提交请求
+			$("#fileForm").submit();
+		}
+		else{
+			$('.importDialog').Dialog('open');//如果用户未选择任何文件，那么窗口保持打开状态
+		}
+	}
+});
+
+<!--实现删除提示框的脚本-->
+
+$('.delDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:400,
+	height:200
+	
+});
+
+$('.del').click(function(){
+	//在弹出前先判断是否已经选中了相关记录
+	var selectedRows=document.getElementsByName("selectedRow");
+	
+	var i=0;
+	var length=selectedRows.length;
+	
+	while(i<length){//如果有记录被选中，则弹出对话框
+		if(selectedRows[i++].checked){
+			$('.delDialog').Dialog('open');
+		}
+	}
+		
+	
+	
+});
+
+
+
+$('.delDialog input[type=button]').click(function(e) {
+    $('.delDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		del();
+	}
+});
+
+</script>
 
 </html>

@@ -66,18 +66,15 @@ public class TutorServicesImpl extends BaseServicesImpl<Tutor> implements TutorS
 				nextday=new Timestamp(time);
 			}
 			
-			if(!StringUtils.isEmpty(tutor.getStudentNo())){
-				fields=new String[]{"studentNo=?","stuName like ?","guidDate>?","guidDate<?"};
-				params=new Object[]{tutor.getStudentNo(),"%"+tutor.getStuName()+"%",tutor.getGuidDate(),nextday};
-			}
-			else if(!StringUtils.isEmpty(tutor.getStuName())){
+			
+			if(tutor.getGuidDate()==null){//此处与学籍异动信息模块不同，这里要对辅导日期进行判空处理
+				fields=new String[]{"studentNo=?","stuName like ?"};
+				params=new Object[]{tutor.getStudentNo(),"%"+tutor.getStuName()+"%"};
+			}else{
 				fields=new String[]{"stuName like ?","studentNo=?","guidDate>?","guidDate<?"};
 				params=new Object[]{"%"+tutor.getStuName()+"%",tutor.getStudentNo(),tutor.getGuidDate(),nextday};
 			}
-			else if(!StringUtils.isEmpty(tutor.getGuidDate()+"")){
-				fields=new String[]{"guidDate>?","guidDate<?","stuName like ?","studentNo=?"};
-				params=new Object[]{tutor.getGuidDate(),nextday,"%"+tutor.getStuName()+"%",tutor.getStudentNo()};
-			}
+				
 		}
 		
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
@@ -110,6 +107,33 @@ public class TutorServicesImpl extends BaseServicesImpl<Tutor> implements TutorS
 		
 		return tutorDao.getPageUtils(queryUtils, pageNO, pageSize);
 		
+	}
+
+	@Override
+	public Tutor trimTutor(Tutor tutor) {
+		// TODO Auto-generated method stub
+		if(tutor!=null){
+			if(!StringUtils.isEmpty(tutor.getStudentNo())){
+				tutor.setStudentNo(tutor.getStudentNo().trim());
+			}
+			if(!StringUtils.isEmpty(tutor.getClassName())){
+				tutor.setClassName(tutor.getClassName().trim());
+			}
+			if(!StringUtils.isEmpty(tutor.getStuName())){
+				tutor.setStuName(tutor.getStuName().trim());
+			}
+			if(!StringUtils.isEmpty(tutor.getGuidAddress())){
+				tutor.setGuidAddress(tutor.getGuidAddress().trim());
+			}
+			if(!StringUtils.isEmpty(tutor.getGuidContent())){
+				tutor.setGuidContent(tutor.getGuidContent().trim());
+			}
+			if(!StringUtils.isEmpty(tutor.getDemo())){
+				tutor.setDemo(tutor.getDemo().trim());
+			}
+		}
+		
+		return tutor;
 	}
 	
 	

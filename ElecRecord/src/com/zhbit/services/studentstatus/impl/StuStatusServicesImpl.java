@@ -57,19 +57,8 @@ public class StuStatusServicesImpl extends BaseServicesImpl<StuStatus> implement
 			if(!StringUtils.isEmpty(stuStatus.getStudentNo())){
 				stuStatus.setStudentNo(stuStatus.getStudentNo().trim());
 			}
-			
-			if(!StringUtils.isEmpty(stuStatus.getAcademicYear())){
 				fields=new String[]{"academicYear=?","studentNo=?","stuName like ?"};
 				params=new String[]{stuStatus.getAcademicYear(),stuStatus.getStudentNo(),"%"+stuStatus.getStuName()+"%"};
-			}
-			else if(!StringUtils.isEmpty(stuStatus.getStudentNo())){
-				fields=new String[]{"studentNo=?","academicYear=?","stuName like ?"};
-				params=new String[]{stuStatus.getStudentNo(),stuStatus.getAcademicYear(),"%"+stuStatus.getStuName()+"%"};
-			}
-			else if(!StringUtils.isEmpty(stuStatus.getStuName())){
-				fields=new String[]{"stuName like ?","academicYear=?","studentNo=?"};
-				params=new String[]{"%"+stuStatus.getStuName()+"%",stuStatus.getAcademicYear(),stuStatus.getStudentNo()};
-			}
 			
 		}
 		// TODO Auto-generated method stub

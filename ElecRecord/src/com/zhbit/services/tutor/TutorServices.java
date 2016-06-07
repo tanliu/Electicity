@@ -21,4 +21,6 @@ public interface TutorServices extends BaseServices<Tutor> {
 	
 	 public PageUtils queryList(Tutor tutor, int pageNO, int pageSize);
 	 
+	 public Tutor trimTutor(Tutor tutor);
+	 
 }

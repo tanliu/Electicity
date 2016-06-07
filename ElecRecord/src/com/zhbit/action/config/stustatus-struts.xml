@@ -37,7 +37,7 @@
 	          <param name="encode">true</param>
 	          </result>
 	           <result name="importExcel" type="redirectAction">
-	           <param name="actionName">stustatus_listUI</param>
+	           <param name="actionName">tutor_listUI</param>
 	           </result>
          </action>
         
