@@ -35,9 +35,6 @@ frame{
   <frame style="padding-top: 5px;" src="${basePath}/system/authority_addUI.action" id="add" name="add" frameborder="0" scrolling="yes">
   </frameset>
 </frameset> 
-
-
-
 <script type="text/javascript" src="${basePath}js/tree/jquery-1.4.4.min.js"></script>
 <script type="text/javascript">
 	$(function($){
