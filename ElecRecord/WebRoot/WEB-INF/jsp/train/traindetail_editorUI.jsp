@@ -13,29 +13,34 @@
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
-<title>学生干部培训明细表添加</title>
+<title>学生干部培训明细表修改</title>
 </head>
-<body>
+<body >
 
-<div class="title"><h2>添加学生干部培训明细表信息</h2></div>
-<form id="myForm" method="post">  
-	    <input hidden="hidden" value="<s:property value="1"/>" name="traininfoDetail.stuId">
-<%--  	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="traininfoMaster.creator">  --%>
-	    
+<div class="title"><h2>修改学生干部培训明细表</h2></div>
+<form id="myForm" method="post">
+        <input hidden="hidden" value="<s:property value="traininfoDetail.stuId"/>" name="traininfoDetail.stuId"> 
+	   <input hidden="hidden" name="traininfoDetail.id" value="${traininfoDetail.id}" > 
+	   <!-- 将listUI传过来的查询条件赋值 -->
+	    <input type="hidden" name="query_trainsResult" value="${querycon.trainsResult}">
+	    <input type="hidden" name="query_trainsTopic" value="${querycon.master_trainsTopic}">
+	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">
+	    <s:hidden name="pageNO"></s:hidden>
+	  
 <div class="main">
-    <p class="short-input ue-clear">
+     <p class="short-input ue-clear">
     	<label>参训人：</label>
-        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人" /> 
+        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人" value="${traininfoDetail.stuName}" /> 
        <label>学号：</label>
-        <input type="text" name="traininfoDetail.studentNo" placeholder="请输入学号" />
+        <input type="text" name="traininfoDetail.studentNo" placeholder="请输入学号" value="${traininfoDetail.studentNo}" />
     </p>
     <!-- 迭代选择   根据 traininfoMaster的id找到对应的trainTopic-->
      <div class="short-input select ue-clear" >
          <label>培训主题：</label>
-        <input class="noNull" hidden="hidden" value="" name="traininfoDetail.master_id">
+        <input class="noNull" hidden="hidden" value="<s:property value="traininfoDetail.master_trainsTopic"/>" name="traininfoDetail.master_id">
 				<div class="select-wrap">
 				<div class="select-title">
-					<span id="span1">请选择</span><i class="icon"></i>
+					<span id="span1">${traininfoDetail.master_trainsTopic}</span><i class="icon"></i>
 					</div>
 					<ul class="select-list" >
 					    <li id="">请选择</li>
@@ -46,9 +51,9 @@
 				</div>
 
         <label>培训结果：</label>
-        <input  hidden="hidden"  name="traininfoDetail.trainsResult">
+        <input  hidden="hidden"  value="<s:property value="traininfoDetail.trainsResult"/>" name="traininfoDetail.trainsResult">
         <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
+        	<div class=" select-title ue-clear" ><span >${traininfoDetail.trainsResult}</span><i class="icon"></i></div>
             <ul class="select-list" >
                 <li id="">请选择</li>
                 <li id="合格">合格</li>
@@ -60,18 +65,20 @@
     
     <p class="short-input ue-clear">
     	<label >备注：</label>
-        <textarea name="traininfoDetail.memo" placeholder="请输入备注"></textarea>
+        <textarea name="traininfoDetail.memo" placeholder="请输入备注">${traininfoDetail.memo}</textarea>
     </p>
     
 </div>
 
 <div class="btn ue-clear">
 	
-	<a href="javascript:editor('myForm','post','${basePath}train/traindetail_add.action')"  class="confirm save">确定</a>
+	 <a href="javascript:editor('myForm','post','${basePath}train/traindetail_editor.action') "  class="confirm save">确定</a> 
+  
     <a href="javascript:back()" class="clear clear" >返回</a>
 </div>
 </form>
 </body>
-
 <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
+
+
 </html>

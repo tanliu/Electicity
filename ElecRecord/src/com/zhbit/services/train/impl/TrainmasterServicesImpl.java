@@ -34,13 +34,13 @@ TrainmasterServices{
 			
 			if(traininfoMaster!=null){ //判定traininfoMaster不为空时
 				
-//				//先去除学号和姓名中可能存在的空格
-//				if(!StringUtils.isEmpty(politicalstatus.getStuName())){
-//					politicalstatus.setStuName(politicalstatus.getStuName().trim());
-//				}
-//				if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){
-//					politicalstatus.setStudentNo(politicalstatus.getStudentNo().trim());
-//				}
+				//先去除存在的空格
+				if(!StringUtils.isEmpty(traininfoMaster.getManager())){
+					traininfoMaster.setManager(traininfoMaster.getManager().trim());
+			    }
+			    if(!StringUtils.isEmpty(traininfoMaster.getTrainsTopic())){
+			    	traininfoMaster.setTrainsTopic(traininfoMaster.getTrainsTopic().trim());
+				}
 				////多个查询条件组合
 				if(!StringUtils.isEmpty(traininfoMaster.getManager())){ 
 					//查询语句组合
