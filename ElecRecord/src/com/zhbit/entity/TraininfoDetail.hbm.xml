@@ -12,8 +12,14 @@
         </id>
         
          <property name="master_id" type="java.lang.String">
-            <column name="master_id" length="32">
+            <column name="master_id" length="232">
                 <comment>培训信息ID</comment>
+            </column>
+        </property>
+        
+          <property name="master_trainsTopic" type="java.lang.String">
+            <column name="master_trainsTopic" length="200">
+                <comment>培训主题</comment>
             </column>
         </property>
         

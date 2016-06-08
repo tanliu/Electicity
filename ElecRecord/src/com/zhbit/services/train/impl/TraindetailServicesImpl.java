@@ -2,6 +2,7 @@ package com.zhbit.services.train.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.train.TraindetailDao;
@@ -11,6 +12,7 @@ import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.train.TraindetailServices;
 
 import com.zhbit.util.PageUtils;
+import com.zhbit.util.QueryUtils;
 
 
 
@@ -28,8 +30,35 @@ TraindetailServices{
 	
 	@Override
 	public PageUtils queryList(TraininfoDetail traininfoDetail, int pageNO, int pageSize) {
+		String[] fields=null;
+		String[] params=null;
+		//排序条件，根据创建时间去排序查出来的结果集
+		String proterty="id";	
+		
+		if(traininfoDetail!=null){ //判定traininfoMaster不为空时
+			
+			//先去除存在的空格
+			if(!StringUtils.isEmpty(traininfoDetail.getStuName())){
+				traininfoDetail.setStuName(traininfoDetail.getStuName().trim());
+		    }
+		    if(!StringUtils.isEmpty(traininfoDetail.getTrainsResult())){
+		    	traininfoDetail.setTrainsResult(traininfoDetail.getTrainsResult().trim());
+			}
+			////多个查询条件组合
+			if(!StringUtils.isEmpty(traininfoDetail.getStuName())){ 
+				//查询语句组合
+				fields=new String[]{"stuName like ?","trainsResult=?","master_trainsTopic=?"};
+				params=new String[]{"%"+traininfoDetail.getStuName()+"%",traininfoDetail.getTrainsResult(),traininfoDetail.getMaster_trainsTopic()};
+			}else if(!StringUtils.isEmpty(traininfoDetail.getTrainsResult())){
+				fields=new String[]{"trainsResult=?","stuName like ?","master_trainsTopic=?"};
+				params=new String[]{traininfoDetail.getTrainsResult(),"%"+traininfoDetail.getStuName()+"%",traininfoDetail.getMaster_trainsTopic()};
+			}else if(!StringUtils.isEmpty(traininfoDetail.getMaster_trainsTopic())){
+				fields=new String[]{"master_trainsTopic=?","trainsResult=?","stuName like ?",};
+				params=new String[]{traininfoDetail.getMaster_trainsTopic(),traininfoDetail.getTrainsResult(),"%"+traininfoDetail.getStuName()+"%"};
+			}
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
 	}
 
 }

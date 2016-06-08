@@ -11,10 +11,10 @@ public class TraininfoDetail implements java.io.Serializable {
 	private String id;
 	private String stuId;
 	private String master_id;
-	private String trainsTopic;
 	private String studentNo;
 	private String stuName;
 	private String trainsResult;
+	private String master_trainsTopic;
 	private String memo;
 
 	// Constructors
@@ -94,13 +94,13 @@ public class TraininfoDetail implements java.io.Serializable {
 	public void setMaster_id(String master_id) {
 		this.master_id = master_id;
 	}
-
-	public String getTrainsTopic() {
-		return trainsTopic;
+	public String getMaster_trainsTopic() {
+		return master_trainsTopic;
 	}
 
-	public void setTrainsTopic(String trainsTopic) {
-		this.trainsTopic = trainsTopic;
+	public void setMaster_trainsTopic(String master_trainsTopic) {
+		this.master_trainsTopic = master_trainsTopic;
 	}
+	
 
 }
