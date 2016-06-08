@@ -13,14 +13,14 @@
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
-<title>党团关系基本信息添加</title>
+<title>学生干部培训基本信息添加</title>
 </head>
 <body>
 
-<div class="title"><h2>添加党团关系基本信息</h2></div>
+<div class="title"><h2>添加学生干部培训基本信息</h2></div>
 <form id="myForm" method="post">  
-	    <input hidden="hidden" value="<s:property value="1"/>" name="politicalstatus.stuId">
-	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="politicalstatus.creator">
+	    <input hidden="hidden" value="<s:property value="1"/>" name="traininfoDetail.stuId">
+<%-- 	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="politicalstatus.creator"> --%>
 	    
 <div class="main">
     <p class="short-input ue-clear">

@@ -11,6 +11,7 @@
             <result name="listUI">/WEB-INF/jsp/studentstatus/stustausinfo_listUI.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/studentstatus/stustausinfo_editorUI.jsp</result>
              <result name="addUI">/WEB-INF/jsp/studentstatus/stustausinfo_addUI.jsp</result>
+              <result name="detailUI">/WEB-INF/jsp/studentstatus/stustatusinfo_detailUI.jsp</result>
             <result name="add" type="redirectAction">
 	         <param name="actionName">stustatus_listUI</param>
 	          <param name="stuStatus.studentNo">${stuStatus.studentNo}</param>
@@ -36,7 +37,7 @@
 	          <param name="encode">true</param>
 	          </result>
 	           <result name="importExcel" type="redirectAction">
-	           <param name="actionName">stustatus_listUI</param>
+	           <param name="actionName">tutor_listUI</param>
 	           </result>
          </action>
         

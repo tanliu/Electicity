@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
+<link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
 
 <style type="text/css">
 /*单元格样式*/
@@ -29,6 +30,7 @@ table thead tr th{
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
+<script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
 
 <script type="text/javascript" >
 
@@ -49,7 +51,7 @@ $(function(){
     
     	 var $id=$(this).children("td").children("input").val();
     	
-    	window.open("${basePath}stustatus/stustatus_detailUI.action?stuStatus.id="+$id);
+    	window.open("${basePath}tutor/tutor_detailUI.action?tutor.id="+$id);
 
      }  
         
@@ -64,77 +66,66 @@ $(function(){
     });
 })
 
-//以下两条路径用于访问Action
-var queryAction="${basePath}stustatus/stustatus_listUI.action";
-var deleteAction="${basePath}stustatus/stustatus_delete.action";
 
-//向stustatus_editorUI.action提交信息
-function editor(id){
-		var url="${basePath}stustatus/stustatus_editorUI.action?stuStatus.id="+id;
-		$("#queryForm").attr("action",url);
- 		$("#queryForm").submit();  
-} 
-
-//向stustatus_addUI.action提交信息
-function add(){
-		var url="${basePath}stustatus/stustatus_addUI.action";
-		$("#queryForm").attr("action",url);
- 	$("#queryForm").submit();  
-} 
+//以下路径用于访问Action
+var queryAction="${basePath}tutor/tutor_listUI.action";
+var deleteAction="${basePath}tutor/tutor_delete.action";
 
 //向stustatus_listUI.action提交信息
 function query(){
-	  	$("#pageNo").val(1);
+	    $("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
 	
+//向stustatus_addUI.action提交信息
+function add(){
+		var url="${basePath}tutor/tutor_addUI.action";
+		$("#queryForm").attr("action",url);
+ 	$("#queryForm").submit();  
+} 
+
+//向stustatus_editorUI.action提交信息
+function editor(id){
+		var url="${basePath}tutor/tutor_editorUI.action?tutor.id="+id;
+		$("#queryForm").attr("action",url);
+ 		$("#queryForm").submit();  
+} 
+
 //向stustatus_delUI.action提交信息
 function del(){
-		var url="${basePath}stustatus/stustatus_delete.action";
+		var url="${basePath}tutor/tutor_delete.action";
 		$("#queryForm").attr("action",url);
  		$("#queryForm").submit();  
 } 
  </script>
-<title>学生学籍异动信息</title>
+<title>辅导信息</title>
 </head>
 
 <body>
-<div class="title"><h2>学生学籍异动信息</h2></div>
-<form id="queryForm" action="${basePath}stustatus/stustatus_listUI.action" method="post">
+<div class="title"><h2>辅导信息</h2></div>
+<form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" style="width:100%">
-                                                               
-       
+	<div class="query-conditions ue-clear" style="width:100%">                  
+	                                          
        <div class="conditions staff ue-clear" style="width:25%">
             <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" name="stuStatus.studentNo" value="${queryCon.studentNo}" style="width:233px;height:30px" />
-            
+            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}" style="width:233px;height:30px" />
         </div>
         
          <div class="conditions staff ue-clear" style="width:25%">
             <label>姓名：</label>
-            <input type="text" placeholder="请输入学生姓名进行查询" name="stuStatus.stuName" value="${queryCon.stuName}" style="width:233px;height:30px"/>
+            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" style="width:233px;height:30px"/>
             
         </div>
         
-        
-        
-        <div class="conditions name ue-clear" >
-           <label>学年：</label>
-        <input  hidden="hidden" value="${queryCon.academicYear}" name="stuStatus.academicYear">
-      <div class="select-wrap" >
-				<div class="select-title ue-clear" ><span id="span1" >${queryCon.academicYear}</span><i class="icon"></i></div>
-					<ul class="select-list" >
-					 <li id="" >请选择</li>
-					    <s:iterator value="#request.years" var="years">
-					      <li id="<s:property value='#years.ddlName'/>" ><s:property value="#years.ddlName"/></li>
-					    </s:iterator>
-					</ul>					
-				</div>
+            
+         <div class="conditions staff ue-clear" >
+            <label>辅导时间：</label>
+            <input type="text" value="<s:date format="yyyy-MM-dd" name="tutor.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="tutor.guidDate" style="width:233px;height:30px"/>
+            
         </div>
-        
        
        
         
@@ -157,35 +148,29 @@ function del(){
         	<tr>
 			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
             	<th width="20%" class="num">学号</th>
-                <th width="10%" >姓名</th>
-				<th width="5%" >性别</th>
-				<th width="20%" align="center">身份证号</th>
-				<th width="20%" >考生号</th>
-				<th width="10%" align="center">异动类别</th>
+                <th width="15%" >姓名</th>
+				<th width="20%" align="center">专业班级</th>
+				<th width="15%" >辅导时间</th>
+				<th width="15%" align="center">辅导地点</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="stustatus">
+           <s:iterator value="pageUtils.items" var="tutor">
         	<tr>
-        	
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#stustatus.id'/>' /></td>
-			
-            	<td><s:property value="#stustatus.studentNo"/></td>
-				<td ><s:property value="#stustatus.stuName"/></td>
-				<td><s:property value="#stustatus.sex"/></td>
-				<td><s:property value="#stustatus.idCardNo"/></td>
-				<td><s:property value="#stustatus.examinateNo"/></td>
-				<td><s:property value="#stustatus.tansactionType"/></td>
-				<td><a href="javascript:editor('<s:property value='#stustatus.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#tutor.id'/>'/></td>
+            	<td><s:property value="#tutor.studentNo"/></td>
+				<td ><s:property value="#tutor.stuName"/></td>
+				<td><s:property value="#tutor.className"/></td>
+				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#tutor.guidDate"/></td>
+				<td><s:property value="#tutor.guidAddress"/></td>
+				<td><a href="javascript:editor('<s:property value='#tutor.id'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>          
         </tbody>
     </table>
     
 </div>
-
-
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 </form>
 
@@ -193,7 +178,7 @@ function del(){
 	<div class="dialog-content" align="center">   
         <div class="ui-dialog-text" align="center">
             <p class="dialog-content">请选择要导入的excel文件</p>
-            <form id="fileForm" action="${basePath}stustatus/stustatus_importExcel.action" method="post" enctype="multipart/form-data">
+            <form id="fileForm" action="${basePath}tutor/tutor_importExcel.action" method="post" enctype="multipart/form-data">
             <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel"  id="filename"/></p>
           </form>
             <div class="buttons" align="center">
