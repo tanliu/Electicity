@@ -31,7 +31,7 @@ frame{
 <frameset id="test" name="test" cols="15%,75%">
   <frame src="${basePath}/system/authority_tree.action" id="privilige" name="privilige" frameborder="0" scrolling="no"></frame>
   <frameset rows="50%,50%">
-  <frame style="padding-bottom: 0px;" src="${basePath}/system/authority_editorUI.action" id="editor" name="editor"  marginheight="" marginwidth="" frameborder="0" scrolling="no">
+  <frame style="padding-bottom: 0px;" src="${basePath}/system/authority_editorUI.action" id="editor" name="editor"  marginheight="" marginwidth="" frameborder="0" scrolling="yes">
   <frame style="padding-top: 5px;" src="${basePath}/system/authority_addUI.action" id="add" name="add" frameborder="0" scrolling="yes">
   </frameset>
 </frameset> 
@@ -42,9 +42,9 @@ frame{
 <script type="text/javascript">
 	$(function($){
 	$("BODY").width($(window).width());
-	$("#editor").height($(window).height()*0.92*0.48);
+	$("#editor").height($(window).height()*0.92);
 	$("#menu").height($(window).height()*0.92);
-	$("#add").height($(window).height()*0.92*0.48);
+	$("#add").height($(window).height()*0.92);
 	$("#editor").width($(window).width()*0.72);
 	$("#menu").width($(window).width()*0.1);
 	$("#add").width($(window).width()*0.72);

@@ -1,6 +1,7 @@
 
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
+<%@ taglib prefix="a" uri="http://openhome.cc/jstl/fake"%>
 
 <html>
 <head>
@@ -137,7 +138,7 @@ function del(){
 </div>
 
 <div class="table-operate ue-clear">
-	<a href="javascript:add()" class="add">添加</a>
+     <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
     <a href="javascript:" class="del confirm save">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
 </div>
