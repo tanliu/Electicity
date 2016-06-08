@@ -5,6 +5,7 @@ package com.zhbit.dao.system;
 
 import com.zhbit.dao.BaseDao;
 import com.zhbit.entity.User;
+import com.zhbit.entity.UserRole;
 /** 
  * 项目名称：ElecRecord
  * 类名称：UserDao 
@@ -18,5 +19,17 @@ import com.zhbit.entity.User;
  */ 
 public interface UserDao extends BaseDao<User> {
 	public static final String DAO_NAME="com.zhbit.dao.system.impl.UserDaoImpl";
+
+	/**
+	 * 方法描述:保存角色
+	 * @param userRole
+	 */
+	void saveUserRole(UserRole userRole);
+
+	/**
+	 * 方法描述:删除角色角色表的数据
+	 * @param userId
+	 */
+	void deleteUserRole(String string);
 
 }

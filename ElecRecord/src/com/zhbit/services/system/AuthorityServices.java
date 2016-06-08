@@ -35,6 +35,20 @@ void deleteNode(String authorityId);
  * @return
  */
  List<Authority> getTreeData();
+
+/**
+ * 方法描述:能过用户权限获取权限菜单
+ * @param authorities
+ * @return
+ */
+List<Authority> findMenu(String authorities);
+
+/**
+ * 方法描述:查找权限所对应的url
+ * @param authorities
+ * @return
+ */
+String findUrls(String authorities);
  
 
 

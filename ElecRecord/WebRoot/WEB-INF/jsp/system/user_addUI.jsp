@@ -87,6 +87,22 @@
 	<a href="javascript:add('myForm','post','${basePath}system/user_add.action')"  class="confirm save">确定</a> <a
 				href="javascript:back()" class="clear clear">返回</a>
 		</div>
+	<fieldset>
+	<legend>用户角色分配</legend>
+	   
+       <s:iterator value="#request.roles" var="role" status="num"  >
+       
+
+       
+	   <input  name="roleIds" value="<s:property value='#role.roleId'/> " type=checkbox style="vertical-align:middle;" /> 
+                    <span  style="vertical-align:middle;" ><s:property value="#role.roleName"/></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <s:if test="(#num.getIndex()+1)%10==0">        
+          <br>
+        </s:if>
+       </s:iterator>
+	
+	</fieldset>
 
 </div>
 	</form>

@@ -3,11 +3,14 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.zhbit.annotation.Transform;
+
 
 public class User implements java.io.Serializable {
 
 	// Fields
 
+	@Transform(name="tanliu", isNull = Transform.TYPE_Integer, type = "")
 	private String userId;   //用户id
 	private Organization organization;
 	private String employNo;
@@ -23,6 +26,8 @@ public class User implements java.io.Serializable {
 	private Set<UserRole> userRoles = new HashSet(0);
 
 
+	public final static String SESSION_NAME="user";
+	
 	public User() {
 	}
 

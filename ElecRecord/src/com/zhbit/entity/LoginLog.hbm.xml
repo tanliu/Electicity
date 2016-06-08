@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.zhbit.entity.LoginLog" table="tb_sys_login_log" catalog="elecrecord">
+        <id name="logicId" type="java.lang.String">
+            <column name="logic_id" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="employNo" type="java.lang.String">
+            <column name="employ_no" length="32">
+                <comment>用户账号</comment>
+            </column>
+        </property>
+        <property name="loginTime" type="java.sql.Timestamp">
+            <column name="login_time" length="19">
+                <comment>登入时间</comment>
+            </column>
+        </property>
+        <property name="loginIp" type="java.lang.String">
+            <column name="login_ip" length="100">
+                <comment>客户端IP</comment>
+            </column>
+        </property>
+        <property name="ifSuccess" type="java.lang.Integer">
+            <column name="if_success">
+                <comment>是否成功</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

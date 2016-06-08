@@ -62,13 +62,13 @@
                 <comment>用户类型</comment>
             </column>
         </property>
-<!--          <set name="userRoles" inverse="true">
+         <set name="userRoles" inverse="false" lazy="false" cascade="delete" >
             <key>
                 <column name="user_id" length="32">
                     <comment>标识ID</comment>
                 </column>
             </key>
             <one-to-many class="com.zhbit.entity.UserRole" />
-        </set>  -->
+        </set> 
     </class>
 </hibernate-mapping>

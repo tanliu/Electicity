@@ -45,6 +45,12 @@ public class Role implements java.io.Serializable {
 
 
 
+	public Role(String roleId) {
+		this.roleId=roleId;
+	}
+
+
+
 	public String getRoleId() {
 		return roleId;
 	}

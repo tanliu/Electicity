@@ -12,8 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.system.AuthorityDao;
 import com.zhbit.entity.Authority;
+import com.zhbit.entity.RoleAuthority;
+import com.zhbit.entity.UserRole;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.system.AuthorityServices;
+import com.zhbit.services.system.RoleAuthotityServices;
+import com.zhbit.services.system.UserRoleServices;
 import com.zhbit.util.QueryUtils;
 
 /** 
@@ -36,6 +40,9 @@ public class AuthorityServicesImpl extends BaseServicesImpl<Authority> implement
 		super.setBaseDao(authorityDao);
 		this.authorityDao = authorityDao;
 	}
+	@Resource(name=RoleAuthotityServices.SERVICES_NAME)
+	RoleAuthotityServices roleAuthotityServices;
+	
 	@Override
 	public void saveAuthoity(Authority authority) {
 		
@@ -57,6 +64,16 @@ public class AuthorityServicesImpl extends BaseServicesImpl<Authority> implement
 		List<Authority> authorities=authorityDao.findNodeAndChild(authorityId);
 		//批量删除
 		if(authorities!=null&&authorities.size()>0){
+			//能过权限查找到角色权限表中的信息
+			for (Authority authority : authorities) {
+				String[] fields={""};
+				String[] params={};
+				List<RoleAuthority> roleAuthorities =roleAuthotityServices.findObjectByFields(fields, params);
+				if(roleAuthorities!=null&& roleAuthorities.size()>0){
+					roleAuthotityServices.deleteObjectByCollection(roleAuthorities);
+				}
+			}
+			//对权限角色表中的信息进清理
 			authorityDao.deleteObjectByCollection(authorities);
 		}
 		
@@ -67,6 +84,42 @@ public class AuthorityServicesImpl extends BaseServicesImpl<Authority> implement
 		String proterty="menuNo";
 		String order=QueryUtils.ORDER_BY_ASC;
 		return this.findAllObject(proterty, order);
+	}
+	@Override
+	public List<Authority> findMenu(String authorities) {
+		String[] ary = authorities.split("@");
+		//拼接查找条件
+		StringBuffer condition=new StringBuffer("");
+		if(ary!=null&&ary.length>0){
+			for (String authority : ary) {
+				condition.append("'").append(authority).append("'").append(",");
+			}
+			condition.deleteCharAt(condition.length()-1);
+		}
+		List<Authority> menus=authorityDao.findAuthByAuthAndType(condition.toString(),Authority.TYPE_MENU);
+		return menus;
+	}
+	@Override
+	public String findUrls(String authorities) {
+		String[] ary = authorities.split("@");
+		//拼接查找条件
+		StringBuffer condition=new StringBuffer("");
+		if(ary!=null&&ary.length>0){
+			for (String authority : ary) {
+				condition.append("'").append(authority).append("'").append(",");
+			}
+			condition.deleteCharAt(condition.length()-1);
+		}
+		List<Authority> auth=authorityDao.findUrlByAuth(condition.toString());
+		StringBuffer urls=new StringBuffer("");
+		if(auth!=null&&auth.size()>0){
+			for (Authority authority : auth) {
+				urls.append(authority.getUrl()).append("@");
+			}
+			urls.deleteCharAt(urls.length()-1);
+			
+		}
+		return urls.toString();
 	}
 
 

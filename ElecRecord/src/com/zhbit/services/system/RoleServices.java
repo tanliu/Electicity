@@ -3,6 +3,7 @@
  */
 package com.zhbit.services.system;
 
+import java.util.Hashtable;
 import java.util.List;
 
 import com.zhbit.entity.Role;
@@ -58,7 +59,14 @@ public interface RoleServices extends BaseServices<Role> {
 	 * 方法描述:删除角色
 	 * @param selectedRow
 	 */
-	void deleteRole(String[] selectedRow);	
+	void deleteRole(String[] selectedRow);
+
+	/**
+	 * 方法描述:能过角色查找所有权限
+	 * @param userRoleht
+	 * @return
+	 */
+	String findPopedomByRoleIDs(Hashtable<String, String> userRoleht);	
 	
 
 }

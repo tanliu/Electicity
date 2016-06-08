@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
+<%@ taglib prefix="a" uri="http://openhome.cc/jstl/fake"%>
 <html>
 <head>
     
@@ -71,7 +72,7 @@ table thead tr th{
 <div class="query">
 	<div class="query-conditions ue-clear">
         <div class="conditions staff ue-clear">
-            <label>查询条件：</label>
+           <a:if url="/system/user_listUI.action"> <label>查询条件：</label></a:if>
             <!-- 如果employNo的值是空时，表示上一页的查询条件是以用户的方式查询 -->
             <s:textfield id="condition" name="querycon"></s:textfield>            
 

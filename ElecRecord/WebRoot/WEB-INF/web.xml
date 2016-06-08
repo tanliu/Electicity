@@ -2,6 +2,25 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>ElecRecord</display-name>
   
+    <!-- cookie处理的filter -->
+  <filter>
+    <filter-name>CookieFilter</filter-name>
+    <filter-class>com.zhbit.filter.CookieFilter</filter-class>
+  </filter>  
+  <filter-mapping>
+    <filter-name>CookieFilter</filter-name>
+    <url-pattern>/system/login_loginUI.action</url-pattern>
+  </filter-mapping>
+    <!-- cookie处理的filter -->
+  <filter>
+    <filter-name>AuthorityFilter</filter-name>
+    <filter-class>com.zhbit.filter.AuthorityFilter</filter-class>
+  </filter>  
+  <filter-mapping>
+    <filter-name>AuthorityFilter</filter-name>
+    <url-pattern>*.action</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
     <!-- spring的配置-->
   <listener>
   	<listener-class>org.springframework.web.context.ContextLoaderListener </listener-class>
@@ -11,7 +30,7 @@
       <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
   
-  
+
   <!-- 配置 -->
   <filter>
     <filter-name>StrutsPrepareAndExecuteFilter</filter-name>

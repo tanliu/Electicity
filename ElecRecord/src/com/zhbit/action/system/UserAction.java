@@ -15,15 +15,19 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Organization;
+import com.zhbit.entity.Role;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.User;
 import com.zhbit.services.system.OrganizeServices;
+import com.zhbit.services.system.RoleServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.services.system.UserServices;
 import com.zhbit.util.AjaxReturnUtils;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.EncryptUtils;
+import com.zhbit.util.QueryUtils;
 /** 
  * 项目名称：ElecRecord
  * 类名称：UserAction 
@@ -43,6 +47,7 @@ public class UserAction extends BaseAction {
 	private String queryWay; //查询的方式
 	private String confirmpwd; //确认密码
 	private String querycon;//查询的条件
+	private String[] roleIds;
 	
 	@Resource(name=UserServices.SERVER_NAME)
 	UserServices userServices;
@@ -50,8 +55,11 @@ public class UserAction extends BaseAction {
 	OrganizeServices organizeServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
+	@Resource(name=RoleServices.SEVICES_NAME)
+	RoleServices roleServices;
 
 	@Override
+	@Limit(url="/system/system_listUI.action")
 	public String listUI(){
 		if(querycon!=null){
 			querycon=querycon.trim();
@@ -88,40 +96,55 @@ public class UserAction extends BaseAction {
 		String[] fields={"keyword=?"};
 		String[] params={"用户类型"};
 		List<SystemDll> systemDlls=systeDllServices.findObjectByFields(fields, params);
+		//查找到所有角色
+		String proterty="roleNo";
+		String order=QueryUtils.ORDER_BY_DESC;
+		List<Role> roles=roleServices.findAllObject(proterty, order);
 		request.setAttribute("organizations", organizations);
-		request.setAttribute("systemDlls", systemDlls);		
+		request.setAttribute("systemDlls", systemDlls);	
+		request.setAttribute("roles", roles);	
 		return "addUI";
 	}
 
 	@Override
 	public String add() {
-		//设置用户创建时间 
-		user.setCreateTime(new Timestamp(new Date().getTime()));
-		//对用户数据进行加密处理
-		user.setPassword(EncryptUtils.MD5Encrypt(user.getPassword()));
-		userServices.save(user);		
+		if(user!=null){
+		   userServices.saveUser(user,roleIds);
+		}
 		return "add";
 	}
 
 	@Override
-	public String delete() {		
-		userServices.deleteObjectByIds(selectedRow);
+	public String delete() {
+		if(selectedRow!=null&&selectedRow.length>0){
+			userServices.deleteUser(selectedRow);
+			
+		}
 		return "delete";
 	}
 
 	@Override
 	public String editorUI() {
-		
-		user=userServices.findObjectById(user.getUserId());
-		//查找所有的部门
-		List<Organization> organizations=organizeServices.findAllObject();
-		//到数据字典查找用户类型
-		String[] fields={"keyword=?"};
-		String[] params={"用户类型"};
-		List<SystemDll> systemDlls=systeDllServices.findObjectByFields(fields, params);
-		request.setAttribute("organizations", organizations);
-		request.setAttribute("systemDlls", systemDlls);
-		user=userServices.findObjectById(user.getUserId());
+		if(user!=null){			
+			user=userServices.findObjectById(user.getUserId());
+			//查找所有的部门
+			List<Organization> organizations=organizeServices.findAllObject();
+			//到数据字典查找用户类型
+			String[] fields={"keyword=?"};
+			String[] params={"用户类型"};
+			List<SystemDll> systemDlls=systeDllServices.findObjectByFields(fields, params);
+			//查找到所有角色
+			String proterty="roleNo";
+			String order=QueryUtils.ORDER_BY_DESC;
+			List<Role> roles=roleServices.findAllObject(proterty, order);
+			
+			request.setAttribute("roles", roles);
+			request.setAttribute("organizations", organizations);
+			request.setAttribute("systemDlls", systemDlls);
+			user=userServices.findObjectById(user.getUserId());
+		}else{
+			return "addUI";
+		}
 		return "editorUI";
 	}
 
@@ -132,8 +155,9 @@ public class UserAction extends BaseAction {
 		//设置更改后的信息
 		user.setEmployNo(tempUser.getEmployNo());//防止用户恶意更改用户编号
 		user.setCreateTime(tempUser.getCreateTime());
-		user.setPassword(tempUser.getPassword());		
-		userServices.update(user);		
+		user.setPassword(tempUser.getPassword());
+		userServices.editorUser(user,roleIds);
+	
 		return "editor";
 	}
 
@@ -205,6 +229,14 @@ public class UserAction extends BaseAction {
 
 	public void setQuerycon(String querycon) {
 		this.querycon = querycon;
+	}
+
+	public String[] getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
 	}
 	
 

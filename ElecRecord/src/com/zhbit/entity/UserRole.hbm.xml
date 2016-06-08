@@ -15,7 +15,7 @@
                 <comment>标识ID</comment>
             </column>
         </many-to-one>
-        <many-to-one name="role" class="com.zhbit.entity.Role" fetch="select">
+        <many-to-one name="role" class="com.zhbit.entity.Role" lazy="false" fetch="select">
             <column name="role_id" length="32">
                 <comment>主键ID</comment>
             </column>

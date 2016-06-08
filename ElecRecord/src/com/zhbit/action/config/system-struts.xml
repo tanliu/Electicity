@@ -7,6 +7,31 @@
 
 	<!-- 配置全局结果及异常映射 -->
 	<package name="system" namespace="/system" extends="json-default">
+	     <interceptors>
+	       <interceptor name="authorityInterceptor" class="com.zhbit.interceptor.AuthorityInterceptor"></interceptor>
+	       <interceptor name="errorInterceptor" class="com.zhbit.interceptor.ErrorInterceptor"></interceptor>
+	       <interceptor name="loginInterceptor" class="com.zhbit.interceptor.LoginLogInterceptor"></interceptor>
+	       
+	       <interceptor-stack name="myAuthorityInterceptor">
+	          <interceptor-ref name="defaultStack"></interceptor-ref>
+	          <interceptor-ref name="errorInterceptor"></interceptor-ref>
+	          <interceptor-ref name="loginInterceptor">
+	              <param name="includeMethods">login</param>
+	          </interceptor-ref>
+	          <interceptor-ref name="authorityInterceptor">
+	              <param name="excludeMethods">login</param>
+	          </interceptor-ref>
+	       </interceptor-stack>
+	     </interceptors> 
+		<!-- 覆盖底层的拦截器栈 对包中的所有action都有效 -->
+	<!-- 	<default-interceptor-ref name="myAuthorityInterceptor"/> -->
+	
+	   	  <global-results>
+	    	<result name="error">/WEB-INF/error.jsp</result>
+	    </global-results>
+	    <global-exception-mappings>
+	    	<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
 	
          <action name="systemddl_*" class="com.zhbit.action.system.SystemDllAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/system/systemdll.jsp</result>
@@ -36,6 +61,8 @@
          </action>
          <!-- 用户管理 -->
          <action name="user_*" class="userAction" method="{1}">
+             <interceptor-ref name="myAuthorityInterceptor"></interceptor-ref>
+            
             <result name="listUI">/WEB-INF/jsp/system/user_listUI.jsp</result>
             <result name="detailUI">/WEB-INF/jsp/system/user_detailUI.jsp</result>
             <result name="addUI">/WEB-INF/jsp/system/user_addUI.jsp</result>
@@ -95,6 +122,20 @@
 	          <param name="querycon">${querycon}</param>
 	          <param name="pageNO">${pageNO}</param>
 	          <param name="encode">true</param>
+            </result>
+         </action>
+         <!-- 登录管理 -->
+         <action name="login_*" class="loginAction" method="{1}">
+               <interceptor-ref name="myAuthorityInterceptor"></interceptor-ref>
+              <result name="failLogin">/WEB-INF/jsp/system/login.jsp</result>
+              <result name="home">/WEB-INF/jsp/system/home.jsp</result>
+              <result name="personInfo">/WEB-INF/jsp/system/personInfo.jsp</result>
+              <result name="loginUI">/WEB-INF/jsp/system/login.jsp</result>
+              <result name="success" type="redirectAction">
+	          <param name="actionName">login_home</param>
+	        </result>
+              <result name="menujson" type="json">
+				<param name="includeProperties">\[\d+\]\.authorityId,\[\d+\]\.parentId,\[\d+\]\.authorityName,\[\d+\]\.url</param>
             </result>
          </action>
 	</package>

@@ -28,4 +28,15 @@ public interface AuthorityDao extends BaseDao<Authority> {
 	 * @return
 	 */
 	List<Authority> findNodeAndChild(String authorityId);
+
+	/**
+	 * 方法描述:查找权限
+	 * @param condition
+	 * @param typeMenu
+	 * @return
+	 */
+	List<Authority> findAuthByAuthAndType(String condition, Integer typeMenu);
+
+	List<Authority> findUrlByAuth(String condition);
+
 }

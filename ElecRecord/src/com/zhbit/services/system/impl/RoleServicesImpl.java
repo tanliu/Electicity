@@ -4,19 +4,26 @@
 package com.zhbit.services.system.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.zhbit.dao.system.RoleAuthorityDao;
 import com.zhbit.dao.system.RoleDao;
+import com.zhbit.dao.system.UserRoleDao;
 import com.zhbit.entity.Authority;
 import com.zhbit.entity.Role;
 import com.zhbit.entity.RoleAuthority;
+import com.zhbit.entity.UserRole;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.system.RoleServices;
+import com.zhbit.services.system.UserRoleServices;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
@@ -41,6 +48,10 @@ public class RoleServicesImpl extends BaseServicesImpl<Role> implements RoleServ
 		super.setBaseDao(roleDao);
 		this.roleDao = roleDao;
 	}
+	@Resource(name=RoleAuthorityDao.DAO_NAME)
+	RoleAuthorityDao roleAuthorityDao;
+	@Resource(name=UserRoleServices.SERVICES_NAME)
+	UserRoleServices userRoleServices;
 	
 	/* 
 	 * 方法描述:保存角色信息	 *
@@ -116,9 +127,40 @@ public class RoleServicesImpl extends BaseServicesImpl<Role> implements RoleServ
 			//先删除对应的权限角色
 			List<RoleAuthority> roleAuthorities=roleDao.getRoleAuthority(roleId);
 			roleDao.deleteRoleAuthority(roleAuthorities);
+			//删除用户角色
+			String[] fields={"role.roleId=?"};
+			String[] params={roleId};
+			List<UserRole> userRoles=userRoleServices.findObjectByFields(fields, params);
+			userRoleServices.deleteObjectByCollection(userRoles);
 			//再删除角色
 			roleDao.deleteObjectByIds(roleId);			
 		}
 		
+	}
+
+	@Override
+	public String findPopedomByRoleIDs(Hashtable<String, String> userRoleht) {
+		StringBuffer buffer=new StringBuffer("");
+		List<Object> authorities;
+		//先查询到所有权限
+		StringBuffer buffercondition=new StringBuffer("");
+		if(userRoleht!=null&&userRoleht.size()>0){
+			for(Iterator<Entry<String, String>> iterator=userRoleht.entrySet().iterator();iterator.hasNext();){
+				Entry<String, String> entry=iterator.next();
+				buffercondition.append("'").append(entry.getKey()).append("'").append(",");
+			}
+			buffercondition.deleteCharAt(buffercondition.length()-1);
+			String condition=buffercondition.toString();
+			//查找所有权限
+			authorities=roleAuthorityDao.findAuthorityByRoleIDs(condition);
+			//拼接权限字符串
+			if(authorities!=null&&authorities.size()>0){
+				for (Object object : authorities) {
+					buffer.append(object.toString()).append("@");
+				}
+				buffer.deleteCharAt(buffer.length()-1);
+			}
+		}
+		return buffer.toString();
 	}
 }

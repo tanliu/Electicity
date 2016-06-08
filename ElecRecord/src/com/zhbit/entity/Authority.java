@@ -21,6 +21,15 @@ public class Authority implements java.io.Serializable {
 	private String menuNo;
 	private String memo;
 	
+	//authorityType权限类型-----权限类型 0-菜单 1-新增 2-修改 3-查询 4-删除 5-导出 6-导入 7-授权
+	public final static Integer TYPE_MENU=0;
+	public final static Integer TYPE_ADD=1;
+	public final static Integer TYPE_ALTER=2;
+	public final static Integer TYPE_QUERY=3;
+	public final static Integer TYPE_DELETE=4;
+	public final static Integer TYPE_EXPORT=5;
+	public final static Integer TYPE_IMPORT=6;
+	public final static Integer TYPE_GRANT=7;
 	
 	
 	
