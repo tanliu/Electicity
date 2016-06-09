@@ -71,7 +71,7 @@ public class TutorServicesImpl extends BaseServicesImpl<Tutor> implements TutorS
 				fields=new String[]{"studentNo=?","stuName like ?"};
 				params=new Object[]{tutor.getStudentNo(),"%"+tutor.getStuName()+"%"};
 			}else{
-				fields=new String[]{"stuName like ?","studentNo=?","guidDate>?","guidDate<?"};
+				fields=new String[]{"stuName like ?","studentNo=?","guidDate>=?","guidDate<=?"};
 				params=new Object[]{"%"+tutor.getStuName()+"%",tutor.getStudentNo(),tutor.getGuidDate(),nextday};
 			}
 				
