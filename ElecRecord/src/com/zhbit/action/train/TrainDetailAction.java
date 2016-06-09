@@ -21,7 +21,7 @@ import com.zhbit.util.DecodeUtils;
 @Controller("trainDetailAction")
 @Scope(value="prototype")
 public class TrainDetailAction extends BaseAndExcelAction{
-	TraininfoMaster traininfoMaster;
+	TraininfoMaster traininfoMaster=new TraininfoMaster();
 	TraininfoDetail traininfoDetail=new TraininfoDetail();
 	private static final long serialVersionUID = 1L;
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
@@ -174,6 +174,14 @@ public class TrainDetailAction extends BaseAndExcelAction{
 
 	public void setTraininfoDetail(TraininfoDetail traininfoDetail) {
 		this.traininfoDetail = traininfoDetail;
+	}
+
+	public TraininfoMaster getTraininfoMaster() {
+		return traininfoMaster;
+	}
+
+	public void setTraininfoMaster(TraininfoMaster traininfoMaster) {
+		this.traininfoMaster = traininfoMaster;
 	}
 
 }

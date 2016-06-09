@@ -26,6 +26,7 @@
 	   <!-- 将listUI传过来的查询条件赋值 -->
 	    <input type="hidden" name="query_trainsTopic" value="${querycon.trainsTopic}">
 	    <input type="hidden" name="query_manager" value="${querycon.manager}">
+	    <input type="hidden" name="query_trainsDate" value="${querycon.trainsDate}">
 	    <s:hidden name="pageNO"></s:hidden>
 	    
 	    <!-- 将原先的创建时间返回 -->
@@ -52,11 +53,10 @@
                  <li id="2015">2015</li>
             </ul>
         </div>
-         <label>培训日期：</label>
-        <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期" name="traininfoMaster.trainsDate" value="<s:date name="traininfoMaster.trainsDate" format="yyyy-MM-dd"></s:date>"/>
-        </div>
         
+       
+     	<label>培训日期：</label> 
+         <input type="text" value="${traininfoMaster.trainsDate }" name="traininfoMaster.trainsDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/> 
     </div>
     
      <p class="short-input ue-clear">

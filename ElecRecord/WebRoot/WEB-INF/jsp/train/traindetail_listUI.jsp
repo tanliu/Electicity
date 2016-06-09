@@ -38,9 +38,9 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-         <div class="conditions name ue-clear" style="width:25%"> 
+         <div class="conditions staff ue-clear" style="width:25%"> 
             <label>主题：</label> 
-          <input  hidden="hidden" value="${querycon.master_trainsTopic}" name="traininfoDetail.master_trainsTopic"> 
+          <input  hidden="hidden" value="${querycon.master_trainsTopic}" name="traininfoDetail.master_trainsTopic" style="width:233px;height:30px"> 
        <div class="select-wrap" > 
  				<div class="select-title ue-clear" ><span id="span1" >${querycon.master_trainsTopic}</span><i class="icon"></i></div> 
  					<ul class="select-list" > 
@@ -52,13 +52,13 @@ table thead tr th{
 				</div> 
          </div> 
         
-         <div class="conditions name ue-clear" style="width:25%">
+         <div class="conditions staff ue-clear" style="width:25%">
           <label> 参训人：</label>
-        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人进行查询" value="${querycon.stuName}" />
+        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人进行查询" value="${querycon.stuName}" style="width:233px;height:30px"/>
     </div>
-     <div class="conditions name ue-clear" style="width:30%">
+     <div class="conditions staff ue-clear" style="width:30%">
          <label>参训结果：</label>
-        <input  hidden="hidden"  value="${querycon.trainsResult}" name="traininfoDetail.trainsResult">
+        <input  hidden="hidden"  value="${querycon.trainsResult}" name="traininfoDetail.trainsResult" style="width:233px;height:30px">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span>${querycon.trainsResult}</span><i class="icon"></i></div>
             <ul class="select-list" >

@@ -51,13 +51,14 @@
 	          <param name="actionName">trainmaster_listUI</param>
 	          <param name="traininfoMaster.trainsTopic">${traininfoMaster.trainsTopic}</param> 
 	           <param name="traininfoMaster.manager">${traininfoMaster.manager}</param>
+	           <param name="traininfoMaster.trainsDate">${traininfoMaster.trainsDate}</param>
 	            <param name="encode">true</param>
 	        </result>
 	         <result name="editor" type="redirectAction">
 	          <param name="actionName">trainmaster_listUI</param>
 	           <param name="traininfoMaster.trainsTopic">${traininfoMaster.trainsTopic}</param> 
 	           <param name="traininfoMaster.manager">${traininfoMaster.manager}</param>
-	         <!--   <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>-->
+	          <param name="traininfoMaster.trainsDate">${traininfoMaster.trainsDate}</param>
 	          <param name="pageNO">${pageNO}</param>
 	            <param name="encode">true</param>
 	        </result>
@@ -66,7 +67,7 @@
 	          <param name="actionName">trainmaster_listUI</param>
 	           <param name="traininfoMaster.trainsTopic">${traininfoMaster.trainsTopic}</param> 
 	           <param name="traininfoMaster.manager">${traininfoMaster.manager}</param>
-	         <!--   <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>-->
+	          <param name="traininfoMaster.trainsDate">${traininfoMaster.trainsDate}</param>
 	          <param name="pageNO">${pageNO}</param>
 	            <param name="encode">true</param>
 	        </result>

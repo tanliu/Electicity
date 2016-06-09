@@ -30,7 +30,7 @@
             <tr>
             	 <td  class="colum" nowrap="nowrap">日期:</td><td class="colum1"  >
             	 <!-- 将时间格式设置为yyyy-MM-dd的格式 如：2016-09-01 -->
-            	 <fmt:formatDate value="${traininfoMaster.trainsDate}" pattern="yyyy-MM-dd"/> </td>
+            	 <fmt:formatDate value="${traininfoMaster.trainsDate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
             </tr>
             <tr>
             	 <td  class="colum" nowrap="nowrap">地点:</td><td class="colum1">${traininfoMaster.trainsAddress}</td>

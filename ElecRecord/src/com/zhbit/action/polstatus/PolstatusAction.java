@@ -47,7 +47,8 @@ public class PolstatusAction extends BaseAndExcelAction{
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
 	private String query_stuName;
 	private String query_studentNo;
-
+	private Timestamp query_joinDate;
+	
 		@Override
 		public String importExcel() {
 			// TODO Auto-generated method stub
@@ -102,7 +103,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 			request.setAttribute("querycon", politicalstatus);
 			//设置页面显示信息条数
-			setPageSize(5);
+			setPageSize(2);
 			//调用方法，根据查询条件显示数据
 			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
 			return "listUI";
@@ -111,7 +112,8 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		public String addUI() {
 			// TODO Auto-generated method stub
-			
+			//保存查询条件
+			request.setAttribute("querycon", politicalstatus);
 			return "addUI";
 		}
 		@Override
@@ -149,8 +151,11 @@ public class PolstatusAction extends BaseAndExcelAction{
 			//直接调用baseDao接口里面的update方法更新修改后的数据
 			polstatusServices.update(politicalstatus);
 			//返回listUI页面的时候 将查询条件也传回列表页面
-			politicalstatus.setStudentNo(request.getParameter("query_studentNo"));
-			politicalstatus.setStuName(request.getParameter("query_stuName"));
+			//politicalstatus.setStudentNo(request.getParameter("query_studentNo"));
+			//politicalstatus.setStuName(request.getParameter("query_stuName"));
+			politicalstatus.setStudentNo(getQuery_studentNo());
+			politicalstatus.setStuName(getQuery_stuName());
+			politicalstatus.setJoinDate(getQuery_joinDate());
 			request.setAttribute("politicalstatus",politicalstatus);
 			return "editor";
 		}
@@ -188,5 +193,11 @@ public class PolstatusAction extends BaseAndExcelAction{
 		}
 		public void setQuery_studentNo(String query_studentNo) {
 			this.query_studentNo = query_studentNo;
+		}
+		public Timestamp getQuery_joinDate() {
+			return query_joinDate;
+		}
+		public void setQuery_joinDate(Timestamp query_joinDate) {
+			this.query_joinDate = query_joinDate;
 		}
 }

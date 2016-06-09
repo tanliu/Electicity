@@ -38,21 +38,21 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions name ue-clear" style="width:25%">
-            <label>姓名：</label>
-        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" />
+        <div class="conditions staff ue-clear" style="width:25%">
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label>
+        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
         </div>
         
-         <div class="conditions name ue-clear" style="width:25%">
-          <label>学号：</label>
-        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${querycon.studentNo}" />
+         <div class="conditions staff ue-clear" style="width:25%">
+          <label>&nbsp;&nbsp;&nbsp;&nbsp;学号：</label>
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${querycon.studentNo}" style="width:200px;height:30px"/>
     </div>
-     <div class="conditions name ue-clear" style="width:30%">
-         <label>入党日期：</label>
-        <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期进行查询" name="politicalstatus.joinDate" value="<s:date name="querycon.joinDate" format="yyyy-MM-dd"></s:date>"/>
+ <div class="conditions staff ue-clear" style="width:25%">
+            <label>&nbsp;&nbsp;入党日期：</label>
+             <div class="select-wrap" >
+            <input type="text" value="<s:date format="yyyy-MM-dd" name="politicalstatus.joinDate"/>" placeholder="请输入日期进行查询" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="politicalstatus.joinDate" style="width:200px;height:30px"/>
+            </div>
         </div>
-  </div>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>
