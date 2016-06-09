@@ -17,6 +17,12 @@
 	        </result>
 			<result name="editor" type="redirectAction">
 	          <param name="actionName">studentdutys_listUI</param>
+	          <param name="studentdutys.grade">${studentdutys.grade}</param> 
+	          <param name="studentdutys.college">${studentdutys.college}</param>
+	          <param name="studentdutys.className">${studentdutys.className}</param>
+	          <param name="studentdutys.duty">${studentdutys.duty}</param>
+	          <param name="pageNO">${pageNO}</param>
+	            <param name="encode">true</param>
 	        </result>
 	         <result name="delete" type="redirectAction">
 	          <param name="actionName">studentdutys_listUI</param>

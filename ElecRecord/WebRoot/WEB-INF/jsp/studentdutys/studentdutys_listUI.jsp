@@ -1,12 +1,15 @@
-<!DOCTYPE html>
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
 <html>
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
-<script type="text/javascript" src="${basePath}js/core.js"></script>
-<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
+<link rel="stylesheet" href="${basePath}css/base.css" />
+<link rel="stylesheet" href="${basePath}css/info-mgt.css" />
+<link rel="stylesheet" href="${basePath}css/alter.css" />
+<link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="${basePath}css/jquery.dialog.css" />
 <!-- 行之间的显示效果与选中行的效果 -->
 <style type="text/css">
         .even{ background:#FFF;color:#000;}  /* 偶数行样式*/
@@ -15,6 +18,12 @@
 		table tbody tr td{text-align: center;}
 		table thead tr th{text-align: center;}
 </style>
+
+
+<script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
+<script type="text/javascript" src="${basePath}js/core.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
 <script type="text/javascript">
 	    var queryAction="${basePath}studentdutys/studentdutys_listUI.action";
 		var deleteAction="${basePath}studentdutys/studentdutys_delete.action";
@@ -37,6 +46,13 @@
 		 	$("#queryForm").submit();  
 		} 
 
+	 	//向studentdutys_editorUI.action提交信息
+	 	function editor(id){
+	 			var url="${basePath}studentdutys/studentdutys_editorUI.action?studentdutys.id="+id;
+	 			$("#queryForm").attr("action",url);
+	 	 		$("#queryForm").submit();  
+	 	} 
+	 	
 	    $(function(){
 	    	 $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
 			    $("tr:even").addClass("even"); /* 偶数行添加样式*/
@@ -61,73 +77,74 @@
 </head>
 
 <body>
-	<div class="title"><h2>学生职务信息管理</h2></div>
+<div class="title"><h2>学生职务信息管理</h2></div>
 	<form id="queryForm"
 		action="${basePath}studentdutys/studentdutys_listUI.action"
 		method="post">
-		<input hidden="hidden" name="studentdutys.id" value="#studentdutys.id"/>
-<div class="query">
+	<div class="query">
 	<div class="query-conditions ue-clear">
-        <div class="conditions name ue-clear">
-            <label>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
-             <input  hidden="hidden" value="" name="studentdutys.grade" value="${querycon.grade}"/>
-            <div class="select-wrap">
-                <div class="select-title ue-clear"><span>${querycon.grade}</span><i class="icon"></i></div>
-                <ul class="select-list">
+		<div class="conditions name ue-clear">
+		<label>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
+		<input  hidden="hidden" value="" name="studentdutys.grade" value="${querycon.grade}"/>
+		<div class="select-wrap">
+			<div class="select-title ue-clear"><span>${querycon.grade}</span><i class="icon"></i></div>
+		 <ul class="select-list">
 	                <s:iterator value="#request.Grade" var="Grade">
 						<li id="<s:property value='#Grade.ddlName'/>"><s:property value="#Grade.ddlName"/></li>
 					</s:iterator>  
                 </ul>
-            </div>
-        </div>
+		</div>
+		</div>
         
 		<div class="conditions name ue-clear">
-            <label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;院：</label>
-            <input  hidden="hidden" name="studentdutys.college" value="${querycon.college}"/>
-            <div class="select-wrap">
-                <div class="select-title ue-clear"><span>${querycon.college}</span><i class="icon"></i></div>
-                <ul class="select-list">
-	                <s:iterator value="#request.College" var="College">
+			<label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;院：</label>
+			<input  hidden="hidden" name="studentdutys.college" value="${querycon.college}"/>
+			<div class="select-wrap">
+				<div class="select-title ue-clear"><span>${querycon.college}</span><i class="icon"></i></div>
+				<ul class="select-list">
+				 <s:iterator value="#request.College" var="College">
 						<li id="<s:property value='#College.ddlName'/>"><s:property value="#College.ddlName"/></li>
 					</s:iterator>  
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="query-conditions ue-clear">
+				</ul>
+			 </div>
+		 </div>
+	</div>
+	<div class="query-conditions ue-clear">
 		<div class="conditions staff ue-clear">
 			<label>班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
 				<input type="text" name="studentdutys.className" value="${querycon.className}" />
 		</div>
 		
 		<div class="conditions name ue-clear">
-            <label>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务：</label>
-            <input  hidden="hidden"  name="studentdutys.duty" value="${querycon.duty}"/>
-            <div class="select-wrap">
-                <div class="select-title ue-clear"><span>${querycon.duty}</span><i class="icon"></i></div>
-                <ul class="select-list">
-	                <s:iterator value="#request.Duty" var="Duty">
+			    <label>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务：</label>
+			    <input  hidden="hidden"  name="studentdutys.duty" value="${querycon.duty}"/>
+			<div class="select-wrap">
+				<div class="select-title ue-clear"><span>${querycon.duty}</span><i class="icon"></i></div>
+				<ul class="select-list">
+				        <s:iterator value="#request.Duty" var="Duty">
 						<li id="<s:property value='#Duty.ddlName'/>"><s:property value="#Duty.ddlName"/></li>
-					</s:iterator>  
-                </ul>
-            </div>
-        </div>
+									</s:iterator>  
+				 </ul>
+			</div>
+		 </div>
 	</div>
+	 
+	<div class="query-btn ue-clear">
+    		<a href="javascript:query()" class="confirm">查询</a>
 	</div>
- <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
-    </div>
-		<div class="table-operate ue-clear">
+</div>
+		
+		
+<div class="table-operate ue-clear">
 			<a href="${basePath}studentdutys/studentdutys_addUI.action" class="add">添加</a>
-			<a href="javascript:deleteItem()" class="del">删除</a> 
+			<a href="javascript:;" class="del">删除</a> 
 			<a href="javascript:;" class="import">导入</a>
     		<a href="javascript:;" class="upload">上传</a>
     		<a href="javascript:downloadItem()" class="del">下载</a>
-    		
+ 
 		</div>
-	
-		<div class="table-box">
-			<table>
+<div class="table-box">
+	<table>
 				<thead>
 					<tr>
 						<th width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
@@ -162,15 +179,15 @@
 							<td><s:property value="#studentdutys.shortTelNo" /></td>
 							<td><s:property value="#studentdutys.address"/></td>
 							<td><s:property value="#studentdutys.memo" /></td>
-							<td><a href="${basePath}studentdutys/studentdutys_editorUI.action?studentdutys.id=<s:property value='#studentdutys.id'/>">
+							<td><a href="javascript:editor('<s:property value='#studentdutys.id'/>')">
 								<img src="../images/edtico.png" /></a></td>
 						</tr>
 						
 					</s:iterator>
 				</tbody>
 			</table>
-		</div>
-		<jsp:include page="/common/pagination.jsp"></jsp:include>
+    </div>
+<jsp:include page="/common/pagination.jsp"></jsp:include>
 	</form>
 <div class="importDialog" align="center" >
 	<div class="dialog-content" align="center">   
@@ -186,6 +203,23 @@
         </div>
        </div>
 </div>
+
+<!--弹出删除提示框的窗口-->
+<div class="delDialog">
+	<div class="dialog-content">
+    	<div class="ui-deldialog-icon"></div>
+        <div class="ui-dialog-text">
+        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
+            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
+            
+            <div class="buttons">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="取消" />
+            </div>
+        </div>
+        </div>
+</div>
+
 </body>
 
 <script type="text/javascript">
@@ -206,6 +240,38 @@ $('.importDialog input[type=button]').click(function(e) {
 	if($(this).hasClass('ok')){
 		var $form=$("#fileForm");
 		$("#fileForm").submit();
+	}
+});
+
+<!--实现删除提示框的脚本-->
+
+$('.delDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:400,
+	height:200
+	
+});
+
+$('.del').click(function(){
+	//在弹出前先判断是否已经选中了相关记录
+	var selectedRows=document.getElementsByName("selectedRow");
+	
+	var i=0;
+	var length=selectedRows.length;
+	
+	while(i<length){//如果有记录被选中，则弹出对话框
+		if(selectedRows[i++].checked){
+			$('.delDialog').Dialog('open');
+		}
+	}
+});
+
+$('.delDialog input[type=button]').click(function(e) {
+    $('.delDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		deleteItem();
 	}
 });
 </script>

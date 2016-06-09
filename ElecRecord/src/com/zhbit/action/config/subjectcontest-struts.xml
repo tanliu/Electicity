@@ -13,10 +13,18 @@
             <result name="addUI">/WEB-INF/jsp/subjectcontest/subjectcontest_addUI.jsp</result>
             <result name="detailUI">/WEB-INF/jsp/subjectcontest/subjectcontest_detailUI.jsp</result>
             <result name="add" type="redirectAction">
-	          <param name="actionName">subjectcontest_listUI</param>
+	          <param name="actionName">subjectcontest_listUI</param>     
+	          <param name="pageNO">${pageNO}</param>
+	            <param name="encode">true</param>
 	        </result>
 			<result name="editor" type="redirectAction">
 	          <param name="actionName">subjectcontest_listUI</param>
+	          <param name="subjectcontest.stuName">${subjectcontest.stuName}</param> 
+	          <param name="subjectcontest.studentNo">${subjectcontest.studentNo}</param>
+	          <param name="subjectcontest.grantUnits">${subjectcontest.grantUnits}</param>
+	          <param name="subjectcontest.rewardName">${subjectcontest.rewardName}</param>
+	          <param name="pageNO">${pageNO}</param>
+	            <param name="encode">true</param>
 	        </result>
 	         <result name="delete" type="redirectAction">
 	          <param name="actionName">subjectcontest_listUI</param>

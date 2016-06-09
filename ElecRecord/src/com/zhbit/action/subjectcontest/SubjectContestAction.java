@@ -82,6 +82,10 @@ public class SubjectContestAction extends BaseAndExcelAction {
 		//对传来的查询条件进行编码
 		if(subjectcontest!=null){
 			try {
+				System.out.println("listUI传来的学号="+subjectcontest.getStudentNo());
+				System.out.println("listUI传来的姓名="+subjectcontest.getStuName());
+				System.out.println("listUI传来的单位="+subjectcontest.getGrantUnits());
+				System.out.println("listUI传来的名称="+subjectcontest.getRewardName());
 				subjectcontest.setStuName(DecodeUtils.decodeUTF(subjectcontest.getStuName()));
 				subjectcontest.setStudentNo(DecodeUtils.decodeUTF(subjectcontest.getStudentNo()));
 				subjectcontest.setGrantUnits(DecodeUtils.decodeUTF(subjectcontest.getGrantUnits()));
@@ -89,7 +93,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				System.out.println("编码时出错");
-		}
+			}
 		}
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", subjectcontest);
@@ -162,6 +166,9 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	*/
 	@Override
 	public String editorUI() {
+		//将listUI界面传过来的查询条件保存
+		request.setAttribute("querycon", subjectcontest);
+		
 		// 到数据字典查找类别
 		String[] fields = { "keyword=?" };
 		String[] params1 = { "奖励等级" };
@@ -186,11 +193,20 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
-	public String editor() {		
+	public String editor() {
 		Timestamp time = new Timestamp(System.currentTimeMillis()); 
 		subjectcontest.setCreateTime(time);
 		subjectcontest.setCreator("朱嘉鑫");
 		subjectContestServices.update(subjectcontest);
+		
+		subjectcontest.setStudentNo(request.getParameter("query_studentNo"));
+		subjectcontest.setStuName(request.getParameter("query_stuName"));
+		subjectcontest.setGrantUnits(request.getParameter("query_grantUnits"));
+		subjectcontest.setRewardName(request.getParameter("query_rewardName"));
+		
+		System.out.println("listUI传来的单位="+subjectcontest.getGrantUnits());
+		System.out.println("listUI传来的名称="+subjectcontest.getRewardName());
+		request.setAttribute("subjectcontest",subjectcontest);
 		return "editor";
 	}
 
@@ -249,7 +265,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 			 */
 			System.out.println("我在这里，看见了吗？？？？？？");
 			
-			ExcelConfig config=new ExcelConfig(SubjectContestExcel.class, "国家级", 3, new FileInputStream(excel),excelFileName);
+			ExcelConfig config=new ExcelConfig(SubjectContestExcel.class, "sheet1", 3, new FileInputStream(excel),excelFileName);
 			List<Object> lists=excelServices.parseExcel(config);
 			System.out.println("我有"+lists.size()+"行");
 			for(Object object:lists){
@@ -260,6 +276,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 			List<Object> list=subjectContestTransfrom.toDBEntity(lists);
 			for (int i=0;i<list.size();i++) {
 				Subjectcontest st=(Subjectcontest)list.get(i);
+				System.out.println("学号="+st.getStudentNo());
 				subjectContestServices.save(st);
 			}
 			
