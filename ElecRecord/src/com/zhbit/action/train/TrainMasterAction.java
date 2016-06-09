@@ -33,6 +33,8 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
 	private String query_trainsTopic;
 	private String query_manager;
+	private Timestamp query_trainsDate;
+	
 	
 	@Override
 	public String importExcel() {
@@ -75,7 +77,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 
 	@Override
 	public String listUI() {
-		// TODO Auto-generated method stub
+		
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 		if(traininfoMaster!=null){
 			try {
@@ -88,8 +90,9 @@ public class TrainMasterAction extends BaseAndExcelAction{
 		}
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", traininfoMaster);
+		
 		//设置页面显示信息条数
-		setPageSize(3);
+		setPageSize(2);
 		//调用方法，根据查询条件显示数据
 		pageUtils=trainmasterServices.queryList(traininfoMaster, getPageNO(), getPageSize());	
 		return "listUI";
@@ -99,7 +102,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 
 	@Override
 	public String addUI() {
-		// TODO Auto-generated method stub
+		request.setAttribute("querycon", traininfoMaster);
 		return "addUI";
 	}
 
@@ -141,8 +144,9 @@ public class TrainMasterAction extends BaseAndExcelAction{
 		//直接调用baseDao接口里面的update方法更新修改后的数据
 		trainmasterServices.update(traininfoMaster);
 		//返回listUI页面的时候 将查询条件也传回列表页面
-		traininfoMaster.setManager(request.getParameter("query_manager"));
-		traininfoMaster.setTrainsTopic(request.getParameter("query_trainsTopic"));
+		traininfoMaster.setManager(getQuery_manager());
+		traininfoMaster.setTrainsTopic(getQuery_trainsTopic());
+	    traininfoMaster.setTrainsDate(getQuery_trainsDate());
 		request.setAttribute("traininfoMaster",traininfoMaster);
 		return "editor";
 	}
@@ -178,7 +182,12 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	public void setQuery_manager(String query_manager) {
 		this.query_manager = query_manager;
 	}
-	
+	public Timestamp getQuery_trainsDate() {
+		return query_trainsDate;
+	}
+	public void setQuery_trainsDate(Timestamp query_trainsDate) {
+		this.query_trainsDate = query_trainsDate;
+	}
 
 	public TraininfoMaster getTraininfoMaster() {
 		return traininfoMaster;

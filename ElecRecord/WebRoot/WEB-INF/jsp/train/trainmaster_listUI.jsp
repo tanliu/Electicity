@@ -38,21 +38,22 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions name ue-clear" style="width:25%">
-            <label>主题：</label>
-        <input type="text" name="traininfoMaster.trainsTopic" placeholder="请输入主题进行查询" value="${querycon.trainsTopic}" />
-        </div>
-        
-         <div class="conditions name ue-clear" style="width:25%">
-          <label>负责人：</label>
-        <input type="text" name="traininfoMaster.manager" placeholder="请输入负责人进行查询" value="${querycon.manager}" />
+       <div class="conditions staff ue-clear" style="width:25%" >
+          <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主题：</label>
+        <input type="text" name="traininfoMaster.trainsTopic" placeholder="请输入主题进行查询" value="${querycon.trainsTopic}" style="width:200px;height:30px"/>
     </div>
-     <div class="conditions name ue-clear" style="width:30%">
-         <label>日期：</label>
-        <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期进行查询" name="traininfoMaster.trainsDate" value="<s:date name="querycon.trainsDate" format="yyyy-MM-dd"></s:date>"/>
+        
+         <div class="conditions staff ue-clear" style="width:25%">
+          <label>&nbsp;&nbsp;&nbsp;负责人：</label>
+        <input type="text" name="traininfoMaster.manager" placeholder="请输入负责人进行查询" value="${querycon.manager}" style="width:200px;height:30px"/>
+    </div>
+
+<div class="conditions staff ue-clear" style="width:25%">
+            <label>&nbsp;&nbsp;培训日期：</label>
+             <div class="select-wrap" >
+            <input type="text" value="<s:date format="yyyy-MM-dd" name="traininfoMaster.trainsDate"/>" placeholder="请输入日期进行查询" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="traininfoMaster.trainsDate" style="width:200px;height:30px"/>
+            </div>
         </div>
-  </div>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>
@@ -70,12 +71,12 @@ table thead tr th{
     	<thead>
         	<tr>
 			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
-            	<th width="25%" >主题</th>
+            	<th width="20%" >主题</th>
             	 <th width="10%" >负责人</th>
 				<th width="10%" >地点</th>
-				<th width="10%" align="center">日期</th>
+				<th width="20%" align="center">日期</th>
 				<th width="10%" align="center">培训年级</th>
-				<th width="25%" >备注</th>
+				<th width="20%" >备注</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
@@ -87,7 +88,7 @@ table thead tr th{
 				<td ><s:property value="#traininfoMaster.manager"/></td>
 				
 				<td><s:property value="#traininfoMaster.trainsAddress"/></td>
-				<td><s:date name="#traininfoMaster.trainsDate" format="yyyy-MM-dd"></s:date></td>
+				<td><s:date name="#traininfoMaster.trainsDate" format="yyyy-MM-dd HH:mm:ss"></s:date></td>
 				<td><s:property value="#traininfoMaster.trainsGrade"/></td>
 				<td><s:property value="#traininfoMaster.memo"/></td>
 				<!-- 跳转到editor对应的action。并将对应的查询条件数据传到action -->

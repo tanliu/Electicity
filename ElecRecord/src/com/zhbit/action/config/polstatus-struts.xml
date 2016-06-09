@@ -22,13 +22,14 @@
 	          <param name="actionName">polstatus_listUI</param>
 	           <param name="politicalstatus.stuName">${politicalstatus.stuName}</param> 
 	           <param name="politicalstatus.studentNo">${politicalstatus.studentNo}</param>
+	             <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>
 	            <param name="encode">true</param>
 	        </result>
             <result name="editor" type="redirectAction">
 	          <param name="actionName">polstatus_listUI</param>
 	           <param name="politicalstatus.stuName">${politicalstatus.stuName}</param> 
 	           <param name="politicalstatus.studentNo">${politicalstatus.studentNo}</param>
-	         <!--   <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>-->
+	           <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>
 	          <param name="pageNO">${pageNO}</param>
 	            <param name="encode">true</param>
 	        </result>
@@ -36,7 +37,7 @@
 	          <param name="actionName">polstatus_listUI</param>
 	           <param name="politicalstatus.stuName">${politicalstatus.stuName}</param> 
 	           <param name="politicalstatus.studentNo">${politicalstatus.studentNo}</param>
-	         <!--   <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>-->
+	           <param name="politicalstatus.joinDate">${politicalstatus.joinDate}</param>
 	          <param name="pageNO">${pageNO}</param>
 	            <param name="encode">true</param>
 	        </result>

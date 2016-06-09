@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.zhbit.dao.polstatus.PolstatusDao;
 import com.zhbit.dao.system.OrganizeDao;
 import com.zhbit.entity.Politicalstatus;
+import com.zhbit.entity.Tutor;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.polstatus.PolstatusServices;
@@ -50,9 +51,10 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 	@Override
 	public PageUtils queryList(Politicalstatus politicalstatus, int pageNO, int pageSize) {
 		String[] fields=null;
-		String[] params=null;
+		Object[] params=null;
 		//排序条件，根据创建时间去排序查出来的结果集
 		String proterty="createTime";	
+		
 		
 		if(politicalstatus!=null){ //判定politicalstatus不为空时
 			
@@ -63,24 +65,59 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 			if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){
 				politicalstatus.setStudentNo(politicalstatus.getStudentNo().trim());
 			}
-			////多个查询条件组合
-			if(!StringUtils.isEmpty(politicalstatus.getStuName())){ 
-				//查询语句组合
-				fields=new String[]{"stuName like ?","studentNo=?"};
-				params=new String[]{"%"+politicalstatus.getStuName()+"%",politicalstatus.getStudentNo()};
-			}else if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){
-				fields=new String[]{"studentNo=?","stuName like ?",};
-				params=new String[]{politicalstatus.getStudentNo(),"%"+politicalstatus.getStuName()+"%"};
-			}//else if(politicalstatus.getJoinDate()!=null){
-				//politicalstatus.setJoinDate(new Timestamp(new Date().getTime()));
-			//	String time=politicalstatus.getJoinDate();
+			
+			//用于查询某个具体日期的数据
+			if(politicalstatus.getJoinDate()!=null){
+				long time=politicalstatus.getJoinDate().getTime();
+				//下一天的时间
+				//time=time+24*60*60*1000; 
+				//nextday=new Timestamp(time);
+			}
+//			////多个查询条件组合
+			if(politicalstatus!=null){ //politicalstatus不为空时
+				 if(politicalstatus.getJoinDate()!=null){
+					fields=new String[]{"joinDate=?","studentNo=?","stuName like ?"};
+					params=new Object[]{politicalstatus.getJoinDate(),politicalstatus.getStudentNo(),"%"+politicalstatus.getStuName()+"%"};	
+				}else if(!StringUtils.isEmpty(politicalstatus.getStudentNo())){ //查询条件是用户名
+					fields=new String[]{"studentNo=?","stuName like ?"};
+					params=new Object[]{politicalstatus.getStudentNo(),"%"+politicalstatus.getStuName()+"%"};	
 				
-			//	fields=new String[]{"joinDate=?"};
-			//	params=new String[]{time};
-			//}
+			    }else if(!StringUtils.isEmpty(politicalstatus.getStuName())){ //查询条件
+					fields=new String[]{"stuName like ?","studentNo=?"};
+					params=new Object[]{"%"+politicalstatus.getStuName()+"%",politicalstatus.getStudentNo()};
+		}
+		}
 		}
 		// TODO Auto-generated method stub
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
 	}
+	/**
+	 * 方法描述:重写getPageUtils方法，因为此模块的查询条件中有比较特殊(时间日期查询)的查询条件
+	 * @param
+	 * @param 
+	 */
+@Override
+public PageUtils getPageUtils(String[] fields, Object[] params, String proterty, String order, int pageNO,
+		int pageSize) {
+	
+	// TODO Auto-generated method stub
+	QueryUtils queryUtils=new QueryUtils(Politicalstatus.class, "entity");
+	//添加查询条件
+	if(fields!=null&&fields.length>0&&params!=null&&params.length>0&&fields.length==params.length){
+		for(int i=0;i<fields.length;i++){
+			if(!StringUtils.isEmpty(fields[i])&&!StringUtils.isEmpty((params[i])+"")){
+				queryUtils.addCondition("entity."+fields[i], params[i]);				
+			}
+		}
+	}
+	
+	//添加排序
+	if(!StringUtils.isEmpty(proterty)&&!StringUtils.isEmpty(order)){
+		queryUtils.addOrderByProperty("entity."+proterty, order);
+	}
+	
+	return polstatusDao.getPageUtils(queryUtils, pageNO, pageSize);
+	
+}
 	
 }

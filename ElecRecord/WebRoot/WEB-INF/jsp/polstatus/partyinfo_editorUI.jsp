@@ -26,6 +26,7 @@
 	   <!-- 将listUI传过来的查询条件赋值 -->
 	    <input type="hidden" name="query_studentNo" value="${querycon.studentNo}">
 	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">
+	    <input type="hidden" name="query_joinDate" value="${querycon.joinDate}">
 	    <s:hidden name="pageNO"></s:hidden>
 	    
 	    <!-- 将原先的创建时间返回 -->

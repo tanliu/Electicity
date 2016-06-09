@@ -46,7 +46,7 @@
         </div>
          <label>培训日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期" name="traininfoMaster.trainsDate"/>
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" placeholder="请选择日期" name="traininfoMaster.trainsDate"/>
         </div>
         
     </div>
