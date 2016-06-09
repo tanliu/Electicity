@@ -9,6 +9,8 @@ public class SubjectContestExcel extends BaseExcelVo{
 
 		@Lang(value="序号")
 		private String sequence;
+		@Lang(value = "学号")
+		private String studentNo;
 		@Lang(value = "获奖者姓名")
 		private String stuName;
 		@Lang(value = "奖励名称")
@@ -62,6 +64,16 @@ public class SubjectContestExcel extends BaseExcelVo{
 
 	public String getSequence() {
 		return sequence;
+	}
+
+
+	public String getStudentNo() {
+		return studentNo;
+	}
+
+
+	public void setStudentNo(String studentNo) {
+		this.studentNo = studentNo;
 	}
 
 

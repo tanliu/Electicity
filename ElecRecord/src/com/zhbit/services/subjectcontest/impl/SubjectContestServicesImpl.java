@@ -59,17 +59,17 @@ public class SubjectContestServicesImpl extends BaseServicesImpl<Subjectcontest>
 			////多个查询条件组合
 			if(!StringUtils.isEmpty(subjectcontest.getStuName())){ 
 				//查询语句组合
-				fields=new String[]{"stuName like ?","studentNo=?","grantUnits=?","rewardName like ?"};
-				params=new String[]{"%"+subjectcontest.getStuName()+"%",subjectcontest.getStudentNo(),subjectcontest.getGrantUnits(),"%"+subjectcontest.getRewardName()+"%"};
+				fields=new String[]{"stuName like ?","studentNo=?","grantUnits like ?","rewardName like ?"};
+				params=new String[]{"%"+subjectcontest.getStuName()+"%",subjectcontest.getStudentNo(),"%"+subjectcontest.getGrantUnits()+"%","%"+subjectcontest.getRewardName()+"%"};
 			}else if(!StringUtils.isEmpty(subjectcontest.getStudentNo())){
-				fields=new String[]{"studentNo=?","stuName like ?",};
-				params=new String[]{subjectcontest.getStudentNo(),"%"+subjectcontest.getStuName()+"%"};
+				fields=new String[]{"studentNo=?","stuName like ?","grantUnits like ?","rewardName like ?"};
+				params=new String[]{subjectcontest.getStudentNo(),"%"+subjectcontest.getStuName()+"%","%"+subjectcontest.getGrantUnits()+"%","%"+subjectcontest.getRewardName()+"%"};
 			}else if(!StringUtils.isEmpty(subjectcontest.getGrantUnits())){
-				fields=new String[]{"grantUnits=?"};
-				params=new String[]{subjectcontest.getGrantUnits()};
+				fields=new String[]{"grantUnits like ?","stuName like ?","studentNo=?","rewardName like ?"};
+				params=new String[]{"%"+subjectcontest.getGrantUnits()+"%","%"+subjectcontest.getStuName()+"%",subjectcontest.getStudentNo(),"%"+subjectcontest.getRewardName()+"%"};
 			}else  if(!StringUtils.isEmpty(subjectcontest.getRewardName())){
-				fields=new String[]{"rewardName like ?"};
-				params=new String[]{"%"+subjectcontest.getRewardName()+"%"};
+				fields=new String[]{"rewardName like ?","stuName like ?","studentNo=?","grantUnits like ?"};
+				params=new String[]{"%"+subjectcontest.getRewardName()+"%","%"+subjectcontest.getStuName()+"%",subjectcontest.getStudentNo(),"%"+subjectcontest.getGrantUnits()+"%"};
 			}
 		}
 

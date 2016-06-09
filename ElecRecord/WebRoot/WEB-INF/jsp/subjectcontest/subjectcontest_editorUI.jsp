@@ -22,6 +22,11 @@
             <form id="myForm">
             	<input hidden="hidden" name="subjectcontest.id" value="${subjectcontest.id}"/>
                <input hidden="hidden"  name="subjectcontest.stuId" value="${subjectcontest.stuId}"/>
+               	   <!-- 将listUI传过来的查询条件赋值 -->
+	    <input type="hidden" name="query_studentNo" value="${querycon.studentNo}">
+	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">
+	    <input type="hidden" name="query_grantUnits" value="${querycon.grantUnits}">
+	    <input type="hidden" name="query_rewardName" value="${querycon.rewardName}">
                 <p class="short-input ue-clear">
                     <label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
                     	<input type="text" readonly="readonly" name="subjectcontest.studentNo"  value="${subjectcontest.studentNo}" class="strutsinput noNull"/> 
@@ -79,7 +84,7 @@
         </div>
 
         <div class="btn ue-clear">
-            <a href="javascript:add('myForm','post','${basePath}/subjectcontest/subjectcontest_editor.action')" class="confirm save">确定</a>
+            <a href="javascript:editor('myForm','post','${basePath}/subjectcontest/subjectcontest_editor.action')" class="confirm save">确定</a>
             <a href="javascript:;" class="clear" onClick="reset()">清空内容</a>
         </div>
     </body>

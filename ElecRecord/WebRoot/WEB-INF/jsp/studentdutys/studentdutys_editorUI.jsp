@@ -19,6 +19,12 @@
             <input hidden="hidden"  name="studentdutys.id" value="${studentdutys.id}"/>
              <input hidden="hidden"  name="studentdutys.stuId" value="${studentdutys.stuId}"/>
              <input hidden="hidden"  name="studentdutys.studentNo" value="${studentdutys.studentNo}"/>
+                      	   <!-- 将listUI传过来的查询条件赋值 -->
+	    <input type="hidden" name="query_grade" value="${querycon.grade}">
+	    <input type="hidden" name="query_college" value="${querycon.college}">
+	    <input type="hidden" name="query_className" value="${querycon.className}">
+	    <input type="hidden" name="query_duty" value="${querycon.duty}">
+            
             <div class="short-input select ue-clear" >
                     <label>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
                     <input  hidden="hidden"  name="studentdutys.grade" value="${studentdutys.grade}" class="noNull"/>

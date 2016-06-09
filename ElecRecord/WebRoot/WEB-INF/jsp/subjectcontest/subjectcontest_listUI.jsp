@@ -1,10 +1,18 @@
-<!DOCTYPE html>
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
 <html>
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
+<link rel="stylesheet" href="${basePath}css/base.css" />
+<link rel="stylesheet" href="${basePath}css/info-mgt.css" />
+<link rel="stylesheet" href="${basePath}css/alter.css" />
+<link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="${basePath}css/jquery.dialog.css" />
+
+<script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
 <!-- 行之间的显示效果与选中行的效果 -->
@@ -37,6 +45,13 @@
 		 	$("#queryForm").submit();  
 		} 
 
+		//向subjectcontest_editorUI.action提交信息
+	 	function editor(id){
+	 			var url="${basePath}subjectcontest/subjectcontest_editorUI.action?subjectcontest.id="+id;
+	 			$("#queryForm").attr("action",url);
+	 	 		$("#queryForm").submit();  
+	 	} 
+		
 	    $(function(){
 	    	 $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
 			    $("tr:even").addClass("even"); /* 偶数行添加样式*/
@@ -57,69 +72,70 @@
 	    });
 	    
 </script>
-	<title>学生电子档案管理系统</title>
+<title>学科竞赛信息</title>
 </head>
 
 <body>
-	<div class="title">
+<div class="title">
 		<h2>学科竞赛信息管理</h2>
 	</div>
 	<form id="queryForm"
 		action="${basePath}subjectcontest/subjectcontest_listUI.action"
 		method="post">
-		<input hidden="hidden" name="subjectcontest.id" value="#subjectcontest.id"/>
+		
 		<div class="query">
 			<div class="query-conditions ue-clear">
 
-				<div class="conditions staff ue-clear">
+				<div class="conditions name ue-clear">
 					<label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label> <input
 						type="text" placeholder="可以直接输入或选择" name="subjectcontest.studentNo" value="${querycon.studentNo}" />
 				</div>
 
-				<div class="conditions staff ue-clear">
+				<div class="conditions name ue-clear">
 					<label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label> <input
 						type="text" placeholder="可以直接输入或选择" name="subjectcontest.stuName" value="${querycon.stuName}"/>
 				</div>
 			
 			
-				<div class="conditions staff ue-clear">
+				<div class="conditions name ue-clear">
 					<label>奖励名称：</label>
 					 <input type="text" name="subjectcontest.rewardName" value="${querycon.rewardName}" />
 				</div>
 
-				<div class="conditions staff ue-clear">
+				<div class="conditions name ue-clear">
 					<label>授予单位：</label> 
 					<input type="text" name="subjectcontest.grantUnits" value="${querycon.grantUnits}"/>
 			</div>
-			
-		</div>
-		<div class="query-btn ue-clear">
+			</div>
+			<div class="query-btn ue-clear">
 					<a href="javascript:query()" class="confirm">查询</a>
 				</div>
+		
+		</div>
 		<div class="table-operate ue-clear">
 			<a href="${basePath}subjectcontest/subjectcontest_addUI.action" class="add">添加</a>
-			<a href="javascript:deleteItem()" class="del">删除</a> 
+			<a href="javascript:;" class="del">删除</a> 
 			<a href="javascript:;" class="import">导入</a>
     		<a href="javascript:;" class="upload">上传</a>
     		<a href="javascript:downloadItem()" class="del">下载</a>
     		
 		</div>
-		<div class="table-box">
+<div class="table-box">
 			<table>
 				<thead>
 					<tr>
-						<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+						<th width="3%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
 						<th width="3%">序号</th>
-						<th width="8%">学号</th>
-						<th width="6%">获奖者姓名</th>
+						<th width="6%">学号</th>
+						<th width="5%">获奖者姓名</th>
 						<th width="8%">奖励名称</th>
 						<th width="4%" align="center">获奖级别</th>
 						<th width="4%" align="center">获奖等级</th>
-						<th width="10%">授予单位</th>
-						<th width="8%">获奖项目</th>
-						<th width="6%">指导老师</th>
-						<th width="8%">获奖时间</th>
-						<th width="8%">备注</th>
+						<th width="12%">授予单位</th>
+						<th width="12%">获奖项目</th>
+						<th width="5%">指导老师</th>
+						<th width="6%">获奖时间</th>
+						<th width="5%">备注</th>
 						<th width="5%">编辑</th>
 					</tr>
 				</thead>
@@ -140,14 +156,14 @@
 							<td><s:property value="#subjectcontest.guidTeacher" /></td>
 							<td><s:date name="#subjectcontest.rewardDate" format="yyyy-MM-dd"></s:date></td>
 							<td><s:property value="#subjectcontest.memo" /></td>
-							<td><a href="${basePath}subjectcontest/subjectcontest_editorUI.action?subjectcontest.id=<s:property value='#subjectcontest.id'/>">
+							<td><a href="javascript:editor('<s:property value='#subjectcontest.id'/>')">
 								<img src="../images/edtico.png" /></a></td>
+				
 						</tr>
 						
 					</s:iterator>
 				</tbody>
 			</table>
-		</div>
 		<jsp:include page="/common/pagination.jsp"></jsp:include>
 	</form>
 <div class="importDialog" align="center" >
@@ -164,6 +180,23 @@
         </div>
        </div>
 </div>
+
+<!--弹出删除提示框的窗口-->
+<div class="delDialog">
+	<div class="dialog-content">
+    	<div class="ui-deldialog-icon"></div>
+        <div class="ui-dialog-text">
+        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
+            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
+            
+            <div class="buttons">
+                <input type="button" class="button long2 ok" value="确定" />
+                <input type="button" class="button long2 normal" value="取消" />
+            </div>
+        </div>
+        </div>
+</div>
+
 </body>
 
 <script type="text/javascript">
@@ -186,5 +219,39 @@ $('.importDialog input[type=button]').click(function(e) {
 		$("#fileForm").submit();
 	}
 });
+
+<!--实现删除提示框的脚本-->
+
+$('.delDialog').Dialog({
+	title:'提示信息',
+	autoOpen: false,
+	width:400,
+	height:200
+	
+});
+
+$('.del').click(function(){
+	//在弹出前先判断是否已经选中了相关记录
+	var selectedRows=document.getElementsByName("selectedRow");
+	
+	var i=0;
+	var length=selectedRows.length;
+	
+	while(i<length){//如果有记录被选中，则弹出对话框
+		if(selectedRows[i++].checked){
+			$('.delDialog').Dialog('open');
+		}
+	}
+});
+
+$('.delDialog input[type=button]').click(function(e) {
+    $('.delDialog').Dialog('close');
+	
+	if($(this).hasClass('ok')){
+		deleteItem();
+	}
+});
+
 </script>
 </html>
+ 

@@ -178,6 +178,9 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	*/
 	@Override
 	public String editorUI() {
+		//将listUI界面传过来的查询条件保存
+		System.out.println("editorUI_duty="+studentdutys.getDuty());
+				request.setAttribute("querycon", studentdutys);
 		//到数据字典查找类别
 		String[] fields={"keyword=?"};
 		String[] params1={"年级"};
@@ -211,6 +214,14 @@ public class StudentDutysAction extends BaseAndExcelAction {
 		//设置学号
 		//studentdutys.setStudentNo("123");
 		studentDutysServices.update(studentdutys);
+	
+		studentdutys.setGrade(request.getParameter("query_grade"));
+		studentdutys.setCollege(request.getParameter("query_college"));
+		studentdutys.setClassName(request.getParameter("query_className"));
+		studentdutys.setDuty(request.getParameter("query_duty"));
+		
+		System.out.println("editor_duty="+studentdutys.getDuty());
+		request.setAttribute("studentdutys",studentdutys);
 		return "editor";
 	}
 

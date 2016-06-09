@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.zhbit.entity.excel.SubjectContestExcel;
 import com.zhbit.entity.Subjectcontest;
+import com.zhbit.entity.User;
 
 public class SubjectContestTransfrom implements BaseTransfrom{
 
@@ -20,7 +21,7 @@ public class SubjectContestTransfrom implements BaseTransfrom{
 			Subjectcontest subjectcontests=new Subjectcontest();
 			SubjectContestExcel subjectContestExcel=(SubjectContestExcel)excelObjs.get(i);
 			subjectcontests.setStuId("001");
-			subjectcontests.setStudentNo("130202010001"+i);
+			subjectcontests.setStudentNo(subjectContestExcel.getStudentNo());
 			subjectcontests.setStuName(subjectContestExcel.getStuName());
 			subjectcontests.setRewardName(subjectContestExcel.getRewardName());
 			subjectcontests.setRewardLevel(subjectContestExcel.getRewardLevel());
@@ -28,10 +29,7 @@ public class SubjectContestTransfrom implements BaseTransfrom{
 			subjectcontests.setGrantUnits(subjectContestExcel.getGrantUnits());
 			subjectcontests.setRewardProject(subjectContestExcel.getRewardProject());
 			subjectcontests.setGuidTeacher(subjectContestExcel.getGuidTeacher());	
-			//DateFormat simpleDateFormat=new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-			//Timestamp time =Timestamp.valueOf(subjectContestExcel.getRewardDate());
-			//System.out.println("日期="+subjectContestExcel.getRewardDate().replace("//", "-"));
-			//subjectcontests.setRewardDate(Timestamp.valueOf(subjectContestExcel.getRewardDate().replace("//", "-")));
+			subjectcontests.setRewardDate(Timestamp.valueOf(subjectContestExcel.getRewardDate().trim()+" 00:00:00"));
 			subjectcontests.setMemo(subjectContestExcel.getMemo());
 
 			Timestamp createtime = new Timestamp(System.currentTimeMillis());
@@ -51,6 +49,7 @@ public class SubjectContestTransfrom implements BaseTransfrom{
 			Subjectcontest subjectContest=(Subjectcontest) dbObjs.get(i);
 			
 			subjectContestExcel.setSequence(""+(i+1));
+			subjectContestExcel.setStudentNo(subjectContest.getStudentNo());
 			subjectContestExcel.setStuName(subjectContest.getStuName());
 			subjectContestExcel.setRewardName(subjectContest.getRewardName());
 			subjectContestExcel.setRewardLevel(subjectContest.getRewardLevel());
