@@ -120,7 +120,7 @@ public class TutorAction extends BaseAndExcelAction {
 	public String add() {
 		// TODO Auto-generated method stub
 		
-		//保存传过来的tutor
+		
 		//设定创建时间为当前时间
 		Timestamp createtime = new Timestamp(System.currentTimeMillis());
 		tutor.setCreateTime(createtime);

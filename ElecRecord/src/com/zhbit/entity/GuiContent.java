@@ -13,6 +13,7 @@ public class GuiContent implements java.io.Serializable {
 	private String stuId;
 	private String studentNo;
 	private String stuName;
+	private String className;
 	private Timestamp guidDate;
 	private String guidContent;
 	private String guidAddress;
@@ -138,4 +139,14 @@ public class GuiContent implements java.io.Serializable {
 		this.creator = creator;
 	}
 
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	
+	
 }

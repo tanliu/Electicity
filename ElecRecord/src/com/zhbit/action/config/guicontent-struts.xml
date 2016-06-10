@@ -14,27 +14,27 @@
               <result name="detailUI">/WEB-INF/jsp/guicontent/guicontentinfo_detailUI.jsp</result>
             <result name="add" type="redirectAction">
  	         <param name="actionName">guicontent_listUI</param> 
-<!-- 	          <param name="guicontent.studentNo">${guicontent.studentNo}</param>  -->
-<!--  	          <param name="guicontent.stuName">${guicontent.stuName}</param>  -->
-<!-- 	          <param name="guicontent.guidDate">${guicontent.guidDate}</param>  -->
-<!--  	          <param name="pageNO">${pageNO}</param>  -->
-<!-- 	           <param name="encode">true</param>  -->
+	          <param name="guiContent.studentNo">${guiContent.studentNo}</param>  
+ 	          <param name="guiContent.stuName">${guiContent.stuName}</param>  
+ 	          <param name="guiContent.guidDate">${guiContent.guidDate}</param>  
+ 	          <param name="pageNO">${pageNO}</param>  
+ 	           <param name="encode">true</param>  
 	        </result>
             <result name="editor" type="redirectAction">
-	          <param name="actionName">guicontent_listUI</param>
-	          <param name="guicontent.studentNo">${guicontent.studentNo}</param>
-	          <param name="guicontent.stuName">${guicontent.stuName}</param>
-	          <param name="guicontent.guidDate">${guicontent.guidDate}</param>
-	          <param name="pageNO">${pageNO}</param>
-	          <param name="encode">true</param>
+	         <param name="actionName">guicontent_listUI</param> 
+	          <param name="guiContent.studentNo">${guiContent.studentNo}</param>  
+ 	          <param name="guiContent.stuName">${guiContent.stuName}</param>  
+ 	          <param name="guiContent.guidDate">${guiContent.guidDate}</param>  
+ 	          <param name="pageNO">${pageNO}</param>  
+ 	           <param name="encode">true</param> 
 	          </result>
 	          <result name="delete" type="redirectAction">
-	          <param name="actionName">guicontent_listUI</param>
-	          <param name="guicontent.studentNo">${guicontent.studentNo}</param>
-	          <param name="guicontent.stuName">${guicontent.stuName}</param>
-	          <param name="guicontent.guidDate">${guicontent.guidDate}</param>
-	          <param name="pageNO">${pageNO}</param>
-	          <param name="encode">true</param>
+	         <param name="actionName">guicontent_listUI</param> 
+	          <param name="guiContent.studentNo">${guiContent.studentNo}</param>  
+ 	          <param name="guiContent.stuName">${guiContent.stuName}</param>  
+ 	          <param name="guiContent.guidDate">${guiContent.guidDate}</param>  
+ 	          <param name="pageNO">${pageNO}</param>  
+ 	           <param name="encode">true</param> 
 	          </result>
 	           <result name="importExcel" type="redirectAction">
 	           <param name="actionName">guicontent_listUI</param>

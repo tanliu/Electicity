@@ -15,21 +15,21 @@
 <div class="title"><h2>添加导学信息</h2></div>
 <form id="myForm">
 <div class="main">
-<!-- <!-- 发送查询条件 --> 
-<%-- 	<input type="hidden" name="query_guidDate" value="${queryCon.guidDate}"> --%>
-<%-- 	 <input type="hidden" name="query_studentNo" value="${queryCon.studentNo}"> --%>
-<%-- 	 <input type="hidden" name="query_stuName" value="${queryCon.stuName}"> --%>
-<%-- 	  <s:hidden name="pageNO"></s:hidden>  --%>
+<!-- 发送查询条件 -->
+	<input type="hidden" name="query_guidDate" value="${queryCon.guidDate}"> 
+ 	 <input type="hidden" name="query_studentNo" value="${queryCon.studentNo}"> 
+	 <input type="hidden" name="query_stuName" value="${queryCon.stuName}"> 
+	  <s:hidden name="pageNO"></s:hidden>  
 <!-- 先默认stu_id为9528 -->
    <input type="hidden" name="guiContent.stuId" value="9528"/>
     <p class="short-input ue-clear">
     	<label>学号：</label>
         <input type="text" placeholder="请输入学生学号" name="guiContent.studentNo"/>
     </p>
-   <!--  <p class="short-input ue-clear">
+    <p class="short-input ue-clear">
     	<label>专业班级：</label>
         <input type="text" placeholder="请输入学生所在专业班级" name="guiContent.className"/>
-    </p> -->
+    </p> 
     <p class="short-input ue-clear">
     	<label>姓名：</label>
         <input type="text" placeholder="请输入学生姓名" name="guiContent.stuName"/>

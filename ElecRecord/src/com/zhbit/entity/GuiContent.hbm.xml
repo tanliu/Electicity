@@ -18,6 +18,11 @@
                 <comment>学号</comment>
             </column>
         </property>
+        <property name="className" type="java.lang.String">
+            <column name="className" length="200">
+                <comment>班级</comment>
+            </column>
+        </property>
         <property name="stuName" type="java.lang.String">
             <column name="stuName" length="20" />
         </property>

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.zhbit.entity.GuiContent;
-import com.zhbit.entity.Tutor;
+
 import com.zhbit.entity.GuiContent;
 import com.zhbit.services.BaseServices;
 import com.zhbit.services.BaseServicesImpl;
@@ -98,7 +98,28 @@ public class GuiContentServicesImpl extends BaseServicesImpl<GuiContent> impleme
 	@Override
 	public GuiContent trimGuiContent(GuiContent guiContent) {
 		// TODO Auto-generated method stub
-		return null;
+		if(guiContent!=null){
+			if(!StringUtils.isEmpty(guiContent.getStudentNo())){
+				guiContent.setStudentNo(guiContent.getStudentNo().trim());
+			}
+			if(!StringUtils.isEmpty(guiContent.getClassName())){
+				guiContent.setClassName(guiContent.getClassName().trim());
+			}
+			if(!StringUtils.isEmpty(guiContent.getStuName())){
+				guiContent.setStuName(guiContent.getStuName().trim());
+			}
+			if(!StringUtils.isEmpty(guiContent.getGuidAddress())){
+				guiContent.setGuidAddress(guiContent.getGuidAddress().trim());
+			}
+			if(!StringUtils.isEmpty(guiContent.getGuidContent())){
+				guiContent.setGuidContent(guiContent.getGuidContent().trim());
+			}
+			if(!StringUtils.isEmpty(guiContent.getMemo())){
+				guiContent.setMemo(guiContent.getMemo().trim());
+			}
+		}
+		
+		return guiContent;
 	}
 
 

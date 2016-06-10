@@ -50,7 +50,7 @@ $(function(){
     
     	 var $id=$(this).children("td").children("input").val();
     	
-    	window.open("${basePath}guicontent/guicontent_detailUI.action?guicontent.id="+$id);
+    	window.open("${basePath}guicontent/guicontent_detailUI.action?guiContent.id="+$id);
 
      }  
         
@@ -69,28 +69,28 @@ $(function(){
 var queryAction="${basePath}guicontent/guicontent_listUI.action";
 var deleteAction="${basePath}guicontent/guicontent_delete.action";
 
-//向guicontent_editorUI.action提交信息
+//向guiContent_editorUI.action提交信息
 function editor(id){
-		var url="${basePath}guicontent/guicontent_editorUI.action?guicontent.id="+id;
+		var url="${basePath}guicontent/guicontent_editorUI.action?guiContent.id="+id;
 		$("#queryForm").attr("action",url);
  		$("#queryForm").submit();  
 } 
 
-//向guicontent_addUI.action提交信息
+//向guiContent_addUI.action提交信息
 function add(){
 		var url="${basePath}guicontent/guicontent_addUI.action";
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
 
-//向guicontent_listUI.action提交信息
+//向guiContent_listUI.action提交信息
 function query(){
 	  	$("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
 	
-//向guicontent_delUI.action提交信息
+//向guiContent_delUI.action提交信息
 function del(){
 		var url="${basePath}guicontent/guicontent_delete.action";
 		$("#queryForm").attr("action",url);
@@ -111,19 +111,19 @@ function del(){
         
        <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;" >
             <label style="margin-left:3px;width:50px">学号：</label>
-            <input   type="text" placeholder="请输入学生学号进行查询" name="guicontent.studentNo" value="${queryCon.studentNo}" style="width:200px;height:30px" />
+            <input   type="text" placeholder="请输入学生学号进行查询" name="guiContent.studentNo" value="${queryCon.studentNo}" style="width:200px;height:30px" />
             
         </div>
         
          <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;">
             <label style="margin-right:3px;width:50px">姓名：</label>
-            <input  type="text" placeholder="请输入学生姓名进行查询" name="guicontent.stuName" value="${queryCon.stuName}" style="width:200px;height:30px"/>
+            <input  type="text" placeholder="请输入学生姓名进行查询" name="guiContent.stuName" value="${queryCon.stuName}" style="width:200px;height:30px"/>
             
         </div>
         
           <div class="conditions staff ue-clear" >
             <label>辅导时间：</label>
-            <input type="text" value="<s:date format="yyyy-MM-dd" name="tutor.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="tutor.guidDate" style="width:233px;height:30px"/>
+            <input type="text" value="<s:date format="yyyy-MM-dd" name="guiContent.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="guiContent.guidDate" style="width:233px;height:30px"/>
             
         </div>
         
@@ -150,27 +150,25 @@ function del(){
         	<tr>
 			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
             	<th width="20%" class="num">学号</th>
-                <th width="10%" >姓名</th>
-				<th width="5%" >性别</th>
-				<th width="20%" align="center">身份证号</th>
-				<th width="20%" >考生号</th>
-				<th width="10%" align="center">异动类别</th>
+                <th width="15%" >姓名</th>
+				<th width="20%" align="center">专业班级</th>
+				<th width="15%" >辅导时间</th>
+				<th width="15%" align="center">辅导地点</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="guicontent">
+           <s:iterator value="pageUtils.items" var="guiContent">
         	<tr>
         	
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guicontent.id'/>' /></td>
+			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guiContent.id'/>' /></td>
 			
-            	<td><s:property value="#guicontent.studentNo"/></td>
-				<td ><s:property value="#guicontent.stuName"/></td>
-				<td><s:property value="#guicontent.sex"/></td>
-				<td><s:property value="#guicontent.idCardNo"/></td>
-				<td><s:property value="#guicontent.examinateNo"/></td>
-				<td><s:property value="#guicontent.tansactionType"/></td>
-				<td><a href="javascript:editor('<s:property value='#guicontent.id'/>')"><img src="../images/edtico.png"/></a></td>
+            	<td><s:property value="#guiContent.studentNo"/></td>
+				<td ><s:property value="#guiContent.stuName"/></td>
+				<td><s:property value="#guiContent.className"/></td>
+				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#guiContent.guidDate"/></td>
+				<td><s:property value="#guiContent.guidAddress"/></td>
+				<td><a href="javascript:editor('<s:property value='#guiContent.id'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>          
         </tbody>
