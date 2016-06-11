@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -18,6 +19,17 @@ import com.zhbit.services.train.TrainmasterServices;
 import com.zhbit.util.DecodeUtils;
 
 
+/** 
+ * 项目名称：ElecRecord
+ * 类名称：TrainDetailAction
+ * 类描述： 
+ * 创建人：罗吉林
+ * 创建时间：2016年6月10日 下午8:49:47
+ * 修改人：罗吉林
+ * 修改时间：2016年6月10日 下午8:49:47
+ * 修改备注： 
+ * @version 
+ */
 @Controller("trainDetailAction")
 @Scope(value="prototype")
 public class TrainDetailAction extends BaseAndExcelAction{
@@ -53,6 +65,8 @@ public class TrainDetailAction extends BaseAndExcelAction{
 		request.setAttribute("traininfoMaster", traininfoMaster);
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 		if(traininfoDetail!=null){
+			if(!StringUtils.isEmpty(traininfoDetail.getStuName())||!StringUtils.isEmpty(traininfoDetail.getTrainsResult())
+					||!StringUtils.isEmpty(traininfoDetail.getMaster_trainsTopic())){
 			try {
 				traininfoDetail.setStuName(DecodeUtils.decodeUTF(traininfoDetail.getStuName()));
 				traininfoDetail.setTrainsResult(DecodeUtils.decodeUTF(traininfoDetail.getTrainsResult()));
@@ -60,6 +74,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				System.out.println("编码时出错 ");
+		}
 		}
 		}
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
@@ -116,9 +131,12 @@ public class TrainDetailAction extends BaseAndExcelAction{
 
 	@Override
 	public String editor() {
-		//根据traininfoMaster的id，找到对应的trainsTopic，在将trainsTopic插入到新表中
-		traininfoMaster=trainmasterServices.findObjectById(traininfoDetail.getMaster_id());
-		traininfoDetail.setMaster_trainsTopic(traininfoMaster.getTrainsTopic());
+		//根据traininfoMaster的的主题字段，找出对应的id赋值到setMaster_id。
+		String[] fields={"trainsTopic=?"};
+		String[] params={traininfoDetail.getMaster_trainsTopic()};
+		List<TraininfoMaster> traininfoMaster=trainmasterServices.findObjectByFields(fields, params);
+		if(traininfoMaster!=null){
+		traininfoDetail.setMaster_id(traininfoMaster.get(0).getId());}
 		//直接调用baseDao接口里面的update方法更新修改后的数据
 		traindetailServices.update(traininfoDetail);
 		//返回listUI页面的时候 将查询条件也传回列表页面
@@ -176,12 +194,6 @@ public class TrainDetailAction extends BaseAndExcelAction{
 		this.traininfoDetail = traininfoDetail;
 	}
 
-	public TraininfoMaster getTraininfoMaster() {
-		return traininfoMaster;
-	}
-
-	public void setTraininfoMaster(TraininfoMaster traininfoMaster) {
-		this.traininfoMaster = traininfoMaster;
-	}
+	
 
 }

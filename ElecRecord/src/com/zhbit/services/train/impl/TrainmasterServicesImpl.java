@@ -18,6 +18,17 @@ import com.zhbit.services.train.TrainmasterServices;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
+/** 
+ * 项目名称：ElecRecord
+ * 类名称：TrainmasterServicesImpl
+ * 类描述： 
+ * 创建人：罗吉林
+ * 创建时间：2016年6月10日 下午8:48:15
+ * 修改人：罗吉林
+ * 修改时间：2016年6月10日 下午8:48:15
+ * 修改备注： 
+ * @version 
+ */
 @Service(value=TrainmasterServices.SERVICES_NAME)
 public class TrainmasterServicesImpl extends BaseServicesImpl<TraininfoMaster> implements
 TrainmasterServices{

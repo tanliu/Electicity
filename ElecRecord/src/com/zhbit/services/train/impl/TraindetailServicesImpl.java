@@ -16,6 +16,17 @@ import com.zhbit.util.QueryUtils;
 
 
 
+/** 
+ * 项目名称：ElecRecord
+ * 类名称：TraindetailServicesImpl
+ * 类描述： 
+ * 创建人：罗吉林
+ * 创建时间：2016年6月10日 下午8:48:08
+ * 修改人：罗吉林
+ * 修改时间：2016年6月10日 下午8:48:08
+ * 修改备注： 
+ * @version 
+ */
 @Service(value=TraindetailServices.SERVICES_NAME)
 public class TraindetailServicesImpl extends BaseServicesImpl<TraininfoDetail> implements
 TraindetailServices{

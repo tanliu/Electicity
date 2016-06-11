@@ -29,44 +29,55 @@ table thead tr th{
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
-<title>学生干部培训信息</title>
+<title>光大、国家奖学金信息管理</title>
 </head>
 
 <body>
-<div class="title"><h2>学生干部培训信息</h2></div>
+<div class="title"><h2>光大、国家奖学金信息管理</h2></div>
 <!-- 跳转页面时表单提交数据，换页显示数据 -->
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-         <div class="conditions name ue-clear" style="width:20%"> 
-            <label>主题：</label> 
-          <input  hidden="hidden" value="${querycon.master_trainsTopic}" name="traininfoDetail.master_trainsTopic" style="width:200px;height:30px"> 
-       <div class="select-wrap" > 
- 				<div class="select-title ue-clear" ><span id="span1" >${querycon.master_trainsTopic}</span><i class="icon"></i></div> 
- 					<ul class="select-list" > 
- 					    <li id="">请选择</li> 
- 					    <s:iterator value="#request.traininfoMaster" var="traininfoMaster"> 
- 					      <li id="<s:property value='#traininfoMaster.trainsTopic'/>"><s:property value="#traininfoMaster.trainsTopic"/></li> 
- 					    </s:iterator> 
-					</ul>					 
-				</div> 
-         </div> 
-     <div class="conditions name ue-clear" style="width:20%">
-         <label>参训结果：</label>
-        <input  hidden="hidden"  value="${querycon.trainsResult}" name="traininfoDetail.trainsResult" style="width:200px;height:30px">
+        <div class="conditions staff ue-clear" style="width:20%">
+            <label>姓名：</label>
+        <input type="text" name="countryScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
+        </div>
+        
+       <div class="conditions name ue-clear" style="width:20%">
+         <label>获奖名称：</label>
+        <input  hidden="hidden"  value="${querycon.rewardName}" name="countryScholarship.rewardName" style="width:200px;height:30px">
         <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>${querycon.trainsResult}</span><i class="icon"></i></div>
+        	<div class=" select-title ue-clear" ><span>${querycon.rewardName}</span><i class="icon"></i></div>
             <ul class="select-list" >
                 <li id="">请选择</li>
-            	<li id="合格">合格</li>
-                <li id="不合格">不合格</li>
+            	<li id="国家奖学金">国家奖学金</li>
+                <li id="光大奖学金">光大奖学金</li>
             </ul>
         </div>
   </div>
-      <div class="conditions staff ue-clear" style="width:20%">
-          <label> 参训人：</label>
-        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人进行查询" value="${querycon.stuName}" style="width:233px;height:30px"/>
-    </div>
+  
+  <div class="conditions name ue-clear" style="width:20%">
+         <label>学院名称：</label>
+        <input  hidden="hidden"  value="${querycon.orgName}" name="countryScholarship.orgName" style="width:200px;height:30px">
+        <div class="select-wrap">
+        	<div class=" select-title ue-clear" ><span>${querycon.orgName}</span><i class="icon"></i></div>
+            <ul class="select-list" >
+                <li id="">请选择</li>
+            	<li id="计算机学院">计算机学院</li>
+                <li id="艺术与设计学院">艺术与设计学院</li>
+                <li id="机械与车辆学院">机械与车辆学院</li>
+                <li id="化工与材料学院">化工与材料学院</li>
+                <li id="会计与金融学院">会计与金融学院</li>
+                <li id="商学院">商学院</li>
+                <li id="外国语学院">外国语学院</li>
+                <li id="航空学院">航空学院</li>
+                <li id="文法学院">文法学院</li>
+                <li id="数理学院">数理学院</li>
+                <li id="信息学院">信息学院</li>
+                <li id="布莱恩特学院">布莱恩特学院</li>
+            </ul>
+        </div>
+  </div>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>
@@ -84,25 +95,25 @@ table thead tr th{
     	<thead>
         	<tr>
 			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
-            	<th width="10%" >参训人</th>
-            	<th width="10%" >学号</th>
-              	<th width="25%" >主题</th> 
-				<th width="10%" align="center">参训结果</th>
+            	 <th width="10%" >姓名</th>
+            	 <th width="20%" class="num">学号</th>
+				<th width="20%" >学院</th>
+				<th width="15%" align="center">获奖名称</th>
 				<th width="30%" >备注</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="traininfoDetail">
+           <s:iterator value="pageUtils.items" var="countryScholarship">
         	<tr>
-			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#traininfoDetail.id'/>'/></td>
-				<td ><s:property value="#traininfoDetail.stuName"/></td>
-				<td><s:property value="#traininfoDetail.studentNo"/></td>
-  				<td><s:property value="#traininfoDetail.master_trainsTopic"/></td>   
-				<td><s:property value="#traininfoDetail.trainsResult"/></td>
-				<td><s:property value="#traininfoDetail.memo"/></td>
+			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#countryScholarship.id'/>'/></td>
+              	<td ><s:property value="#countryScholarship.stuName"/></td>
+              	<td><s:property value="#countryScholarship.studentNo"/></td>
+				<td><s:property value="#countryScholarship.orgName"/></td>
+				<td><s:property value="#countryScholarship.rewardName"/></td>
+				<td><s:property value="#countryScholarship.memo"/></td>
 				<!-- 跳转到editor对应的action。并将对应的查询条件数据传到action -->
-				<td><a href="javascript:editor('<s:property value='#traininfoDetail.id'/>')"><img src="../images/edtico.png"/></a></td>
+				<td><a href="javascript:editor('<s:property value='#countryScholarship.id'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>        
         </tbody>
@@ -118,7 +129,7 @@ table thead tr th{
         <div class="ui-dialog-text" align="center">
             <p class="dialog-content">请选择要导入的excel文件</p>
 <!--          上传表格文件工具   enctype="multipart/form-data"  name必须等于"excel"-->
-            <form  id="fileForm" action="${basePath}train/traindetail_importExcel.action" method="post" enctype="multipart/form-data">
+            <form  id="fileForm" action="${basePath}couscholarship/couscholarship_importExcel.action" method="post" enctype="multipart/form-data">
             <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel" value="" id="filename"/></p>
           </form>
             <div class="buttons" align="center">
@@ -216,8 +227,8 @@ $('.delDialog input[type=button]').click(function(e) {
 </script>
 <script type="text/javascript" >
 <!-- action之间的跳转 ，用于换页-->
-var queryAction="${basePath}train/traindetail_listUI.action";
-var deleteAction="${basePath}train/traindetail_delete.action";
+var queryAction="${basePath}couscholarship/couscholarship_listUI.action";
+var deleteAction="${basePath}couscholarship/couscholarship_delete.action";
 /* 批量选中*/
 function doSelectAll(){
 	$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
@@ -234,7 +245,7 @@ function doSelectAll(){
         //双击得到当前行数据的id
        	 var $id=$(this).children("td").children("input").val();
        	//跳转到详情页
-       	window.open("${basePath}train/traindetail_detailUI.action?traininfoDetail.id="+$id);
+       	window.open("${basePath}couscholarship/couscholarship_detailUI.action?countryScholarship.id="+$id);
         });
         
         
@@ -247,29 +258,29 @@ function doSelectAll(){
                     .end();
         });
 	})
-	//向trainmaster_editorUI.action提交信息
+	//向couscholarship_editorUI.action提交信息
 function editor(id){
-		var url="${basePath}train/traindetail_editorUI.action?traininfoDetail.id="+id;
+		var url="${basePath}couscholarship/couscholarship_editorUI.action?countryScholarship.id="+id;
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
 
-//向trainmaster_addUI.action提交信息
+//向couscholarship_addUI.action提交信息
 function add(){
-		var url="${basePath}train/traindetail_addUI.action";
+		var url="${basePath}couscholarship/couscholarship_addUI.action";
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
 
-//向trainmaster_listUI.action提交信息
+//向couscholarship_listUI.action提交信息
 function query(){
 	 	$("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
-//向trainmaster_delete().action提交信息
+//向couscholarship_delete().action提交信息
 function del(){
-		var url="${basePath}train/traindetail_delete.action";
+		var url="${basePath}couscholarship/couscholarship_delete.action";
 		$("#queryForm").attr("action",url);
  		$("#queryForm").submit();  
 } 

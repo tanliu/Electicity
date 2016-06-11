@@ -37,23 +37,24 @@
     <!-- 迭代选择   根据 traininfoMaster的id找到对应的trainTopic-->
      <div class="short-input select ue-clear" >
          <label>培训主题：</label>
-        <input class="noNull" hidden="hidden" value="<s:property value="traininfoDetail.master_trainsTopic"/>" name="traininfoDetail.master_id">
+        <input  class="noNull" hidden="hidden" value='<s:property value='traininfoDetail.master_trainsTopic'/>' name="traininfoDetail.master_trainsTopic">
 				<div class="select-wrap">
 				<div class="select-title">
-					<span id="span1">${traininfoDetail.master_trainsTopic}</span><i class="icon"></i>
+					<span id="span1"><s:property value='traininfoDetail.master_trainsTopic' /></span><i class="icon"></i>
 					</div>
 					<ul class="select-list" >
 					    <li id="">请选择</li>
 					    <s:iterator value="#request.traininfoMaster" var="traininfoMaster">
-					      <li id="<s:property value='#traininfoMaster.id'/>"><s:property value="#traininfoMaster.trainsTopic"/></li>
+					      <li id="<s:property value='#traininfoMaster.trainsTopic'/>"><s:property value="#traininfoMaster.trainsTopic"/></li>
 					    </s:iterator>
 					</ul>					
 				</div>
+			
 
         <label>培训结果：</label>
         <input  hidden="hidden"  value="<s:property value="traininfoDetail.trainsResult"/>" name="traininfoDetail.trainsResult">
         <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span >${traininfoDetail.trainsResult}</span><i class="icon"></i></div>
+        	<div class=" select-title ue-clear" ><span>${traininfoDetail.trainsResult}</span><i class="icon"></i></div>
             <ul class="select-list" >
                 <li id="">请选择</li>
                 <li id="合格">合格</li>

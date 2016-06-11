@@ -23,6 +23,17 @@ import com.zhbit.transform.PolstatusTransform;
 import com.zhbit.transform.TrainmasterTransform;
 import com.zhbit.util.DecodeUtils;
 
+/** 
+ * 项目名称：ElecRecord
+ * 类名称：TrainMasterAction
+ * 类描述： 
+ * 创建人：罗吉林
+ * 创建时间：2016年6月10日 下午8:49:52
+ * 修改人：罗吉林
+ * 修改时间：2016年6月10日 下午8:49:52
+ * 修改备注： 
+ * @version 
+ */
 @Controller("trainMasterAction")
 @Scope(value="prototype")
 public class TrainMasterAction extends BaseAndExcelAction{
