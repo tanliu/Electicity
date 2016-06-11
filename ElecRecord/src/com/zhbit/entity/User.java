@@ -10,7 +10,6 @@ public class User implements java.io.Serializable {
 
 	// Fields
 
-	@Transform(name="tanliu", isNull = Transform.TYPE_Integer, type = "")
 	private String userId;   //用户id
 	private Organization organization;
 	private String employNo;

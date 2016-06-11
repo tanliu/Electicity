@@ -17,33 +17,39 @@
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
 
 <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
-<script type="text/javascript" src="${basePath}js/jquery.validate.min.js"></script>
 </head>
 <body>
 
 	<div class="title">
-		<h2>增加学生个人基本信息</h2>
+		<h2>学生个人基本信息修改</h2>
 	</div>
 	<form id="myForm">
+	    <s:hidden name="student.stuId"></s:hidden>
+	    <s:hidden name="student.createTime"></s:hidden>
+	    <s:hidden name="student.creator"></s:hidden>
+	    <s:hidden name="student.password"></s:hidden>
+	    <s:hidden name="queryNO"></s:hidden>
+	    <s:hidden name="qeuryName"></s:hidden>
+	    <s:hidden name="pageNO"></s:hidden>
 		<div class="main">
 			<p class="short-input ue-clear">
 				<label>学号：</label>
-				<s:textfield id="stuNO" name="student.studentNo" class="strutsinput noNull studentNo"></s:textfield>
+				<s:textfield  name="student.studentNo" class="strutsinput" readonly="true"></s:textfield>
 				<label>姓名：</label>
-				<s:textfield name="student.stuName" class="strutsinput noNull"></s:textfield>
+				<s:textfield name="student.stuName" class="strutsinput"></s:textfield>
 			</p>
 			<p class="short-input ue-clear">
 				<label>身份证号码：</label>
-				<s:textfield name="student.idCardNo" class="strutsinput noNull idCard"></s:textfield>
+				<s:textfield name="student.idCardNo" class="strutsinput"></s:textfield>
 				<label>本人手机号码：</label>
-				<s:textfield name="student.mobileNo" class="strutsinput noNull tell"></s:textfield>
+				<s:textfield name="student.mobileNo" class="strutsinput"></s:textfield>
 			</p>
 
 			<div class="short-input select ue-clear">
-				<label>性别：</label> <input type="hidden" class="noNull" value="男" name="student.sex">
+				<label>性别：</label> <input type="hidden" value="<s:property value='student.sex'/>" name="student.sex">
 				<div class="select-wrap">
 					<div class="select-title " id="select-title1">
-						<span id="span1">男</span><i class="icon"></i>
+						<span id="span1"><s:property value="student.sex"/></span><i class="icon"></i>
 					</div>
 					<ul class="select-list" id="list1">
 						<li id="男">男</li>
@@ -52,16 +58,16 @@
 				</div>
 				<label>出生日期：</label>
 				<div class="select-wrap">
-					<input type="text" name="student.birthday"
-						onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="noNull" readonly="readonly" />
+					<input type="text" name="student.birthday" value="<s:date name='student.acceptanceDate' format='yyyy-MM-dd'/>"
+						onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" />
 				</div>
 			</div>
 			<div class="short-input select ue-clear">
-				<label>政治面貌：</label> <input type="hidden" class="noNull" value="党员"
+				<label>政治面貌：</label> <input type="hidden" value="<s:property value='student.politicalStatus'/>"
 					name="student.politicalStatus">
 				<div class="select-wrap">
 					<div class="select-title " id="select-title3">
-						<span id="span3">群众</span><i class="icon"></i>
+						<span id="span3"><s:property value="student.politicalStatus"/></span><i class="icon"></i>
 					</div>
 					<ul class="select-list" id="list3">
 						<li id="党员">党员</li>
@@ -86,13 +92,13 @@
 				<label>学院id：</label>
 				<s:textfield name="student.orgId" class="strutsinput"></s:textfield>
 				<label>学院名称：</label>
-				<s:textfield name="student.orgName" class="strutsinput noNull"></s:textfield>
+				<s:textfield name="student.orgName" class="strutsinput"></s:textfield>
 			</p>
 			<p class="short-input ue-clear">
 				<label>系：</label>
 				<s:textfield name="student.department" class="strutsinput"></s:textfield>
 				<label>专业：</label>
-				<s:textfield name="student.major" class="strutsinput noNull"></s:textfield>
+				<s:textfield name="student.major" class="strutsinput"></s:textfield>
 			</p>
 			<p class="short-input ue-clear">
 				<label>专业方向：</label>
@@ -113,10 +119,10 @@
 				<s:textfield name="student.schoolingLength" class="strutsinput"></s:textfield>
 			</p>
 			<p class="short-input ue-clear">
-				<label>入学日期：</label>
-				<s:textfield name="student.acceptanceDate"  
+				<label>入学日期：</label>				
+				<input type="text" name="student.acceptanceDate" value="<s:date name='student.acceptanceDate' format='yyyy-MM-dd'/>"
 					onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="true"
-					class="strutsinput"></s:textfield>
+					>
 				<label>毕业中学：</label>
 				<s:textfield name="student.middleSchool" class="strutsinput"></s:textfield>
 			</p>
@@ -142,11 +148,11 @@
 			<p class="short-input ue-clear">
 				<label>毕业审核标志：</label>
 				<s:radio list="#{'Y':'通过','N':'没通过'}" name="student.graduateFlag"
-					value="'Y'" cssStyle="width:35px;" />
+					 cssStyle="width:40px;" />
 
 				<label>导入校友会标志：</label>
 				<s:radio list="#{'Y':'已导入','N':'未导入'}" name="student.alumniFlag"
-					value="'Y'" cssStyle="width:45px;" />
+					 cssStyle="width:45px;" />
 			</p>
 
 			<p class="short-input ue-clear">
@@ -163,91 +169,28 @@
 				<textarea name="student.awards"></textarea>
 			</p>
 
-<!-- 
-		<div class="short-input select ue-clear">
-			<div style="margin-left: 100px; width: 50%; border: 1px gray solid;">
-			<ul>
-			  <li>1111</li>
-			  <li>1111</li>
-			  <li>1111</li>
-			  <li>1111</li>
-			</ul>
-			</div>
-		</div> -->
+
 		</div>
 
 		<div class="btn ue-clear">
-<!-- 			<a
-				href="javascript:test()"
-				class="confirm save">确定</a> -->
 			<a
-				href="javascript:add('myForm','post','${basePath}student/student_add.action')"
+				href="javascript:editor('myForm','post','${basePath}student/student_editor.action')"
 				class="confirm save">确定</a>
+			<a
+				href="javascript:tolist('myForm','post','${basePath}student/student_listUI.action')"
+				class="confirm clear">返回</a>
 		</div>
-      <input type="submit" value="测试">
+
 
 	</form>
 
 
 </body>
 
-<script type="text/javascript">
-
-
-function test(){
-	$("#myForm").submit();
-}
-
-$(function(){
-	$("#myForm").validate({
-	    rules: {
-	    	'student.studentNo': {
-	    	  required: true
-	      }
-
-	    }
-	});
-	
-});
-
-</script>
 
 
 <script type="text/javascript">
 	showRemind('input[type=text], textarea', 'placeholder');
-
-	//--------------------------------------信息唯一性校验------------------------------
-	function myonfocus() {
-		window.setTimeout(function() {
-			document.getElementById('stuNO').select();
-		}, 0);
-		$("#stuNO").focus();
-
-	}
-
-		$("input[name='student.studentNo']").blur(function() {
-			var value = $(this).val();
-			var url="${basePath}student/student_hasStudent.action";
- 			$.ajax({
-				url : url,
-				data : {'student.studentNo':value},
-				type : "post",
-				//dataType:"json",//返回数据类型
-				success : function(data) {
-                   if(data=="1"){
-                	   alert("些学号已经存，请重新输入！");
-                	  myonfocus() 
-                   }else{
-                	   
-                   }
-				},
-				error : function() {
-					alert("失败！");
-				}
-
-			});  
-
-		});
 
 </script>
 </html>

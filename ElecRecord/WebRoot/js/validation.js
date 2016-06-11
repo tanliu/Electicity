@@ -34,7 +34,7 @@ function isEmail(){
 	  $(".email").each(function(i){ 
 		  //获取指定非空的属性的值
 		   var txt=$(this).val();
-		   if(!re.test(txt)){//当值为空时
+		   if(txt!=""&&!re.test(txt)){//当值为空时
 			  warn=$(this);
 			  return false;
 		   }
@@ -50,11 +50,43 @@ function isTell(){
 	var rephone= /^1\d{10}$/; //表达式中不可以加双引号
     $(".tell").each(function(i){ //获取指定非空的属性的值
     	var txt=$(this).val();
-    	if(!rephone.test(txt)&&!retell.test(txt)){
+    	if(txt!=""&&!rephone.test(txt)&&!retell.test(txt)){
     		warn=$(this);
     		return false;
     		}
     	});
+	
+	return warn;
+}
+/**
+ * 判断输入框信息是学生学号
+ */
+function isStuNo(){
+	var warn;//当电话号码不符合时，就返回对象，正常时是返回undefined
+	var retell=/^\d{12}$/; //表达式中不可以加双引号
+	$(".studentNo").each(function(i){ //获取指定非空的属性的值
+		var txt=$(this).val();
+		if(txt!=""&&!retell.test(txt)){
+			warn=$(this);
+			return false;
+		}
+	});
+	
+	return warn;
+}
+/**
+ * 判断输入框信息是身份证信息
+ */
+function isidCard(){
+	var warn;//当电话号码不符合时，就返回对象，正常时是返回undefined
+	var retell=/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/; //表达式中不可以加双引号
+	$(".idCard").each(function(i){ //获取指定非空的属性的值
+		var txt=$(this).val();
+		if(txt!=""&&!retell.test(txt)){
+			warn=$(this);
+			return false;
+		}
+	});
 	
 	return warn;
 }

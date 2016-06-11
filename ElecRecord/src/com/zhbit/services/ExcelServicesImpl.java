@@ -6,6 +6,7 @@ package com.zhbit.services;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,12 @@ public class ExcelServicesImpl implements ExcelServices {
 			System.out.println("-------------------生成excel文档时出错----------------");
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Map<String, String> viladationExcel(List list) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

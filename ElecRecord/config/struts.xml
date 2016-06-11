@@ -8,6 +8,8 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 	<!-- 配置成开发模式 -->
 	<constant name="struts.devMode" value="true" />
+	<!-- 文件保存路径 -->
+	<constant name="struts.multipart.saveDir" value="/repository"/>  
 	<!-- 配置拓展名为action -->
 	<constant name="struts.action.extention" value="action" />
 	<!-- 把主题配置成simple -->

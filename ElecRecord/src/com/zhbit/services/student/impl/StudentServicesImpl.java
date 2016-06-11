@@ -5,6 +5,7 @@ package com.zhbit.services.student.impl;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -47,5 +48,52 @@ public class StudentServicesImpl extends BaseServicesImpl<Student> implements St
 		//保存学生
 		this.save(student);
 		
+	}
+	@Override
+	public void saveFromExcel(List<Object> students, String creator) {
+		if(students!=null&&students.size()>0){
+			//对每一条数据进行校验和设置相应的值
+			for (Object object : students) {
+				Student student=(Student) object;
+				//判断是否存在这个学生
+				Boolean flag=this.hasStudent(student.getStudentNo());
+				if(!flag){ //如果系统中没有这个学生的信息
+					student.setCreateTime(new Timestamp(new Date().getTime()));
+					student.setCreator(creator);
+					student.setPassword(EncryptUtils.MD5Encrypt("123456"));
+					this.save(student);					
+				}
+			}
+		}
+		
+	}
+	public Boolean hasStudent(String studentNo) {
+		String[] fields={"studentNo=?"};
+		String[] params={studentNo};
+		List<Student> students = findObjectByFields(fields, params);
+		if(students==null||students.size()==0){
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public Student getStudentByNo(String stuNO) {
+		String[] fields={"studentNo=?"};
+		String[] params={stuNO};
+		List<Student> students = findObjectByFields(fields, params);
+		if(students!=null&&students.size()>0){
+			return students.get(0);
+		}
+		return null;
+	}
+	@Override
+	public Student getStudentByName(String stuName) {
+		String[] fields={"stuName=?"};
+		String[] params={stuName};
+		List<Student> students = findObjectByFields(fields, params);
+		if(students!=null&&students.size()>0){
+			return students.get(0);
+		}
+		return null;
 	}
 }

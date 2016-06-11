@@ -20,6 +20,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Map;
 
 /**
  *
@@ -29,4 +30,28 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Lang {
     String value();
+	String isNull() default TYPE_CANNULL;
+	String isNum() default TYPE_NONUM;
+	String[] toExcle() default Excel;
+	String[] toEntity() default Entity;
+	String date() default  TYPE_NODATE;
+	String type() default  TYPE_DEFAULT;
+	
+	
+	public final static String TYPE_DEFAULT="DEFAULT";
+	
+	//是不是日期
+	public final static String TYPE_DATE="DATE";
+	public final static String TYPE_NODATE="NODATE";
+	
+	public final static String TYPE_CANNULL="Null";
+	public final static String TYPE_NONULL="Nonull";
+	
+	public final static String TYPE_ISNUM="Null";
+	public final static String TYPE_NONUM="Nonull";
+	
+	public final static String Excel="null";
+	public final static String Entity="null";
+	
+	
 }

@@ -3,6 +3,8 @@
  */
 package com.zhbit.services.student;
 
+import java.util.List;
+
 import com.zhbit.entity.Student;
 import com.zhbit.services.BaseServices;
 
@@ -21,4 +23,30 @@ public interface StudentServices extends BaseServices<Student> {
    public static final String SERVICES_NAME="com.zhbit.services.student.StudentServicesImpl";
 
     void saveStudent(String createor,Student student);
+
+	/**
+	 * 方法描述:保存导入的数据
+	 * @param students
+	 * @param creator
+	 */
+	void saveFromExcel(List<Object> students, String creator);
+	
+	/**
+	 * 方法描述:判断系统是存在学号为这个的学生
+	 * @param studentNo
+	 * @return
+	 */
+	Boolean hasStudent(String studentNo);
+	
+	/**
+	 * 方法描述:通过学号获取学生信息
+	 * @return
+	 */
+	public Student getStudentByNo(String stuNO);
+	/**
+	 * 方法描述:通过学生名字获取学生信息
+	 * @return
+	 */
+	public Student getStudentByName(String stuName);
+	
 }

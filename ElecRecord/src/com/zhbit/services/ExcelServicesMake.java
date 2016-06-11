@@ -21,7 +21,7 @@ import com.zhbit.excel.ExcelConfig;
  * 修改备注： 
  * @version 
  */
-public interface ExcelServices {
+public interface ExcelServicesMake {
 
 	/**
 	 * 方法描述:解释excel文档
@@ -29,7 +29,7 @@ public interface ExcelServices {
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<Object> parseExcel(ExcelConfig config);
+	public List<Object> parseExcel(ExcelConfig config) throws Exception;
 	/**
 	 * 方法描述:生成excel文档
 	 * @param config
@@ -37,4 +37,6 @@ public interface ExcelServices {
 	public void createExcel(ExcelConfig config);
 	
 	public Map<String, String> viladationExcel(List list);
+	
+	public List<Object> toDBEnity(List lists, Class clazz);
 }

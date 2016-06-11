@@ -45,15 +45,16 @@
                 </thead>
                 <tbody>
 
-                 <s:iterator value="logs" var="log">
-                	<tr>
-                	
+                 <s:iterator value="logs" status="num" var="log">
+                    <s:if test="#num.index<5">
+                	<tr>                	
                      	<td width="33%"><s:date name="#log.loginTime" format="MM-dd hh:mm:ss"/></td>
                         <td width="33%"><s:property value="#log.ifSuccess==1?'成功':'失败'"/> </td> 
                         <td width="33%"><s:property value="#log.loginIp"/> </td>
 <!--                         <td class="contact">139039409876</td>
                         <td class="remark"></td> -->
                     </tr>
+                    </s:if>
                    </s:iterator>
                 </tbody>
             </table>

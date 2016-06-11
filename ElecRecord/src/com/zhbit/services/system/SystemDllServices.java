@@ -34,4 +34,11 @@ public interface SystemDllServices extends BaseServices<SystemDll> {
 	 * @param keyword
 	 */
 	void editorSystemDll(String[] ddlNames, String keyword);
+	
+	/**
+	 * 方法描述:通过keyword查找到数据字典的数据
+	 * @param keyword
+	 * @return
+	 */
+	public List<SystemDll> findSystemDllByKeyword(String keyword);
 }

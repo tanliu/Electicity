@@ -1,0 +1,76 @@
+@CHARSET "UTF-8";
+/*表单主体*/
+.main {
+	padding-top: 2px;
+}
+.main p {
+	margin-top: 5px;
+	padding-left: 5px;
+	line-height: 30px;
+}
+.main p label {
+	float: left;
+	width: 90px;
+	text-align:right;
+}
+.main p input {
+	float: left;
+	margin-left:4px;
+}
+.main p input[type="text"] {
+	width: 180px;
+	height: 28px;
+    line-height:28px;
+	padding: 0 10px;
+	border: 1px solid #c5d6e0;
+	outline: none;
+	background: url(../images/inputbg.png) repeat-x;
+}
+.main p.long-input input[type="text"] {
+	width: 472px;
+}
+.main p span {
+	float: left;
+	margin-left: 15px;
+	color: #959595;
+}
+.main p span em {
+	color: #f81212;
+}
+
+.main .select {
+	overflow: visible;
+	margin-top: 10px;
+	padding-left: 31px;
+	line-height: 30px;
+}
+.main .select label {
+	float: left;
+	width: 160px;
+	text-align: right;
+}
+.main .select .select-wrap {
+	float: left;
+	position: relative;
+	margin-left:4px;
+	width：300px;
+	}
+.main .select .select-wrap .select-title {
+	width: 240px;
+	height: 28px;
+	padding: 0 10px;
+	border: 1px solid #c5d6e0;
+	outline: none;
+	background: url(../images/inputbg.png) repeat-x;
+	cursor: pointer;
+}
+.main .select .select-wrap .select-title span {
+	float: left;
+}
+.main .select .select-wrap .select-title .icon {
+	float: right;
+	margin-right: 3px;
+	width: 9px;
+	height: 28px;
+	background: url(../images/selectxl.png) no-repeat center center;
+}

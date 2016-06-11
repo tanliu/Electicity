@@ -21,19 +21,19 @@ import org.zhbit.excel.bean.BaseExcelVo;
 @ExcelVoConfig
 public class UserExcel extends BaseExcelVo{
 
-	@Lang(value="id")
+	@Lang(value="id",isNull=Lang.TYPE_NONULL)
 	private String id;
 	@Lang(value = "姓名")
 	private String username;
 	@Lang(value = "密码")
 	private String password;
 	
-	@Lang(value="生日")
+	@Lang(value="生日",date=Lang.TYPE_DATE)
 	private String birth;
 	@Lang(value="性别")
 	private String sex;
 	
-	@Lang(value="试试")
+	@Lang(value="试试",toEntity={"1","0"},toExcle={"男","女"} )
 	private String in;
 	
 	public String getId() {

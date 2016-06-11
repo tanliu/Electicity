@@ -7,17 +7,20 @@
 
 	<!-- 配置全局结果及异常映射 -->
 	<package name="student" namespace="/student" extends="json-default">
-         <!-- 用户管理 -->
+         <!-- 学生信息管理 -->
          <action name="/student_*" class="studentAction" method="{1}">            
             <result name="{1}">/WEB-INF/jsp/student/student_{1}.jsp</result>
             <result name="list" type="redirectAction">
-                 <param name="actionName">student_addUI</param>  
+                 <param name="actionName">student_listUI</param>  
+	             <param name="queryNO">${queryNO}</param>
+	             <param name="qeuryName">${qeuryName}</param>
+	             <param name="pageNO">${pageNO}</param>
             </result>
+            <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
+            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>
 <!--             <result name="delete" type="redirectAction">
 	          <param name="actionName">user_listUI</param>
-	          <param name="queryWay">${queryWay}</param>
 	          <param name="querycon">${querycon}</param>
-	          <param name="pageNO">${pageNO}</param>
 	          <param name="encode">true</param>	          
 	        </result> -->
          </action>

@@ -5,6 +5,7 @@ import java.io.File;
 import javax.annotation.Resource;
 
 import com.zhbit.services.ExcelServices;
+import com.zhbit.services.ExcelServicesMake;
 
 
 /** 
@@ -26,6 +27,9 @@ public abstract class BaseAndExcelAction extends BaseAction {
 	
 	@Resource(name="excelServices")
 	protected ExcelServices excelServices;
+	
+	@Resource(name="excelServicesMakeImpl")
+	protected ExcelServicesMake excelServicesMake;
 
 	public abstract String importExcel();
 	public abstract void exportExcel();

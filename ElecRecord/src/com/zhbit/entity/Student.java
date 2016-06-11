@@ -2,6 +2,8 @@ package com.zhbit.entity;
 
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 
 /** 
  * 项目名称：ElecRecord
@@ -14,30 +16,51 @@ import java.sql.Timestamp;
  * 修改备注： 
  * @version 
  */ 
-public class Student implements java.io.Serializable {
+public class Student implements java.io.Serializable,Cloneable {
 
 
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;
+	@Transform(name="姓名")
 	private String stuName;
+	@Transform(name="性别")
 	private String sex;
+	@Transform(name="出生日期")
 	private Timestamp birthday;
+	@Transform(name="政治面貌")
 	private String politicalStatus;
+	@Transform(name="民族")
 	private String nation;
+	@Transform(name="籍贯")
 	private String nativePlace;
+	@Transform(name="来源地区")
 	private String fromPlace;
+	@Transform(name="")
 	private String idCardNo;
+	@Transform(name="")
 	private String orgId;
+	@Transform(name="学院")
 	private String orgName;
+	@Transform(name="系")
 	private String department;
+	@Transform(name="专业名称")
 	private String major;
+	@Transform(name="专业方向")
 	private String majorField;
+	@Transform(name="专业类别")
 	private String majorCategories;
+	@Transform(name="")
 	private String cultivateDirection;
+	@Transform(name="行政班")
 	private String className;
+	@Transform(name="学制")
 	private Integer educationSystem;
+	@Transform(name="XXNX")
 	private Integer schoolingLength;
+	@Transform(name="入学日期")
 	private Timestamp acceptanceDate;
+	@Transform(name="毕业中学")
 	private String middleSchool;
 	private String mobileNo;
 	private String familyTelNo;
@@ -47,7 +70,9 @@ public class Student implements java.io.Serializable {
 	private String skill;
 	private String selfDescription;
 	private String awards;
+	@Transform(name="XJZT")
 	private String schoolStatus;
+	@Transform(name="DQSZJ")
 	private String dqszj;
 	private String photoPath;
 	private String graduateFlag;
@@ -56,6 +81,13 @@ public class Student implements java.io.Serializable {
 	private String creator;
 	private String password;
 
+	
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 
 	public Student() {
 	}
@@ -417,5 +449,23 @@ public class Student implements java.io.Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	@Override
+	public String toString() {
+		return "Student [stuId=" + stuId + ", studentNo=" + studentNo + ", stuName=" + stuName + ", sex=" + sex
+				+ ", birthday=" + birthday + ", politicalStatus=" + politicalStatus + ", nation=" + nation
+				+ ", nativePlace=" + nativePlace + ", fromPlace=" + fromPlace + ", idCardNo=" + idCardNo + ", orgId="
+				+ orgId + ", orgName=" + orgName + ", department=" + department + ", major=" + major + ", majorField="
+				+ majorField + ", majorCategories=" + majorCategories + ", cultivateDirection=" + cultivateDirection
+				+ ", className=" + className + ", educationSystem=" + educationSystem + ", schoolingLength="
+				+ schoolingLength + ", acceptanceDate=" + acceptanceDate + ", middleSchool=" + middleSchool
+				+ ", mobileNo=" + mobileNo + ", familyTelNo=" + familyTelNo + ", postCode=" + postCode
+				+ ", travelRange=" + travelRange + ", address=" + address + ", skill=" + skill + ", selfDescription="
+				+ selfDescription + ", awards=" + awards + ", schoolStatus=" + schoolStatus + ", dqszj=" + dqszj
+				+ ", photoPath=" + photoPath + ", graduateFlag=" + graduateFlag + ", alumniFlag=" + alumniFlag
+				+ ", createTime=" + createTime + ", creator=" + creator + ", password=" + password + "]";
+	}
+	
+	
 
 }

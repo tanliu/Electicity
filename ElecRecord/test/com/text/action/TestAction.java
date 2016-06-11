@@ -8,10 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,15 +19,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 import org.junit.Test;
@@ -35,22 +31,22 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zhbit.excel.annotation.Lang;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.sun.jmx.snmp.Timestamp;
 import com.text.entity.TestUser;
 import com.text.entity.excel.TestEntity;
 import com.text.entity.excel.UserExcel;
 import com.text.services.TestServices;
-import com.text.services.impl.TestServicesImpl;
-import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Transform;
+import com.zhbit.entity.Student;
+import com.zhbit.entity.excel.BaseExcelBean;
+import com.zhbit.entity.excel.StuExcel;
 import com.zhbit.excel.ExcelConfig;
-import com.zhbit.services.ExcelServices;
-import com.zhbit.services.ExcelServicesImpl;
 import com.zhbit.transform.BaseTransfrom;
 import com.zhbit.transform.TestTransform;
+
+import jxl.Sheet;
+import jxl.Workbook;
 
 /** 
  * 项目名称：ElecRecord
@@ -210,7 +206,6 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 	public void imp(){
 		try {
 			InputStream fiS=new FileInputStream(new File("C:\\Users\\Administrator\\Desktop\\谭柳的文件.xls"));
-			//HSSFWorkbook workbook=new HSSFWorkbook(fiS);
 			XSSFWorkbook workbook=new XSSFWorkbook(new File("C:\\Users\\Administrator\\Desktop\\入党.xlsx"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -224,34 +219,162 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 		}
 	}
 	
-	@Test
+	
 	public void tr(){
 		UserExcel userExcel=new UserExcel();
-		userExcel.setId("9527");
+		userExcel.setId("9527");		
 		userExcel.setUsername("谭柳");
 		userExcel.setPassword("123456");
-		userExcel.setBirth("19941004");
+		userExcel.setBirth("1994/10/04");
+		
 		userExcel.setSex("1");
-		userExcel.setIn("2");
-		//System.out.println(userExcel.getClass());
+		userExcel.setIn("女");
+		
+		UserExcel userExcel1=new UserExcel();
+		userExcel1.setId("9527");
+		userExcel1.setUsername("谭某");
+		userExcel1.setPassword("123456");
+		userExcel1.setBirth("1994/10/04");
+		
+		userExcel1.setIn("男");
+		
 		List<UserExcel> userExcels=new ArrayList<UserExcel>();
+		userExcels.add(null);
 		userExcels.add(userExcel);
+		userExcels.add(userExcel1);
 		List<Object> objects=this.tramsform(userExcels,TestUser.class);
+		for (Object object : objects) {
+			System.out.println(object);
+		}
+		
+		Map<String, String> viladationExcel = viladationExcel(userExcels);
+		System.out.println(viladationExcel);
+		
+		
+
 	}
+	
+    private Map<String, String> viladationExcel(List list){
+    	Map<String, String> map=new HashMap<String, String>();
+    	for (Object object : list) {
+    		
+    		if(object==null){
+    			continue;
+    		}
+    		BaseExcelBean baseExcelBean=(BaseExcelBean) object;
+			
+    		
+    		Field[] declaredFields = object.getClass().getDeclaredFields();
+    		for (Field field : declaredFields) {
+    			field.setAccessible(true);
+    			try {
+					String value=(String) field.get(object);
+					Lang annotation = field.getAnnotation(Lang.class);
+					//判断是否可以为空
+					if(Lang.TYPE_NONULL.equals(annotation.isNull())){
+						if(value==null||"".equals(value.replace(" ", ""))){
+							map.put("第"+baseExcelBean.getRow()+"行的("+field.getAnnotation(Lang.class).value()+")列","存在空值");
+							//return map;
+						}
+
+					}
+					//判断指定格式是否正确
+					if(!Lang.TYPE_DEFAULT.equals(annotation.type())&&annotation.type()!=null){
+						String onereg=annotation.type();
+						if(value!=null&&!"".equals(value.replace(" ", ""))){
+							if(!value.matches(onereg)){
+								map.put("第"+baseExcelBean.getRow()+"行的("+field.getAnnotation(Lang.class).value()+")列","：输入的格式不对，不应该是:"+value);
+								//return map;	
+							}
+						}
+					}
+					//判断是不是数字
+					if(Lang.TYPE_ISNUM.equals(annotation.isNum())){
+						String onereg="\\d?";
+						if(value!=null&&!"".equals(value.replace(" ", ""))){
+							if(!value.matches(onereg)){
+								map.put("第"+baseExcelBean.getRow()+"行的("+field.getAnnotation(Lang.class).value()+")列","：输入的格式应该是数字，不应该是:"+value);
+								//return map;	
+							}
+						}
+					}
+					
+					//判断日期是否正常
+					if(Lang.TYPE_DATE.equals(annotation.date())){
+						String onereg = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\\s(((0?[0-9])|([1-2][0-3]))\\:([0-5]?[0-9])((\\s)|(\\:([0-5]?[0-9])))))?$"; 
+						if(value!=null&&!"".equals(value.replace(" ", ""))){
+							if(!value.matches(onereg)){
+								map.put("第"+baseExcelBean.getRow()+"行的("+field.getAnnotation(Lang.class).value()+")列","日期格式(eg:19911004,1991-10-04,1991/10/04)，不应该是:"+value);
+								//return map;								
+							}
+						}
+
+					}
+					//判断类型是否正确
+					if(!Lang.Excel.equals(annotation.toExcle())){
+						boolean flag=false;
+						StringBuffer buffer=new StringBuffer("");
+						if(value!=null&&!"".equals(value.replace(" ", ""))){
+							String[] entitys = annotation.toExcle();
+							if(entitys!=null&&entitys.length>1){
+								for (String entity : entitys) {
+									buffer.append(entity).append("、");
+									if(value.equals(entity)){
+										
+										flag=true;
+									}
+								}
+								if(!flag){
+									buffer.deleteCharAt(buffer.length()-1);
+									map.put("第"+baseExcelBean.getRow()+"行的("+field.getAnnotation(Lang.class).value()+")列","类型应该是："+buffer.toString());
+									//return map;
+								}
+								
+							}
+						}
+						
+					}
+					
+					//类型的指定
+					
+					
+					//判断日期是否正常
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				field.setAccessible(false);
+			}
+    		
+		}
+    	
+    	
+    	return map;
+    }
 
 	private List<Object> tramsform(List lists, Class clazz) {
 		//先创建一个保存属性map（注解名，属性对象）
 		Map<String, Object> map=new HashMap<String, Object>();
+		List<Object> objects=new ArrayList<Object>();
 		try {
 			//现再创建一个实体对像
 			Object object=clazz.newInstance();
 			//把实体对象的属性保存到map中
 			Field[] fields = object.getClass().getDeclaredFields();
 			for (Field field : fields) {
+				if(field.getAnnotation(Transform.class)==null){
+					continue;
+				}
 				map.put(field.getAnnotation(Transform.class).name(), field);
 			}
 			//进行value的的转化
 			for (Object excel : lists) {
+				if(excel==null){
+					continue;
+				}
 				//取得所有属性
 				Field[] declaredFields = excel.getClass().getDeclaredFields();
 				for (Field field : declaredFields) {
@@ -261,6 +384,9 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 					String value=(String) field.get(excel);
 					//从map中取得目标对象的对应方法
 					Field target=(Field) map.get(field.getAnnotation(Lang.class).value());
+					if(target==null){
+						continue;
+					}
 					//设置目标对象的方法可以访问
 					target.setAccessible(true);
 					//清空目标对象中属性的值			
@@ -268,11 +394,24 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 					Class<?> filedtype=target.getType();
 					int index=filedtype.toString().lastIndexOf(".");
 					String type=filedtype.toString().substring(index+1, filedtype.toString().length());
-					System.out.println(type);
 					if("String".equals(type)){ //如果转换为字符串
 						target.set(object, null);
 						target.set(object, value);
 					}else if("int".equals(type)||"Integer".equals(type)){
+						//从注解中取得相应的属性
+						Lang lang=field.getAnnotation(Lang.class);
+						String[] myexcels=lang.toExcle();
+						String[] myentity=lang.toEntity();
+						//注解类型转换值不为空时
+						if(myentity!=null&&myexcels!=null&&myentity.length>0&&myexcels.length>0){
+							//查找一个和相同
+							for(int i=0;i<myexcels.length;i++){
+								if(myexcels[i].equals(value)){
+									value=myentity[i];
+									break;
+								}
+							}
+						}
 						target.set(object, 0);
 						if(value!=null&&!"".equals(value)){
 							target.set(object, Integer.parseInt(value));							
@@ -280,12 +419,16 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 					}else if("Timestamp".equals(type)){
 						if(value!=null&&!"".equals(value)){							
 							String fromat=null;
-							String onereg = "^\\d{4}-0[1-9]|1[1-2]-0[1-9]|[1-2]\\d|3[0-1]"; 
-							String otherreg = "^\\d{4}0[1-9]|1[1-2]0[1-9]|[1-2]\\d|3[0-1]"; 
+							String onereg = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\\s(((0?[0-9])|([1-2][0-3]))\\:([0-5]?[0-9])((\\s)|(\\:([0-5]?[0-9])))))?$"; 
+							
 							if(value.matches(onereg)){
-								fromat="yyyy-MM-dd";
-							}else if(value.matches(otherreg)){
-								fromat="yyyyMMdd";							
+								if(value.contains("-")){
+									fromat="yyyy-MM-dd";									
+								}else if(value.contains("/")){
+									fromat="yyyy/MM/dd";
+								}else{
+									fromat="yyyyMMdd";
+								}
 							}
 							if(fromat!=null){
 								SimpleDateFormat sdf=new SimpleDateFormat(fromat);
@@ -298,25 +441,12 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 					target.setAccessible(false);
 					//设置不可以访问
 					field.setAccessible(false);
-				}				
-			}
-			
-			try {
-				
+				}
 				Method method=object.getClass().getDeclaredMethod("clone", null);
 				method.setAccessible(true);
 				Object obj=method.invoke(object, null);
-				System.out.println(obj);
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-			
+				objects.add(obj);				
+			}			
 			
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -324,9 +454,123 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 			e.printStackTrace();
 		} catch (ParseException e) {
 			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+		return objects;
 	}
 
+	
+	
+	
+	@Test
+	public void te(){
+		try {
+			FileInputStream fiS=new FileInputStream(new File("D:\\学生基本信息表.xls"));
+			ExcelConfig config=new ExcelConfig(StuExcel.class, "学生基本信息", 1,fiS,excelFileName);
+
+			List<Object> objects=paserExcel(config);
+			Map<String, String> viladationExcel = viladationExcel(objects);
+			System.out.println(viladationExcel);
+			List<Object> tramsform = tramsform(objects, Student.class);
+			for (Object object : tramsform) {
+				System.out.println(object);
+			}
+
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private List<Object> paserExcel(ExcelConfig config) throws Exception {
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		Map<Integer, Object> Excelmap=new HashMap<Integer, Object>();
+		List<Object> objects=new ArrayList<Object>();
+		if(config.getFio()==null){
+			throw new Exception("文件不可以为空");
+		}
+		Workbook wb=Workbook.getWorkbook(config.getFio());
+		Sheet sheets[]=wb.getSheets();
+		//现再创建一个实体对像
+		Object object=config.getClazz().newInstance();
+		//把实体对象的属性保存到map中
+		Field[] fields = object.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			if(field.getAnnotation(Lang.class)==null){
+				continue;
+			}
+			map.put(field.getAnnotation(Lang.class).value(), field);
+		}
+		//操作表
+		if(sheets!=null){
+			for (Sheet sheet : sheets) {//指定的表
+				if(!sheet.getName().equalsIgnoreCase(config.getSheetName())){
+					throw new Exception("找不到指定的表");
+				}
+				for(int i=0;i<sheet.getColumns();i++){					
+					String title=sheet.getCell(i, config.getStartRow()-1).getContents();
+					if(title!=null){
+						Field field=(Field) map.get(title);
+						if (field!=null) {							
+							Excelmap.put(i,field);
+						}
+						
+					}
+
+				}
+				map=null;
+				//System.out.println(Excelmap);
+				//装载数据
+				for(int row=config.getStartRow();row<sheet.getRows()+config.getStartRow()-1;row++){
+					for(int colum=0;colum<sheet.getColumns();colum++){
+						Field field=(Field) Excelmap.get(colum);
+						String value=sheet.getCell(colum,row).getContents();
+						if(field!=null&&value!=null){
+							field.setAccessible(true);							
+							field.set(object, value);							
+							field.setAccessible(false);
+						}
+					}			
+					
+					Method rowmethod=object.getClass().getSuperclass().getDeclaredMethod("setRow", String.class);
+					rowmethod.setAccessible(true);
+					rowmethod.invoke(object, row+"");
+					rowmethod.setAccessible(false);
+					
+					Method method=object.getClass().getDeclaredMethod("clone", null);
+					method.setAccessible(true);
+					Object obj=method.invoke(object, null);
+					method.setAccessible(false);
+					objects.add(obj);	
+				}
+				
+				
+				
+			}
+		}
+		return objects;
+	}
 	
 }

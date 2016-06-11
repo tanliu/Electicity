@@ -88,4 +88,13 @@ public class SystemDllServicesImpl extends BaseServicesImpl<SystemDll> implement
 		saveSystemDll(ddlNames, keyword);
 	}
 
+
+
+	@Override
+	public List<SystemDll> findSystemDllByKeyword(String keyword) {
+		String[] fields={"keyword=?"};
+		String[] params={keyword};
+		return this.findObjectByFields(fields, params);
+	}
+
 }
