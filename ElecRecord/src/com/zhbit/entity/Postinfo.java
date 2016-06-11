@@ -10,20 +10,20 @@ public class Postinfo implements java.io.Serializable {
 
 	// Fields
 
-	private String id;
-	private String emsno;
-	private String schoolNo;
-	private String stuId;
-	private String studentNo;
-	private String stuName;
-	private String major;
-	private String sex;
-	private String dispatchType;
-	private String chargeUnit;
-	private String mailNo;
-	private String memo;
-	private Timestamp createTime;
-	private String creator;
+	private String id;   //id
+	private String emsno;   //	EMS编号
+	private String schoolNo;  //北理工编号
+	private String stuId;     //学生id
+	private String studentNo;  //学号
+	private String stuName;    //姓名
+	private String major;	  //专业
+	private String sex;		//性别
+	private String dispatchType;	//派遣性质
+	private String chargeUnit;    //主管单位
+	private String mailNo;		//邮件号
+	private String memo;		//备注
+	private Timestamp createTime;	//创建时间
+	private String creator;		//创建人
 
 	// Constructors
 

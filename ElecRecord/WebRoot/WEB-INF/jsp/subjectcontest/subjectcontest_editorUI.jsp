@@ -22,6 +22,8 @@
             <form id="myForm">
             	<input hidden="hidden" name="subjectcontest.id" value="${subjectcontest.id}"/>
                <input hidden="hidden"  name="subjectcontest.stuId" value="${subjectcontest.stuId}"/>
+               	 <input hidden="hidden"  name="subjectcontest.createTime" value="${subjectcontest.createTime}"/>
+             <input hidden="hidden"  name="subjectcontest.creator" value="${subjectcontest.creator}"/>
                	   <!-- 将listUI传过来的查询条件赋值 -->
 	    <input type="hidden" name="query_studentNo" value="${querycon.studentNo}">
 	    <input type="hidden" name="query_stuName" value="${querycon.stuName}">

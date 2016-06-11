@@ -194,9 +194,6 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	*/
 	@Override
 	public String editor() {
-		Timestamp time = new Timestamp(System.currentTimeMillis()); 
-		subjectcontest.setCreateTime(time);
-		subjectcontest.setCreator("朱嘉鑫");
 		subjectContestServices.update(subjectcontest);
 		
 		subjectcontest.setStudentNo(request.getParameter("query_studentNo"));
@@ -204,8 +201,6 @@ public class SubjectContestAction extends BaseAndExcelAction {
 		subjectcontest.setGrantUnits(request.getParameter("query_grantUnits"));
 		subjectcontest.setRewardName(request.getParameter("query_rewardName"));
 		
-		System.out.println("listUI传来的单位="+subjectcontest.getGrantUnits());
-		System.out.println("listUI传来的名称="+subjectcontest.getRewardName());
 		request.setAttribute("subjectcontest",subjectcontest);
 		return "editor";
 	}

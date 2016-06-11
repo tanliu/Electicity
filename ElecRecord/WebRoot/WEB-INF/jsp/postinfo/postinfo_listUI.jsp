@@ -25,9 +25,9 @@
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
 <script type="text/javascript">
-	    var queryAction="${basePath}studentdutys/studentdutys_listUI.action";
-		var deleteAction="${basePath}studentdutys/studentdutys_delete.action";
-		var downloadAction="${basePath}studentdutys/studentdutys_exportExcel.action";
+	    var queryAction="${basePath}postinfo/postinfo_listUI.action";
+		var deleteAction="${basePath}postinfo/postinfo_delete.action";
+		var downloadAction="${basePath}postinfo/postinfo_exportExcel.action";
 		function query(){
 		  	$("#pageNo").val(1);
 		  	$("#queryForm").attr("action",queryAction);
@@ -46,9 +46,9 @@
 		 	$("#queryForm").submit();  
 		} 
 
-	 	//向studentdutys_editorUI.action提交信息
+	 	//向postinfo_editorUI.action提交信息
 	 	function editor(id){
-	 			var url="${basePath}studentdutys/studentdutys_editorUI.action?studentdutys.id="+id;
+	 			var url="${basePath}postinfo/postinfo_editorUI.action?postinfo.id="+id;
 	 			$("#queryForm").attr("action",url);
 	 	 		$("#queryForm").submit();  
 	 	} 
@@ -61,10 +61,8 @@
 			  	//双击跳转到详情页面
 			  	$('tbody>tr').dblclick(function() {
 			  		var sid=$(this).find('td').find("#subid").val();
-			  		var url="${basePath}studentdutys/studentdutys_detailUI.action?studentdutys.id="+sid;
+			  		var url="${basePath}postinfo/postinfo_detailUI.action?postinfo.id="+sid;
 			  		window.open(url);
-			  		//window.location.href="${basePath}subjectcontest/subjectcontest_detailUI.action?subjectcontest.id="+sid;	
-	
 		    	});	
 				//点击改变选中样式
 			    $('tbody>tr').click(function() {
@@ -77,56 +75,38 @@
 </head>
 
 <body>
-<div class="title"><h2>学生职务信息管理</h2></div>
+<div class="title"><h2>学生档案邮寄管理</h2></div>
 	<form id="queryForm"
-		action="${basePath}studentdutys/studentdutys_listUI.action"
+		action="${basePath}postinfo/postinfo_listUI.action"
 		method="post">
 	<div class="query">
 	<div class="query-conditions ue-clear">
-		<div class="conditions name ue-clear">
-		<label>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
-		<input  hidden="hidden" value="" name="studentdutys.grade" value="${querycon.grade}"/>
-		<div class="select-wrap">
-			<div class="select-title ue-clear"><span>${querycon.grade}</span><i class="icon"></i></div>
-		 <ul class="select-list">
-	                <s:iterator value="#request.Grade" var="Grade">
-						<li id="<s:property value='#Grade.ddlName'/>"><s:property value="#Grade.ddlName"/></li>
-					</s:iterator>  
-                </ul>
+		<div class="conditions staff ue-clear">
+			<label>EMS编号：</label>
+				<input type="text" name="postinfo.emsno" value="${querycon.emsno}" />
 		</div>
+		<div class="conditions staff ue-clear">
+			<label>邮件号：</label>
+				<input type="text" name="postinfo.mailNo" value="${querycon.mailNo}" />
 		</div>
-        
+	</div>
+	 <div class="query-conditions ue-clear">
 		<div class="conditions name ue-clear">
-			<label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;院：</label>
-			<input  hidden="hidden" name="studentdutys.college" value="${querycon.college}"/>
+			<label>专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：</label>
+			<input  hidden="hidden" name="postinfo.major" value="${querycon.major}"/>
 			<div class="select-wrap">
-				<div class="select-title ue-clear"><span>${querycon.college}</span><i class="icon"></i></div>
+				<div class="select-title ue-clear"><span>${querycon.major}</span><i class="icon"></i></div>
 				<ul class="select-list">
-				 <s:iterator value="#request.College" var="College">
-						<li id="<s:property value='#College.ddlName'/>"><s:property value="#College.ddlName"/></li>
+				 <s:iterator value="#request.major" var="Major">
+						<li id="<s:property value='#Major.ddlName'/>"><s:property value="#Major.ddlName"/></li>
 					</s:iterator>  
 				</ul>
 			 </div>
 		 </div>
-	</div>
-	<div class="query-conditions ue-clear">
 		<div class="conditions staff ue-clear">
-			<label>班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
-				<input type="text" name="studentdutys.className" value="${querycon.className}" />
+			<label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+				<input type="text" name="postinfo.stuName" value="${querycon.stuName}" />
 		</div>
-		
-		<div class="conditions name ue-clear">
-			    <label>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务：</label>
-			    <input  hidden="hidden"  name="studentdutys.duty" value="${querycon.duty}"/>
-			<div class="select-wrap">
-				<div class="select-title ue-clear"><span>${querycon.duty}</span><i class="icon"></i></div>
-				<ul class="select-list">
-				        <s:iterator value="#request.Duty" var="Duty">
-						<li id="<s:property value='#Duty.ddlName'/>"><s:property value="#Duty.ddlName"/></li>
-						</s:iterator>  
-				 </ul>
-			</div>
-		 </div>
 	</div>
 	 
 	<div class="query-btn ue-clear">
@@ -136,7 +116,7 @@
 		
 		
 <div class="table-operate ue-clear">
-			<a href="${basePath}studentdutys/studentdutys_addUI.action" class="add">添加</a>
+			<a href="${basePath}postinfo/postinfo_addUI.action" class="add">添加</a>
 			<a href="javascript:;" class="del">删除</a> 
 			<a href="javascript:;" class="import">导入</a>
     		<a href="javascript:;" class="upload">上传</a>
@@ -147,39 +127,39 @@
 	<table>
 				<thead>
 					<tr>
-						<th width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+						<th width="3%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
 						<th width="3%">序号</th>
-						<th width="8%">年级</th>
-						<th width="6%">学院</th>
-						<th width="8%">班级</th>
-						<th width="4%">姓名</th>
-						<th width="4%">性别</th>
-						<th width="10%">职务</th>
-						<th width="8%">手机</th>
-						<th width="6%">短号</th>
-						<th width="8%">宿舍</th>
+						<th width="5%">EMS编号</th>
+						<th width="5%">北理工编号</th>
+						<th width="8%">专业名称</th>
+						<th width="5%">姓名</th>
+						<th width="5%">学号</th>
+						<th width="3%">性别</th>
+						<th width="6%">派遣性质</th>
+						<th width="15%">主管单位</th>
+						<th width="8%">邮件号</th>
 						<th width="8%">备注</th>
-						<th width="5%">编辑</th>
+						<th width="3%">编辑</th>
 					</tr>
 				</thead>
 				<tbody>
-					<s:iterator value="pageUtils.items" var="studentdutys" status="stuts">
+					<s:iterator value="pageUtils.items" var="postinfo" status="stuts">
 					
 						<tr>
 							<td><input type="checkbox" name="selectedRow" id="subid"
-								value='<s:property value='#studentdutys.id'/>' /></td>
+								value='<s:property value='#postinfo.id'/>' /></td>
 							<td class="num">${stuts.count+(pageUtils.pageNo-1)*pageUtils.pageSize}</td>
-							<td><s:property value="#studentdutys.grade" /></td>
-							<td><s:property value="#studentdutys.college" /></td>
-							<td><s:property value="#studentdutys.className" /></td>
-							<td><s:property value="#studentdutys.stuName" /></td>
-							<td><s:property value="#studentdutys.sex" /></td>
-							<td><s:property value="#studentdutys.duty" /></td>
-							<td><s:property value="#studentdutys.telNo" /></td>
-							<td><s:property value="#studentdutys.shortTelNo" /></td>
-							<td><s:property value="#studentdutys.address"/></td>
-							<td><s:property value="#studentdutys.memo" /></td>
-							<td><a href="javascript:editor('<s:property value='#studentdutys.id'/>')">
+							<td><s:property value="#postinfo.emsno" /></td>
+							<td><s:property value="#postinfo.schoolNo" /></td>
+							<td><s:property value="#postinfo.major" /></td>
+							<td><s:property value="#postinfo.stuName" /></td>
+							<td><s:property value="#postinfo.studentNo" /></td>
+							<td><s:property value="#postinfo.sex" /></td>
+							<td><s:property value="#postinfo.dispatchType" /></td>
+							<td><s:property value="#postinfo.chargeUnit" /></td>
+							<td><s:property value="#postinfo.mailNo"/></td>
+							<td><s:property value="#postinfo.memo" /></td>
+							<td><a href="javascript:editor('<s:property value='#postinfo.id'/>')">
 								<img src="../images/edtico.png" /></a></td>
 						</tr>
 						
@@ -193,7 +173,7 @@
 	<div class="dialog-content" align="center">   
         <div class="ui-dialog-text" align="center">
             <p class="dialog-content">请选择要导入的excel文件</p>
-            <form id="fileForm" action="${basePath}studentdutys/studentdutys_importExcel.action" method="post" enctype="multipart/form-data">
+            <form id="fileForm" action="${basePath}postinfo/postinfo_importExcel.action" method="post" enctype="multipart/form-data">
             <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel"  /></p>
           </form>
             <div class="buttons" align="center">

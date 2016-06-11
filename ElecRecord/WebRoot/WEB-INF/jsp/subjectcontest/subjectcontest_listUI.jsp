@@ -117,7 +117,7 @@
 			<a href="javascript:;" class="del">删除</a> 
 			<a href="javascript:;" class="import">导入</a>
     		<a href="javascript:;" class="upload">上传</a>
-    		<a href="javascript:downloadItem()" class="del">下载</a>
+    		<a href="javascript:downloadItem()">下载</a>
     		
 		</div>
 <div class="table-box">
