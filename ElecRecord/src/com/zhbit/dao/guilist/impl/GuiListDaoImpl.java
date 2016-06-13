@@ -9,4 +9,7 @@ import com.zhbit.entity.GuiList;
 @Repository(value=GuiListDao.DAO_NAME)
 public class GuiListDaoImpl extends BaseDaoImpl<GuiList> implements GuiListDao {
 	
+	public void test(){
+		//getHibernateTemplate().saveOrUpdateAll(entities);
+	}
 }
