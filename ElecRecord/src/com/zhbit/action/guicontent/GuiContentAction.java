@@ -120,10 +120,16 @@ public class GuiContentAction extends BaseAndExcelAction {
 	public String add() {
 		// TODO Auto-generated method stub
 		
+		
+		
 		//去除空格后再进行存储
 		guiContent=guiContentServices.trimGuiContent(guiContent);
 		
 		if(guiContent!=null){
+			//设定创建时间为当前时间
+			Timestamp createtime = new Timestamp(System.currentTimeMillis());
+			guiContent.setCreateTime(createtime);
+			
 			guiContentServices.save(guiContent);
 		}
 		
@@ -140,7 +146,7 @@ public class GuiContentAction extends BaseAndExcelAction {
 	@Override
 	public String delete() {
 		// TODO Auto-generated method stub
-		request.setAttribute("guiContentguiContent",guiContent);
+		request.setAttribute("guiContent",guiContent);
 		
 		//先判断用户是否已经选中
 		if(getSelectedRow()!=null){		

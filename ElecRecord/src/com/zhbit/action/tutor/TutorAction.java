@@ -121,13 +121,13 @@ public class TutorAction extends BaseAndExcelAction {
 		// TODO Auto-generated method stub
 		
 		
-		//设定创建时间为当前时间
-		Timestamp createtime = new Timestamp(System.currentTimeMillis());
-		tutor.setCreateTime(createtime);
-		
 		//去除空格后再进行存储
 		tutor=tutorServices.trimTutor(tutor);
 		if(tutor!=null){
+			//设定创建时间为当前时间
+			Timestamp createtime = new Timestamp(System.currentTimeMillis());
+			tutor.setCreateTime(createtime);
+			
 			tutorServices.save(tutor);
 		}
 		
