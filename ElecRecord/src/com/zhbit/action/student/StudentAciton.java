@@ -21,10 +21,12 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.entity.Familyinfo;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.User;
 import com.zhbit.entity.excel.StuExcel;
 import com.zhbit.excel.ExcelConfig;
+import com.zhbit.services.student.FamilyServices;
 import com.zhbit.services.student.StudentServices;
 import com.zhbit.transform.CommonTransform;
 import com.zhbit.util.AjaxReturnUtils;
@@ -48,14 +50,16 @@ import com.zhbit.util.RequestUtils;
 public class StudentAciton extends BaseAndExcelAction {
 	
 	Student student;
+	List<Familyinfo> family;
 	
 	String queryNO;//学号
 	String qeuryName;//姓名
 	
 	@Resource(name=StudentServices.SERVICES_NAME)
 	StudentServices studentServices;
-	@Resource(name=CommonTransform.TRANSFORM_NAME)
-	CommonTransform commonTransform;
+	@Resource(name=FamilyServices.SERVICES_NAME)
+	FamilyServices familyServices;
+
 
 
 	@Override
@@ -82,7 +86,6 @@ public class StudentAciton extends BaseAndExcelAction {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "excelSuccess";
@@ -224,5 +227,18 @@ public class StudentAciton extends BaseAndExcelAction {
 	public void setQeuryName(String qeuryName) {
 		this.qeuryName = qeuryName;
 	}
+
+
+	public List<Familyinfo> getFamily() {
+		return family;
+	}
+
+
+	public void setFamily(List<Familyinfo> family) {
+		this.family = family;
+	}
+
+
+
 	
 }

@@ -18,6 +18,18 @@
 
 <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.validate.min.js"></script>
+<style type="text/css">
+table tbody tr td{
+	 text-align: center;
+     border:  1px red solid;
+}
+table tbody tr{
+	 text-align: center;
+}
+table thead tr th{
+	 text-align: center;
+}
+</style>
 </head>
 <body>
 
@@ -40,7 +52,8 @@
 			</p>
 
 			<div class="short-input select ue-clear">
-				<label>性别：</label> <input type="hidden" class="noNull" value="男" name="student.sex">
+				<label>性别：</label>
+				 <input type="hidden" class="noNull" value="男" name="student.sex">
 				<div class="select-wrap">
 					<div class="select-title " id="select-title1">
 						<span id="span1">男</span><i class="icon"></i>
@@ -163,17 +176,90 @@
 				<textarea name="student.awards"></textarea>
 			</p>
 
-<!-- 
-		<div class="short-input select ue-clear">
-			<div style="margin-left: 100px; width: 50%; border: 1px gray solid;">
-			<ul>
-			  <li>1111</li>
-			  <li>1111</li>
-			  <li>1111</li>
-			  <li>1111</li>
-			</ul>
-			</div>
-		</div> -->
+<fieldset style="width: 98%;">
+<legend>学生家庭情况</legend>
+<div class="table-operate ue-clear">
+	<a id="addtable"  class="add">添加</a>
+    
+</div>
+<div class="table-box" >
+	<table id="edit_table" align="center">
+    	<thead>
+        	<tr  align="center">
+            	<th  width="8%">称呼</th>
+                <th  width="10%">家庭成员姓名</th>
+                <th  width="10%">政治面貌</th>
+                <th  width="10%">职务</th>
+                <th  width="10%">电话号码</th>
+                <th  width="15%">家庭成员单位</th>
+                <th  width="15%">单位地址</th>
+                <th  width="10%">邮政编码</th>
+                <th  width="5%">操作</th>
+            </tr>
+        </thead>
+        <tbody id="edit_tbody" >
+ 			<tr id="1">
+				<td ><input style="width: 70%;" type="text"  size="50" name="family[0].relation" /></td>
+				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].name" /></td>
+				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].politicalStatus" /></td>
+				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].jobDuty" /></td>
+				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].telNo" /></td>
+				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].company" /></td>
+				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].companyAddress" /></td>
+				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].postCode" /></td>				
+				<td class="operate" align='center'><a
+					href="javascript:delTableRow(1);" class="del">删除</a></td>
+			</tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+$("#addtable").on("click",function(){
+    var tempRow=$("table #edit_tbody tr").size();  //获取显示了多少
+    
+    
+    
+    var tr=$("<tr id=\""+(tempRow+1)+"\" ></tr>");
+    tr.html("<td ><input style=\"width: 70%;\" type=\"text\" class=\"noNull \"  size=\"50\" name=\"family["+tempRow+"].relation\"/></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].name\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].politicalStatus\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].jobDuty\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].telNo\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].company\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].companyAddress\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].postCode\" /></td>"+				
+	"<td class=\"operate\" align='center'><a href=\"javascript:delTableRow("+(tempRow+1)+");\" class=\"del\">删除</a></td>");                  
+
+    $("table #edit_tbody").append(tr);
+
+})
+function delTableRow(rowNum){
+  
+   var tempRow=$("table #edit_tbody tr").size();  //获取显示了多少
+  // alert(rowNum);
+   $("#edit_tbody #"+rowNum).remove();
+   //删除后更改编号
+   for(var i=parseInt(rowNum)+1;i<tempRow+1;i++){
+     $("#edit_tbody #"+i+" td input").each(function(){
+    	 var test=$(this).attr("name");
+    	 //更换
+    	 var my=test.replace(/\d+/g, (i-2));
+    	 $(this).attr("name",my);
+    	//alert("---------");
+     });
+
+       //更改删除的值
+      $("#edit_tbody #"+i+" .operate").html("<a href='javascript:delTableRow(\""+(i-1)+"\")' class='del'>删除</a>");
+            //更改tr的id
+      $("#edit_tbody #"+i).attr("id",(i-1));//将id设置成i-1 
+      
+      
+   }
+   
+}
+
+</script>
+</fieldset>
 		</div>
 
 		<div class="btn ue-clear">
@@ -183,8 +269,10 @@
 			<a
 				href="javascript:add('myForm','post','${basePath}student/student_add.action')"
 				class="confirm save">确定</a>
+						<a
+				href="javascript:tolist('myForm','post','${basePath}student/student_listUI.action')"
+				class="confirm clear">返回</a>
 		</div>
-      <input type="submit" value="测试">
 
 	</form>
 
@@ -198,23 +286,15 @@ function test(){
 	$("#myForm").submit();
 }
 
-$(function(){
-	$("#myForm").validate({
-	    rules: {
-	    	'student.studentNo': {
-	    	  required: true
-	      }
-
-	    }
-	});
-	
-});
 
 </script>
 
 
 <script type="text/javascript">
 	showRemind('input[type=text], textarea', 'placeholder');
+	
+	//----------------------------------------学生家庭情况-----------------------
+	
 
 	//--------------------------------------信息唯一性校验------------------------------
 	function myonfocus() {

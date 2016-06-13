@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <div class="pagination ue-clear">
-<s:if test="pageUtils.items!=null">
+<s:if test="pageUtils.items.size>0">
 
 <div class="goto"><span class="text">转到第</span><input  id="pageNo" type="text" value="${pageUtils.pageNo}" name="pageNO"><span class="page">页</span><a href="javascript:doGoPage()">转</a></div>
 <div class="pagin-list" >
 <!------------------------------ 当前页是第一页----------------------------------------->
-<s:if test="1==pageUtils.pageNo">
+<s:if test="2<pageUtils.pageNo">
 <a class="current prev">&lt;&nbsp;上一页</a>
 </s:if>
 <s:else>
