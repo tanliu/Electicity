@@ -42,7 +42,7 @@ CouscholarshipServices{
 		String[] fields=null;
 		String[] params=null;
 		//排序条件，根据创建时间去排序查出来的结果集
-		String proterty="id";	
+		String proterty="createTime";	
 		
 		if(countryScholarship!=null){ //判定countryScholarship不为空时
 			
