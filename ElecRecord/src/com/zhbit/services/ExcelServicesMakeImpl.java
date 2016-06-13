@@ -66,8 +66,7 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 		if(sheets!=null){
 			for (Sheet sheet : sheets) {//指定的表
 				if(!sheet.getName().equalsIgnoreCase(config.getSheetName())){
-					continue;
-				    //throw new Exception("找不到指定的表");
+					throw new Exception("找不到指定的表");
 				}
 				for(int i=0;i<sheet.getColumns();i++){					
 					String title=sheet.getCell(i, config.getStartRow()-1).getContents();
