@@ -4,7 +4,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.GuiList;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.excel.GuiContentEntity;
 import com.zhbit.entity.excel.GuiListEntity;
 import com.zhbit.excel.ExcelConfig;
@@ -21,6 +26,8 @@ import com.zhbit.services.guilist.GuiListServices;
 import com.zhbit.transform.GuiContentTransform;
 import com.zhbit.transform.GuiListTransform;
 import com.zhbit.util.DecodeUtils;
+
+
 
 /** 
  * 项目名称：ElecRecord
@@ -54,33 +61,54 @@ public class GuiListAction extends BaseAndExcelAction {
 	@Override
 	public String importExcel() {
 		// TODO Auto-generated method stub
-		ExcelConfig config;
+		
 		try {
-			config = new ExcelConfig(GuiListEntity.class, "Sheet1", 1, new FileInputStream(excel),excelFileName);
-			
-			List<Object> lists=excelServices.parseExcel(config);
-			
-			//将StuStaEntity的集合转换成StuStatus的集合
-			List<Object> guiLists=new GuiListTransform().toDBEntity(lists);
-			
-			
+			ExcelConfig excelConfig = new ExcelConfig(GuiListEntity.class, "Sheet1", 1, new FileInputStream(excel),excelFileName);
+			List<Object> objects=excelServicesMake.parseExcel(excelConfig);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(objects);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
+			}
+			//数据的转换
+			List<Object> guiLists = excelServicesMake.toDBEnity(objects,GuiList.class);
+					
 			for(Object object:guiLists){
 				GuiList guiList=(GuiList) object;
 				System.out.println("姓名是："+guiList.getStuName());
 			}
 		//将集合中的对象保存至数据库
 			for(Object object:guiLists){
-				GuiList guiContent=(GuiList) object;
-				guiListServices.save(guiContent);
+				
+				GuiList guiList=(GuiList) object;
+				if(!StringUtils.isEmpty(guiList.getStudentNo())){	
+					//设定创建时间为当前时间
+					guiList.setStuId("9528");
+					Timestamp createtime = new Timestamp(System.currentTimeMillis());
+					guiList.setCreateTime(createtime);
+					//设定学年为2013-2014学年，学期为第一学期
+					guiList.setAcademicYear("2013-2014");
+					guiList.setTerm("1");
+					guiListServices.save(guiList);
+				}
+				
 			}
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		
-		return "importExcel";
+		return "excelSuccess";
 	}
 
 	@Override
