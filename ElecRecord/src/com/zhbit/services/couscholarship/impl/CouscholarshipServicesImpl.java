@@ -1,6 +1,10 @@
 package com.zhbit.services.couscholarship.impl;
 
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.couscholarship.CouscholarshipDao;
 import com.zhbit.entity.CountryScholarship;
+import com.zhbit.entity.Politicalstatus;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.couscholarship.CouscholarshipServices;
 
@@ -71,6 +76,24 @@ CouscholarshipServices{
 		}
 		// TODO Auto-generated method stub
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
+	}
+	@Override
+	public void saveFromExcel(List<Object> countryScholarships, String creator) {
+		if(countryScholarships!=null&&countryScholarships.size()>0){
+			//对每一条数据进行校验和设置相应的值
+			for (Object object : countryScholarships) {
+				CountryScholarship countryScholarship=(CountryScholarship) object;
+				//获取学生的学号,将学号赋给countryScholarship实体。
+				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
+				//politicalstatus.setStuId(student.getStuId());
+				//这里先设置一个值用来测试
+				countryScholarship.setStuId("9527");
+				countryScholarship.setCreator(creator);
+				countryScholarship.setCreateTime(new Timestamp(new Date().getTime()));
+				this.save(countryScholarship);
+			}
+		}
+		
 	}
 
 }

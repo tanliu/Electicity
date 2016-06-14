@@ -2,21 +2,38 @@
 package com.zhbit.entity;
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TTraininfoMaster entity. @author MyEclipse Persistence Tools
  */
 
-public class TraininfoMaster implements java.io.Serializable {
+public class TraininfoMaster implements java.io.Serializable,Cloneable {
 
 	// Fields
 
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	
+	
 	private String id;
+	@Transform(name="时间")
 	private Timestamp trainsDate;
+	@Transform(name="年级")
 	private String trainsGrade;
+	@Transform(name="主讲人")
 	private String manager;
+	@Transform(name="主题")
 	private String trainsTopic;
+	@Transform(name="内容")
 	private String trainsContent;
+	@Transform(name="地点")
 	private String trainsAddress;
+	@Transform(name="备注")
 	private String memo;
 	private Timestamp createTime;
 	private String creator;

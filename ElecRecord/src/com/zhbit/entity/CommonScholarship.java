@@ -3,22 +3,35 @@ package com.zhbit.entity;
 
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TCommonScholarship entity. @author MyEclipse Persistence Tools
  */
 
-public class CommonScholarship implements java.io.Serializable {
+public class CommonScholarship implements java.io.Serializable,Cloneable {
 
 	// Fields
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
 	private String id;
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;
+	@Transform(name="姓名")
 	private String stuName;
+	@Transform(name="专业")
 	private String major;
+	@Transform(name="获奖名称")
 	private String rewardName;
 	private String academicYear;
 	private String term;
+	@Transform(name="备注")
 	private String memo;
 	private Timestamp createTime;
 	private String creator;

@@ -24,9 +24,11 @@
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery-form.js"></script>
 <script type="text/javascript">
 	    var queryAction="${basePath}postinfo/postinfo_listUI.action";
 		var deleteAction="${basePath}postinfo/postinfo_delete.action";
+		var importUrl="${basePath}postinfo/postinfo_importExcel.action";
 		var downloadAction="${basePath}postinfo/postinfo_exportExcel.action";
 		function query(){
 		  	$("#pageNo").val(1);
@@ -38,8 +40,7 @@
 		} 
     
 	 	function deleteItem(){
-	 		$("#queryForm").attr("action",deleteAction);
-		 	$("#queryForm").submit();  
+	 		$('.delDialog').Dialog('open');   
 		} 
 	 	function downloadItem(){
 	 		$("#queryForm").attr("action",downloadAction);
@@ -117,8 +118,8 @@
 		
 <div class="table-operate ue-clear">
 			<a href="${basePath}postinfo/postinfo_addUI.action" class="add">添加</a>
-			<a href="javascript:;" class="del">删除</a> 
-			<a href="javascript:;" class="import">导入</a>
+			<a href="javascript:deleteItem()" class="del">删除</a> 
+			<a href="javascript:;" class="import clear clear">导入</a>
     		<a href="javascript:;" class="upload">上传</a>
     		<a href="javascript:downloadItem()">下载</a>
  
@@ -169,90 +170,7 @@
     </div>
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 	</form>
-<div class="importDialog" align="center" >
-	<div class="dialog-content" align="center">   
-        <div class="ui-dialog-text" align="center">
-            <p class="dialog-content">请选择要导入的excel文件</p>
-            <form id="fileForm" action="${basePath}postinfo/postinfo_importExcel.action" method="post" enctype="multipart/form-data">
-            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel"  /></p>
-          </form>
-            <div class="buttons" align="center">
-                <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="返回" />
-            </div>
-        </div>
-       </div>
-</div>
-
-<!--弹出删除提示框的窗口-->
-<div class="delDialog">
-	<div class="dialog-content">
-    	<div class="ui-deldialog-icon"></div>
-        <div class="ui-dialog-text">
-        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
-            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
-            
-            <div class="buttons">
-                <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="取消" />
-            </div>
-        </div>
-        </div>
-</div>
-
+<jsp:include page="/common/inputdialog.jsp"></jsp:include>
 </body>
 
-<script type="text/javascript">
-<!--实现清空弹出框的脚本-->
-$('.importDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:250,
-	height:220
-	
-});
-$('.import').click(function(){
-	$('.importDialog').Dialog('open');
-});
-$('.importDialog input[type=button]').click(function(e) {
-    $('.importDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		var $form=$("#fileForm");
-		$("#fileForm").submit();
-	}
-});
-
-<!--实现删除提示框的脚本-->
-
-$('.delDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:400,
-	height:200
-	
-});
-
-$('.del').click(function(){
-	//在弹出前先判断是否已经选中了相关记录
-	var selectedRows=document.getElementsByName("selectedRow");
-	
-	var i=0;
-	var length=selectedRows.length;
-	
-	while(i<length){//如果有记录被选中，则弹出对话框
-		if(selectedRows[i++].checked){
-			$('.delDialog').Dialog('open');
-		}
-	}
-});
-
-$('.delDialog input[type=button]').click(function(e) {
-    $('.delDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		deleteItem();
-	}
-});
-</script>
 </html>

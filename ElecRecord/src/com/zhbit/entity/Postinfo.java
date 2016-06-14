@@ -2,29 +2,45 @@ package com.zhbit.entity;
 
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TPostinfo entity. @author MyEclipse Persistence Tools
  */
 
-public class Postinfo implements java.io.Serializable {
+public class Postinfo implements java.io.Serializable,Cloneable {
 
 	// Fields
 
 	private String id;   //id
+	@Transform(name="EMS编号")
 	private String emsno;   //	EMS编号
+	@Transform(name="北理工编号")
 	private String schoolNo;  //北理工编号
 	private String stuId;     //学生id
+	@Transform(name="学号")
 	private String studentNo;  //学号
+	@Transform(name="姓名")
 	private String stuName;    //姓名
+	@Transform(name="专业名称")
 	private String major;	  //专业
+	@Transform(name="性别")
 	private String sex;		//性别
+	@Transform(name="派遣性质")
 	private String dispatchType;	//派遣性质
+	@Transform(name="主管单位")
 	private String chargeUnit;    //主管单位
+	@Transform(name="邮件号")
 	private String mailNo;		//邮件号
 	private String memo;		//备注
 	private Timestamp createTime;	//创建时间
 	private String creator;		//创建人
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 	// Constructors
 
 	/** default constructor */

@@ -1,5 +1,9 @@
 package com.zhbit.services.comscholarship.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.comscholarship.ComscholarshipDao;
 import com.zhbit.entity.CommonScholarship;
+import com.zhbit.entity.CountryScholarship;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.comscholarship.ComscholarshipServices;
 import com.zhbit.util.PageUtils;
@@ -72,6 +77,24 @@ ComscholarshipServices{
 		// TODO Auto-generated method stub
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
 	
+	}
+	@Override
+	public void saveFromExcel(List<Object> commonScholarships, String creator) {
+		if(commonScholarships!=null&&commonScholarships.size()>0){
+			//对每一条数据进行校验和设置相应的值
+			for (Object object : commonScholarships) {
+				CommonScholarship commonScholarship=(CommonScholarship) object;
+				//获取学生的学号,将学号赋给CommonScholarship实体。
+				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
+				//politicalstatus.setStuId(student.getStuId());
+				//这里先设置一个值用来测试
+				commonScholarship.setStuId("9527");
+				commonScholarship.setCreator(creator);
+				commonScholarship.setCreateTime(new Timestamp(new Date().getTime()));
+				this.save(commonScholarship);
+			}
+		}
+		
 	}
 
 

@@ -33,7 +33,9 @@
 	        </result>
 	         <result name="importExcel" type="redirectAction">
 	          <param name="actionName">studentdutys_listUI</param>
-	        </result>	        
+	        </result>	  
+	        <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
+            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>      
          </action>
         
         

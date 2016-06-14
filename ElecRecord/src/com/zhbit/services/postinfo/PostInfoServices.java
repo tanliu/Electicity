@@ -27,4 +27,6 @@ public interface PostInfoServices extends BaseServices<Postinfo> {
    public List<Postinfo> queryListDownload(Serializable... id);
    public List<Postinfo> queryAllList();
    public PageUtils queryList(Postinfo postinfo,int pageNO,int pageSize);
+   public void saveFromExcel(List<Object> postinfos, String creator);
+  	Boolean hasStudent(String studentNo);
 }

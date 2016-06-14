@@ -144,4 +144,21 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		return lists;
 	}
 
+	@Override
+	public void saveOrUpdate(T entity) {
+
+		getHibernateTemplate().saveOrUpdate(entity);
+	}
+
+	@Override
+	public void saveOrUpdate(List<T> entitys) {
+		getHibernateTemplate().saveOrUpdateAll(entitys);
+	}
+
+	@Override
+	public void saveAll(List<T> entitys) {
+		getHibernateTemplate().saveOrUpdateAll(entitys);
+		
+	}
+
 }

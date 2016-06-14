@@ -9,15 +9,18 @@ import org.zhbit.excel.bean.BaseExcelVo;
 
 import com.zhbit.excel.InnerVo;
 @ExcelVoConfig
-public class PolstatusExcel extends BaseExcelVo{
+public class PolstatusExcel extends BaseExcelBean implements Cloneable{
 
-	@Override
-	public int getHashVal() {
+	
+
+	  @Override
+	protected Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
-		return 0;
+		return super.clone();
 	}
 
-	  @Lang(value="学号")
+
+	@Lang(value="学号")
 		private String studentNo;
 	  
 	  @Lang(value="姓名")
@@ -97,7 +100,7 @@ public class PolstatusExcel extends BaseExcelVo{
 	
 
 	public PolstatusExcel(){
-		  
+		super();
 	  }
 
 }

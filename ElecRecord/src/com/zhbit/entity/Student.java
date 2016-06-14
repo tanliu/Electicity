@@ -63,9 +63,12 @@ public class Student implements java.io.Serializable,Cloneable {
 	@Transform(name="毕业中学")
 	private String middleSchool;
 	private String mobileNo;
+	@Transform(name="家庭电话")
 	private String familyTelNo;
+	@Transform(name="家庭邮编")
 	private String postCode;
 	private String travelRange;
+	@Transform(name="家庭住址")
 	private String address;
 	private String skill;
 	private String selfDescription;

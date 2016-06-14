@@ -48,7 +48,7 @@ public class SubjectContestTransfrom implements BaseTransfrom{
 			SubjectContestExcel subjectContestExcel=new SubjectContestExcel();
 			Subjectcontest subjectContest=(Subjectcontest) dbObjs.get(i);
 			
-			subjectContestExcel.setSequence(""+(i+1));
+			
 			subjectContestExcel.setStudentNo(subjectContest.getStudentNo());
 			subjectContestExcel.setStuName(subjectContest.getStuName());
 			subjectContestExcel.setRewardName(subjectContest.getRewardName());

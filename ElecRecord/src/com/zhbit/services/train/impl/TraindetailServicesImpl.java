@@ -1,16 +1,22 @@
 package com.zhbit.services.train.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.train.TraindetailDao;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.TraininfoDetail;
-
+import com.zhbit.entity.TraininfoMaster;
 import com.zhbit.services.BaseServicesImpl;
-import com.zhbit.services.train.TraindetailServices;
 
+import com.zhbit.services.train.TraindetailServices;
+import com.zhbit.services.train.TrainmasterServices;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -31,6 +37,11 @@ import com.zhbit.util.QueryUtils;
 public class TraindetailServicesImpl extends BaseServicesImpl<TraininfoDetail> implements
 TraindetailServices{
 
+	//@Resource(name=StudentServices.SERVICES_NAME)
+	//StudentServices studentServices;
+	//注入TrainmasterServices
+	@Resource(name=TrainmasterServices.SERVICES_NAME)
+	TrainmasterServices trainmasterServices;
 	//初始化Dao层
     TraindetailDao traindetailDao;
 	@Resource(name=TraindetailDao.DAO_NAME)
@@ -71,5 +82,36 @@ TraindetailServices{
 		// TODO Auto-generated method stub
 		return getPageUtils(fields, params, proterty, QueryUtils.ORDER_BY_ASC, pageNO, pageSize);
 	}
+
+	@Override
+	public void saveFromExcel(List<Object> traininfoDetails) {
+		//对每一条数据进行校验和设置相应的值
+		for (Object object : traininfoDetails) {
+			TraininfoDetail traininfoDetail=(TraininfoDetail) object;
+			//获取到主题对应的ID
+			TraininfoMaster traininfoMaster=getmasterID(traininfoDetail.getMaster_trainsTopic());
+			//如果不为空 则赋值
+			if(traininfoMaster!=null){
+				traininfoDetail.setMaster_id(traininfoMaster.getId());
+				//这里先设置一个值用来测试
+				traininfoDetail.setStuId("9527");
+				//traininfoMaster.setCreator(creator);
+				//traininfoMaster.setCreateTime(new Timestamp(new Date().getTime()));
+				this.save(traininfoDetail);
+			}
+		}
+	}
+
+	//获取主题对应的ID
+	public TraininfoMaster getmasterID(String topic){
+		String[] fields={"trainsTopic=?"};
+		String[] params={topic};
+		List<TraininfoMaster> traininfoMaster = trainmasterServices.findObjectByFields(fields, params);
+		if(traininfoMaster!=null&&traininfoMaster.size()>0){
+			return traininfoMaster.get(0);
+		}
+		return null;
+	}
+	
 
 }

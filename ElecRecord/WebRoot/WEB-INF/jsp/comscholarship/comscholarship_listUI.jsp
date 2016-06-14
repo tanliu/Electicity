@@ -3,6 +3,12 @@
 <%@include file="/common/header_js.jsp"%>
 <html>
 <head>
+<script type="text/javascript" >
+<!-- action之间的跳转 ，用于换页-->
+var queryAction="${basePath}comscholarship/comscholarship_listUI.action";
+var deleteAction="${basePath}comscholarship/comscholarship_delete.action";
+var importUrl="${basePath}comscholarship/comscholarship_importExcel.action";
+</script>
 <meta charset="utf-8">
 <link rel="stylesheet" href="${basePath}css/base.css" />
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
@@ -29,21 +35,21 @@ table thead tr th{
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
-<title>光大、国家奖学金信息管理</title>
+<title>普通奖学金信息管理</title>
 </head>
 
 <body>
-<div class="title"><h2>光大、国家奖学金信息管理</h2></div>
+<div class="title"><h2>普通奖学金信息管理</h2></div>
 <!-- 跳转页面时表单提交数据，换页显示数据 -->
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions staff ue-clear" style="width:20%">
+        <div class="conditions staff ue-clear" style="width:25%">
             <label>姓名：</label>
         <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
         </div>
         
-       <div class="conditions name ue-clear" style="width:20%">
+       <div class="conditions name ue-clear" style="width:25%">
          <label>获奖名称：</label>
         <input  hidden="hidden"  value="${querycon.rewardName}" name="commonScholarship.rewardName" style="width:200px;height:30px">
         <div class="select-wrap">
@@ -58,7 +64,7 @@ table thead tr th{
         </div>
   </div>
   
-  <div class="conditions name ue-clear" style="width:20%">
+  <div class="conditions name ue-clear" style="width:25%">
        <label>专业：</label>
        <input  hidden="hidden" value="${querycon.major}" name="commonScholarship.major">
         <div class="select-wrap">
@@ -80,7 +86,7 @@ table thead tr th{
 </div>
 <div class="table-operate ue-clear">
 	<a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:" class="del confirm save">删除</a>
+    <a href="javascript:del()" class="del confirm save">删除</a>
     <a href="javascript:;" class="import clear clear">导入</a>
 <!--     <a href="javascript:;" class="upload">上传</a> -->
 </div>
@@ -119,112 +125,16 @@ table thead tr th{
 <!-- 跳转页面  页码    （将这语句置于form表单之内  才能提交页码）-->
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 </form>
-
-<div class="importDialog" align="center" >
-	<div class="dialog-content" align="center">   
-        <div class="ui-dialog-text" align="center">
-            <p class="dialog-content">请选择要导入的excel文件</p>
-<!--          上传表格文件工具   enctype="multipart/form-data"  name必须等于"excel"-->
-            <form  id="fileForm" action="${basePath}comscholarship/comscholarship_importExcel.action" method="post" enctype="multipart/form-data">
-            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel" value="" id="filename"/></p>
-          </form>
-            <div class="buttons" align="center">
-                <input type="button" class="button long2 ok"  value="确定" />
-                <input type="button" class="button long2 normal" value="取消 " />
-            </div>
-        </div>
-        </div>
-</div>
-
-<!--弹出删除提示框的窗口-->
-<div class="delDialog">
-	<div class="dialog-content">
-    	<div class="ui-deldialog-icon"></div>
-        <div class="ui-dialog-text">
-        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
-            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
-            
-            <div class="buttons">
-                <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="取消" />
-            </div>
-        </div>
-        </div>
-</div>
+<script type="text/javascript" src="${basePath}js/core.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery-form.js"></script>
+<jsp:include page="/common/inputdialog.jsp"></jsp:include>
 
 </body>
 
 <script type="text/javascript">
 
-<!--实现上传文件弹出框的脚本-->
-
-$('.importDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:250,
-	height:220
-	
-});
-
-$('.import').click(function(){
-	$('.importDialog').Dialog('open');
-});
-
-
-
-$('.importDialog input[type=button]').click(function(e) {
-    $('.importDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		//判断是否有选择文件
-		if(document.getElementById("filename").value){//在文件非空的条件下才允许向后台提交请求
-			$("#fileForm").submit();
-		}
-		else{
-			//alert('未选择文件!!!!');
-			$('.importDialog').Dialog('open');//如果用户未选择任何文件，那么窗口保持打开状态
-		}
-	}
-	
-});
-
-<!--实现删除提示框的脚本-->
-
-$('.delDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:400,
-	height:200
-	
-});
-
-$('.del').click(function(){
-	//在弹出前先判断是否已经选中了相关记录
-	var selectedRows=document.getElementsByName("selectedRow");
-	
-	var i=0;
-	var length=selectedRows.length;
-	
-	while(i<length){//如果有记录被选中，则弹出对话框
-		if(selectedRows[i++].checked){
-			$('.delDialog').Dialog('open');
-		}
-	}
-});
-
-$('.delDialog input[type=button]').click(function(e) {
-    $('.delDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		del();
-	}
-});
-
-</script>
-<script type="text/javascript" >
-<!-- action之间的跳转 ，用于换页-->
-var queryAction="${basePath}comscholarship/comscholarship_listUI.action";
-var deleteAction="${basePath}comscholarship/comscholarship_delete.action";
 /* 批量选中*/
 function doSelectAll(){
 	$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));
@@ -276,9 +186,7 @@ function query(){
 	}
 //向couscholarship_delete().action提交信息
 function del(){
-		var url="${basePath}comscholarship/comscholarship_delete.action";
-		$("#queryForm").attr("action",url);
- 		$("#queryForm").submit();  
+	$('.delDialog').Dialog('open'); 
 } 
  </script>
 </html>

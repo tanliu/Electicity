@@ -14,9 +14,9 @@
             <result name="editorUI">/WEB-INF/jsp/comscholarship/comscholarship_editorUI.jsp</result>
              <result name="detailUI">/WEB-INF/jsp/comscholarship/comscholarship_detailUI.jsp</result>
             
-<!--              <result name="importExcel" type="redirectAction"> -->
-<!-- 	          <param name="actionName">polstatus_listUI</param> -->
-<!-- 	        </result> -->
+  
+            <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
+            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>
             
              <result name="add" type="redirectAction"> 
  	          <param name="actionName">comscholarship_listUI</param> 

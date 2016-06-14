@@ -1,6 +1,8 @@
 package com.zhbit.services.postinfo.impl;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,9 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.postinfo.PostInfoDao;
 import com.zhbit.entity.Postinfo;
+import com.zhbit.entity.Student;
+import com.zhbit.entity.Subjectcontest;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.postinfo.PostInfoServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.subjectcontest.SubjectContestServices;
 import com.zhbit.services.system.UserServices;
 import com.zhbit.util.PageUtils;
@@ -34,6 +39,9 @@ import com.zhbit.util.QueryUtils;
 @Service(value=PostInfoServices.SERVER_NAME)
 public class PostInfoServicesImpl extends BaseServicesImpl<Postinfo> 
 	implements PostInfoServices {
+	
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	
 	PostInfoDao postinfoDao;
 	@Resource(name=PostInfoDao.DAO_NAME)
@@ -73,14 +81,46 @@ public class PostInfoServicesImpl extends BaseServicesImpl<Postinfo>
 	}
 	
 	
-	
+	//下载选中的记录
 	public List<Postinfo> queryListDownload(Serializable... id) {
 		List<Postinfo> list=postinfoDao.queryListDownload(id);
 		return list;
 	}
+	//下载所有的记录
 	@Override
 	public List<Postinfo> queryAllList() {
 		return postinfoDao.queryAllList();
 	}
 	
+	//保存excel数据到数据库
+	@Override
+	public void saveFromExcel(List<Object> postinfos, String creator) {
+		if(postinfos!=null&&postinfos.size()>0){
+			//对每一条数据进行校验和设置相应的值
+			for (Object object : postinfos) {
+				Postinfo postinfo=(Postinfo) object;
+				//判断是否存在这个学生
+				Boolean flag=this.hasStudent(postinfo.getStudentNo());
+				if(!flag){ //如果系统中没有这个学生的信息
+					postinfo.setCreateTime(new Timestamp(new Date().getTime()));
+					postinfo.setCreator(creator);
+					//设置学生id（到数据库中找）
+					postinfo.setStuId(studentServices.getStudentByNo(postinfo.getStudentNo()).getStuId());
+					this.save(postinfo);					
+				}
+			}
+		}
+	}
+	
+	//根据学号判断是否存在这个学生
+	@Override
+	public Boolean hasStudent(String studentNo) {
+		String[] fields={"studentNo=?"};
+		String[] params={studentNo};
+		List<Postinfo> postinfos = findObjectByFields(fields, params);
+		if(postinfos==null||postinfos.size()==0){
+			return false;
+		}
+		return true;
+	}
 }

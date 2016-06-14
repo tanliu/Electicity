@@ -28,7 +28,8 @@ table thead tr th{
 
 	var queryAction="${basePath}student/student_listUI.action";
 	var deleteAction="${basePath}student/student_delete.action";
-	var importUrl="${basePath}student/student_importExcel.action";
+	var importUrl="${basePath}student/student_impotExcel.action";
+
 	function query(){
 	  	$("#pageNo").val(1);
 
@@ -80,7 +81,8 @@ table thead tr th{
 <div class="table-operate ue-clear">
 	<a href="${basePath}student/student_addUI.action" class="add">添加</a>
     <a href="javascript:deleteItem()" class="del">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+    <a href="javascript:" id="importstudent" class="import clear clear">导入学生信息</a>
+    <a href="javascript:" id="importfamily" class="import clear clear">导入家庭信息</a>
 <!--     <a href="javascript:;" class="count">统计</a>
     <a href="javascript:;" class="check">审核</a> -->
 </div>
@@ -124,4 +126,14 @@ table thead tr th{
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery-form.js"></script>
 <jsp:include page="/common/inputdialog.jsp"></jsp:include>
+<script type="text/javascript">
+$('#importstudent').click(function(){
+	importUrl="${basePath}student/student_importExcel.action";
+	$('.importDialog').Dialog('open');
+});
+$('#importfamily').click(function(){
+	importUrl="${basePath}student/student_importFamilyExcel.action";
+	$('.importDialog').Dialog('open');
+});
+</script>
 </body>

@@ -8,13 +8,15 @@ import org.zhbit.excel.bean.BaseExcelVo;
 
 import com.zhbit.excel.InnerVo;
 
-public class TrainmasterExcel extends BaseExcelVo{
+public class TrainmasterExcel extends BaseExcelBean implements Cloneable{
 
+	
 	@Override
-	public int getHashVal() {
+	protected Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
-		return 0;
+		return super.clone();
 	}
+
 	//非对就
 	  @ExcelColumnGroup(type = String.class)
 	    private List<String> baseArray;
@@ -29,6 +31,12 @@ public class TrainmasterExcel extends BaseExcelVo{
 	  
 	  @Lang(value="时间")
 		private String trainsDate;
+	  
+	  @Lang(value="年级")
+		private String trainsGrade;
+	  
+	  @Lang(value="内容")
+		private String trainsContent;
 	  
 	  @Lang(value="地点")
 		private String trainsAddress;
@@ -47,7 +55,7 @@ public class TrainmasterExcel extends BaseExcelVo{
 	  }
 	  
       public TrainmasterExcel(){
-		  
+    	  super();
 	  }
 
       

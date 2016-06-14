@@ -3,6 +3,8 @@
  */
 package com.zhbit.services.student;
 
+import java.util.List;
+
 import com.zhbit.entity.Familyinfo;
 import com.zhbit.services.BaseServices;
 
@@ -18,6 +20,10 @@ import com.zhbit.services.BaseServices;
  * @version 
  */
 public interface FamilyServices extends BaseServices<Familyinfo> {
-
 	public final static String SERVICES_NAME="com.zhbit.services.student.FamilyServicesImpl";
+	List<Familyinfo> findFamilyByStuId(String stuId);
+	
+	public void saveOrUpdate(List<Familyinfo> familyinfos);
+	
+	
 }

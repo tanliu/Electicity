@@ -2,6 +2,8 @@
 package com.zhbit.entity;
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TCountryScholarship entity. @author MyEclipse Persistence Tools
  */
@@ -16,26 +18,45 @@ import java.sql.Timestamp;
  * 修改备注： 
  * @version 
  */
-public class CountryScholarship implements java.io.Serializable {
+public class CountryScholarship implements java.io.Serializable,Cloneable {
 
 	// Fields
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
 	private String id;
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;
+	@Transform(name="姓名")
 	private String stuName;
+	@Transform(name="性别")
 	private String sex;
+	@Transform(name="年级")
 	private String grade;
+	@Transform(name="政治面貌")
 	private String politicalStatus;
 	private String orgId;
+	@Transform(name="专业学院")
 	private String orgName;
 	private String major;
+	@Transform(name="获本校奖学金情况")
 	private String schoolScholarInfo;
+	@Transform(name="获省级及省级以上奖学金情况")
 	private String provinceScholarIinfo;
+	@Transform(name="评优获奖情况")
 	private String awardInfo;
+	@Transform(name="比赛、竞赛类获奖情况")
 	private String competitionInfo;
+	@Transform(name="担任职务")
 	private String duty;
+	@Transform(name="获奖名称")
 	private String rewardName;
+	@Transform(name="备注")
 	private String memo;
 	private String academicYear;
 	private String term;
