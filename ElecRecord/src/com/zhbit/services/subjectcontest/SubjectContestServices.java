@@ -1,11 +1,15 @@
 package com.zhbit.services.subjectcontest;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
+import com.zhbit.entity.Student;
 import com.zhbit.entity.Subjectcontest;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServices;
+import com.zhbit.util.EncryptUtils;
 import com.zhbit.util.PageUtils;
 
 
@@ -25,4 +29,6 @@ public interface SubjectContestServices extends BaseServices<Subjectcontest> {
    public List<Subjectcontest> queryListDownload(Serializable... id);
    public List<Subjectcontest> queryAllList();
    public PageUtils queryList(Subjectcontest subjectcontest,int pageNO,int pageSize);
+   public void saveFromExcel(List<Object> students, String creator);
+	Boolean hasStudent(String studentNo);
 }

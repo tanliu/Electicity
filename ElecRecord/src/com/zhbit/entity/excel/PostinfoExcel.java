@@ -8,20 +8,20 @@ import org.zhbit.excel.bean.BaseExcelVo;
 
 
 @ExcelVoConfig
-public class PostinfoExcel extends BaseExcelVo {
+public class PostinfoExcel extends BaseExcelBean implements Cloneable {
 
 	// Fields
 	@Lang(value="EMS编号")
 	private String emsno;   //	EMS编号
 	@Lang(value="北理工编号")
 	private String schoolNo;  //北理工编号
-	@Lang(value="专业名称")
+	@Lang(value="专业名称",isNull=Lang.TYPE_NONULL)
 	private String major;	  //专业
-	@Lang(value="姓名")
+	@Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 	private String stuName;    //姓名
-	@Lang(value = "学号")
+	@Lang(value = "学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 	private String studentNo;	
-	@Lang(value="性别")
+	@Lang(value="性别",toExcle={"男","女"},toEntity={"1","0"})
 	private String sex;		//性别
 	@Lang(value="派遣性质")
 	private String dispatchType;	//派遣性质
@@ -30,7 +30,10 @@ public class PostinfoExcel extends BaseExcelVo {
 	@Lang(value="邮件号")
 	private String mailNo;		//邮件号
 
-	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 	// Constructors
 
 	/** default constructor */
@@ -162,12 +165,6 @@ public class PostinfoExcel extends BaseExcelVo {
 	}
 
 
-
-	@Override
-	public int getHashVal() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	// Property accessors
 

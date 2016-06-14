@@ -1,27 +1,45 @@
 package com.zhbit.entity;
 
-/**
- * TStudentDutys entity. @author MyEclipse Persistence Tools
- */
+import org.zhbit.excel.annotation.ExcelVoConfig;
 
-public class StudentDutys implements java.io.Serializable {
+import com.zhbit.annotation.Transform;
+
+
+@ExcelVoConfig
+public class StudentDutys implements java.io.Serializable,Cloneable {
 
 	// Fields
 
 	private String id; 
+	@Transform(name="学院")
 	private String college; //学院
+	@Transform(name="年级")
 	private String grade;  //年级
+	@Transform(name="班级")
 	private String className;  //班级
 	private String stuId;		//学生Id
+	@Transform(name="学号")
 	private String studentNo;	//学号
+	@Transform(name="姓名")
 	private String stuName;    //姓名
+	@Transform(name="性别")
 	private String sex;		//性别
+	@Transform(name="手机")
 	private String telNo;    //手机
+	@Transform(name="短号")
 	private String shortTelNo;		//短号
+	@Transform(name="职务")
 	private String duty;	//职务
+	@Transform(name="宿舍")
 	private String address;		//宿舍
 	private String memo;		//备注
 
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 	// Constructors
 
 	/** default constructor */
