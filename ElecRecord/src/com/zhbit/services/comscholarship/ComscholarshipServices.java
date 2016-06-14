@@ -1,6 +1,8 @@
 package com.zhbit.services.comscholarship;
 
 
+import java.util.List;
+
 import com.zhbit.entity.CommonScholarship;
 
 import com.zhbit.services.BaseServices;
@@ -21,4 +23,10 @@ public interface ComscholarshipServices extends BaseServices<CommonScholarship>{
 	public static final String SERVICES_NAME="com.zhbit.services.comscholarship.impl.ComscholarshipServicesImpl";
 	//定义数据查询的方法
 		public PageUtils queryList(CommonScholarship commonScholarship, int pageNO, int pageSize);
+		/**
+		 * 方法描述:保存导入的数据
+		 * @param students
+		 * @param creator
+		 */
+		void saveFromExcel(List<Object> commonScholarship, String creator);
 }

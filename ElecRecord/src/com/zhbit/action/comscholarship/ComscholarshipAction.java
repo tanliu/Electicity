@@ -1,8 +1,13 @@
 package com.zhbit.action.comscholarship;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -11,10 +16,15 @@ import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.CommonScholarship;
+import com.zhbit.entity.CountryScholarship;
 import com.zhbit.entity.SystemDll;
+import com.zhbit.entity.excel.ComscholarshipExcel;
+import com.zhbit.entity.excel.CouscholarshipExcel;
+import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.comscholarship.ComscholarshipServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -43,8 +53,40 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 	
 	@Override
 	public String importExcel() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			/**
+			 * arg01:excel实体
+			 * arg02:表名
+			 * arg03:表头的位置
+			 * arg04:上传文件的输入流
+			 * arg05:文件名
+			 */
+			ExcelConfig config=new ExcelConfig(ComscholarshipExcel.class, "普通奖学金", 1, new FileInputStream(excel),excelFileName);
+			List<Object> lists=excelServicesMake.parseExcel(config);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(lists);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
+			}
+			//数据的转换
+			List<Object> commonScholarship = excelServicesMake.toDBEnity(lists,CommonScholarship.class);
+			//获取创建人
+			String creator=RequestUtils.getUserName(request);
+            //保存表格里面的数据，在comscholarshipServices重新定义saveFromExcel方法
+			comscholarshipServices.saveFromExcel(commonScholarship,creator);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "excelSuccess";
 	}
 
 	@Override

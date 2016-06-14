@@ -14,9 +14,7 @@
 
             <result name="detailUI">/WEB-INF/jsp/polstatus/partyinfo_detailUI.jsp</result>
             
-             <result name="importExcel" type="redirectAction">
-	          <param name="actionName">polstatus_listUI</param>
-	        </result>
+           
             
             <result name="add" type="redirectAction">
 	          <param name="actionName">polstatus_listUI</param>
@@ -41,6 +39,8 @@
 	          <param name="pageNO">${pageNO}</param>
 	            <param name="encode">true</param>
 	        </result>
+	         <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
+            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>
          </action>
         
 	</package>

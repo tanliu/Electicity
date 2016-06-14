@@ -1,5 +1,7 @@
 package com.zhbit.services.train;
 
+import java.util.List;
+
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.entity.TraininfoDetail;
 import com.zhbit.entity.TraininfoMaster;
@@ -22,4 +24,11 @@ public interface TrainmasterServices extends BaseServices<TraininfoMaster>{
 	
 	//定义数据查询的方法
 		public PageUtils queryList(TraininfoMaster traininfoMaster, int pageNO, int pageSize);
+		
+		/**
+		 * 方法描述:保存导入的数据
+		 * @param students
+		 * @param creator
+		 */
+		void saveFromExcel(List<Object> traininfoMaster, String creator);
 }

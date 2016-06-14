@@ -1,6 +1,7 @@
 package com.zhbit.services.polstatus.impl;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -11,10 +12,13 @@ import org.springframework.stereotype.Service;
 import com.zhbit.dao.polstatus.PolstatusDao;
 import com.zhbit.dao.system.OrganizeDao;
 import com.zhbit.entity.Politicalstatus;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.Tutor;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.polstatus.PolstatusServices;
+import com.zhbit.services.student.StudentServices;
+import com.zhbit.util.EncryptUtils;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -33,6 +37,10 @@ import com.zhbit.util.QueryUtils;
 @Service(value=PolstatusServices.SERVICES_NAME)
 public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> implements
     PolstatusServices{
+	
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
+	
 	//初始化Dao层
 	PolstatusDao polstatusDao;
 	@Resource(name=PolstatusDao.DAO_NAME)
@@ -119,5 +127,24 @@ public PageUtils getPageUtils(String[] fields, Object[] params, String proterty,
 	return polstatusDao.getPageUtils(queryUtils, pageNO, pageSize);
 	
 }
+	@Override
+	public void saveFromExcel(List<Object> politicalstatuss, String creator) {
+		
+		if(politicalstatuss!=null&&politicalstatuss.size()>0){
+			//对每一条数据进行校验和设置相应的值
+			for (Object object : politicalstatuss) {
+				Politicalstatus politicalstatus=(Politicalstatus) object;
+				//获取学生的学号,将学号赋给politicalstatus实体。
+				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
+				//politicalstatus.setStuId(student.getStuId());
+				//这里先设置一个值用来测试
+				politicalstatus.setStuId("9527");
+				politicalstatus.setCreator(creator);
+				politicalstatus.setCreateTime(new Timestamp(new Date().getTime()));
+				this.add(politicalstatus);
+			}
+		}
+		
+	}
 	
 }

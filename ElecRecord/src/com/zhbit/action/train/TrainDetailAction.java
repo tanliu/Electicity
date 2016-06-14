@@ -1,8 +1,13 @@
 package com.zhbit.action.train;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -14,9 +19,13 @@ import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.TraininfoDetail;
 import com.zhbit.entity.TraininfoMaster;
+import com.zhbit.entity.excel.TraindetailExcel;
+import com.zhbit.entity.excel.TrainmasterExcel;
+import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.train.TraindetailServices;
 import com.zhbit.services.train.TrainmasterServices;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 
 
 /** 
@@ -48,8 +57,40 @@ public class TrainDetailAction extends BaseAndExcelAction{
 
 	@Override
 	public String importExcel() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			/**
+			 * arg01:excel实体
+			 * arg02:表名
+			 * arg03:表头的位置
+			 * arg04:上传文件的输入流
+			 * arg05:文件名
+			 */
+			ExcelConfig config=new ExcelConfig(TraindetailExcel.class, "培训明细表", 1, new FileInputStream(excel),excelFileName);
+			List<Object> lists=excelServicesMake.parseExcel(config);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(lists);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
+			}
+			//数据的转换
+			List<Object> traininfoDetail = excelServicesMake.toDBEnity(lists,TraininfoDetail.class);
+			//获取创建人
+			//String creator=RequestUtils.getUserName(request);
+            //保存表格里面的数据，在trainmasterServices重新定义saveFromExcel方法
+			traindetailServices.saveFromExcel(traininfoDetail);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "excelSuccess";
 	}
 
 	@Override

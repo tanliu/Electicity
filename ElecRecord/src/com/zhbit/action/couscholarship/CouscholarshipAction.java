@@ -1,16 +1,27 @@
 package com.zhbit.action.couscholarship;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.CountryScholarship;
+import com.zhbit.entity.Politicalstatus;
 import com.zhbit.entity.SystemDll;
+import com.zhbit.entity.excel.CouscholarshipExcel;
+import com.zhbit.entity.excel.PolstatusExcel;
+import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.couscholarship.CouscholarshipServices;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 import com.zhbit.services.system.SystemDllServices;
 
 /** 
@@ -31,6 +42,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	private static final long serialVersionUID = 1L;
 	@Resource(name=CouscholarshipServices.SERVICES_NAME)
 	CouscholarshipServices couscholarshipServices;
+	//注入的Services
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
@@ -40,8 +52,40 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	
 	@Override
 	public String importExcel() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			/**
+			 * arg01:excel实体
+			 * arg02:表名
+			 * arg03:表头的位置
+			 * arg04:上传文件的输入流
+			 * arg05:文件名
+			 */
+			ExcelConfig config=new ExcelConfig(CouscholarshipExcel.class, "国家奖学金", 1, new FileInputStream(excel),excelFileName);
+			List<Object> lists=excelServicesMake.parseExcel(config);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(lists);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
+			}
+			//数据的转换
+			List<Object> countryScholarship = excelServicesMake.toDBEnity(lists,CountryScholarship.class);
+			//获取创建人
+			String creator=RequestUtils.getUserName(request);
+            //保存表格里面的数据，在couscholarshipServices重新定义saveFromExcel方法
+			couscholarshipServices.saveFromExcel(countryScholarship,creator);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "excelSuccess";
 	}
 
 	@Override

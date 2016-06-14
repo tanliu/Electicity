@@ -4,7 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -22,6 +25,7 @@ import com.zhbit.services.train.TrainmasterServices;
 import com.zhbit.transform.PolstatusTransform;
 import com.zhbit.transform.TrainmasterTransform;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -58,27 +62,31 @@ public class TrainMasterAction extends BaseAndExcelAction{
 			 * arg05:文件名
 			 */
 			ExcelConfig config=new ExcelConfig(TrainmasterExcel.class, "培训信息", 1, new FileInputStream(excel),excelFileName);
-			List<Object> lists=excelServices.parseExcel(config);
-			for (Object object : lists) {
-				TrainmasterExcel trainmasterExcel=(TrainmasterExcel) object;
-				//System.out.println(polstatusExcel.getStudentNo());
+			List<Object> lists=excelServicesMake.parseExcel(config);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(lists);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
 			}
-			
-			//将polstatusExcel的集合转换成Politicalstatus的集合
-			List<Object> Trainmaster=new TrainmasterTransform().toDBEntity(lists);
-			//将集合中的对象保存至数据库
-			for(Object object:Trainmaster){
-				TraininfoMaster traininfoMaster=(TraininfoMaster) object;
-				trainmasterServices.save(traininfoMaster);
-			
-		}
-			//BaseTransfrom baseTransfrom=new TestTransform();
-			//baseTransfrom.toDBEntity(lists);
-			//baseTransfrom.toExcelObj(lists);
+			//数据的转换
+			List<Object> traininfoMaster = excelServicesMake.toDBEnity(lists,TraininfoMaster.class);
+			//获取创建人
+			String creator=RequestUtils.getUserName(request);
+            //保存表格里面的数据，在trainmasterServices重新定义saveFromExcel方法
+			trainmasterServices.saveFromExcel(traininfoMaster,creator);
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return "importExcel";
+
+		return "excelSuccess";
 	}
 	@Override
 	public void exportExcel() {
