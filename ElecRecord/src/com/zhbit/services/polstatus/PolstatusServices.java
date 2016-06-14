@@ -1,4 +1,6 @@
 package com.zhbit.services.polstatus;
+import java.util.List;
+
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.services.BaseServices;
 import com.zhbit.util.PageUtils;
@@ -24,6 +26,14 @@ public interface PolstatusServices extends BaseServices<Politicalstatus> {
 	 */
 	public String add(Politicalstatus politicalstatus);
     
+	/**
+	 * 方法描述:保存导入的数据
+	 * @param students
+	 * @param creator
+	 */
+	void saveFromExcel(List<Object> politicalstatus, String creator);
+	
+	
 	//定义数据查询的方法
 	public PageUtils queryList(Politicalstatus politicalstatus, int pageNO, int pageSize);
 }

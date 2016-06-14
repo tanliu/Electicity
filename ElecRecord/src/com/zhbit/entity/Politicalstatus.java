@@ -2,6 +2,8 @@ package com.zhbit.entity;
 
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TPoliticalstatus entity. @author MyEclipse Persistence Tools
  */
@@ -17,16 +19,27 @@ import java.sql.Timestamp;
  * 修改备注： 
  * @version 
  */
-public class Politicalstatus implements java.io.Serializable {
+public class Politicalstatus implements java.io.Serializable,Cloneable {
 
 	// Fields
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
 	private String id;
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;
+	@Transform(name="姓名")
 	private String stuName;
+	@Transform(name="入党团日期")
 	private Timestamp joinDate;
+	@Transform(name="政治面貌")
 	private String politicalStatus;
+	@Transform(name="备注")
 	private String memo;
 	private Timestamp createTime;
 	private String creator;

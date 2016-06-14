@@ -471,9 +471,16 @@ public class TestAction extends BaseAndExcelAction  implements ModelDriven<TestU
 	}
 
 	
-	
-	
 	@Test
+	public void match(){
+		String onereg="^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+		if("817@.com".matches(onereg)){
+			System.out.println("------------------");
+		}
+	}
+	
+	
+
 	public void te(){
 		try {
 			FileInputStream fiS=new FileInputStream(new File("D:\\学生基本信息表.xls"));

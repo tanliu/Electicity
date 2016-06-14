@@ -39,6 +39,8 @@ public @interface Lang {
 	
 	
 	public final static String TYPE_DEFAULT="DEFAULT";
+	public final static String TYPE_TEL="1([\\d]{10})|((\\+[0-9]{2,4})?\\(?[0-9]+\\)?-?)?[0-9]{7,8}";
+	public final static String TYPE_EMAIL="^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 	
 	//是不是日期
 	public final static String TYPE_DATE="DATE";
@@ -52,6 +54,7 @@ public @interface Lang {
 	
 	public final static String Excel="null";
 	public final static String Entity="null";
+	
 	
 	
 }

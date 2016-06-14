@@ -59,7 +59,6 @@
 			</tr>
         </tbody>
     </table>
-
 </div>
  <div class="query-btn ue-clear" align="center">
         <a  class="confirm">保存</a> 

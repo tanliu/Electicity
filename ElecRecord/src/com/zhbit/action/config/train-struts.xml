@@ -35,6 +35,8 @@
 	          <param name="pageNO">${pageNO}</param>
 	            <param name="encode">true</param>
 	        </result>
+	         <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
+            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>
      </action>
      
         
@@ -44,9 +46,7 @@
                   <result name="addUI">/WEB-INF/jsp/train/trainmaster_addUI.jsp</result> 
                    <result name="listUI">/WEB-INF/jsp/train/trainmaster_listUI.jsp</result> 
                     <result name="detailUI">/WEB-INF/jsp/train/trainmaster_detailUI.jsp</result>
-              <result name="importExcel" type="redirectAction">
-	          <param name="actionName">trainmaster_listUI</param>
-	        </result>
+              
             <result name="add" type="redirectAction">
 	          <param name="actionName">trainmaster_listUI</param>
 	          <param name="traininfoMaster.trainsTopic">${traininfoMaster.trainsTopic}</param> 
@@ -63,7 +63,7 @@
 	            <param name="encode">true</param>
 	        </result>
 
- <result name="delete" type="redirectAction">
+              <result name="delete" type="redirectAction">
 	          <param name="actionName">trainmaster_listUI</param>
 	           <param name="traininfoMaster.trainsTopic">${traininfoMaster.trainsTopic}</param> 
 	           <param name="traininfoMaster.manager">${traininfoMaster.manager}</param>
@@ -71,6 +71,8 @@
 	          <param name="pageNO">${pageNO}</param>
 	            <param name="encode">true</param>
 	        </result>
+	         <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
+            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>
          </action>
 	</package>
 

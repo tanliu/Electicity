@@ -82,10 +82,11 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 				map=null;
 				//System.out.println(Excelmap);
 				//装载数据
-				for(int row=config.getStartRow();row<sheet.getRows()+config.getStartRow()-1;row++){
+				for(int row=config.getStartRow();row<sheet.getRows();row++){
 					for(int colum=0;colum<sheet.getColumns();colum++){
-						Field field=(Field) Excelmap.get(colum);
 						String value=sheet.getCell(colum,row).getContents();
+						Field field=(Field) Excelmap.get(colum);
+
 						if(field!=null&&value!=null){
 							field.setAccessible(true);							
 							field.set(object, value);							
@@ -137,6 +138,9 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
     			try {
 					String value=(String) field.get(object);
 					Lang annotation = field.getAnnotation(Lang.class);
+					if(annotation==null){
+						continue;
+					}
 					//判断是否可以为空
 					if(Lang.TYPE_NONULL.equals(annotation.isNull())){
 						if(value==null||"".equals(value.replace(" ", ""))){
@@ -157,9 +161,9 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 					}
 					//判断是不是数字
 					if(Lang.TYPE_ISNUM.equals(annotation.isNum())){
-						String onereg="\\d?";
+						String onereg="^\\d+$";
 						if(value!=null&&!"".equals(value.replace(" ", ""))){
-							if(!value.matches(onereg)){
+							if(!(value.trim()).matches(onereg)){
 								map.put("第"+baseExcelBean.getRow()+"行的("+field.getAnnotation(Lang.class).value()+")列","：输入的格式应该是数字，不应该是:"+value);
 								//return map;	
 							}
@@ -250,8 +254,12 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 					field.setAccessible(true);
 				    //取得属性的值
 					String value=(String) field.get(excel);
+					Lang mylang=field.getAnnotation(Lang.class);
+					if(mylang==null){
+						continue;
+					}
 					//从map中取得目标对象的对应方法
-					Field target=(Field) map.get(field.getAnnotation(Lang.class).value());
+					Field target=(Field) map.get(mylang.value());
 					if(target==null){
 						continue;
 					}
@@ -262,24 +270,27 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 					Class<?> filedtype=target.getType();
 					int index=filedtype.toString().lastIndexOf(".");
 					String type=filedtype.toString().substring(index+1, filedtype.toString().length());
+					//从注解中取得相应的属性
+					Lang lang=field.getAnnotation(Lang.class);
+					if(lang==null){
+						continue;
+					}
+					String[] myexcels=lang.toExcle();
+					String[] myentity=lang.toEntity();
+					//注解类型转换值不为空时
+					if(myentity!=null&&myexcels!=null&&myentity.length>0&&myexcels.length>0){
+						//查找一个和相同
+						for(int i=0;i<myexcels.length;i++){
+							if(myexcels[i].equals(value)){
+								value=myentity[i];
+								break;
+							}
+						}
+					}
 					if("String".equals(type)){ //如果转换为字符串
 						target.set(object, null);
 						target.set(object, value);
 					}else if("int".equals(type)||"Integer".equals(type)){
-						//从注解中取得相应的属性
-						Lang lang=field.getAnnotation(Lang.class);
-						String[] myexcels=lang.toExcle();
-						String[] myentity=lang.toEntity();
-						//注解类型转换值不为空时
-						if(myentity!=null&&myexcels!=null&&myentity.length>0&&myexcels.length>0){
-							//查找一个和相同
-							for(int i=0;i<myexcels.length;i++){
-								if(myexcels[i].equals(value)){
-									value=myentity[i];
-									break;
-								}
-							}
-						}
 						target.set(object, 0);
 						if(value!=null&&!"".equals(value)){
 							target.set(object, Integer.parseInt(value));							

@@ -1,6 +1,8 @@
 package com.zhbit.services.train.impl;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -109,5 +111,25 @@ TrainmasterServices{
 		return trainmasterDao.getPageUtils(queryUtils, pageNO, pageSize);
 		
 	}
+		@Override
+		public void saveFromExcel(List<Object> traininfoMasters, String creator) {
+			
+			if(traininfoMasters!=null&&traininfoMasters.size()>0){
+				//对每一条数据进行校验和设置相应的值
+				for (Object object : traininfoMasters) {
+					TraininfoMaster traininfoMaster=(TraininfoMaster) object;
+					//获取学生的学号,将学号赋给politicalstatus实体。
+					//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
+					//politicalstatus.setStuId(student.getStuId());
+					//这里先设置一个值用来测试
+					//politicalstatus.setStuId("9527");
+					traininfoMaster.setCreator(creator);
+					traininfoMaster.setCreateTime(new Timestamp(new Date().getTime()));
+					this.save(traininfoMaster);
+				}
+			}
+			
+			
+		}
 		
 }

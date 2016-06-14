@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import com.zhbit.services.ExcelServices;
 import com.zhbit.services.ExcelServicesMake;
+import com.zhbit.transform.CommonTransform;
 
 
 /** 
@@ -30,6 +31,8 @@ public abstract class BaseAndExcelAction extends BaseAction {
 	
 	@Resource(name="excelServicesMakeImpl")
 	protected ExcelServicesMake excelServicesMake;
+	@Resource(name=CommonTransform.TRANSFORM_NAME)
+	protected CommonTransform commonTransform;
 
 	public abstract String importExcel();
 	public abstract void exportExcel();

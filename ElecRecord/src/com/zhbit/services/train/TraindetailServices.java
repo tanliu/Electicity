@@ -1,8 +1,11 @@
 package com.zhbit.services.train;
 
 
-import com.zhbit.entity.TraininfoDetail;
+import java.util.List;
 
+import com.zhbit.entity.Student;
+import com.zhbit.entity.TraininfoDetail;
+import com.zhbit.entity.TraininfoMaster;
 import com.zhbit.services.BaseServices;
 import com.zhbit.util.PageUtils;
 
@@ -21,4 +24,15 @@ public interface TraindetailServices extends BaseServices<TraininfoDetail>{
 	public static final String SERVICES_NAME="com.zhbit.services.train.impl.TraindetailServicesImpl";
 	//定义数据查询的方法
 	public PageUtils queryList(TraininfoDetail traininfoDetail, int pageNO, int pageSize);
+	/**
+	 * 方法描述:保存导入的数据
+	 * @param students
+	 * @param creator
+	 */
+	void saveFromExcel(List<Object> traininfoDetail);
+	/**
+	 * 方法描述:通过主题获取主题ID
+	 * @return
+	 */
+	//public TraininfoMaster getmasterID(String topic);
 }
