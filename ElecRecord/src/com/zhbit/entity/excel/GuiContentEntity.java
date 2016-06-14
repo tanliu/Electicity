@@ -5,7 +5,7 @@ import org.zhbit.excel.annotation.Lang;
 import org.zhbit.excel.bean.BaseExcelVo;
 
 @ExcelVoConfig
-public class GuiContentEntity extends BaseExcelVo {
+public class GuiContentEntity extends BaseExcelBean implements Cloneable {
 
 	@Lang(value="序号")
 	private String xuhao;
@@ -46,13 +46,15 @@ public class GuiContentEntity extends BaseExcelVo {
 
 
 	@Override
-	public int getHashVal() {
+	protected Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
-		return 0;
+		return super.clone();
 	}
+
 
 	
 //-----------------------------getter&setter---------------------------
+	
 	
 	public String getXuhao() {
 		return xuhao;

@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -17,6 +21,7 @@ import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.SystemDll;
+import com.zhbit.entity.Tutor;
 import com.zhbit.entity.excel.StuStaEntity;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.studentstatus.StuStatusServices;
@@ -62,23 +67,54 @@ public class StuStatusAction extends BaseAndExcelAction {
 		// TODO Auto-generated method stub
 		try {
 			ExcelConfig config=new ExcelConfig(StuStaEntity.class, "12131学籍异动", 2, new FileInputStream(excel),excelFileName);
-			List<Object> lists=excelServices.parseExcel(config);
+			List<Object> objects=excelServicesMake.parseExcel(config);
 			
-		//将StuStaEntity的集合转换成StuStatus的集合
-			List<Object> stustauss=new StuStatusTransform().toDBEntity(lists);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(objects);
+			
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				
+				//出错
+				return "excelError";
+			}
+			
+			//数据的转换
+			List<Object> stustausEntitys = excelServicesMake.toDBEnity(objects,StuStatus.class);
+			
+			List<StuStatus> stustauss=new ArrayList<StuStatus>();
 			
 			//将集合中的对象保存至数据库
-			for(Object object:stustauss){
+			for(Object object:stustausEntitys){
 				StuStatus stuStatus=(StuStatus) object;
-				stuStatusServices.save(stuStatus);
+				
+				//设定创建时间为当前时间，学生ID暂时设定为"9528"
+				stuStatus.setStuId("9528");
+				Timestamp createtime = new Timestamp(System.currentTimeMillis());
+				stuStatus.setCreateTime(createtime);
+				//去除可能存在的空格
+				stuStatusServices.trimStustatus(stuStatus);
+				
+				//将此对象添加到stuStatuss集合中
+				stustauss.add(stuStatus);
+								
 			}
+			//批量保存学籍异动信息
+			stuStatusServices.saveStatuss(stustauss);
+			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("将Excel的数据转换成StuStaEntity时出错");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return "importExcel";
+		return "excelSuccess";
 	}
 
 	@Override

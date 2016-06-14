@@ -68,6 +68,7 @@ $(function(){
 //以下两条路径用于访问Action
 var queryAction="${basePath}guicontent/guicontent_listUI.action";
 var deleteAction="${basePath}guicontent/guicontent_delete.action";
+var importUrl="${basePath}guicontent/guicontent_importExcel.action";
 
 //向guiContent_editorUI.action提交信息
 function editor(id){
@@ -122,7 +123,7 @@ function del(){
         </div>
         
           <div class="conditions staff ue-clear" >
-            <label>辅导时间：</label>
+            <label>导学时间：</label>
             <input type="text" value="<s:date format="yyyy-MM-dd" name="guiContent.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="guiContent.guidDate" style="width:233px;height:30px"/>
             
         </div>
@@ -152,8 +153,8 @@ function del(){
             	<th width="20%" class="num">学号</th>
                 <th width="15%" >姓名</th>
 				<th width="20%" align="center">专业班级</th>
-				<th width="15%" >辅导时间</th>
-				<th width="15%" align="center">辅导地点</th>
+				<th width="15%" >导学时间</th>
+				<th width="15%" align="center">导学地点</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
@@ -180,106 +181,10 @@ function del(){
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 </form>
 
-<div class="importDialog" align="center" >
-	<div class="dialog-content" align="center">   
-        <div class="ui-dialog-text" align="center">
-            <p class="dialog-content">请选择要导入的excel文件</p>
-            <form id="fileForm" action="${basePath}guicontent/guicontent_importExcel.action" method="post" enctype="multipart/form-data">
-            <p><input style="margin-left:30px; margin-top:5px;margin-bottom:10px;outline:0;" type="file"  name="excel"  id="filename"/></p>
-          </form>
-            <div class="buttons" align="center">
-                <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="返回" />
-            </div>
-        </div>
-        </div>
-</div>
+<script type="text/javascript" src="${basePath}js/core.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
+<script type="text/javascript" src="${basePath}js/jquery-form.js"></script>
+<jsp:include page="/common/inputdialog.jsp"></jsp:include>
 
-<!--弹出删除提示框的窗口-->
-<div class="delDialog">
-	<div class="dialog-content">
-    	<div class="ui-deldialog-icon"></div>
-        <div class="ui-dialog-text">
-        	<p class="dialog-content">您确定要删除选中的记录吗？</p>
-            <p class="tips">如果是请点击“确定”，否则点“取消”</p>
-            
-            <div class="buttons">
-                <input type="button" class="button long2 ok" value="确定" />
-                <input type="button" class="button long2 normal" value="取消" />
-            </div>
-        </div>
-        </div>
-</div>
-
-</body>
-
-<script type="text/javascript">
-<!--实现文本选择框的脚本-->
-
-$('.importDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:250,
-	height:220
-	
-});
-
-$('.import').click(function(){
-	$('.importDialog').Dialog('open');
-});
-
-
-
-$('.importDialog input[type=button]').click(function(e) {
-    $('.importDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		
-		if(document.getElementById("filename").value){//在文件非空的条件下才允许向后台提交请求
-			$("#fileForm").submit();
-		}
-		else{
-			$('.importDialog').Dialog('open');//如果用户未选择任何文件，那么窗口保持打开状态
-		}
-	}
-});
-
-<!--实现删除提示框的脚本-->
-
-$('.delDialog').Dialog({
-	title:'提示信息',
-	autoOpen: false,
-	width:400,
-	height:200
-	
-});
-
-$('.del').click(function(){
-	//在弹出前先判断是否已经选中了相关记录
-	var selectedRows=document.getElementsByName("selectedRow");
-	
-	var i=0;
-	var length=selectedRows.length;
-	
-	while(i<length){//如果有记录被选中，则弹出对话框
-		if(selectedRows[i++].checked){
-			$('.delDialog').Dialog('open');
-		}
-	}
-		
-	
-	
-});
-
-
-
-$('.delDialog input[type=button]').click(function(e) {
-    $('.delDialog').Dialog('close');
-	
-	if($(this).hasClass('ok')){
-		del();
-	}
-});
-
-</script>
 </html>

@@ -1,5 +1,7 @@
 package com.zhbit.dao.tutor;
 
+import java.util.List;
+
 import com.zhbit.dao.BaseDao;
 import com.zhbit.entity.Tutor;
 
@@ -16,4 +18,6 @@ import com.zhbit.entity.Tutor;
  */ 
 public interface TutorDao extends BaseDao<Tutor> {
 	public static final String DAO_NAME="com.zhbit.dao.tutor.impl.TutorDaoImpl"; 
+	
+	public void saveTutors(List<Tutor> tutors);
 }

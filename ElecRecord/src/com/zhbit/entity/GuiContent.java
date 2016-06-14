@@ -1,29 +1,51 @@
 package com.zhbit.entity;
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TLearningguidInfo entity. @author MyEclipse Persistence Tools
  */
 
-public class GuiContent implements java.io.Serializable {
+public class GuiContent implements java.io.Serializable,Cloneable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;
+	@Transform(name="姓名")
 	private String stuName;
+	@Transform(name="专业班级")
 	private String className;
+	@Transform(name="导学时间")
 	private Timestamp guidDate;
+	@Transform(name="导学内容")
 	private String guidContent;
+	@Transform(name="导学地点")
 	private String guidAddress;
 	private String docPath;
+	@Transform(name="备注")
 	private String memo;
 	private Timestamp createTime;
 	private String creator;
 
-	// Constructors
+	
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 
+	
+	// Constructors
+	
 	/** default constructor */
 	public GuiContent() {
 	}

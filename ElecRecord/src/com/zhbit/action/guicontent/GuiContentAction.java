@@ -4,7 +4,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -13,13 +17,9 @@ import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.GuiContent;
-import com.zhbit.entity.Tutor;
 import com.zhbit.entity.excel.GuiContentEntity;
-import com.zhbit.entity.excel.TutorEntity;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.guicontent.GuiContentServices;
-import com.zhbit.transform.GuiContentTransform;
-import com.zhbit.transform.TutorTransform;
 import com.zhbit.util.DecodeUtils;
 
 /** 
@@ -50,32 +50,62 @@ public class GuiContentAction extends BaseAndExcelAction {
 	
 	@Override
 	public String importExcel() {
-		ExcelConfig config;
+		
 		try {
-			config = new ExcelConfig(GuiContentEntity.class, "Sheet1", 1, new FileInputStream(excel),excelFileName);
+			ExcelConfig excelConfig = new ExcelConfig(GuiContentEntity.class, "Sheet1", 1, new FileInputStream(excel),excelFileName);
 			
-			List<Object> lists=excelServices.parseExcel(config);
+			List<Object> objects=excelServicesMake.parseExcel(excelConfig);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(objects);
 			
-			//将StuStaEntity的集合转换成StuStatus的集合
-			List<Object> guiContents=new GuiContentTransform().toDBEntity(lists);
-			
-			
-			for(Object object:guiContents){
-				GuiContent guiContent=(GuiContent) object;
-				System.out.println("姓名是："+guiContent.getStuName());
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
 			}
+			//数据的转换
+			List<Object> guiContentEntitys = excelServicesMake.toDBEnity(objects,GuiContent.class);
+			List<GuiContent> guiContents=new ArrayList<GuiContent>();
+			
+			
+			for(Object object:guiContentEntitys){
+				GuiContent guiContent=(GuiContent) object;
+				System.out.println("学号是："+guiContent.getStudentNo());
+			}
+			
 		//将集合中的对象保存至数据库
-			for(Object object:guiContents){
+			for(Object object:guiContentEntitys){
 				GuiContent guiContent=(GuiContent) object;
-				guiContentServices.save(guiContent);
-			}
+				
+				//if(!StringUtils.isEmpty(guiContent.getStudentNo())){
+					//设定创建时间为当前时间，学生ID暂时设定为"9528"
+					guiContent.setStuId("9528");
+					Timestamp createtime = new Timestamp(System.currentTimeMillis());
+					guiContent.setCreateTime(createtime);
+					
+					//将此对象放入guiContents集合中
+					guiContents.add(guiContent);
+					//guiContentServices.save(guiContent);
+				}
+				
+				
+			//}
+			
+			//批量插入导学内容信息
+			guiContentServices.saveGuiContents(guiContents);
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return "importExcel";
+		return "excelSuccess";
 	}
 
 	@Override
@@ -109,7 +139,7 @@ public class GuiContentAction extends BaseAndExcelAction {
 
 	@Override
 	public String addUI() {
-		// TODO Auto-generated method stub
+		
 		//保存查询条件
 		request.setAttribute("queryCon", guiContent);
 		

@@ -1,5 +1,7 @@
 package com.zhbit.services.studentstatus;
 
+import java.util.List;
+
 import com.zhbit.entity.StuStatus;
 import com.zhbit.services.BaseServices;
 import com.zhbit.util.PageUtils;
@@ -22,4 +24,6 @@ public interface StuStatusServices extends BaseServices<StuStatus> {
 	  
 	  //用于去除前后字符串的方法
 	  public  StuStatus trimStustatus(StuStatus stuStatus);
+	  
+	  public void saveStatuss(List<StuStatus> stuStatus);
 }

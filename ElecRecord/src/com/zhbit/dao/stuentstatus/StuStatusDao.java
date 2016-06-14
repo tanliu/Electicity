@@ -23,5 +23,5 @@ public static final String DAO_NAME="com.zhbit.dao.studentstatus.impl.StuStatusD
 	/**
 	 * 方法描述:批量保存、更新数据
 	 */
-	public void saveOrUpdateAll(List<StuStatus> status);
+	public void saveStuStatuss(List<StuStatus> statuss);
 }

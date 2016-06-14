@@ -1,13 +1,9 @@
 package com.zhbit.entity.excel;
 
-import org.zhbit.excel.annotation.ExcelVoConfig;
 import org.zhbit.excel.annotation.Lang;
-import org.zhbit.excel.bean.BaseExcelVo;
 
-import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
-@ExcelVoConfig
-public class TutorEntity extends BaseExcelVo {
+public class TutorEntity extends BaseExcelBean implements Cloneable{
 	@Lang(value="序号")
 	private String xuhao;
 	@Lang(value="学号")
@@ -26,7 +22,13 @@ public class TutorEntity extends BaseExcelVo {
 	private String demo;
 	
 	
-	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
+
 	public TutorEntity() {
 		// TODO Auto-generated constructor stub
 	}
@@ -47,12 +49,6 @@ public class TutorEntity extends BaseExcelVo {
 
 
 
-	@Override
-	public int getHashVal() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 //----------------------------------getter&setter------------------------------------------------
 	public String getStudentNo() {
 		return studentNo;

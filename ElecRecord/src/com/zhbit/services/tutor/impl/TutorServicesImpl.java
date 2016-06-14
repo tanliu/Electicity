@@ -135,6 +135,12 @@ public class TutorServicesImpl extends BaseServicesImpl<Tutor> implements TutorS
 		
 		return tutor;
 	}
+
+	@Override
+	public void saveTutors(List<Tutor> tutors) {
+		// TODO Auto-generated method stub
+		tutorDao.saveTutors(tutors);
+	}
 	
 	
 	

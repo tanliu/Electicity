@@ -1,5 +1,7 @@
 package com.zhbit.services.guicontent;
 
+import java.util.List;
+
 import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.GuiContent;
 import com.zhbit.services.BaseServices;
@@ -11,4 +13,6 @@ public interface GuiContentServices extends BaseServices<GuiContent> {
 	public PageUtils queryList(GuiContent guiContent, int pageNO, int pageSize);
 	 
 	 public GuiContent trimGuiContent(GuiContent guiContent);
+	 
+	 public void saveGuiContents(List<GuiContent> guiContents);
 }

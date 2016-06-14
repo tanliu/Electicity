@@ -24,9 +24,9 @@ import com.zhbit.entity.StuStatus;
 public class StuStatusDaoImpl extends BaseDaoImpl<StuStatus> implements StuStatusDao{
 
 	@Override
-	public void saveOrUpdateAll(List<StuStatus> status) {
+	public void saveStuStatuss(List<StuStatus> statuss) {
 		// TODO Auto-generated method stub
-		
+		getHibernateTemplate().saveOrUpdateAll(statuss);
 	}
 	
 }

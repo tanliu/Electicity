@@ -1,5 +1,7 @@
 package com.zhbit.services.tutor;
 
+import java.util.List;
+
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.Tutor;
 import com.zhbit.services.BaseServices;
@@ -22,5 +24,8 @@ public interface TutorServices extends BaseServices<Tutor> {
 	 public PageUtils queryList(Tutor tutor, int pageNO, int pageSize);
 	 
 	 public Tutor trimTutor(Tutor tutor);
+	 
+	 public void saveTutors(List<Tutor> tutors);
+		 
 	 
 }

@@ -3,76 +3,147 @@ package com.zhbit.entity;
 
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TEnrolltransaction entity. @author MyEclipse Persistence Tools
  */
 
-public class StuStatus implements java.io.Serializable {
+public class StuStatus implements java.io.Serializable,Cloneable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Fields
 
 	private String id;
+	@Transform(name="异动序号")
 	private String transactionNo;//异动序号
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;//学号
+	@Transform(name="姓名")
 	private String stuName;//姓名
+	@Transform(name="性别")
 	private String sex;//性别
+	@Transform(name="学年")
 	private String academicYear;//学年
+	@Transform(name="学期")
 	private String term;//学期
+	@Transform(name="异动后行政班")
 	private String tansactionClass;//异动后行政班
+	@Transform(name="处理文号")
 	private String processSymbols;//处理文号
+	@Transform(name="异动类别")
 	private String tansactionType;//异动类型
+	@Transform(name="异动原因")
 	private String tansactionReason;//异动原因
+	@Transform(name="异动时间")
 	private Timestamp tansactionDate;//异动时间
+	@Transform(name="行文时间")
 	private Timestamp handleDate;//行文时间
+	@Transform(name="撤消时间")
 	private Timestamp cancelDate;//撤消时间
+	@Transform(name="异动说明")
 	private String tansactionMemo;
+	@Transform(name="转学前学校名称")
 	private String zxqschool;//转学前学校名称
+	@Transform(name="转学前所在年级")
 	private String zxqgrade;//转学前所在年级
+	@Transform(name="转学前专业")
 	private String zxqmajor;//转学前专业
+	@Transform(name="异动前学院")
 	private String ydqcollege;//异动前学院
+	@Transform(name="异动前系")
 	private String ydqdepartment;//异动前系
+	@Transform(name="异动前专业")
 	private String ydqmajor;//异动前专业
+	@Transform(name="异动前学制")
 	private String ydqlength;//异动前学制
+	@Transform(name="异动前专业方向")
 	private String ydqmajorField;//异动前专业方向
+	@Transform(name="异动前培养方向")
 	private String ydqcultivateDirection;//异动前培养方向
+	@Transform(name="异动前所在年级")
 	private String ydqgrade;//异动前所在年级
+	@Transform(name="异动前行政班")
 	private String ydqclassName;//异动前行政班
+	@Transform(name="异动前学籍状态")
 	private String ydqschoolStatus;//异动前学籍状态
+	@Transform(name="转出后学校名称")
 	private String zchschool;//转出后学校名称
+	@Transform(name="转出后年级")
 	private String zchgrade;//转出后年级
+	@Transform(name="转出后专业")
 	private String zchmajor;//转出后专业
+	@Transform(name="异动后学院")
 	private String ydhcollege;//异动后学院
+	@Transform(name="异动后系")
 	private String ydhdepartment;//异动后系
+	@Transform(name="异动后专业")
 	private String ydhmajor;//异动后专业
+	@Transform(name="异动后学制")
 	private String ydhlength;//异动后学制
+	@Transform(name="异动后专业方向")
 	private String ydhmajorField;//异动后专业方向
+	@Transform(name="异动后培养方向")
 	private String ydhcultivatedirection;//异动后培养方向
+	@Transform(name="异动后所在年级")
 	private String ydhgrade;//异动后所在年级
+	@Transform(name="异动后所在班级")
 	private String ydhclassName;//异动后所在班级
+	@Transform(name="异动后学籍状态")
 	private String ydhschoolStatus;//异动后学籍状态
+	@Transform(name="操作人")
 	private String operator;//操作人
+	@Transform(name="操作日期")
 	private Timestamp operatorTime;//操作日期
+	@Transform(name="异动前是否在校")
 	private String ydqinSchool;//异动前是否在校
+	@Transform(name="异动后是否在校")
 	private String ydhinSchool;//异动后是否在校
+	@Transform(name="异动前专业代码")
 	private String ydqmajorCode;//异动前专业代码
+	@Transform(name="异动后专业代码")
 	private String ydhmajorCode;//异动后专业代码
+	@Transform(name="异动前是否注册")
 	private String ydqisRegiste;//异动前是否注册
+	@Transform(name="异动后是否注册")
 	private String ydhisRegiste;//异动后是否注册
+	@Transform(name="/备注")
 	private String memo;//备注
+	@Transform(name="异动前学历层次")
 	private String ydqeducation;//异动前学历层次
+	@Transform(name="异动后学历层次")
 	private String ydheducation;//异动后学历层次
+	@Transform(name="异动前专业类别")
 	private String ydqmajorCategory;//异动前专业类别
+	@Transform(name="异动后专业类别")
 	private String ydhmajorCategory;//异动后专业类别
+	@Transform(name="异动结果")
 	private String ydresult;//异动结果
+	@Transform(name="学生类别")
 	private String studentCategory;//学生类别
+	@Transform(name="考生号")
 	private String examinateNo;//考生号
+	@Transform(name="身份证号")
 	private String idCardNo;//身份证号码
 	private Timestamp createTime;//创建时间
 	private String creator;//创建者
 
-	// Constructors
+	
+	
+	
+	
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
+	// Constructors
 	/** default constructor */
 	public StuStatus() {
 	}

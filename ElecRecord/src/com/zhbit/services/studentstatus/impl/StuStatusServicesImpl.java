@@ -74,142 +74,163 @@ public class StuStatusServicesImpl extends BaseServicesImpl<StuStatus> implement
 	public StuStatus trimStustatus(StuStatus stuStatus) {
 		// TODO Auto-generated method stub
 		if(stuStatus!=null){
-			if(!StringUtils.isEmpty(stuStatus.getTransactionNo())){
+			if(!StringUtils.isEmpty(stuStatus.getTransactionNo())){//异动序号
 				stuStatus.setTransactionNo(stuStatus.getTransactionNo().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getStudentNo())){
+			if(!StringUtils.isEmpty(stuStatus.getStudentNo())){//学号
 				stuStatus.setStudentNo(stuStatus.getStudentNo().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getStuName())){
+			if(!StringUtils.isEmpty(stuStatus.getStuName())){//姓名
 				stuStatus.setStuName(stuStatus.getStuName().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getSex())){
+			if(!StringUtils.isEmpty(stuStatus.getSex())){//性别
 				stuStatus.setSex(stuStatus.getSex().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getAcademicYear())){
+			if(!StringUtils.isEmpty(stuStatus.getAcademicYear())){//学年
 				stuStatus.setAcademicYear(stuStatus.getAcademicYear().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getTerm())){
+			if(!StringUtils.isEmpty(stuStatus.getTerm())){//学期
 				stuStatus.setTerm(stuStatus.getTerm().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getTansactionClass())){
+			if(!StringUtils.isEmpty(stuStatus.getTansactionClass())){//异动后行政班
 				stuStatus.setTansactionClass(stuStatus.getTansactionClass().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getProcessSymbols())){
+			if(!StringUtils.isEmpty(stuStatus.getProcessSymbols())){//处理文号
 				stuStatus.setProcessSymbols(stuStatus.getProcessSymbols().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getTansactionType())){
+			if(!StringUtils.isEmpty(stuStatus.getTansactionType())){//异动类别
 				stuStatus.setTansactionType(stuStatus.getTansactionType().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getTansactionReason())){
+			if(!StringUtils.isEmpty(stuStatus.getTansactionReason())){//异动原因
 				stuStatus.setTansactionReason(stuStatus.getTansactionReason().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getTansactionMemo())){
+			if(!StringUtils.isEmpty(stuStatus.getTansactionMemo())){//异动说明
 				stuStatus.setTansactionMemo(stuStatus.getTansactionMemo().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getZxqschool())){
+			if(!StringUtils.isEmpty(stuStatus.getZxqschool())){//转学前学校名称
 				stuStatus.setZxqschool(stuStatus.getZxqschool().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getZxqgrade())){
+			if(!StringUtils.isEmpty(stuStatus.getZxqgrade())){//转学前所在年级
 				stuStatus.setZxqgrade(stuStatus.getZxqgrade().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getZxqmajor())){
+			if(!StringUtils.isEmpty(stuStatus.getZxqmajor())){//转学前专业
 				stuStatus.setZxqmajor(stuStatus.getZxqmajor().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqcollege())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqcollege())){//异动前学院
 				stuStatus.setYdqcollege(stuStatus.getYdqcollege().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqdepartment())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqdepartment())){//异动前系
 				stuStatus.setYdqdepartment(stuStatus.getYdqdepartment().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqmajor())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqmajor())){//异动前专业
 				stuStatus.setYdqmajor(stuStatus.getYdqmajor().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqlength())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqlength())){//异动前学制
 				stuStatus.setYdqlength(stuStatus.getYdqlength().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqmajorField())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqmajorField())){//异动前专业方向
 				stuStatus.setYdqmajorField(stuStatus.getYdqmajorField().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqcultivateDirection())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqcultivateDirection())){//异动前培养方向
 				stuStatus.setYdqcultivateDirection(stuStatus.getYdqcultivateDirection().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqgrade())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqgrade())){//异动前所在年级
 				stuStatus.setYdqgrade(stuStatus.getYdqgrade().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqclassName())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqclassName())){//异动前行政班
 				stuStatus.setYdqclassName(stuStatus.getYdqclassName().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqschoolStatus())){
-				stuStatus.setYdqschoolStatus(stuStatus.getYdqschoolStatus().trim().equals("有")?"1":"0");
+			if(!StringUtils.isEmpty(stuStatus.getYdqschoolStatus())){//异动前学籍状态
+				stuStatus.setYdqschoolStatus(stuStatus.getYdqschoolStatus().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getZchschool())){
+			if(!StringUtils.isEmpty(stuStatus.getZchschool())){//转出后学校名称
 				stuStatus.setZchschool(stuStatus.getZchschool().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getZchgrade())){
+			if(!StringUtils.isEmpty(stuStatus.getZchgrade())){//转出后年级
 				stuStatus.setZchgrade(stuStatus.getZchgrade().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getZchmajor())){
+			if(!StringUtils.isEmpty(stuStatus.getZchmajor())){//转出后专业
 				stuStatus.setZchmajor(stuStatus.getZchmajor().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhcollege())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhcollege())){//异动后学院
 				stuStatus.setYdhcollege(stuStatus.getYdhcollege().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhdepartment())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhdepartment())){//异动后系
 				stuStatus.setYdhdepartment(stuStatus.getYdhdepartment().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhmajor())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhmajor())){//异动后专业
 				stuStatus.setYdhmajor(stuStatus.getYdhmajor().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhlength())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhlength())){//异动后学制
 				stuStatus.setYdhlength(stuStatus.getYdhlength().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhcultivatedirection())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhmajorField())){//异动后专业方向
+				stuStatus.setYdhmajorField(stuStatus.getYdhmajorField().trim());
+			}
+			if(!StringUtils.isEmpty(stuStatus.getYdhcultivatedirection())){//异动后培养方向
 				stuStatus.setYdhcultivatedirection(stuStatus.getYdhcultivatedirection().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhgrade())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhgrade())){//异动后所在年级
 				stuStatus.setYdhgrade(stuStatus.getYdhgrade().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhschoolStatus())){
-				stuStatus.setYdhschoolStatus(stuStatus.getYdhschoolStatus().trim().equals("有")?"1":"0");
+			if(!StringUtils.isEmpty(stuStatus.getYdhschoolStatus())){//异动后学籍状态
+				stuStatus.setYdhschoolStatus(stuStatus.getYdhschoolStatus().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getOperator())){
+			if(!StringUtils.isEmpty(stuStatus.getOperator())){//操作人
 				stuStatus.setOperator(stuStatus.getOperator().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqmajorCode())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqmajorCode())){//异动前专业代码
 				stuStatus.setYdqmajorCode(stuStatus.getYdqmajorCode().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhmajorCode())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhmajorCode())){//异动后专业代码
 				stuStatus.setYdhmajorCode(stuStatus.getYdhmajorCode().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getMemo())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqisRegiste())){//异动前是否注册
+				stuStatus.setYdqisRegiste(stuStatus.getYdqisRegiste().trim());
+			}
+			if(!StringUtils.isEmpty(stuStatus.getYdhisRegiste())){//异动后是否注册
+				stuStatus.setYdhisRegiste(stuStatus.getYdhisRegiste().trim());
+			}
+			if(!StringUtils.isEmpty(stuStatus.getMemo())){//备注
 				stuStatus.setMemo(stuStatus.getMemo().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqeducation())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqeducation())){//异动前学历层次
 				stuStatus.setYdqeducation(stuStatus.getYdqeducation().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdheducation())){
+			if(!StringUtils.isEmpty(stuStatus.getYdheducation())){//异动后学历层次
 				stuStatus.setYdheducation(stuStatus.getYdheducation().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdqmajorCategory())){
+			if(!StringUtils.isEmpty(stuStatus.getYdqmajorCategory())){//异动前专业类别
 				stuStatus.setYdqmajorCategory(stuStatus.getYdqmajorCategory().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdhmajorCategory())){
+			if(!StringUtils.isEmpty(stuStatus.getYdhmajorCategory())){//异动后专业类别
 				stuStatus.setYdhmajorCategory(stuStatus.getYdhmajorCategory().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getYdresult())){
+			if(!StringUtils.isEmpty(stuStatus.getYdresult())){//异动结果
 				stuStatus.setYdresult(stuStatus.getYdresult().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getStudentCategory())){
+			if(!StringUtils.isEmpty(stuStatus.getStudentCategory())){//学生类别
 				stuStatus.setStudentCategory(stuStatus.getStudentCategory().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getExaminateNo())){
+			if(!StringUtils.isEmpty(stuStatus.getExaminateNo())){//考生号
 				stuStatus.setExaminateNo(stuStatus.getExaminateNo().trim());
 			}
-			if(!StringUtils.isEmpty(stuStatus.getIdCardNo())){
+			if(!StringUtils.isEmpty(stuStatus.getIdCardNo())){//身份证号
 				stuStatus.setIdCardNo(stuStatus.getIdCardNo().trim());
+			}
+			if(!StringUtils.isEmpty(stuStatus.getYdqinSchool())){//异动前是否在校
+				stuStatus.setYdqinSchool(stuStatus.getYdqinSchool().trim());
+			}
+			if(!StringUtils.isEmpty(stuStatus.getYdhinSchool())){//异动后是否在校
+				stuStatus.setYdhinSchool(stuStatus.getYdhinSchool().trim());
 			}
 		}
 		return stuStatus;
+	}
+
+	@Override
+	public void saveStatuss(List<StuStatus> stuStatus) {
+		// TODO Auto-generated method stub
+		stuStatusDao.saveStuStatuss(stuStatus);
 	}
 }

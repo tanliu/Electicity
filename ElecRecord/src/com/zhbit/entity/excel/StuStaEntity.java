@@ -16,7 +16,7 @@ import org.zhbit.excel.bean.BaseExcelVo;
  * @version 
  */ 
 @ExcelVoConfig
-public class StuStaEntity extends BaseExcelVo {
+public class StuStaEntity extends BaseExcelBean implements Cloneable {
 
 	@Lang(value="异动序号")
 	private String transactionNo;
@@ -128,6 +128,15 @@ public class StuStaEntity extends BaseExcelVo {
 	private String idCardNo;
 	
 	
+	
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
+
 	public StuStaEntity() {
 		
 	}
@@ -743,10 +752,5 @@ public class StuStaEntity extends BaseExcelVo {
 	}
 
 
-	@Override
-	public int getHashVal() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }

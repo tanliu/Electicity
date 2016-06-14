@@ -39,16 +39,16 @@
         <input type="text" placeholder="请输入学生姓名" name="guiContent.stuName" value="${guiContent.stuName }"/>
     </p>
     <p class="short-input ue-clear">
-    	<label>辅导时间：</label>
+    	<label>导学时间：</label>
         <input type="text" value="${guiContent.guidDate }" name="guiContent.guidDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
     </p>
     
     <p class="short-input ue-clear">
-    	<label>辅导地点：</label>
+    	<label>导学地点：</label>
         <input name="guiContent.guidAddress" value="${guiContent.guidAddress }" type="text" placeholder="请输入辅导地点"/>
     </p>
     <p class="short-input ue-clear">
-    	<label>辅导内容：</label>
+    	<label>导学内容：</label>
         <input type="text" name="guiContent.guidContent" value="${guiContent.guidContent }" placeholder="请输入辅导内容"/>
     </p>
     
