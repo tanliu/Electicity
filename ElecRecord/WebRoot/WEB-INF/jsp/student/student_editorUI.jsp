@@ -169,6 +169,210 @@
 				<textarea name="student.awards"></textarea>
 			</p>
 
+        
+        <!-- ---------------学生家庭情况---------------------- -->
+<fieldset style="width: 98%;">
+<legend>学生家庭情况</legend>
+<div class="table-operate ue-clear">
+	<a id="addtable"  class="add">添加</a>
+    
+</div>
+<div class="table-box" >
+	<table id="edit_table" align="center">
+    	<thead>
+        	<tr  align="center">
+            	<th  width="8%">称呼</th>
+                <th  width="10%">家庭成员姓名</th>
+                <th  width="10%">政治面貌</th>
+                <th  width="10%">职务</th>
+                <th  width="10%">电话号码</th>
+                <th  width="15%">家庭成员单位</th>
+                <th  width="15%">单位地址</th>
+                <th  width="10%">邮政编码</th>
+                <th  width="5%">操作</th>
+            </tr>
+        </thead>
+        <tbody id="edit_tbody" >
+        
+        <s:iterator value="family" var="fam" status="num">
+        <tr id="<s:property value='#num.count'/>">
+        <td ><input style="width: 70%;" type="text" value="<s:property value='#fam.relation'/> " class="noNull"  size="50" name="family[${num.count-1}].relation"/></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#fam.name'/> " size="50" name="family[${num.count-1}].name" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#fam.politicalStatus'/> " size="50" name="family[${num.count-1}].politicalStatus" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#fam.jobDuty'/> " size="50" name="family[${num.count-1}].jobDuty" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#fam.telNo'/> " size="50" name="family[${num.count-1}].telNo" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#fam.company'/> " size="50" name="family[${num.count-1}].company" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#fam.companyAddress'/> " size="50" name="family[${num.count-1}].companyAddress" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#fam.postCode'/> " size="50" name="family[${num.count-1}].postCode" /></td>			
+	    <td hidden="true" ><input style="width: 80%;" type="text" value="<s:property value='#fam.createTime'/> " size="50" name="family[${num.count-1}].createTime" /></td>			
+	    <td hidden="true" ><input style="width: 80%;" type="text" value="<s:property value='#fam.creator'/> " size="50" name="family[${num.count-1}].creator" /></td>			
+	    <td hidden="true" ><input id="family<s:property value='#num.count'/>" style="width: 80%;" type="text" value="<s:property value='#fam.id'/> " size="50" name="family[${num.count-1}].id" /></td>			
+	    <td class="operate" align='center'><a href="javascript:delTableRow('<s:property value='#num.count'/>');" class="del">删除</a></td>
+        
+        </tr>
+        </s:iterator>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+$("#addtable").on("click",function(){
+    var tempRow=$("table #edit_tbody tr").size();  //获取显示了多少
+    
+    
+    
+    var tr=$("<tr id=\""+(tempRow+1)+"\" ></tr>");
+    tr.html("<td ><input style=\"width: 70%;\" type=\"text\" class=\"noNull \"  size=\"50\" name=\"family["+tempRow+"].relation\"/></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].name\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].politicalStatus\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].jobDuty\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].telNo\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].company\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].companyAddress\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"family["+tempRow+"].postCode\" /></td>"+				
+	"<td class=\"operate\" align='center'><a href=\"javascript:delTableRow("+(tempRow+1)+");\" class=\"del\">删除</a></td>");                  
+
+    $("table #edit_tbody").append(tr);
+
+})
+function delTableRow(rowNum){
+  
+    var inputId=$("#family"+rowNum);
+      if(typeof(inputId.val()) !== 'undefined'){
+       var $input=$("<input type=\"text\" hidden='true' name=\"familyIds\" value="+inputId.val()+">");
+       $("table #edit_tbody").append($input);   
+   }   
+   
+   var tempRow=$("table #edit_tbody tr").size();  //获取显示了多少
+  // alert(rowNum);
+   $("#edit_tbody #"+rowNum).remove();
+   //删除后更改编号
+   for(var i=parseInt(rowNum)+1;i<tempRow+1;i++){
+     $("#edit_tbody #"+i+" td input").each(function(){
+    	 var test=$(this).attr("name");
+    	 
+    	 //更换
+    	 var my=test.replace(/\d+/g, (i-2));
+    	 $(this).attr("name",my);
+    	 
+    	 var alterinputId=$("#family"+i).attr("id");
+    	 //更改id
+         if(typeof(alterinputId) !== 'undefined'){
+        	 $("#family"+i).attr("id","family"+(i-1));
+         }   
+    	 
+    	//alert("---------");
+     });
+
+       //更改删除的值
+      $("#edit_tbody #"+i+" .operate").html("<a href='javascript:delTableRow(\""+(i-1)+"\")' class='del'>删除</a>");
+            //更改tr的id
+      $("#edit_tbody #"+i).attr("id",(i-1));//将id设置成i-1 
+      
+      
+   }
+   
+}
+
+</script>
+</fieldset>
+<!-- ---------------学生学历情况---------------------- -->
+<fieldset style="width: 98%;">
+<legend>学生学历情况</legend>
+<div class="table-operate ue-clear">
+	<a href="javascript:addExperience()"  class="add">添加</a>
+    
+</div>
+<div class="table-box" >
+	<table id="edit_table" align="center">
+    	<thead>
+        	<tr  align="center">
+            	<th  width="20%">学习期间</th>
+                <th  width="20%">学校名称</th>
+                <th  width="20%">担任职务</th>
+                <th  width="15%">证明人</th>
+                <th  width="5%">操作</th>
+            </tr>
+        </thead>
+        <tbody id="edit_experience" >
+         <s:iterator value="experiences" var="experience" status="num">
+        <tr id="<s:property value='#num.count'/>">
+        <td ><input style="width: 70%;" type="text" value="<s:property value='#experience.duration'/>" class="noNull "  size="50" name="experiences[${num.count-1}].duration"/></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#experience.schoolName'/>" size="50" name="experiences[${num.count-1}].schoolName" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#experience.duty'/>" size="50" name="experiences[${num.count-1}].duty" /></td>
+	    <td ><input style="width: 80%;" type="text" value="<s:property value='#experience.witness'/>" size="50" name="experiences[${num.count-1}].witness" /></td>
+	     <td hidden="true" ><input style="width: 80%;" type="text" value="<s:property value='#experience.createTime'/> " size="50" name="experiences[${num.count-1}].createTime" /></td>			
+	    <td hidden="true" ><input style="width: 80%;" type="text" value="<s:property value='#experience.creator'/> " size="50" name="experiences[${num.count-1}].creator" /></td>			
+	    <td hidden="true" ><input id="experience<s:property value='#num.count'/>" style="width: 80%;" type="text" value="<s:property value='#experience.id'/> " size="50" name="experiences[${num.count-1}].id" /></td>			
+	    <td class="operate" align='center'><a href="javascript:delRow('<s:property value='#num.count'/>');" class="del">删除</a></td>
+        </tr>
+        </s:iterator>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+function addExperience(){	
+    var tempRow=$("table #edit_experience tr").size();  //获取显示了多少  
+    
+    var tr=$("<tr id=\""+(tempRow+1)+"\" ></tr>");
+    tr.html("<td ><input style=\"width: 70%;\" type=\"text\" class=\"noNull \"  size=\"50\" name=\"experiences["+tempRow+"].duration\"/></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"experiences["+tempRow+"].schoolName\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"experiences["+tempRow+"].duty\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"experiences["+tempRow+"].witness\" /></td>"+
+	"<td class=\"operate\" align='center'><a href=\"javascript:delRow("+(tempRow+1)+");\" class=\"del\">删除</a></td>");                 
+
+    $("table #edit_experience").append(tr);
+}
+function delRow(rowNum){
+   
+  
+   var tempRow=$("table #edit_experience tr").size();  //获取显示了多少
+  // alert(rowNum);
+    var t= $("#edit_experience").children("#"+rowNum);
+    var inputId=$("#experience"+rowNum);
+     if(typeof(inputId.val()) !== 'undefined'){
+     var $input=$("<input type=\"text\" hidden='true' name=\"experiencesIds\" value="+inputId.val()+">");
+     $("#edit_experience").append($input);  
+     alert($("#edit_experience"));
+    }   
+	
+     t.remove();
+   //删除后更改编号
+ 
+   for(var i=parseInt(rowNum)+1;i<tempRow+1;i++){
+     $("#edit_experience #"+i+" td input").each(function(){
+    	 //alert("input的取得name值");
+    	 var test=$(this).attr("name");
+    	 //更换
+    	 var my=test.replace(/\d+/g, (i-2));
+    	 $(this).attr("name",my);
+    	 
+    	 //alert("更改hidden");
+     	 var alterinputId=$("#experience"+i).attr("id");
+    	 //更改id
+         if(typeof(alterinputId) !== 'undefined'){
+        	 $("#experience"+i).attr("id","experience"+(i-1));
+         }  
+    	//alert("---------");
+     });
+
+     //更改删除的值
+     //alert("删除"+rowNum+"行把删除值"+i+"__>"+(i-1));
+     var $index=$("#edit_experience").children("#"+i);
+     $index.children(" .operate").html("<a href='javascript:delRow(\""+(i-1)+"\")' class='del'>删除</a>");
+           //更改tr的id
+     $index.attr("id",(i-1));//将id设置成i-1 
+
+
+      
+      
+   }
+
+   
+}
+
+</script>
+</fieldset>
+
 
 		</div>
 

@@ -3,32 +3,46 @@ package com.zhbit.entity;
 
 import java.sql.Timestamp;
 
-/**
- * TFamilyinfo entity. @author MyEclipse Persistence Tools
- */
+import com.zhbit.annotation.Transform;
 
-public class Familyinfo implements java.io.Serializable {
 
-	// Fields
+/** 
+ * 项目名称：ElecRecord
+ * 类名称：Familyinfo 
+ * 类描述： 家庭信息实体类
+ * 创建人：谭柳
+ * 创建时间：2016年6月14日 下午1:47:38
+ * 修改人：TanLiu 
+ * 修改时间：2016年6月14日 下午1:47:38
+ * 修改备注： 
+ * @version 
+ */ 
+public class Familyinfo implements java.io.Serializable ,Cloneable{
+
 
 	private String id;
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;
+	@Transform(name="姓名")
 	private String stuName;
+	@Transform(name="")
 	private String relation;
+	@Transform(name="父亲姓名")
 	private String name;
+	@Transform(name="FQZZMM")
 	private String politicalStatus;
 	private String jobDuty;
+	@Transform(name="父亲单位电话")
 	private String telNo;
+	@Transform(name="父亲单位")
 	private String company;
 	private String companyAddress;
+	@Transform(name="父亲单位邮编")
 	private String postCode;
 	private Timestamp createTime;
 	private String creator;
 
-	// Constructors
-
-	/** default constructor */
 	public Familyinfo() {
 	}
 
@@ -172,4 +186,11 @@ public class Familyinfo implements java.io.Serializable {
 		this.creator = creator;
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
+	
 }

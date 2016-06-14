@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.zhbit.dao.BaseDao;
+import com.zhbit.entity.Familyinfo;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -127,6 +128,10 @@ public class BaseServicesImpl<T> implements BaseServices<T> {
 		}
 		return this.findObjectByFields(queryUtils);
 	}
+
+
+
+
 	
 	
 	

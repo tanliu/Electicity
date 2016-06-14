@@ -5,6 +5,8 @@ package com.zhbit.services.student;
 
 import java.util.List;
 
+import com.zhbit.entity.Familyinfo;
+import com.zhbit.entity.LearningExperience;
 import com.zhbit.entity.Student;
 import com.zhbit.services.BaseServices;
 
@@ -22,7 +24,7 @@ import com.zhbit.services.BaseServices;
 public interface StudentServices extends BaseServices<Student> {
    public static final String SERVICES_NAME="com.zhbit.services.student.StudentServicesImpl";
 
-    void saveStudent(String createor,Student student);
+    void saveStudent(String createor,Student student, List<Familyinfo> family, List<LearningExperience> experiences);
 
 	/**
 	 * 方法描述:保存导入的数据
@@ -48,5 +50,25 @@ public interface StudentServices extends BaseServices<Student> {
 	 * @return
 	 */
 	public Student getStudentByName(String stuName);
+
+	/**
+	 * 方法描述:更新学生信息
+	 * @param student
+	 * @param creator
+	 * @param family
+	 * @param experiences
+	 * @param familyIds
+	 * @param experiencesIds
+	 */
+	void updateStudent(Student student,String creator, List<Familyinfo> family, List<LearningExperience> experiences, String[] familyIds, String[] experiencesIds);
+
+	/**
+	 * 方法描述:保存数据从excel导入的家庭情况信息
+	 * @param students
+	 * @param creator
+	 * @param fatherinfos
+	 * @param motherinfos
+	 */
+	void saveFamilyFromExcel(List<Object> students, String creator, List<Object> fatherinfos, List<Object> motherinfos);
 	
 }

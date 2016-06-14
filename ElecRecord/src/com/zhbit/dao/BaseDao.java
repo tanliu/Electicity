@@ -65,4 +65,23 @@ public interface BaseDao<T> {
 	 * @return
 	 */
 	public List<T> findObjectByFields(QueryUtils queryUtils);
+	
+    /**
+     * 方法描述:保存或者更新一个实体
+     * @param entity
+     */
+    public void saveOrUpdate(T entity);
+    
+    /**
+     * 方法描述:保存或者更新一个集合
+     * @param entity
+     */
+    public void saveOrUpdate(List<T> entitys);
+    
+    /**
+     * 方法描述:保存或者更新一个集合
+     * @param entity
+     */
+    public void saveAll(List<T> entitys);
+    
 }

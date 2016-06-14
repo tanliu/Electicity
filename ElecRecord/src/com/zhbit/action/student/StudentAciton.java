@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import javax.annotation.Resource;
 
 import org.apache.catalina.connector.Request;
+import org.apache.commons.collections.TransformerUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -22,15 +23,19 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.Familyinfo;
+import com.zhbit.entity.LearningExperience;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.User;
+import com.zhbit.entity.excel.FamilyExcel;
 import com.zhbit.entity.excel.StuExcel;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.student.FamilyServices;
+import com.zhbit.services.student.LearnExperienceServices;
 import com.zhbit.services.student.StudentServices;
 import com.zhbit.transform.CommonTransform;
 import com.zhbit.util.AjaxReturnUtils;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.EntityUtils;
 import com.zhbit.util.QueryUtils;
 import com.zhbit.util.RequestUtils;
 
@@ -51,6 +56,9 @@ public class StudentAciton extends BaseAndExcelAction {
 	
 	Student student;
 	List<Familyinfo> family;
+	List<LearningExperience> experiences;
+	String[] familyIds;
+	String[] experiencesIds;
 	
 	String queryNO;//学号
 	String qeuryName;//姓名
@@ -59,9 +67,39 @@ public class StudentAciton extends BaseAndExcelAction {
 	StudentServices studentServices;
 	@Resource(name=FamilyServices.SERVICES_NAME)
 	FamilyServices familyServices;
+	@Resource(name=LearnExperienceServices.SERVICES_NAME)
+	LearnExperienceServices experienceServices;
 
 
 
+	public String importFamilyExcel() {
+		try {
+			ExcelConfig excelConfig=new ExcelConfig(FamilyExcel.class, "学生家庭表",1, new FileInputStream(excel),excelFileName);
+			List<Object> objects=excelServicesMake.parseExcel(excelConfig);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(objects);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
+			}
+			//数据的转换
+			List<Object> students = excelServicesMake.toDBEnity(objects,Student.class);
+			List<Object> fatherinfos=excelServicesMake.toDBEnity(objects,Familyinfo.class);
+			List<Object> motherinfos=EntityUtils.getMotherInfos(objects);
+			String creator=RequestUtils.getUserName(request);
+			studentServices.saveFamilyFromExcel(students,creator,fatherinfos,motherinfos);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "excelSuccess";
+	}
 	@Override
 	public String importExcel() {
 		try {
@@ -150,7 +188,7 @@ public class StudentAciton extends BaseAndExcelAction {
 		if(student!=null&&student.getStudentNo()!=null){
 			User user=(User) request.getSession().getAttribute(User.SESSION_NAME);
 			String creator=user.getEmployName();			
-			studentServices.saveStudent(creator,student);	
+			studentServices.saveStudent(creator,student,family,experiences);	
 
 		}
 		return "list";
@@ -173,7 +211,14 @@ public class StudentAciton extends BaseAndExcelAction {
 	@Override
 	public String editorUI() {
 		if(student!=null&&!StringUtils.isBlank(student.getStuId())){
-			student=studentServices.findObjectById(student.getStuId());			
+			student=studentServices.findObjectById(student.getStuId());	
+			if(student!=null){
+				//查找到家庭信息
+				family=familyServices.findFamilyByStuId(student.getStuId());
+				//查找到学习情况
+				experiences=experienceServices.findExperiencByStuId(student.getStuId());
+				
+			}
 		}
 		return "editorUI";
 	}
@@ -184,9 +229,9 @@ public class StudentAciton extends BaseAndExcelAction {
 	@Override
 	public String editor() {
 		if(student!=null){
-			studentServices.update(student);
+			String creator=RequestUtils.getUserName(request);
+			studentServices.updateStudent(student,creator,family,experiences,familyIds,experiencesIds);
 		}
-		// TODO Auto-generated method stub
 		return "list";
 	}
 
@@ -239,6 +284,36 @@ public class StudentAciton extends BaseAndExcelAction {
 	}
 
 
+	public List<LearningExperience> getExperiences() {
+		return experiences;
+	}
+
+
+	public void setExperiences(List<LearningExperience> experiences) {
+		this.experiences = experiences;
+	}
+
+
+	public String[] getFamilyIds() {
+		return familyIds;
+	}
+
+
+	public void setFamilyIds(String[] familyIds) {
+		this.familyIds = familyIds;
+	}
+
+
+	public String[] getExperiencesIds() {
+		return experiencesIds;
+	}
+
+
+	public void setExperiencesIds(String[] experiencesIds) {
+		this.experiencesIds = experiencesIds;
+	}
+
+   
 
 	
 }

@@ -21,7 +21,6 @@
 <style type="text/css">
 table tbody tr td{
 	 text-align: center;
-     border:  1px red solid;
 }
 table tbody tr{
 	 text-align: center;
@@ -175,7 +174,7 @@ table thead tr th{
 				<label>所获奖励：</label>
 				<textarea name="student.awards"></textarea>
 			</p>
-
+<!-- ---------------学生家庭情况---------------------- -->
 <fieldset style="width: 98%;">
 <legend>学生家庭情况</legend>
 <div class="table-operate ue-clear">
@@ -198,18 +197,6 @@ table thead tr th{
             </tr>
         </thead>
         <tbody id="edit_tbody" >
- 			<tr id="1">
-				<td ><input style="width: 70%;" type="text"  size="50" name="family[0].relation" /></td>
-				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].name" /></td>
-				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].politicalStatus" /></td>
-				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].jobDuty" /></td>
-				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].telNo" /></td>
-				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].company" /></td>
-				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].companyAddress" /></td>
-				<td ><input style="width: 80%;" type="text"  size="50" name="family[0].postCode" /></td>				
-				<td class="operate" align='center'><a
-					href="javascript:delTableRow(1);" class="del">删除</a></td>
-			</tr>
         </tbody>
     </table>
 </div>
@@ -252,6 +239,75 @@ function delTableRow(rowNum){
       $("#edit_tbody #"+i+" .operate").html("<a href='javascript:delTableRow(\""+(i-1)+"\")' class='del'>删除</a>");
             //更改tr的id
       $("#edit_tbody #"+i).attr("id",(i-1));//将id设置成i-1 
+      
+      
+   }
+   
+}
+
+</script>
+</fieldset>
+<!-- ---------------学生学历情况---------------------- -->
+<fieldset style="width: 98%;">
+<legend>学生学历情况</legend>
+<div class="table-operate ue-clear">
+	<a href="javascript:addExperience()"  class="add">添加</a>
+    
+</div>
+<div class="table-box" >
+	<table id="edit_table" align="center">
+    	<thead>
+        	<tr  align="center">
+            	<th  width="20%">学习期间</th>
+                <th  width="20%">学校名称</th>
+                <th  width="20%">担任职务</th>
+                <th  width="15%">证明人</th>
+                <th  width="5%">操作</th>
+            </tr>
+        </thead>
+        <tbody id="edit_experience" >
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+function addExperience(){
+    var tempRow=$("table #edit_experience tr").size();  //获取显示了多少
+    
+    
+    
+    var tr=$("<tr id=\""+(tempRow+1)+"\" ></tr>");
+    tr.html("<td ><input style=\"width: 70%;\" type=\"text\" class=\"noNull \"  size=\"50\" name=\"experiences["+tempRow+"].duration\"/></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"experiences["+tempRow+"].schoolName\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"experiences["+tempRow+"].duty\" /></td>"+
+	"<td ><input style=\"width: 80%;\" type=\"text\"  size=\"50\" name=\"experiences["+tempRow+"].witness\" /></td>"+
+	"<td class=\"operate\" align='center'><a href=\"javascript:delRow("+(tempRow+1)+");\" class=\"del\">删除</a></td>");                  
+
+    $("table #edit_experience").append(tr);
+
+}
+function delRow(rowNum){
+  
+   var tempRow=$("table #edit_experience tr").size();  //获取显示了多少
+  // alert(rowNum);
+   var t= $("#edit_experience").children("#"+rowNum);
+   t.remove();
+   //删除后更改编号
+ 
+   for(var i=parseInt(rowNum)+1;i<tempRow+1;i++){
+     $("#edit_experience #"+i+" td input").each(function(){
+    	 var test=$(this).attr("name");
+    	 //更换
+    	 var my=test.replace(/\d+/g, (i-2));
+    	 $(this).attr("name",my);
+    	//alert("---------");
+     });
+
+     //更改删除的值
+     //alert("删除"+rowNum+"行把删除值"+i+"__>"+(i-1));
+     var $index=$("#edit_experience").children("#"+i);
+     $index.children(" .operate").html("<a href='javascript:delRow(\""+(i-1)+"\")' class='del'>删除</a>");
+           //更改tr的id
+     $index.attr("id",(i-1));//将id设置成i-1 
       
       
    }

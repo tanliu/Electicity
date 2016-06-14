@@ -6,6 +6,9 @@ package com.zhbit.services;
 import java.io.Serializable;
 import java.util.List;
 
+import com.zhbit.entity.Familyinfo;
+import com.zhbit.entity.LearningExperience;
+import com.zhbit.entity.Student;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -28,6 +31,7 @@ public interface BaseServices<T> {
 	 */
 	public void save(T entity);
 	
+
 	/**
 	 * 方法描述:更新对象
 	 * @param entity
@@ -107,6 +111,8 @@ public interface BaseServices<T> {
 	 * @return
 	 */
 	public List<T> findAllObject(String proterty,String order);
+
+
 
 
 	
