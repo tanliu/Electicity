@@ -35,11 +35,11 @@ table thead tr th{
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
-<title>学生干部培训信息</title>
+<title>学生干部培训明细表</title>
 </head>
 
 <body>
-<div class="title"><h2>学生干部培训信息</h2></div>
+<div class="title"><h2>学生干部培训明细表</h2></div>
 <!-- 跳转页面时表单提交数据，换页显示数据 -->
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">

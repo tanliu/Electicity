@@ -5,9 +5,9 @@
 <head>
 <script type="text/javascript" >
 <!-- action之间的跳转 ，用于换页-->
-var queryAction="${basePath}couscholarship/couscholarship_listUI.action";
-var deleteAction="${basePath}couscholarship/couscholarship_delete.action";
-var importUrl="${basePath}couscholarship/couscholarship_importExcel.action";
+var queryAction="${basePath}grantscholarship/grantscholarship_listUI.action";
+var deleteAction="${basePath}grantscholarship/grantscholarship_delete.action";
+var importUrl="${basePath}grantscholarship/grantscholarship_importExcel.action";
 </script>
 <meta charset="utf-8">
 <link rel="stylesheet" href="${basePath}css/base.css" />
@@ -35,36 +35,28 @@ table thead tr th{
 <script type="text/javascript" src="${basePath}js/jquery.pagination.js"></script>
 <script type="text/javascript" src="${basePath}js/core.js"></script>
 <script type="text/javascript" src="${basePath}js/jquery.dialog.js"></script>
-<title>光大、国家奖学金信息管理</title>
+<title>助学金信息管理</title>
 </head>
 
 <body>
-<div class="title"><h2>光大、国家奖学金信息管理</h2></div>
+<div class="title"><h2>助学金信息管理</h2></div>
 <!-- 跳转页面时表单提交数据，换页显示数据 -->
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
         <div class="conditions staff ue-clear" style="width:20%">
             <label>姓名：</label>
-        <input type="text" name="countryScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
+        <input type="text" name="grantScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
         </div>
         
-       <div class="conditions name ue-clear" style="width:20%">
-         <label>获奖名称：</label>
-        <input  hidden="hidden"  value="${querycon.rewardName}" name="countryScholarship.rewardName" style="width:200px;height:30px">
-        <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>${querycon.rewardName}</span><i class="icon"></i></div>
-            <ul class="select-list" >
-                <li id="">请选择</li>
-            	<li id="国家奖学金">国家奖学金</li>
-                <li id="光大奖学金">光大奖学金</li>
-            </ul>
+      <div class="conditions staff ue-clear" style="width:20%">
+            <label>学号：</label>
+        <input type="text" name="grantScholarship.studentNo" placeholder="请输入姓名进行查询" value="${querycon.studentNo}" style="width:200px;height:30px"/>
         </div>
-  </div>
   
   <div class="conditions name ue-clear" style="width:20%">
          <label>学院名称：</label>
-        <input  hidden="hidden"  value="${querycon.orgName}" name="countryScholarship.orgName" style="width:200px;height:30px">
+        <input  hidden="hidden"  value="${querycon.orgName}" name="grantScholarship.orgName" style="width:200px;height:30px">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span>${querycon.orgName}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -102,24 +94,30 @@ table thead tr th{
         	<tr>
 			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
             	 <th width="10%" >姓名</th>
-            	 <th width="20%" class="num">学号</th>
-				<th width="20%" >学院</th>
-				<th width="15%" align="center">获奖名称</th>
-				<th width="30%" >备注</th>
+            	 <th width="10%" class="num">学号</th>
+            	 <th width="5%">性别</th>
+            	 <th width="10%">民族</th>
+				<th width="15%" >学院</th>
+				<th width="10%">入学年月</th>
+				 <th width="10%">经济困难程度</th>
+				<th width="20%" >备注</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="countryScholarship">
+           <s:iterator value="pageUtils.items" var="grantScholarship">
         	<tr>
-			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#countryScholarship.id'/>'/></td>
-              	<td ><s:property value="#countryScholarship.stuName"/></td>
-              	<td><s:property value="#countryScholarship.studentNo"/></td>
-				<td><s:property value="#countryScholarship.orgName"/></td>
-				<td><s:property value="#countryScholarship.rewardName"/></td>
-				<td><s:property value="#countryScholarship.memo"/></td>
+			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#grantScholarship.id'/>'/></td>
+              	<td ><s:property value="#grantScholarship.stuName"/></td>
+              	<td><s:property value="#grantScholarship.studentNo"/></td>
+              	<td><s:property value="#grantScholarship.sex"/></td>
+              	<td><s:property value="#grantScholarship.nation"/></td>
+				<td><s:property value="#grantScholarship.orgName"/></td>
+				<td><s:property value="#grantScholarship.acceptanceDate"/></td>
+				<td><s:property value="#grantScholarship.familyEconomic"/></td>
+				<td><s:property value="#grantScholarship.memo"/></td>
 				<!-- 跳转到editor对应的action。并将对应的查询条件数据传到action -->
-				<td><a href="javascript:editor('<s:property value='#countryScholarship.id'/>')"><img src="../images/edtico.png"/></a></td>
+				<td><a href="javascript:editor('<s:property value='#grantScholarship.id'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>        
         </tbody>
@@ -154,7 +152,7 @@ function doSelectAll(){
         //双击得到当前行数据的id
        	 var $id=$(this).children("td").children("input").val();
        	//跳转到详情页
-       	window.open("${basePath}couscholarship/couscholarship_detailUI.action?countryScholarship.id="+$id);
+       	window.open("${basePath}grantscholarship/grantscholarship_detailUI.action?grantScholarship.id="+$id);
         });
         
         
@@ -169,14 +167,14 @@ function doSelectAll(){
 	})
 	//向couscholarship_editorUI.action提交信息
 function editor(id){
-		var url="${basePath}couscholarship/couscholarship_editorUI.action?countryScholarship.id="+id;
+		var url="${basePath}grantscholarship/grantscholarship_editorUI.action?grantScholarship.id="+id;
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
 
 //向couscholarship_addUI.action提交信息
 function add(){
-		var url="${basePath}couscholarship/couscholarship_addUI.action";
+		var url="${basePath}grantscholarship/grantscholarship_addUI.action";
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
