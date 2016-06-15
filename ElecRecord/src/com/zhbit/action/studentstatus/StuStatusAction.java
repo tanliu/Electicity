@@ -91,19 +91,27 @@ public class StuStatusAction extends BaseAndExcelAction {
 			for(Object object:stustausEntitys){
 				StuStatus stuStatus=(StuStatus) object;
 				
-				//设定创建时间为当前时间，学生ID暂时设定为"9528"
-				stuStatus.setStuId("9528");
-				Timestamp createtime = new Timestamp(System.currentTimeMillis());
-				stuStatus.setCreateTime(createtime);
-				//去除可能存在的空格
-				stuStatusServices.trimStustatus(stuStatus);
-				
-				//将此对象添加到stuStatuss集合中
-				stustauss.add(stuStatus);
-								
+				String[] fields={"transactionNo=?"};
+				String[] params={stuStatus.getTransactionNo()};
+				if(stuStatusServices.findObjectByFields(fields,params)==null){//当数据库中不存在此记录时，才将其加入要放入数据库的集合
+					//设定创建时间为当前时间，学生ID暂时设定为"9528"
+					stuStatus.setStuId("9528");
+					Timestamp createtime = new Timestamp(System.currentTimeMillis());
+					stuStatus.setCreateTime(createtime);
+					//去除可能存在的空格
+					stuStatusServices.trimStustatus(stuStatus);
+					
+					//将此对象添加到stuStatuss集合中
+					stustauss.add(stuStatus);
+				}
+											
 			}
-			//批量保存学籍异动信息
-			stuStatusServices.saveStatuss(stustauss);
+			
+			if(stustauss.size()>=1){
+				//批量保存学籍异动信息
+				stuStatusServices.saveStatuss(stustauss);
+			}
+			
 			
 			
 		} catch (FileNotFoundException e) {

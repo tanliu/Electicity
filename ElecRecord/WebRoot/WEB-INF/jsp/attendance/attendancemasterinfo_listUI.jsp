@@ -1,3 +1,4 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
 <%@ taglib prefix="a" uri="http://openhome.cc/jstl/fake"%>
@@ -9,6 +10,7 @@
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
+<link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
 
 <style type="text/css">
 /*单元格样式*/
@@ -39,12 +41,22 @@ function doSelectAll(){
 } 
 
 
-//单击的JS
+//单击及双击的JS
 $(function(){
     
    $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
    $("tr:even").addClass("even"); /* 偶数行添加样式*/
    
+    //双击跳转到详情页面
+    $('tbody>tr').dblclick(function() {
+    
+    	 var $id=$(this).children("td").children("input").val();
+    	
+    	window.open("${basePath}tutor/tutor_detailUI.action?tutor.id="+$id);
+
+     }  
+        
+    );
     
     //点击改变选中样式
     $('tbody>tr').click(function() {
@@ -55,66 +67,63 @@ $(function(){
     });
 })
 
-//以下两条路径用于访问Action
-var queryAction="${basePath}guilist/guilist_listUI.action";
-var deleteAction="${basePath}guilist/guilist_delete.action";
-var importUrl="${basePath}guilist/guilist_importExcel.action";
 
-//向guilist_editorUI.action提交信息
-function editor(id){
-		var url="${basePath}guilist/guilist_editorUI.action?guiList.id="+id;
-		$("#queryForm").attr("action",url);
- 		$("#queryForm").submit();  
-} 
+//以下路径用于访问Action
+var queryAction="${basePath}attendancemaster/attendancemaster_listUI.action";
+var deleteAction="${basePath}attendancemaster/attendancemaster_delete.action";
+var importUrl="${basePath}attendancemaster/attendancemaster_importExcel.action";
 
-//向guilist_addUI.action提交信息
-function add(){
-		var url="${basePath}guilist/guilist_addUI.action";
-		$("#queryForm").attr("action",url);
- 	$("#queryForm").submit();  
-} 
-
-//向guilist_listUI.action提交信息
+//向stustatus_listUI.action提交信息
 function query(){
-	  	$("#pageNo").val(1);
+	    $("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
 	
+//向stustatus_addUI.action提交信息
+function add(){
+		var url="${basePath}attendancemaster/attendancemaster_addUI.action";
+		$("#queryForm").attr("action",url);
+ 	$("#queryForm").submit();  
+} 
+
+//向stustatus_editorUI.action提交信息
+function editor(id){
+		var url="${basePath}attendancemaster/attendancemaster_editorUI.action?attendanceMaster.id="+id;
+		$("#queryForm").attr("action",url);
+ 		$("#queryForm").submit();  
+} 
+
 
  </script>
-<title>导学名单</title>
+<title>考勤课程信息</title>
 </head>
 
 <body>
-<div class="title"><h2>导学名单</h2></div>
-<form id="queryForm" action="${basePath}guilist/guilist_listUI.action" method="post">
+<div class="title"><h2>考勤课程信息</h2></div>
+<form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" >
-                                                               
-     
+	<div class="query-conditions ue-clear" style="width:100%">                  
+	                                          
+       <div class="conditions staff ue-clear" style="width:25%">
+            <label>课程名称：</label>
+            <input type="text" placeholder="请输入课程名称进行查询" name="attendanceMatser.coursename" value="${queryCon.coursename}" style="width:233px;height:30px" />
+        </div>
         
-       <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;" >
-            <label style="margin-left:3px;width:50px">学号：</label>
-            <input   type="text" placeholder="请输入学生学号进行查询" name="guiList.studentNo" value="${queryCon.studentNo}" style="width:200px;height:30px" />
+         <div class="conditions staff ue-clear" style="width:25%">
+            <label>教师姓名：</label>
+            <input type="text" placeholder="请输入教师姓名进行查询" name="attendanceMatser.employName" value="${queryCon.employName}" style="width:233px;height:30px"/>
             
         </div>
         
-         <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;">
-            <label style="margin-right:3px;width:60px">学生姓名：</label>
-            <input  type="text" placeholder="请输入学生姓名进行查询" name="guiList.stuName" value="${queryCon.stuName}" style="width:200px;height:30px"/>
+            
+         <div class="conditions staff ue-clear" >
+            <label>上课地点：</label>
+            <input type="text" placeholder="请输入上课地点进行查询" name="attendanceMatser.address" value="${queryCon.address}" style="width:233px;height:30px"/>
             
         </div>
-        
-          <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;">
-            <label style="margin-right:3px;width:60px">导师姓名：</label>
-            <input  type="text" placeholder="请输入导师姓名进行查询" name="guiList.teacherName" value="${queryCon.teacherName}" style="width:200px;height:30px"/>
-            
-        </div>
-        
-        
-        
+       
        
         
     </div>
@@ -125,7 +134,7 @@ function query(){
 </div>
 
 <div class="table-operate ue-clear">
-  <a href="javascript:add()" class="add">添加</a>
+     <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
     <a href="javascript:del()" class="del confirm save">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
 </div>
@@ -135,32 +144,30 @@ function query(){
     	<thead>
         	<tr>
 			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
-            	<th width="25%" class="num">学号</th>
-                <th width="25%" >专业班级</th>
-				<th width="20%" align="center">姓名</th>
-				<th width="20%" >导师姓名</th>
+            	<th width="20%" class="num">选课课号</th>
+                <th width="15%" >课程名称</th>
+				<th width="20%" align="center">教师工号</th>
+				<th width="15%" >教师姓名</th>
+				<th width="15%" align="center">上课地点</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="guilist">
+           <s:iterator value="pageUtils.items" var="attendanceMatser">
         	<tr>
-        	
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guilist.id'/>' /></td>
-			
-            	<td><s:property value="#guilist.studentNo"/></td>
-            	<td><s:property value="#guilist.className"/></td>
-				<td ><s:property value="#guilist.stuName"/></td>		
-				<td><s:property value="#guilist.teacherName"/></td>
-				<td><a href="javascript:editor('<s:property value='#guilist.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceMatser.id'/>'/></td>
+            	<td><s:property value="#attendanceMatser.selectedcourseno"/></td>
+				<td ><s:property value="#attendanceMatser.coursename"/></td>
+				<td><s:property value="#attendanceMatser.employNo"/></td>
+				<td><s:property value="#attendanceMatser.employName"/></td>
+				<td><s:property value="#attendanceMatser.address"/></td>
+				<td><a href="javascript:editor('<s:property value='#attendanceMatser.id'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>          
         </tbody>
     </table>
     
 </div>
-
-
 <jsp:include page="/common/pagination.jsp"></jsp:include>
 </form>
 

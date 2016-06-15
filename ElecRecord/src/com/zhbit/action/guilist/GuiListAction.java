@@ -92,6 +92,9 @@ public class GuiListAction extends BaseAndExcelAction {
 					guiList.setAcademicYear("2013-2014");
 					guiList.setTerm("1");
 					
+					//去除可能存在的空格
+					guiListServices.trimGuiList(guiList);
+		
 					//将此对象放入guiLists集合中
 					guiLists.add(guiList);
 				}

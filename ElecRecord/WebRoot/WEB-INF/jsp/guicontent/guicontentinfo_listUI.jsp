@@ -91,12 +91,7 @@ function query(){
 	 	$("#queryForm").submit(); 
 	}
 	
-//向guiContent_delUI.action提交信息
-function del(){
-		var url="${basePath}guicontent/guicontent_delete.action";
-		$("#queryForm").attr("action",url);
- 		$("#queryForm").submit();  
-} 
+
  </script>
 <title>导学信息</title>
 </head>
@@ -141,7 +136,7 @@ function del(){
 
 <div class="table-operate ue-clear">
   <a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:" class="del confirm save">删除</a>
+    <a href="javascript:del()" class="del confirm save">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
 </div>
 
@@ -187,4 +182,18 @@ function del(){
 <script type="text/javascript" src="${basePath}js/jquery-form.js"></script>
 <jsp:include page="/common/inputdialog.jsp"></jsp:include>
 
+<script type="text/javascript">
+
+function del(){
+	var selectedRows=document.getElementsByName("selectedRow");
+	
+	for(i=0;i<selectedRows.length;i++){
+		if(selectedRows[i].checked){
+			$('.delDialog').Dialog('open');
+		}
+	}
+	
+}
+
+</script>
 </html>
