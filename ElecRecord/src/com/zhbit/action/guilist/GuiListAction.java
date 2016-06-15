@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,15 +17,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
-import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.GuiList;
-import com.zhbit.entity.Student;
-import com.zhbit.entity.excel.GuiContentEntity;
 import com.zhbit.entity.excel.GuiListEntity;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.guilist.GuiListServices;
-import com.zhbit.transform.GuiContentTransform;
-import com.zhbit.transform.GuiListTransform;
 import com.zhbit.util.DecodeUtils;
 
 
@@ -76,14 +72,15 @@ public class GuiListAction extends BaseAndExcelAction {
 				return "excelError";
 			}
 			//数据的转换
-			List<Object> guiLists = excelServicesMake.toDBEnity(objects,GuiList.class);
+			List<Object> guiListEntitys = excelServicesMake.toDBEnity(objects,GuiList.class);
+			List<GuiList> guiLists=new ArrayList<GuiList>();
 					
-			for(Object object:guiLists){
+			/*for(Object object:guiListEntitys){
 				GuiList guiList=(GuiList) object;
 				System.out.println("姓名是："+guiList.getStuName());
-			}
+			}*/
 		//将集合中的对象保存至数据库
-			for(Object object:guiLists){
+			for(Object object:guiListEntitys){
 				
 				GuiList guiList=(GuiList) object;
 				if(!StringUtils.isEmpty(guiList.getStudentNo())){	
@@ -94,10 +91,15 @@ public class GuiListAction extends BaseAndExcelAction {
 					//设定学年为2013-2014学年，学期为第一学期
 					guiList.setAcademicYear("2013-2014");
 					guiList.setTerm("1");
-					guiListServices.save(guiList);
+					
+					//将此对象放入guiLists集合中
+					guiLists.add(guiList);
 				}
 				
 			}
+			
+			//批量存储导学名单信息
+			guiListServices.saveGuiLists(guiLists);
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

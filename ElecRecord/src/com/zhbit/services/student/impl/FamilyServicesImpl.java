@@ -3,6 +3,8 @@
  */
 package com.zhbit.services.student.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -32,4 +34,18 @@ public class FamilyServicesImpl extends BaseServicesImpl<Familyinfo> implements 
 		super.setBaseDao(familyDao);
 		this.familyDao = familyDao;
 	}
+	@Override
+	public List<Familyinfo> findFamilyByStuId(String stuId) {
+		String[] fields={"stuId = ?"};
+		String[] params={stuId};
+		
+		return this.findObjectByFields(fields, params);
+	}
+	@Override
+	public void saveOrUpdate(List<Familyinfo> familyinfos) {
+
+		familyDao.saveOrUpdate(familyinfos);
+	}
+
+
 }

@@ -5,13 +5,11 @@ import org.zhbit.excel.annotation.Lang;
 import org.zhbit.excel.bean.BaseExcelVo;
 
 @ExcelVoConfig
-public class SubjectContestExcel extends BaseExcelVo{
+public class SubjectContestExcel extends BaseExcelBean implements Cloneable{
 
-		@Lang(value="序号")
-		private String sequence;
-		@Lang(value = "学号")
+		@Lang(value = "学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 		private String studentNo;
-		@Lang(value = "获奖者姓名")
+		@Lang(value = "获奖者姓名",isNull=Lang.TYPE_NONULL)
 		private String stuName;
 		@Lang(value = "奖励名称")
 		private String rewardName;
@@ -25,11 +23,16 @@ public class SubjectContestExcel extends BaseExcelVo{
 		private String rewardProject;
 		@Lang(value = "指导老师")
 		private String guidTeacher;
-		@Lang(value = "获奖时间")
+		@Lang(value = "获奖时间",date=Lang.TYPE_DATE)
 		private String rewardDate;
 		@Lang(value = "备注")
 		private String memo;
 		
+		
+		@Override
+		protected Object clone() throws CloneNotSupportedException {
+			return super.clone();
+		}
 
 		// Constructors
 
@@ -39,11 +42,10 @@ public class SubjectContestExcel extends BaseExcelVo{
 
 
 		/** full constructor */
-		public SubjectContestExcel(String sequence,String stuName,
+		public SubjectContestExcel(String stuName,
 				String rewardName,String rewardLevel, String rewardGrade, 
 				String grantUnits,String rewardProject, String guidTeacher, 
 				String rewardDate,String memo) {
-			this.sequence = sequence;
 			this.stuName = stuName;
 			this.rewardName = rewardName;
 			this.rewardLevel = rewardLevel;
@@ -55,16 +57,8 @@ public class SubjectContestExcel extends BaseExcelVo{
 			this.memo = memo;
 		}
 		
-	@Override
-	public int getHashVal() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 
-	public String getSequence() {
-		return sequence;
-	}
 
 
 	public String getStudentNo() {
@@ -74,11 +68,6 @@ public class SubjectContestExcel extends BaseExcelVo{
 
 	public void setStudentNo(String studentNo) {
 		this.studentNo = studentNo;
-	}
-
-
-	public void setSequence(String sequence) {
-		this.sequence = sequence;
 	}
 
 

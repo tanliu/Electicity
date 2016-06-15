@@ -1,6 +1,8 @@
 package com.zhbit.services.studentdutys.impl;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,10 +16,12 @@ import com.zhbit.dao.polstatus.PolstatusDao;
 import com.zhbit.dao.studentdutys.StudentDutysDao;
 import com.zhbit.dao.stuentstatus.StuStatusDao;
 import com.zhbit.dao.system.UserDao;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.StudentDutys;
 import com.zhbit.entity.Subjectcontest;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.studentdutys.StudentDutysServices;
 import com.zhbit.services.subjectcontest.SubjectContestServices;
 import com.zhbit.services.system.UserServices;
@@ -39,6 +43,9 @@ import com.zhbit.util.QueryUtils;
 @Service(value=StudentDutysServices.SERVER_NAME)
 public class StudentDutysServicesImpl extends BaseServicesImpl<StudentDutys> 
 	implements StudentDutysServices {
+	
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	
 	StudentDutysDao studentDutysDao;
 	@Resource(name=StudentDutysDao.DAO_NAME)
@@ -90,7 +97,33 @@ public class StudentDutysServicesImpl extends BaseServicesImpl<StudentDutys>
 		return studentDutysDao.queryAllList();
 	}
 
+	@Override
+	public void saveFromExcel(List<Object> studentdutys, String creator) {
+		if(studentdutys!=null&&studentdutys.size()>0){
+			//对每一条数据进行校验和设置相应的值
+			for (Object object : studentdutys) {
+				StudentDutys studentduty=(StudentDutys) object;
+				//判断是否存在这个学生
+				Boolean flag=this.hasStudent(studentduty.getStudentNo());
+				if(!flag){ //如果系统中没有这个学生的信息
+					//设置学生id（到数据库中找）
+					studentduty.setStuId(studentServices.getStudentByNo(studentduty.getStudentNo()).getStuId());
+					this.save(studentduty);					
+				}
+			}
+		}
+		
+	}
 
+	public Boolean hasStudent(String studentNo) {
+		String[] fields={"studentNo=?"};
+		String[] params={studentNo};
+		List<StudentDutys> studentDutys = findObjectByFields(fields, params);
+		if(studentDutys==null||studentDutys.size()==0){
+			return false;
+		}
+		return true;
+	}
 	
 
 	

@@ -25,5 +25,11 @@ import com.zhbit.util.QueryUtils;
 @Repository(value=TutorDao.DAO_NAME)
 public class TutorDaoImpl extends BaseDaoImpl<Tutor> implements TutorDao {
 
+	@Override
+	public void saveTutors(List<Tutor> tutors) {
+		// TODO Auto-generated method stub
+		getHibernateTemplate().saveOrUpdateAll(tutors);
+	}
+
 	
 }

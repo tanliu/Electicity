@@ -7,7 +7,10 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -24,11 +27,14 @@ import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.Postinfo;
+import com.zhbit.entity.StudentDutys;
+import com.zhbit.entity.Subjectcontest;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.User;
 import com.zhbit.entity.excel.PostinfoExcel;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.postinfo.PostInfoServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.system.OrganizeServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.transform.BaseTransfrom;
@@ -38,6 +44,7 @@ import com.zhbit.util.AjaxReturnUtils;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.EncryptUtils;
 import com.zhbit.util.QueryUtils;
+import com.zhbit.util.RequestUtils;
 
 /**
  * 项目名称：ElecRecord 
@@ -146,7 +153,9 @@ public class PostInfoAction extends BaseAndExcelAction {
 	*/
 	@Override
 	public String delete() {
-		postInfoServices.deleteObjectByIds(selectedRow);
+		if(selectedRow!=null&&selectedRow.length>0){
+			postInfoServices.deleteObjectByIds(selectedRow);
+		}
 		return "delete";
 	}
 
@@ -232,23 +241,41 @@ public class PostInfoAction extends BaseAndExcelAction {
 			 * arg04:上传文件的输入流
 			 * arg05:文件名
 			 */
-			System.out.println("我在这里，看见了吗？？？？？？");
-			
+			System.out.println("我我我我哦我");
 			ExcelConfig config=new ExcelConfig(PostinfoExcel.class, "sheet1", 1, new FileInputStream(excel),excelFileName);
-			List<Object> lists=excelServices.parseExcel(config);
-			System.out.println("我有"+lists.size()+"行");
+			List<Object> lists=excelServicesMake.parseExcel(config);
 			
-			BaseTransfrom postInfoTransform=new PostInfoTransfrom();
-			List<Object> list=postInfoTransform.toDBEntity(lists);
-			for (int i=0;i<list.size();i++) {
-				Postinfo pi=(Postinfo)list.get(i);
-				postInfoServices.save(pi);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(lists);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
 			}
+			
+			//数据的转换
+			List<Object> postinfo = excelServicesMake.toDBEnity(lists,Postinfo.class);
+			
+			String creator=RequestUtils.getUserName(request);
+			postInfoServices.saveFromExcel(postinfo,creator);
+			
+//			
+//			BaseTransfrom postInfoTransform=new PostInfoTransfrom();
+//			List<Object> list=postInfoTransform.toDBEntity(lists);
+//			for (int i=0;i<list.size();i++) {
+//				Postinfo pi=(Postinfo)list.get(i);
+//				postInfoServices.save(pi);
+//			}
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return "importExcel";
+		return "excelSuccess";
 		
 	}
 

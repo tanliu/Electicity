@@ -4,7 +4,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -12,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.Tutor;
 import com.zhbit.entity.excel.StuStaEntity;
@@ -54,28 +59,56 @@ public class TutorAction extends BaseAndExcelAction {
 		try {
 			config = new ExcelConfig(TutorEntity.class, "Sheet1", 1, new FileInputStream(excel),excelFileName);
 			
-			List<Object> lists=excelServices.parseExcel(config);
+			List<Object> objects=excelServicesMake.parseExcel(config);
 			
-			//将StuStaEntity的集合转换成StuStatus的集合
-			List<Object> tutors=new TutorTransform().toDBEntity(lists);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(objects);
+			
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				
+				//出错
+				return "excelError";
+			}
+			//数据的转换
+			List<Object> tutorEntitys = excelServicesMake.toDBEnity(objects,Tutor.class);
+			
+			List<Tutor> tutors=new ArrayList<Tutor>();
 			
 			
-			for(Object object:tutors){
+			for(Object object:tutorEntitys){
 				Tutor tutor=(Tutor) object;
 				System.out.println("姓名是："+tutor.getStuName());
 			}
 		//将集合中的对象保存至数据库
-			for(Object object:tutors){
+			for(Object object:tutorEntitys){
 				Tutor tutor=(Tutor) object;
-				tutorServices.save(tutor);
+				
+				//设定创建时间为当前时间，学生ID暂时设定为"9528"
+				tutor.setStuId("9528");
+				Timestamp createtime = new Timestamp(System.currentTimeMillis());
+				tutor.setCreateTime(createtime);
+				
+				//将此对象放入guiContents集合中
+				tutors.add(tutor);
+				
 			}
+			
+			//批量插入辅导信息
+			tutorServices.saveTutors(tutors);
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return "importExcel";
+		return "excelSuccess";
 	}
 
 	@Override

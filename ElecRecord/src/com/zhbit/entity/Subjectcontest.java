@@ -2,31 +2,49 @@ package com.zhbit.entity;
 
 import java.sql.Timestamp;
 
+import com.zhbit.annotation.Transform;
+
 /**
  * TSubjectcontest entity. @author MyEclipse Persistence Tools
  */
 
-public class Subjectcontest implements java.io.Serializable {
+public class Subjectcontest implements java.io.Serializable,Cloneable {
 
 	// Fields
 
 	private String id;
 	private String stuId;
+	@Transform(name="学号")
 	private String studentNo;
+	@Transform(name="获奖者姓名")
 	private String stuName;
 	private String academicYear;
 	private String term;
+	@Transform(name="奖励名称")
 	private String rewardName;
+	@Transform(name="获奖级别")
 	private String rewardLevel;
+	@Transform(name="获奖等级")
 	private String rewardGrade;
+	@Transform(name="授予单位")
 	private String grantUnits;
+	@Transform(name="获奖项目")
 	private String rewardProject;
+	@Transform(name="指导老师")
 	private String guidTeacher;
+	@Transform(name="获奖时间")
 	private Timestamp rewardDate;
+	@Transform(name="备注")
 	private String memo;
 	private Timestamp createTime;
 	private String creator;
 
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 	// Constructors
 
 	/** default constructor */

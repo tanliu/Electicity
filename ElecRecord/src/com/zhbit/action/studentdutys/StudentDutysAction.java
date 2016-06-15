@@ -7,7 +7,10 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -19,12 +22,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.mysql.fabric.xmlrpc.base.Data;
+import com.zhbit.entity.excel.PostinfoExcel;
 import com.zhbit.entity.excel.StudentDutysExcel;
 import com.zhbit.entity.excel.SubjectContestExcel;
 import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.Organization;
+import com.zhbit.entity.Postinfo;
 import com.zhbit.entity.StudentDutys;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.User;
@@ -43,6 +48,7 @@ import com.zhbit.util.AjaxReturnUtils;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.EncryptUtils;
 import com.zhbit.util.QueryUtils;
+import com.zhbit.util.RequestUtils;
 /**
  * 项目名称：ElecRecord
  * 类名称：SubjectContestAction 
@@ -164,9 +170,10 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	*/
 	@Override
 	public String delete() {
-		System.out.println("选中size="+selectedRow.length);
-			System.out.println("选中ID="+selectedRow.toString());
+		if(selectedRow!=null&&selectedRow.length>0){
 			studentDutysServices.deleteObjectByIds(selectedRow);
+		}
+			
 		return "delete";
 	}
 
@@ -271,27 +278,40 @@ public class StudentDutysAction extends BaseAndExcelAction {
 			 * arg04:上传文件的输入流
 			 * arg05:文件名
 			 */
-			System.out.println("我在这里，看见了吗？？？？？？");
+			ExcelConfig config=new ExcelConfig(StudentDutysExcel.class, "sheet1", 1, new FileInputStream(excel),excelFileName);
+			List<Object> lists=excelServicesMake.parseExcel(config);
 			
-			ExcelConfig config=new ExcelConfig(StudentDutysExcel.class, "sheet1", 3, new FileInputStream(excel),excelFileName);
-			List<Object> lists=excelServices.parseExcel(config);
-			System.out.println("我有"+lists.size()+"行");
-			for(Object object:lists){
-				StudentDutysExcel studentDutysExcel=(StudentDutysExcel)object;
-				System.out.println("grade="+studentDutysExcel.getGrade());
-				System.out.println("College="+studentDutysExcel.getCollege());
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(lists);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
 			}
-			BaseTransfrom studentDutysTransfrom=new StudentDutysTransfrom();
-			List<Object> list=studentDutysTransfrom.toDBEntity(lists);
-			for (int i=0;i<list.size();i++) {
-				StudentDutys sd=(StudentDutys)list.get(i);
-				studentDutysServices.save(sd);
-			}
+			
+			//数据的转换
+			List<Object> studentdutys = excelServicesMake.toDBEnity(lists,StudentDutys.class);
+			
+			String creator=RequestUtils.getUserName(request);
+			studentDutysServices.saveFromExcel(studentdutys,creator);
+			
+		
+//			BaseTransfrom studentDutysTransfrom=new StudentDutysTransfrom();
+//			List<Object> list=studentDutysTransfrom.toDBEntity(lists);
+//			for (int i=0;i<list.size();i++) {
+//				StudentDutys sd=(StudentDutys)list.get(i);
+//				studentDutysServices.save(sd);
+//			}
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return "importExcel";
+		return "excelSuccess";
 		
 	}
 

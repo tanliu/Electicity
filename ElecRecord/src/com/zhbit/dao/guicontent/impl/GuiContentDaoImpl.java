@@ -14,5 +14,11 @@ import com.zhbit.util.QueryUtils;
 @Repository(value=GuiContentDao.DAO_NAME)
 public class GuiContentDaoImpl extends BaseDaoImpl<GuiContent> implements GuiContentDao {
 
+	@Override
+	public void saveGuiContents(List<GuiContent> guiContents) {
+		// TODO Auto-generated method stub
+		getHibernateTemplate().saveOrUpdateAll(guiContents);
+	}
+
 	
 }

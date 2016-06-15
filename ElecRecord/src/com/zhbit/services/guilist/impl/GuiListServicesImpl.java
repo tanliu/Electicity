@@ -20,6 +20,11 @@ public class GuiListServicesImpl extends BaseServicesImpl<GuiList> implements Gu
 	
 	GuiListDao guiListDao;
 	
+	@Override
+	public void saveGuiLists(List<GuiList> guiLists){
+		guiListDao.saveGuiLists(guiLists);
+	}
+	
 	@Resource(name=GuiListDao.DAO_NAME)
 	public void setGuiContentDao(GuiListDao guiListDao) {
 		super.setBaseDao(guiListDao);

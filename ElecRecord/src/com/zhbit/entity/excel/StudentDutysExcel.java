@@ -5,22 +5,24 @@ import org.zhbit.excel.annotation.Lang;
 import org.zhbit.excel.bean.BaseExcelVo;
 
 @ExcelVoConfig
-public class StudentDutysExcel extends BaseExcelVo{
+public class StudentDutysExcel extends BaseExcelBean implements Cloneable{
 		
 		
-		@Lang(value="年级")
+		@Lang(value="年级",isNull=Lang.TYPE_NONULL)
 		private String grade;  //年级
-		@Lang(value="学院")
+		@Lang(value="学院",isNull=Lang.TYPE_NONULL)
 		private String college; //学院
-		@Lang(value="班级")
+		@Lang(value="班级",isNull=Lang.TYPE_NONULL)
 		private String className;  //班级
-		@Lang(value="姓名")
+		@Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 		private String stuName;    //姓名
-		@Lang(value="性别")
+		@Lang(value = "学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
+		private String studentNo;
+		@Lang(value="性别",toExcle={"男","女"},toEntity={"1","0"})
 		private String sex;		//性别
-		@Lang(value="职务")
+		@Lang(value="职务",isNull=Lang.TYPE_NONULL)
 		private String duty;	//职务
-		@Lang(value="手机")
+		@Lang(value="手机",isNull=Lang.TYPE_NONULL)
 		private String telNo;    //手机
 		@Lang(value="短号")
 		private String shortTelNo;		//短号
@@ -33,11 +35,11 @@ public class StudentDutysExcel extends BaseExcelVo{
 		}
 
 		
-	@Override
-	public int getHashVal() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		@Override
+		protected Object clone() throws CloneNotSupportedException {
+			return super.clone();
+		}
+
 
 
 	public String getCollege() {

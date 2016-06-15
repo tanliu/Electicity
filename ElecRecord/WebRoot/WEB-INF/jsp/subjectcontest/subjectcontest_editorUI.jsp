@@ -64,22 +64,21 @@
                         <ul class="select-list">
                         	<s:iterator value="#request.rewardLevel" var="rewardLevel">
 					      		<li id="<s:property value='#rewardLevel.ddlName'/>"><s:property value="#rewardLevel.ddlName"/></li>
-					      	</s:iterator>
-                        	 
+					      	</s:iterator>                       	 
                         </ul>
                     </div>
                 </div>
                 <p class="short-input ue-clear">
-                    <label>授予单位：</label>
+                  <label>授予单位：</label>
                        <input  type="text" placeholder="请输入授予单位" name="subjectcontest.grantUnits" value="${subjectcontest.grantUnits}"/>
-                    <label>指导老师：</label>
+                  <label>指导老师：</label>
                        <input  type="text"  placeholder="请输入指导老师" name="subjectcontest.guidTeacher" value="${subjectcontest.guidTeacher}"/>
                 </p>             
                    
                 <p class="short-input ue-clear">
                  <label>奖励时间：</label>   
                         <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="subjectcontest.rewardDate" value="<s:date name="subjectcontest.rewardDate" format="yyyy-MM-dd"></s:date>" class="strutsinput noNull"/>       
-                    <label>附加信息：</label>
+                 <label>附加信息：</label>
                         <textarea name="subjectcontest.memo"><s:property value="subjectcontest.memo"/></textarea>
                 </p>
             </form>

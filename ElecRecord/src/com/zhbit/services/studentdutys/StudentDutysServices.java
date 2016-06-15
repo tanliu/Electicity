@@ -25,4 +25,6 @@ public interface StudentDutysServices extends BaseServices<StudentDutys> {
    public List<StudentDutys> queryListDownload(Serializable... id);
    public List<StudentDutys> queryAllList();
    public PageUtils queryList(StudentDutys studentDutys,int pageNO,int pageSize);
+   public void saveFromExcel(List<Object> students, String creator);
+  	Boolean hasStudent(String studentNo);
 }

@@ -1,6 +1,7 @@
 package com.zhbit.services.guicontent.impl;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -122,7 +123,10 @@ public class GuiContentServicesImpl extends BaseServicesImpl<GuiContent> impleme
 		return guiContent;
 	}
 
-
+	@Override
+	public void saveGuiContents(List<GuiContent> guiContents){
+		guiContentDao.saveGuiContents(guiContents);
+	}
 	
 
 
