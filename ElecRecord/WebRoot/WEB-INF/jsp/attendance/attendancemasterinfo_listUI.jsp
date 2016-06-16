@@ -52,7 +52,7 @@ $(function(){
     
     	 var $id=$(this).children("td").children("input").val();
     	
-    	window.open("${basePath}tutor/tutor_detailUI.action?tutor.id="+$id);
+    	window.open("${basePath}attendancemaster/attendancemaster_detailUI.action?attendanceMatser.id="+$id);
 
      }  
         
@@ -73,23 +73,23 @@ var queryAction="${basePath}attendancemaster/attendancemaster_listUI.action";
 var deleteAction="${basePath}attendancemaster/attendancemaster_delete.action";
 var importUrl="${basePath}attendancemaster/attendancemaster_importExcel.action";
 
-//向stustatus_listUI.action提交信息
+
 function query(){
 	    $("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
 	
-//向stustatus_addUI.action提交信息
+
 function add(){
 		var url="${basePath}attendancemaster/attendancemaster_addUI.action";
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
 
-//向stustatus_editorUI.action提交信息
+
 function editor(id){
-		var url="${basePath}attendancemaster/attendancemaster_editorUI.action?attendanceMaster.id="+id;
+		var url="${basePath}attendancemaster/attendancemaster_editorUI.action?attendanceMatser.id="+id;
 		$("#queryForm").attr("action",url);
  		$("#queryForm").submit();  
 } 
@@ -136,7 +136,7 @@ function editor(id){
 <div class="table-operate ue-clear">
      <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
     <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+    
 </div>
 
 <div class="table-box">

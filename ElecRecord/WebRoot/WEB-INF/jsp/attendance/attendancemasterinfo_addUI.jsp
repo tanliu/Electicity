@@ -55,6 +55,19 @@
     </div>
     
     <div class="short-input select ue-clear" >
+    	<label>学期：</label>
+    	 <input  hidden="hidden" value="" name="attendanceMatser.term">
+        <div class="select-wrap">
+        	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
+            <ul class="select-list" >
+             <li id="">请选择</li>
+            	<li id="1">1</li>
+                <li id="2">2</li>
+            </ul>
+        </div>
+        </div>
+        
+    <div class="short-input select ue-clear" >
      <label>开课单位（学院名称）：</label>
         <input  hidden="hidden" value="" name="attendanceMatser.orgName">
       <div class="select-wrap">
@@ -63,8 +76,8 @@
 					</div>
 					<ul class="select-list" id="list1">
 					 <li id="">请选择</li>
-					    <s:iterator value="#request.years" var="years">
-					      <li id="<s:property value='#years.ddlName'/>"><s:property value="#years.ddlName"/></li>
+					    <s:iterator value="#request.colleges" var="colleges">
+					      <li id="<s:property value='#colleges.ddlName'/>"><s:property value="#colleges.ddlName"/></li>
 					    </s:iterator>
 					</ul>					
 				</div>

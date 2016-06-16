@@ -11,6 +11,7 @@
             <result name="listUI">/WEB-INF/jsp/attendance/attendancemasterinfo_listUI.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/attendance/attendancemasterinfo_editorUI.jsp</result>
              <result name="addUI">/WEB-INF/jsp/attendance/attendancemasterinfo_addUI.jsp</result>
+             <result name="detailUI">/WEB-INF/jsp/attendance/attendancemasterinfo_detailUI.jsp</result>
             <result name="add" type="redirectAction">
  	         <param name="actionName">attendancemaster_listUI</param> 
  	          <param name="attendanceMatser.coursename">${attendanceMatser.coursename}</param>   
@@ -20,26 +21,22 @@
 	           <param name="encode">true</param>   
 	        </result>
             <result name="editor" type="redirectAction">
-	          <param name="actionName">guilist_listUI</param> 
-	          <param name="guiList.studentNo">${guiList.studentNo}</param>  
- 	          <param name="guiList.stuName">${guiList.stuName}</param>  
- 	          <param name="guiList.teacherName">${guiList.teacherName}</param>  
- 	          <param name="pageNO">${pageNO}</param>  
- 	           <param name="encode">true</param>  
+	          <param name="actionName">attendancemaster_listUI</param> 
+ 	          <param name="attendanceMatser.coursename">${attendanceMatser.coursename}</param>   
+ 	          <param name="attendanceMatser.employName">${attendanceMatser.employName}</param>   
+	          <param name="attendanceMatser.address">${attendanceMatser.address}</param>   
+ 	          <param name="pageNO">${pageNO}</param>   
+	           <param name="encode">true</param>   
 	          </result>
 	          <result name="delete" type="redirectAction">
-	          <param name="actionName">guilist_listUI</param> 
-	          <param name="guiList.studentNo">${guiList.studentNo}</param>  
- 	          <param name="guiList.stuName">${guiList.stuName}</param>  
- 	          <param name="guiList.teacherName">${guiList.teacherName}</param>  
- 	          <param name="pageNO">${pageNO}</param>  
- 	           <param name="encode">true</param> 
+	          <param name="actionName">attendancemaster_listUI</param> 
+ 	          <param name="attendanceMatser.coursename">${attendanceMatser.coursename}</param>   
+ 	          <param name="attendanceMatser.employName">${attendanceMatser.employName}</param>   
+	          <param name="attendanceMatser.address">${attendanceMatser.address}</param>   
+ 	          <param name="pageNO">${pageNO}</param>   
+	           <param name="encode">true</param>   
 	          </result>
-	           <result name="importExcel" type="redirectAction">
-	           <param name="actionName">guilist_listUI</param>
-	           </result>
-	          <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
-            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>
+	          
          </action>
         
         

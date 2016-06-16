@@ -47,6 +47,9 @@ public class AttendanceMasterServicesImpl extends BaseServicesImpl<AttendanceMas
 			if(!StringUtils.isEmpty(attendanceMaster.getAddress())){
 				attendanceMaster.setAddress(attendanceMaster.getAddress().trim());
 			}
+			if(!StringUtils.isEmpty(attendanceMaster.getMemo())){
+				attendanceMaster.setMemo(attendanceMaster.getMemo().trim());
+			}
 		}
 		return attendanceMaster;
 	}
