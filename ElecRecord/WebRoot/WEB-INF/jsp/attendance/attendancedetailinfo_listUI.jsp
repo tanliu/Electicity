@@ -82,7 +82,7 @@ function query(){
 	
 //向stustatus_addUI.action提交信息
 function add(){
-		var url="${basePath}tutor/tutor_addUI.action";
+		var url="${basePath}attendancedetail/attendancedetail_addUI.action";
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
@@ -96,31 +96,39 @@ function editor(id){
 
 
  </script>
-<title>辅导信息</title>
+<title>考勤信息</title>
 </head>
 
 <body>
-<div class="title"><h2>辅导信息</h2></div>
+<div class="title"><h2>考勤信息</h2></div>
 <form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="post">
 <div class="query">
 
 	<div class="query-conditions ue-clear" style="width:100%">                  
 	                                          
        <div class="conditions staff ue-clear" style="width:25%">
-            <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}" style="width:233px;height:30px" />
+            <label style="text-align: right;margin-right: 15px">学号：</label>
+            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}" style="width:210px;height:30px" />
         </div>
         
          <div class="conditions staff ue-clear" style="width:25%">
-            <label>姓名：</label>
-            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" style="width:233px;height:30px"/>
+            <label style="text-align: right;margin-right: 15px">姓名：</label>
+            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" style="width:210px;height:30px"/>
             
         </div>
+       
+    </div>
+    
+    <div class="query-conditions ue-clear" style="width:100%">                  
+	                                          
+       <div class="conditions staff ue-clear" style="width:25%">
+            <label style="text-align: right;margin-right: 15px">上课地点：</label>
+            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}" style="width:210px;height:30px" />
+        </div>
         
-            
-         <div class="conditions staff ue-clear" >
-            <label>辅导时间：</label>
-            <input type="text" value="<s:date format="yyyy-MM-dd" name="tutor.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="tutor.guidDate" style="width:233px;height:30px"/>
+         <div class="conditions staff ue-clear" style="width:25%">
+            <label style="text-align: right;margin-right: 15px">上课时间：</label>
+            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" style="width:210px;height:30px"/>
             
         </div>
        
@@ -128,13 +136,13 @@ function editor(id){
         
     </div>
     
-    <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
+    <div class="query-btn ue-clear" >
+    	<a href="javascript:query()" class="confirm" style="margin-left:16px">查询</a>
     </div>
 </div>
 
 <div class="table-operate ue-clear">
-     <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
+     <a href="javascript:add()" class="add">添加</a>
     <a href="javascript:del()" class="del confirm save">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
 </div>
@@ -146,9 +154,9 @@ function editor(id){
 			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
             	<th width="20%" class="num">学号</th>
                 <th width="15%" >姓名</th>
-				<th width="20%" align="center">专业班级</th>
-				<th width="15%" >辅导时间</th>
-				<th width="15%" align="center">辅导地点</th>
+				<th width="20%" align="center">课程名称</th>
+				<th width="15%" >教师名称</th>
+				<th width="15%" align="center">上课地点</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>

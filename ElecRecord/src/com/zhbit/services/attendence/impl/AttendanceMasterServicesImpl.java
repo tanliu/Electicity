@@ -16,7 +16,6 @@ import com.zhbit.util.QueryUtils;
 public class AttendanceMasterServicesImpl extends BaseServicesImpl<AttendanceMaster>
 		implements AttendanceMasterServices {
 	
-	
 	AttendanceMasterDao attendanceMasterDao;
 	
 	@Resource(name=AttendanceMasterDao.DAO_NAME)
