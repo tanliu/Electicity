@@ -94,6 +94,7 @@ public class TeacherAction extends BaseAndExcelAction{
 
 	@Override
 	public String listUI() {
+		setPageSize(10);
 		if(queryNO!=null&&qeuryName!=null){
 			try {
 				qeuryName=DecodeUtils.decodeUTF(qeuryName);
