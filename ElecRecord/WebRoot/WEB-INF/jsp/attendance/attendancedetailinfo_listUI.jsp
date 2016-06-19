@@ -52,7 +52,7 @@ $(function(){
     
     	 var $id=$(this).children("td").children("input").val();
     	
-    	window.open("${basePath}attendanceDetail/attendanceDetail_detailUI.action?attendanceDetail.id="+$id);
+    	window.open("${basePath}attendancedetail/attendancedetail_detailUI.action?attendanceDetail.id="+$id);
 
      }  
         
@@ -104,14 +104,14 @@ function editor(id){
 <form id="queryForm"   method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" style="width:100%">                  
+	<div class="query-conditions ue-clear" >                  
 	                                          
-       <div class="conditions staff ue-clear" style="width:25%">
+       <div class="conditions staff ue-clear" style="margin-right:2px">
             <label style="text-align: right;margin-right: 15px">学号：</label>
             <input type="text" placeholder="请输入学生学号进行查询" name="attendanceDetail.studentno" value="${queryCon.studentno}" style="width:210px;height:30px" />
         </div>
         
-         <div class="conditions staff ue-clear" style="width:25%">
+         <div class="conditions staff ue-clear" >
             <label style="text-align: right;margin-right: 15px">姓名：</label>
             <input type="text" placeholder="请输入学生姓名进行查询" name="attendanceDetail.stuname" value="${queryCon.stuname}" style="width:210px;height:30px"/>
             
@@ -119,14 +119,14 @@ function editor(id){
        
     </div>
     
-    <div class="query-conditions ue-clear" style="width:100%">                  
+    <div class="query-conditions ue-clear" >                  
 	                                          
-       <div class="conditions staff ue-clear" style="width:25%">
+       <div class="conditions staff ue-clear" style="margin-right:2px">
             <label style="text-align: right;margin-right: 15px">考勤时间：</label>
            <input type="text" value="<s:date format="yyyy-MM-dd" name="attendanceDetail.attendanceTime"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="attendanceDetail.attendanceTime" style="width:210px;height:30px"/>
         </div>
         
-         <div class="conditions staff ue-clear" style="width:25%">
+         <div class="conditions staff ue-clear" >
             <label style="text-align: right;margin-right: 15px">班级：</label>
             <input type="text" placeholder="请输入学生所在班级进行查询" name="attendanceDetail.classname" value="${queryCon.classname}" style="width:210px;height:30px"/>
             

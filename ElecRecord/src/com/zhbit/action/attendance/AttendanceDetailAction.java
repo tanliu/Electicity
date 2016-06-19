@@ -1,7 +1,11 @@
 package com.zhbit.action.attendance;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -9,6 +13,7 @@ import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.entity.AttendanceDetail;
 import com.zhbit.entity.AttendanceMaster;
 import com.zhbit.excel.ExcelConfig;
+import com.zhbit.services.AttendExcelImpl;
 import com.zhbit.services.attendence.AttendanceDetailServices;
 import com.zhbit.services.attendence.AttendanceMasterServices;
 import com.zhbit.util.DecodeUtils;
@@ -46,9 +51,52 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		ExcelConfig config;
-		//config = new ExcelConfig(TutorEntity.class, "Sheet1", 1, new FileInputStream(excel),excelFileName);
+		try {
+			config = new ExcelConfig(null, "Sheet1", 2, new FileInputStream(excel),excelFileName);		
+			List<Object> objects=new AttendExcelImpl().parseExcel(config);
+			
+			List<AttendanceDetail> attendanceDetails=new ArrayList<AttendanceDetail>();
+			
+			//object中第一个元素是attendanceMaster信息，其后为attendanceDetail信息
+			for(int i=0;i<objects.size();i++){
+				
+				if(i==0&&objects.get(i)!=null){
+					//转换为attendanceMaster对象 
+					AttendanceMaster attendanceMaster=(AttendanceMaster)objects.get(i);
+					//设定创建时间为当前时间
+					Timestamp createtime = new Timestamp(System.currentTimeMillis());
+					attendanceMaster.setCreateTime(createtime);
+					attendanceMaster=attendanceMasterServices.trimAttendanceMaster(attendanceMaster);
+					//保存该记录至数据库中
+					attendanceMasterServices.save(attendanceMaster);
+				}else {
+					if(objects.get(i)!=null){
+						AttendanceDetail attendanceDetail=(AttendanceDetail)objects.get(i);
+						//设定创建时间为当前时间
+						Timestamp createtime = new Timestamp(System.currentTimeMillis());
+						attendanceDetail.setCreateTime(createtime);
+						//先设定Stu_id为9526
+						attendanceDetail.setStuId("9526");
+						attendanceDetail=attendanceDetailServices.trimAttendanceDetail(attendanceDetail);
+						
+						//将该数据保存至相对应的AttendanceDetail集合中
+						attendanceDetails.add(attendanceDetail);
+					}
+				}
+				
+				
+				attendanceDetailServices.saveAttendanceDeatils(attendanceDetails);
+				
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		return "";
+		return "excelSuccess";
 	}
 
 	@Override
@@ -74,7 +122,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",attendanceDetail);
-		setPageSize(1);
+		setPageSize(9);
 
 		pageUtils=attendanceDetailServices.queryList(attendanceDetail, getPageNO(), getPageSize());
 		return "listUI";
@@ -120,7 +168,6 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 		// TODO Auto-generated method stub
 		request.setAttribute("attendanceDetail",attendanceDetail);
 		
-
 		//先判断用户是否已经选中
 		if(getSelectedRow()!=null){		
 		attendanceDetailServices.deleteObjectByIds(getSelectedRow());		
@@ -137,6 +184,12 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 		
 		attendanceDetail=attendanceDetailServices.findObjectById(attendanceDetail.getId());
 		request.setAttribute("attendanceDetail", attendanceDetail);
+		
+		//将选课课号对应的选课的信息推送到前台进行显示
+		String[] fields={"selectedcourseno=?"};
+		Object[] params={attendanceDetail.getSelectedcourseno()};
+		attendanceMaster=(AttendanceMaster) attendanceMasterServices.findObjectByFields(fields, params).get(0);
+		request.setAttribute("attendanceMaster", attendanceMaster);
 		
 		return "editorUI";
 	}
@@ -164,7 +217,18 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 		return null;
 	}
 
-	
+	public String detailUI(){
+		attendanceDetail=attendanceDetailServices.findObjectById(attendanceDetail.getId());
+		request.setAttribute("attendanceDetail", attendanceDetail);
+		
+		//将选课课号对应的选课的信息推送到前台进行显示
+		String[] fields={"selectedcourseno=?"};
+		Object[] params={attendanceDetail.getSelectedcourseno()};
+		attendanceMaster=(AttendanceMaster) attendanceMasterServices.findObjectByFields(fields, params).get(0);
+		request.setAttribute("attendanceMaster", attendanceMaster);
+		
+		return "detailUI";
+	}
 
 	
 	//-----------------------getter&setter---------------------------------

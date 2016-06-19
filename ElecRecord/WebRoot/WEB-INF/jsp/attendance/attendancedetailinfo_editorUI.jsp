@@ -29,41 +29,41 @@
 	<input type="hidden" name="attendanceDetail.createTime" value="${attendanceDetail.createTime}"/>
     <p class="short-input ue-clear">
     	<label>选课课号：</label>
-        <input type="text" placeholder="请输入选课课号" readonly="readonly" />
+        <input type="text"  readonly="readonly" value="${attendanceMaster.selectedcourseno }" name="attendanceDetail.selectedcourseno"/>
     </p>
     <p class="short-input ue-clear">
     	<label>课程名称：</label>
-        <input type="text"  readonly="readonly"/>
+        <input type="text"  readonly="readonly" value="${attendanceMaster.coursename }"/>
     </p>
     <p class="short-input ue-clear">
     	<label>教师姓名：</label>
-        <input type="text"  readonly="readonly"/>
+        <input type="text"  readonly="readonly" value="${attendanceMaster.employName }"/>
     </p>
     
      <p class="short-input select ue-clear" >
      <label>学年：</label>
-         <input type="text"  readonly="readonly"/>
+         <input type="text"  readonly="readonly" value="${attendanceMaster.academicyear }"/>
     </p>
     
     <p class="short-input select ue-clear" >
     	<label>学期：</label>
-    	 <input type="text" readonly="readonly"/>
+    	 <input type="text" readonly="readonly" value="${attendanceMaster.term }"/>
         </p>
         
     <p class="short-input select ue-clear" >
      <label>开课单位（学院名称）：</label>
-        <input type="text" readonly="readonly"/>
+        <input type="text" readonly="readonly" value="${attendanceMaster.orgName }"/>
     </p>
 
     
     <p class="short-input ue-clear">
     	<label>上课时间：</label>
-        <input type="text" readonly="readonly"/>
+        <input type="text" readonly="readonly" value="${attendanceMaster.schooltime }"/>
     </p>
     
      <p class="short-input ue-clear">
     	<label>上课地点：</label>
-        <input type="text" readonly="readonly"/>
+        <input type="text" readonly="readonly" value="${attendanceMaster.address }"/>
     </p>
     
      <p class="short-input ue-clear">

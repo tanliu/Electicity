@@ -1,6 +1,7 @@
 package com.zhbit.services.attendence.impl;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -107,5 +108,8 @@ public class AttendanceDetailServicesImpl extends BaseServicesImpl<AttendanceDet
 		
 	}
 
-	
+	@Override
+	public void saveAttendanceDeatils(List<AttendanceDetail> attendanceDetails){
+		attendanceDetailDao.saveAttendanceDetails(attendanceDetails);
+	}
 }

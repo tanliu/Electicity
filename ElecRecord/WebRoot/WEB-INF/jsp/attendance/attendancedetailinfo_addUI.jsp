@@ -121,7 +121,5 @@
 showRemind('input[type=text], textarea','placeholder');
 
 
-
-
 </script>
 </html>
