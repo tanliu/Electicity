@@ -17,16 +17,16 @@ public class TraindetailExcel extends BaseExcelBean implements Cloneable{
 		// TODO Auto-generated method stub
 		return super.clone();
 	}
-		 @Lang(value="学号")
+		 @Lang(value="学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 			private String studentNo;
 		  
-		  @Lang(value="主题")
+		  @Lang(value="主题",isNull=Lang.TYPE_NONULL)
 			private String master_trainsTopic;
 		  
-		  @Lang(value="参训人")
+		  @Lang(value="参训人",isNull=Lang.TYPE_NONULL)
 			private String stuName;
 		  
-		  @Lang(value="参训结果")
+		  @Lang(value="参训结果",toExcle={"合格","不合格"},toEntity={"1","0"})
 			private String trainsResult;
 		  
 		  @Lang(value="备注")

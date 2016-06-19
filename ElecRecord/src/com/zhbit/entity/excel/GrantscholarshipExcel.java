@@ -21,11 +21,11 @@ public class GrantscholarshipExcel extends BaseExcelBean implements Cloneable{
 	    private List<InnerVo> innerVoArray;
 	    
 	    
-	    @Lang(value="学号")
+	    @Lang(value="学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 		private String studentNo;
-	    @Lang(value="姓名")
+	    @Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 		private String stuName;
-	    @Lang(value="性别")
+	    @Lang(value="性别",toExcle={"男","女"},toEntity={"1","0"})
 		private String sex;
 	    @Lang(value="学院")
 	 	private String orgName;
@@ -33,9 +33,9 @@ public class GrantscholarshipExcel extends BaseExcelBean implements Cloneable{
 	 	private String major;
 	    @Lang(value="民族")
 	 	private String nation;
-	    @Lang(value="入学年月")
+	    @Lang(value="入学年月",date=Lang.TYPE_DATE)
 	 	private String acceptanceDate;
-	    @Lang(value="经济困难程度")
+	    @Lang(value="经济困难程度",isNull=Lang.TYPE_NONULL)
 	 	private String familyEconomic;
 	    @Lang(value="备注")
 	 	private String memo;

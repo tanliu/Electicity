@@ -25,15 +25,15 @@
 <div class="main">
     <p class="short-input ue-clear">
     	<label>负责人：</label>
-        <input type="text" name="traininfoMaster.manager" placeholder="请输入负责人" /> 
+        <input type="text" name="traininfoMaster.manager" placeholder="请输入负责人" class="strutsinput noNull"/> 
        <label>培训地点：</label>
-        <input type="text" name="traininfoMaster.trainsAddress" placeholder="请输入地点" />
+        <input type="text" name="traininfoMaster.trainsAddress" placeholder="请输入地点" class="strutsinput noNull"/>
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>培训对象年级：</label>
-        <input  hidden="hidden"  name="traininfoMaster.trainsGrade">
+        <input  hidden="hidden" class="noNull" name="traininfoMaster.trainsGrade">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -46,18 +46,18 @@
         </div>
          <label>培训日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" placeholder="请选择日期" name="traininfoMaster.trainsDate"/>
+        	 <input type="text" class="noNull" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" placeholder="请选择日期" name="traininfoMaster.trainsDate"/>
         </div>
         
     </div>
     
      <p class="short-input ue-clear">
     	<label >培训主题：</label>
-        <textarea name="traininfoMaster.trainsTopic" placeholder="请输入主题"></textarea>
+        <textarea name="traininfoMaster.trainsTopic" placeholder="请输入主题" class="noNull"></textarea>
     </p>
      <p class="short-input ue-clear">
     	<label >培训内容：</label>
-        <textarea name="traininfoMaster.trainsContent" placeholder="请输入内容"></textarea>
+        <textarea name="traininfoMaster.trainsContent" placeholder="请输入内容" class="noNull"></textarea>
     </p>
     
     <p class="short-input ue-clear">

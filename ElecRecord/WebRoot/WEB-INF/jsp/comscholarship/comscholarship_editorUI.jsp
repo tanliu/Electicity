@@ -34,15 +34,15 @@
     <p class="short-input ue-clear">
     	
         <label>姓名：</label>
-        <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名"  value="${commonScholarship.stuName}"/> 
+        <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名"  value="${commonScholarship.stuName}" class="strutsinput noNull"/> 
         <label>学号：</label>
-        <input type="text" name="commonScholarship.studentNo" placeholder="请输入学号" value="${commonScholarship.studentNo}"/> 
+        <input type="text" name="commonScholarship.studentNo" placeholder="请输入学号" value="${commonScholarship.studentNo}" class="strutsinput noNull studentNo"/> 
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>获奖名称：</label>
-        <input  hidden="hidden"  name="commonScholarship.rewardName" value="<s:property value="commonScholarship.rewardName"/>">
+        <input  hidden="hidden"  name="commonScholarship.rewardName" value="<s:property value="commonScholarship.rewardName"/>" class="noNull">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${commonScholarship.rewardName}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -54,7 +54,7 @@
             </ul>
         </div>
        	<label>学期：</label>
-    	 <input  hidden="hidden" value="<s:property value="commonScholarship.term"/>" name="commonScholarship.term" value="<s:property value="commonScholarship.term"/>">
+    	 <input  hidden="hidden" value="<s:property value="commonScholarship.term"/>" name="commonScholarship.term" value="<s:property value="commonScholarship.term"/>" class="noNull">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${commonScholarship.term}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -67,7 +67,7 @@
 
 <div class="short-input select ue-clear" >
   <label>专业：</label>
-       <input  hidden="hidden" value='<s:property value='commonScholarship.major'/>' name="commonScholarship.major">
+       <input  hidden="hidden" class="noNull" value='<s:property value='commonScholarship.major'/>' name="commonScholarship.major">
         <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1"><s:property value='commonScholarship.major' /></span><i class="icon"></i>
@@ -80,7 +80,7 @@
 					</ul>					
 				</div>
 		 <label>学年：</label>
-        <input  hidden="hidden" value='<s:property value='commonScholarship.academicYear'/>' name="commonScholarship.academicYear">
+        <input  hidden="hidden" class="noNull" value='<s:property value='commonScholarship.academicYear'/>' name="commonScholarship.academicYear">
       <div class="select-wrap">
 				<div class="select-title ue-clear" >
 					<span id="span1"><s:property value='commonScholarship.academicYear'/></span><i class="icon"></i>

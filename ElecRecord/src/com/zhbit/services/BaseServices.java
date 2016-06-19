@@ -112,10 +112,4 @@ public interface BaseServices<T> {
 	 */
 	public List<T> findAllObject(String proterty,String order);
 
-
-
-
-	
-	
-
 }

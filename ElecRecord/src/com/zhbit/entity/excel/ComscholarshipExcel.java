@@ -22,13 +22,13 @@ public class ComscholarshipExcel extends BaseExcelBean implements Cloneable{
 	    private List<InnerVo> innerVoArray;
 	    
 	    
-	    @Lang(value="学号")
+	    @Lang(value="学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 		private String studentNo;
-	    @Lang(value="姓名")
+	    @Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 		private String stuName;
 		@Lang(value="专业")
 		private String major;
-		@Lang(value="获奖名称")
+		@Lang(value="获奖名称",isNull=Lang.TYPE_NONULL)
 		private String rewardName;
 		@Lang(value="备注")
 		private String memo;

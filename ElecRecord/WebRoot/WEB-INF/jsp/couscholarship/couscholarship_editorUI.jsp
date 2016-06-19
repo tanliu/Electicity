@@ -33,15 +33,15 @@
 <div class="main">
      <p class="short-input ue-clear">
         <label>姓名：</label>
-        <input type="text" name="countryScholarship.stuName" placeholder="请输入姓名" value="${countryScholarship.stuName}" /> 
+        <input type="text" name="countryScholarship.stuName" placeholder="请输入姓名" value="${countryScholarship.stuName}" class="strutsinput noNull"  /> 
         <label>学号：</label>
-        <input type="text" name="countryScholarship.studentNo" placeholder="请输入学号" value="${countryScholarship.studentNo}" /> 
+        <input type="text" name="countryScholarship.studentNo" placeholder="请输入学号" value="${countryScholarship.studentNo}" class="strutsinput noNull studentNo" /> 
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>政治面貌：</label>
-        <input  hidden="hidden"  name="countryScholarship.politicalStatus" value="<s:property value="countryScholarship.politicalStatus"/>">
+        <input  hidden="hidden" class="noNull" name="countryScholarship.politicalStatus" value="<s:property value="countryScholarship.politicalStatus"/>">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${countryScholarship.politicalStatus}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -52,7 +52,7 @@
             </ul>
         </div>
          <label>性别：</label>
-        <input  hidden="hidden"  name="countryScholarship.sex" value="<s:property value="countryScholarship.sex"/>">
+        <input  hidden="hidden" class="noNull" name="countryScholarship.sex" value="<s:property value="countryScholarship.sex"/>">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${countryScholarship.sex}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -66,7 +66,7 @@
   <div class="short-input select ue-clear" >
         
         <label>学院：</label>
-        <input  hidden="hidden"  name="countryScholarship.orgName" value="<s:property value="countryScholarship.orgName"/>">
+        <input  hidden="hidden" class="noNull" name="countryScholarship.orgName" value="<s:property value="countryScholarship.orgName"/>">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${countryScholarship.orgName}</span><i class="icon"></i></div>
            <ul class="select-list" >
@@ -86,7 +86,7 @@
             </ul>
         </div>
          <label>年级：</label>
-        <input  hidden="hidden"  name="countryScholarship.grade" value="<s:property value="countryScholarship.grade"/>">
+        <input  hidden="hidden" class="noNull" name="countryScholarship.grade" value="<s:property value="countryScholarship.grade"/>">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${countryScholarship.grade}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -100,7 +100,7 @@
     </div>
 <div class="short-input select ue-clear" >
   <label>专业：</label>
-       <input  hidden="hidden" value='<s:property value='countryScholarship.major'/>' name="countryScholarship.major">
+       <input  hidden="hidden" class="noNull" value='<s:property value='countryScholarship.major'/>' name="countryScholarship.major">
         <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1"><s:property value='countryScholarship.major' /></span><i class="icon"></i>
@@ -113,7 +113,7 @@
 					</ul>					
 				</div>
 				<label>获奖名称：</label>
-        <input  hidden="hidden"  value="<s:property value="countryScholarship.rewardName"/>" name="countryScholarship.rewardName" >
+        <input  hidden="hidden"  class="noNull" value="<s:property value="countryScholarship.rewardName"/>" name="countryScholarship.rewardName" >
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span>${countryScholarship.rewardName}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -126,7 +126,7 @@
     
       <div class="short-input select ue-clear" >
         <label>学年：</label>
-        <input  hidden="hidden" value='<s:property value='countryScholarship.academicYear'/>' name="countryScholarship.academicYear">
+        <input  hidden="hidden" class="noNull" value='<s:property value='countryScholarship.academicYear'/>' name="countryScholarship.academicYear">
       <div class="select-wrap">
 				<div class="select-title ue-clear" >
 					<span id="span1"><s:property value='countryScholarship.academicYear' /></span><i class="icon"></i>
@@ -139,7 +139,7 @@
 					</ul>					
 				</div>
 		<label>学期：</label>
-    	 <input  hidden="hidden" value="<s:property value="countryScholarship.term"/>" name="countryScholarship.term">
+    	 <input  hidden="hidden" class="noNull" value="<s:property value="countryScholarship.term"/>" name="countryScholarship.term">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${countryScholarship.term}</span><i class="icon"></i></div>
             <ul class="select-list" >

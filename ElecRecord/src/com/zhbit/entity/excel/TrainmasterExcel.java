@@ -23,22 +23,22 @@ public class TrainmasterExcel extends BaseExcelBean implements Cloneable{
 	    @ExcelColumnGroup(type = InnerVo.class)
 	    private List<InnerVo> innerVoArray;
 	
-	 @Lang(value="主题")
+	 @Lang(value="主题",isNull=Lang.TYPE_NONULL)
 		private String trainsTopic;
 	  
-	  @Lang(value="主讲人")
+	  @Lang(value="主讲人",isNull=Lang.TYPE_NONULL)
 		private String manager;
 	  
-	  @Lang(value="时间")
+	  @Lang(value="时间",date=Lang.TYPE_DATE)
 		private String trainsDate;
 	  
 	  @Lang(value="年级")
 		private String trainsGrade;
 	  
-	  @Lang(value="内容")
+	  @Lang(value="内容",isNull=Lang.TYPE_NONULL)
 		private String trainsContent;
 	  
-	  @Lang(value="地点")
+	  @Lang(value="地点",isNull=Lang.TYPE_NONULL)
 		private String trainsAddress;
 	  
 	  @Lang(value="备注")

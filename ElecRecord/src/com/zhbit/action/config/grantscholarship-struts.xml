@@ -6,7 +6,7 @@
 
 	<!-- 配置全局结果及异常映射 -->
 	<package name="grantscholarship" namespace="/grantscholarship" extends="struts-default">
-	          <!-- 国家奖学金信息管理  -->
+	          <!-- 国家助学金信息管理  -->
          <action name="grantscholarship_*" class="com.zhbit.action.grantscholarship.GrantscholarshipAction" method="{1}">
            
              <result name="listUI">/WEB-INF/jsp/grantscholarship/grantscholarship_listUI.jsp</result>

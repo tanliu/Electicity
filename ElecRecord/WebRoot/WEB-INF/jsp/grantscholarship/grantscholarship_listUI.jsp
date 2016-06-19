@@ -44,17 +44,17 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions staff ue-clear" style="width:20%">
+        <div class="conditions staff ue-clear" style="width:25%">
             <label>姓名：</label>
         <input type="text" name="grantScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
         </div>
         
-      <div class="conditions staff ue-clear" style="width:20%">
+      <div class="conditions staff ue-clear" style="width:25%">
             <label>学号：</label>
         <input type="text" name="grantScholarship.studentNo" placeholder="请输入姓名进行查询" value="${querycon.studentNo}" style="width:200px;height:30px"/>
         </div>
   
-  <div class="conditions name ue-clear" style="width:20%">
+  <div class="conditions name ue-clear" style="width:25%">
          <label>学院名称：</label>
         <input  hidden="hidden"  value="${querycon.orgName}" name="grantScholarship.orgName" style="width:200px;height:30px">
         <div class="select-wrap">
