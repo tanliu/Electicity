@@ -52,7 +52,7 @@ $(function(){
     
     	 var $id=$(this).children("td").children("input").val();
     	
-    	window.open("${basePath}tutor/tutor_detailUI.action?tutor.id="+$id);
+    	window.open("${basePath}attendanceDetail/attendanceDetail_detailUI.action?attendanceDetail.id="+$id);
 
      }  
         
@@ -69,58 +69,66 @@ $(function(){
 
 
 //以下路径用于访问Action
-var queryAction="${basePath}tutor/tutor_listUI.action";
-var deleteAction="${basePath}tutor/tutor_delete.action";
-var importUrl="${basePath}tutor/tutor_importExcel.action";
+var queryAction="${basePath}attendancedetail/attendancedetail_listUI.action";
+var deleteAction="${basePath}attendancedetail/attendancedetail_delete.action";
+var importUrl="${basePath}attendancedetail/attendancedetail_importExcel.action";
 
-//向stustatus_listUI.action提交信息
+
 function query(){
 	    $("#pageNo").val(1);
 	  	$("#queryForm").attr("action",queryAction);
 	 	$("#queryForm").submit(); 
 	}
 	
-//向stustatus_addUI.action提交信息
+
 function add(){
-		var url="${basePath}tutor/tutor_addUI.action";
+		var url="${basePath}attendancedetail/attendancedetail_addUI.action";
 		$("#queryForm").attr("action",url);
  	$("#queryForm").submit();  
 } 
 
-//向stustatus_editorUI.action提交信息
+
 function editor(id){
-		var url="${basePath}tutor/tutor_editorUI.action?tutor.id="+id;
+		var url="${basePath}attendancedetail/attendancedetail_editorUI.action?attendanceDetail.id="+id;
 		$("#queryForm").attr("action",url);
  		$("#queryForm").submit();  
 } 
 
 
  </script>
-<title>辅导信息</title>
+<title>考勤信息</title>
 </head>
 
 <body>
-<div class="title"><h2>辅导信息</h2></div>
-<form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="post">
+<div class="title"><h2>考勤信息</h2></div>
+<form id="queryForm"   method="post">
 <div class="query">
 
 	<div class="query-conditions ue-clear" style="width:100%">                  
 	                                          
        <div class="conditions staff ue-clear" style="width:25%">
-            <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}" style="width:233px;height:30px" />
+            <label style="text-align: right;margin-right: 15px">学号：</label>
+            <input type="text" placeholder="请输入学生学号进行查询" name="attendanceDetail.studentno" value="${queryCon.studentno}" style="width:210px;height:30px" />
         </div>
         
          <div class="conditions staff ue-clear" style="width:25%">
-            <label>姓名：</label>
-            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" style="width:233px;height:30px"/>
+            <label style="text-align: right;margin-right: 15px">姓名：</label>
+            <input type="text" placeholder="请输入学生姓名进行查询" name="attendanceDetail.stuname" value="${queryCon.stuname}" style="width:210px;height:30px"/>
             
         </div>
+       
+    </div>
+    
+    <div class="query-conditions ue-clear" style="width:100%">                  
+	                                          
+       <div class="conditions staff ue-clear" style="width:25%">
+            <label style="text-align: right;margin-right: 15px">考勤时间：</label>
+           <input type="text" value="<s:date format="yyyy-MM-dd" name="attendanceDetail.attendanceTime"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="attendanceDetail.attendanceTime" style="width:210px;height:30px"/>
+        </div>
         
-            
-         <div class="conditions staff ue-clear" >
-            <label>辅导时间：</label>
-            <input type="text" value="<s:date format="yyyy-MM-dd" name="tutor.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="tutor.guidDate" style="width:233px;height:30px"/>
+         <div class="conditions staff ue-clear" style="width:25%">
+            <label style="text-align: right;margin-right: 15px">班级：</label>
+            <input type="text" placeholder="请输入学生所在班级进行查询" name="attendanceDetail.classname" value="${queryCon.classname}" style="width:210px;height:30px"/>
             
         </div>
        
@@ -128,13 +136,13 @@ function editor(id){
         
     </div>
     
-    <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
+    <div class="query-btn ue-clear" >
+    	<a href="javascript:query()" class="confirm" style="margin-left:16px">查询</a>
     </div>
 </div>
 
 <div class="table-operate ue-clear">
-     <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
+     <a href="javascript:add()" class="add">添加</a>
     <a href="javascript:del()" class="del confirm save">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
 </div>
@@ -146,22 +154,22 @@ function editor(id){
 			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
             	<th width="20%" class="num">学号</th>
                 <th width="15%" >姓名</th>
-				<th width="20%" align="center">专业班级</th>
-				<th width="15%" >辅导时间</th>
-				<th width="15%" align="center">辅导地点</th>
+                <th width="10%" >性别</th>
+				<th width="20%" align="center">所在班级</th>
+				<th width="20%" >考勤时间</th>
 				<th width="10%">编辑</th>				
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="tutor">
+           <s:iterator value="pageUtils.items" var="attendanceDetail">
         	<tr>
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#tutor.id'/>'/></td>
-            	<td><s:property value="#tutor.studentNo"/></td>
-				<td ><s:property value="#tutor.stuName"/></td>
-				<td><s:property value="#tutor.className"/></td>
-				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#tutor.guidDate"/></td>
-				<td><s:property value="#tutor.guidAddress"/></td>
-				<td><a href="javascript:editor('<s:property value='#tutor.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceDetail.id'/>'/></td>
+            	<td><s:property value="#attendanceDetail.studentno"/></td>
+				<td ><s:property value="#attendanceDetail.stuname"/></td>
+				<td ><s:property value="#attendanceDetail.sex"/></td>
+				<td><s:property value="#attendanceDetail.classname"/></td>
+				<td><s:date format="yyyy-MM-dd" name="#attendanceDetail.attendanceTime"/></td>
+				<td><a href="javascript:editor('<s:property value='#attendanceDetail.id'/>')"><img src="../images/edtico.png"/></a></td>
             </tr> 
             </s:iterator>          
         </tbody>

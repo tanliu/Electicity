@@ -91,12 +91,7 @@ function query(){
 	 	$("#queryForm").submit(); 
 	}
 	
-//向stustatus_delUI.action提交信息
-function del(){
-		var url="${basePath}stustatus/stustatus_delete.action";
-		$("#queryForm").attr("action",url);
- 		$("#queryForm").submit();  
-} 
+
  </script>
 <title>学生学籍异动信息</title>
 </head>
@@ -149,7 +144,7 @@ function del(){
 
 <div class="table-operate ue-clear">
    <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
-    <a href="javascript:" class="del confirm save">删除</a>
+    <a href="javascript:del()" class="del confirm save">删除</a>
     <a href="javascript:" class="import clear clear">导入</a>
 </div>
 
@@ -197,4 +192,18 @@ function del(){
 <script type="text/javascript" src="${basePath}js/jquery-form.js"></script>
 <jsp:include page="/common/inputdialog.jsp"></jsp:include>
 
+<script type="text/javascript">
+
+function del(){
+	var selectedRows=document.getElementsByName("selectedRow");
+	
+	for(i=0;i<selectedRows.length;i++){
+		if(selectedRows[i].checked){
+			$('.delDialog').Dialog('open');
+		}
+	}
+	
+}
+
+</script>
 </html>

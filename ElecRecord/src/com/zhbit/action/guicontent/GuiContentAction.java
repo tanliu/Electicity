@@ -86,9 +86,12 @@ public class GuiContentAction extends BaseAndExcelAction {
 					Timestamp createtime = new Timestamp(System.currentTimeMillis());
 					guiContent.setCreateTime(createtime);
 					
+					//去除可能存在的空格
+					guiContentServices.trimGuiContent(guiContent);
+					
 					//将此对象放入guiContents集合中
 					guiContents.add(guiContent);
-					//guiContentServices.save(guiContent);
+					
 				}
 				
 				

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.zhbit.entity.Course" table="t_courseinfo" catalog="elecrecord">
+        <id name="id" type="java.lang.String">
+            <column name="id" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="courseCode" type="java.lang.String">
+            <column name="courseCode" length="20">
+                <comment>课程代码</comment>
+            </column>
+        </property>
+        <property name="courseName" type="java.lang.String">
+            <column name="courseName" length="100">
+                <comment>课程名称</comment>
+            </column>
+        </property>
+        <property name="academicYear" type="java.lang.String">
+            <column name="academicYear" length="20">
+                <comment>学年</comment>
+            </column>
+        </property>
+        <property name="term" type="java.lang.String">
+            <column name="term" length="20">
+                <comment>学期</comment>
+            </column>
+        </property>
+        <property name="employNo" type="java.lang.String">
+            <column name="employ_no" length="10">
+                <comment>教师工号</comment>
+            </column>
+        </property>
+        <property name="employName" type="java.lang.String">
+            <column name="employ_name" length="64">
+                <comment>教师姓名</comment>
+            </column>
+        </property>
+        <property name="selectedCourseNo" type="java.lang.String">
+            <column name="selectedCourseNo" length="50">
+                <comment>选课课号</comment>
+            </column>
+        </property>
+        <property name="courseType" type="java.lang.String">
+            <column name="courseType" length="20">
+                <comment>课程性质</comment>
+            </column>
+        </property>
+        <property name="totalHours" type="java.lang.Integer">
+            <column name="totalHours">
+                <comment>总学时</comment>
+            </column>
+        </property>
+        <property name="labHours" type="java.lang.Integer">
+            <column name="labHours">
+                <comment>实验学时</comment>
+            </column>
+        </property>
+        <property name="classInfo" type="java.lang.String">
+            <column name="classInfo" length="200">
+                <comment>教学班组成</comment>
+            </column>
+        </property>
+        <property name="studentNum" type="java.lang.Integer">
+            <column name="studentNum">
+                <comment>选课人数</comment>
+            </column>
+        </property>
+        <property name="credit" type="java.lang.Double">
+            <column name="credit" precision="4">
+                <comment>学分：可根据总学时除以16进行换算得到该值</comment>
+            </column>
+        </property>
+        <property name="belongTo" type="java.lang.String">
+            <column name="belongTo" length="100">
+                <comment>课程归属：该值在导入的学生成绩明细中</comment>
+            </column>
+        </property>
+        <property name="memo" type="java.lang.String">
+            <column name="memo" length="200" />
+        </property>
+        <property name="createTime" type="java.sql.Timestamp">
+            <column name="create_time" length="19">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <property name="creator" type="java.lang.String">
+            <column name="creator" length="32">
+                <comment>创建者</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

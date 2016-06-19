@@ -22,7 +22,7 @@
 	    <input type="hidden" name="query_studentNo" value="${queryCon.studentNo}">
 	    <input type="hidden" name="query_stuName" value="${queryCon.stuName}">
 	    <s:hidden name="pageNO"></s:hidden>
-	<!-- 这里先将stuid设定死，用于测试 -->
+	<!-- 返回对应的stuid -->
 	<input type="hidden" name="stuStatus.stuId" value="${stuStatus.stuId}"/>
 	<!-- 将StuStatus传递给对应的editor方法 -->
 	<input type="hidden" name="stuStatus.id" value="${stuStatus.id}"/>

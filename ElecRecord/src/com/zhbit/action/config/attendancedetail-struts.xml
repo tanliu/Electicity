@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- 配置全局结果及异常映射 -->
+	<package name="attendancedetail" namespace="/attendancedetail" extends="struts-default">
+         <action name="attendancedetail_*" class="com.zhbit.action.attendance.AttendanceDetailAction" method="{1}">
+            <result name="listUI">/WEB-INF/jsp/attendance/attendancedetailinfo_listUI.jsp</result>
+            <result name="editorUI">/WEB-INF/jsp/attendance/attendancedetailinfo_editorUI.jsp</result>
+             <result name="addUI">/WEB-INF/jsp/attendance/attendancedetailinfo_addUI.jsp</result>
+             <result name="detailUI">/WEB-INF/jsp/attendance/attendancemasterinfo_detailUI.jsp</result>
+            <result name="add" type="redirectAction">
+ 	         <param name="actionName">attendancedetail_listUI</param> 
+ 	          <param name="attendanceDetail.studentno">${attendanceDetail.studentno}</param>   
+ 	          <param name="attendanceDetail.stuname">${attendanceDetail.stuname}</param>   
+	          <param name="attendanceDetail.attendanceTime">${attendanceDetail.attendanceTime}</param>   
+	           <param name="attendanceDetail.classname">${attendanceDetail.classname}</param>
+ 	          <param name="pageNO">${pageNO}</param>   
+	           <param name="encode">true</param>    
+	        </result>
+            <result name="editor" type="redirectAction">
+	          <param name="actionName">attendancedetail_listUI</param> 
+ 	          <param name="attendanceDetail.studentno">${attendanceDetail.studentno}</param>   
+ 	          <param name="attendanceDetail.stuname">${attendanceDetail.stuname}</param>   
+	          <param name="attendanceDetail.attendanceTime">${attendanceDetail.attendanceTime}</param>   
+	           <param name="attendanceDetail.classname">${attendanceDetail.classname}</param>
+ 	          <param name="pageNO">${pageNO}</param>   
+	           <param name="encode">true</param>    
+	          </result>
+	          <result name="delete" type="redirectAction">
+	          <param name="actionName">attendancedetail_listUI</param> 
+ 	          <param name="attendanceDetail.studentno">${attendanceDetail.studentno}</param>   
+ 	          <param name="attendanceDetail.stuname">${attendanceDetail.stuname}</param>   
+	          <param name="attendanceDetail.attendanceTime">${attendanceDetail.attendanceTime}</param>   
+	           <param name="attendanceDetail.classname">${attendanceDetail.classname}</param>
+ 	          <param name="pageNO">${pageNO}</param>   
+	           <param name="encode">true</param>    
+	          </result>
+	          
+         </action>
+        
+        
+	</package>
+
+</struts>

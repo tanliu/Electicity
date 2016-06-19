@@ -92,6 +92,8 @@ public class TutorAction extends BaseAndExcelAction {
 				Timestamp createtime = new Timestamp(System.currentTimeMillis());
 				tutor.setCreateTime(createtime);
 				
+				//去除可能存在的空格
+				tutorServices.trimTutor(tutor);				
 				//将此对象放入guiContents集合中
 				tutors.add(tutor);
 				
