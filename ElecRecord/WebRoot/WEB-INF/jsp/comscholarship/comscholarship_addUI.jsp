@@ -26,15 +26,15 @@
     <p class="short-input ue-clear">
     	
         <label>姓名：</label>
-        <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名"  /> 
+        <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名" class="strutsinput noNull" /> 
         <label>学号：</label>
-        <input type="text" name="commonScholarship.studentNo" placeholder="请输入学号" /> 
+        <input type="text" name="commonScholarship.studentNo" placeholder="请输入学号" class="strutsinput noNull studentNo"/> 
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>获奖名称：</label>
-        <input  hidden="hidden"  name="commonScholarship.rewardName">
+        <input  hidden="hidden"  name="commonScholarship.rewardName" class="noNull">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -46,7 +46,7 @@
             </ul>
         </div>
        	<label>学期：</label>
-    	 <input  hidden="hidden" value="" name="commonScholarship.term">
+    	 <input  hidden="hidden" value="" name="commonScholarship.term" class="noNull">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -59,7 +59,7 @@
 
 <div class="short-input select ue-clear" >
   <label>专业：</label>
-       <input  hidden="hidden" value="" name="commonScholarship.major">
+       <input  hidden="hidden" value="" name="commonScholarship.major" class="noNull">
         <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -72,7 +72,7 @@
 					</ul>					
 				</div>
 		 <label>学年：</label>
-        <input  hidden="hidden" value="" name="commonScholarship.academicYear">
+        <input  hidden="hidden" value="" name="commonScholarship.academicYear" class="noNull">
       <div class="select-wrap">
 				<div class="select-title ue-clear" >
 					<span id="span1">请选择</span><i class="icon"></i>

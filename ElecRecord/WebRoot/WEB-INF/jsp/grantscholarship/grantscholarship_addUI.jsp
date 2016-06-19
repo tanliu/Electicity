@@ -26,15 +26,15 @@
     <p class="short-input ue-clear">
     	
         <label>姓名：</label>
-        <input type="text" name="grantScholarship.stuName" placeholder="请输入姓名"  /> 
+        <input type="text" name="grantScholarship.stuName" placeholder="请输入姓名" class="strutsinput noNull" /> 
         <label>学号：</label>
-        <input type="text" name="grantScholarship.studentNo" placeholder="请输入学号" /> 
+        <input type="text" name="grantScholarship.studentNo" placeholder="请输入学号" class="strutsinput noNull studentNo"/> 
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>政治面貌：</label>
-        <input  hidden="hidden"  name="grantScholarship.politicalStatus">
+        <input  hidden="hidden"  class="noNull"  name="grantScholarship.politicalStatus">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -45,7 +45,7 @@
             </ul>
         </div>
          <label>性别：</label>
-        <input  hidden="hidden"  name="grantScholarship.sex">
+        <input  hidden="hidden" class="noNull" name="grantScholarship.sex">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -59,7 +59,7 @@
   <div class="short-input select ue-clear" >
         
         <label>学院：</label>
-        <input  hidden="hidden"  name="grantScholarship.orgName">
+        <input  hidden="hidden" class="noNull" name="grantScholarship.orgName">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
            <ul class="select-list" >
@@ -79,7 +79,7 @@
             </ul>
         </div>
          <label>经济困难程度：</label>
-        <input  hidden="hidden"  name="grantScholarship.familyEconomic">
+        <input  hidden="hidden" class="noNull" name="grantScholarship.familyEconomic">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -93,7 +93,7 @@
     </div>
 <div class="short-input select ue-clear" >
   <label>专业：</label>
-       <input  hidden="hidden" value="" name="grantScholarship.major">
+       <input  hidden="hidden" class="noNull" value="" name="grantScholarship.major">
         <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -107,13 +107,13 @@
 				</div>
 		 <label>入学年月：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM'})" readonly="readonly" placeholder="请选择日期" name="grantScholarship.acceptanceDate"/>
+        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM'})" readonly="readonly" placeholder="请选择日期" name="grantScholarship.acceptanceDate" class="noNull"/>
         </div>
     </div>
     
       <div class="short-input select ue-clear" >
         <label>学年：</label>
-        <input  hidden="hidden" value="" name="grantScholarship.academicYear">
+        <input  hidden="hidden"  class="noNull" value="" name="grantScholarship.academicYear">
       <div class="select-wrap">
 				<div class="select-title ue-clear" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -126,7 +126,7 @@
 					</ul>					
 				</div>
 		<label>学期：</label>
-    	 <input  hidden="hidden" value="" name="grantScholarship.term">
+    	 <input  hidden="hidden" class="noNull" value="" name="grantScholarship.term">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -138,7 +138,7 @@
     </div>
    <p class="short-input ue-clear">
         <label>民族：</label>
-        <input type="text" name="grantScholarship.nation" placeholder="请输入姓名"  /> 
+        <input type="text" class="strutsinput noNull" name="grantScholarship.nation" placeholder="请输入姓名"  /> 
     </p>
     <p class="short-input ue-clear">
     	<label >备注：</label>

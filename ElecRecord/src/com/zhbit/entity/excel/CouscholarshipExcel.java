@@ -21,11 +21,11 @@ public class CouscholarshipExcel extends BaseExcelBean implements Cloneable{
 	    @ExcelColumnGroup(type = InnerVo.class)
 	    private List<InnerVo> innerVoArray;
 	    
-	    @Lang(value="学号")
+	    @Lang(value="学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 		private String studentNo;
-	    @Lang(value="姓名")
+	    @Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 		private String stuName;
-	    @Lang(value="性别")
+	    @Lang(value="性别",toExcle={"男","女"},toEntity={"1","0"})
 		private String sex;
 	    @Lang(value="年级")
 		private String grade;
@@ -43,7 +43,7 @@ public class CouscholarshipExcel extends BaseExcelBean implements Cloneable{
 		private String competitionInfo;
 		@Lang(value="担任职务")
 		private String duty;
-		@Lang(value="获奖名称")
+		@Lang(value="获奖名称",isNull=Lang.TYPE_NONULL)
 		private String rewardName;
 		@Lang(value="备注")
 		private String memo;

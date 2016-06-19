@@ -35,16 +35,16 @@
 <div class="main">
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号"  value="${politicalstatus.studentNo}"/> 
+        <input type="text" class="strutsinput noNull studentNo" name="politicalstatus.studentNo" placeholder="请输入学号"  value="${politicalstatus.studentNo}"/> 
         <label>姓名：</label>
-        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名"  value="${politicalstatus.stuName}"/> 
+        <input type="text" class="strutsinput noNull" name="politicalstatus.stuName" placeholder="请输入姓名"  value="${politicalstatus.stuName}"/> 
        
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>政治面貌：</label>
-        <input  hidden="hidden"  value="<s:property value="politicalstatus.politicalStatus"/>" name="politicalstatus.politicalStatus">
+        <input  hidden="hidden" class="noNull" value="<s:property value="politicalstatus.politicalStatus"/>" name="politicalstatus.politicalStatus">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span>${politicalstatus.politicalStatus}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -55,7 +55,7 @@
         </div>
         <label>入党日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   placeholder="请选择日期" name="politicalstatus.joinDate" value="<s:date name="politicalstatus.joinDate" format="yyyy-MM-dd"></s:date>" />
+        	 <input type="text" class="noNull" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"   placeholder="请选择日期" name="politicalstatus.joinDate" value="<s:date name="politicalstatus.joinDate" format="yyyy-MM-dd"></s:date>" />
         </div>
     </div>
 

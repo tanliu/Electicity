@@ -20,16 +20,16 @@ public class PolstatusExcel extends BaseExcelBean implements Cloneable{
 	}
 
 
-	@Lang(value="学号")
+	@Lang(value="学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 		private String studentNo;
 	  
-	  @Lang(value="姓名")
+	  @Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 		private String stuName;
 	  
-	  @Lang(value="入党团日期")
+	  @Lang(value="入党团日期",date=Lang.TYPE_DATE)
 		private String joinDate;
 	  
-	  @Lang(value="政治面貌")
+	  @Lang(value="政治面貌",isNull=Lang.TYPE_NONULL)
 		private String politicalStatus;
 	  
 	  @Lang(value="备注")

@@ -25,15 +25,15 @@
 <div class="main">
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号" /> 
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号" class="strutsinput noNull studentNo"/> 
         <label>姓名：</label>
-        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名"  /> 
+        <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名"  class="strutsinput noNull"/> 
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>政治面貌：</label>
-        <input  hidden="hidden"  name="politicalstatus.politicalStatus">
+        <input  hidden="hidden" class="noNull" name="politicalstatus.politicalStatus">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -45,7 +45,7 @@
         </div>
         <label>入党日期：</label>
         <div class="select-wrap" > 
-        	 <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期" name="politicalstatus.joinDate"/>
+        	 <input type="text" class="noNull" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" placeholder="请选择日期" name="politicalstatus.joinDate"/>
         </div>
     </div>
 

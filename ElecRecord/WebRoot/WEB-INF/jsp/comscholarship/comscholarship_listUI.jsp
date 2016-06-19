@@ -44,12 +44,12 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions staff ue-clear" style="width:20%">
+        <div class="conditions staff ue-clear" style="width:25%">
             <label>姓名：</label>
         <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
         </div>
         
-       <div class="conditions name ue-clear" style="width:20%">
+       <div class="conditions name ue-clear" style="width:25%">
          <label>获奖名称：</label>
         <input  hidden="hidden"  value="${querycon.rewardName}" name="commonScholarship.rewardName" style="width:200px;height:30px">
         <div class="select-wrap">
@@ -64,7 +64,7 @@ table thead tr th{
         </div>
   </div>
   
-  <div class="conditions name ue-clear" style="width:20%">
+  <div class="conditions name ue-clear" style="width:25%">
        <label>专业：</label>
        <input  hidden="hidden" value="${querycon.major}" name="commonScholarship.major">
         <div class="select-wrap">
@@ -186,8 +186,9 @@ function query(){
 	}
 //向couscholarship_delete().action提交信息
 function del(){
+
+	$('.delDialog').Dialog('open');
 	
-	$('.delDialog').Dialog('open'); 
 } 
  </script>
 </html>

@@ -25,9 +25,9 @@
 <div class="main">
     <p class="short-input ue-clear">
     	<label>参训人：</label>
-        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人" /> 
+        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人" class="strutsinput noNull"/> 
        <label>学号：</label>
-        <input type="text" name="traininfoDetail.studentNo" placeholder="请输入学号" />
+        <input type="text" name="traininfoDetail.studentNo" placeholder="请输入学号" class="strutsinput noNull studentNo"/>
     </p>
     <!-- 迭代选择   根据 traininfoMaster的id找到对应的trainTopic-->
      <div class="short-input select ue-clear" >
@@ -46,7 +46,7 @@
 				</div>
 
         <label>培训结果：</label>
-        <input  hidden="hidden"  name="traininfoDetail.trainsResult">
+        <input  hidden="hidden"  class="noNull" name="traininfoDetail.trainsResult">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >

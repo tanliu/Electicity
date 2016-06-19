@@ -13,39 +13,34 @@
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
-<title>国家奖学金基本信息添加</title>
+<title>助学贷款基本信息添加</title>
 </head>
 <body>
 
-<div class="title"><h2>添加国家奖学金基本信息</h2></div>
+<div class="title"><h2>添加国家助学贷款基本信息</h2></div>
 <form id="myForm" method="post">  
-	    <input hidden="hidden" value="<s:property value="1"/>" name="countryScholarship.stuId">
-	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="countryScholarship.creator">
+	    <input hidden="hidden" value="<s:property value="1"/>" name="loanscholarship.stuId">
+	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="loanscholarship.creator">
 	    
 <div class="main">
     <p class="short-input ue-clear">
     	
         <label>姓名：</label>
-        <input type="text" name="countryScholarship.stuName" placeholder="请输入姓名" class="strutsinput noNull"  /> 
+        <input type="text" name="loanscholarship.stuName" placeholder="请输入姓名"  class="strutsinput noNull"/> 
         <label>学号：</label>
-        <input type="text" name="countryScholarship.studentNo" placeholder="请输入学号" class="strutsinput noNull studentNo"/> 
+        <input type="text" name="loanscholarship.studentNo" placeholder="请输入学号" class="strutsinput noNull studentNo"/> 
     </p>
     
+    <p class="short-input ue-clear">
+    	
+        <label>身份证：</label>
+        <input type="text" name="loanscholarship.idCardNo" placeholder="请输入身份证号码" class="strutsinput noNull idCard" /> 
+        <label>班级：</label>
+        <input type="text" name="loanscholarship.className" placeholder="请输入班级 " class="strutsinput noNull"/> 
+    </p>
      <div class="short-input select ue-clear" >
-        
-        <label>政治面貌：</label>
-        <input  hidden="hidden" class="noNull" name="countryScholarship.politicalStatus">
-        <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
-            <ul class="select-list" >
-                <li id="">请选择</li>
-                <li id="共青团员">共青团员</li>
-            	<li id="党员">党员</li>
-                <li id="群众">群众</li>
-            </ul>
-        </div>
          <label>性别：</label>
-        <input  hidden="hidden" class="noNull" name="countryScholarship.sex">
+        <input  hidden="hidden" class="noNull" name="loanscholarship.sex">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -54,12 +49,25 @@
             	<li id="女">女</li>
             </ul>
         </div>
+        <label>年级：</label>
+        <input  hidden="hidden" class="noNull" name="loanscholarship.grade">
+        <div class="select-wrap">
+        	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
+            <ul class="select-list" >
+                <li id="">请选择</li>
+                <li id="2012">2012</li>
+            	<li id="2013">2013</li>
+                <li id="2014">2014</li>
+                <li id="2015">2015</li>
+            </ul>
+        </div>
+        
     </div>
 
   <div class="short-input select ue-clear" >
         
         <label>学院：</label>
-        <input  hidden="hidden"  class="noNull" name="countryScholarship.orgName">
+        <input  hidden="hidden" class="noNull" name="loanscholarship.orgName">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
            <ul class="select-list" >
@@ -78,22 +86,20 @@
                 <li id="布莱恩特学院">布莱恩特学院</li>
             </ul>
         </div>
-         <label>年级：</label>
-        <input  hidden="hidden" class="noNull" name="countryScholarship.grade">
+         <label>贷款金额：</label>
+        <input  hidden="hidden" class="noNull" name="loanscholarship.loanAmount">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
                 <li id="">请选择</li>
-                <li id="2012">2012</li>
-            	<li id="2013">2013</li>
-                <li id="2014">2014</li>
-                 <li id="2015">2015</li>
+                <li id="8000">8000</li>
+            	<li id="6000">6000</li>
             </ul>
         </div>
     </div>
 <div class="short-input select ue-clear" >
   <label>专业：</label>
-       <input  hidden="hidden" class="noNull" value="" name="countryScholarship.major">
+       <input  hidden="hidden"  class="noNull" value="" name="loanscholarship.major">
         <div class="select-wrap">
 				<div class="select-title" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -105,21 +111,21 @@
 					    </s:iterator>
 					</ul>					
 				</div>
-				<label>获奖名称：</label>
-        <input  hidden="hidden"  class="noNull" value="" name="countryScholarship.rewardName" >
+		   <label>是否通过审核：</label>
+        <input  hidden="hidden" class="noNull" name="loanscholarship.censoredFlag">
         <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>请选择</span><i class="icon"></i></div>
+        	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
                 <li id="">请选择</li>
-            	<li id="国家奖学金">国家奖学金</li>
-                <li id="光大奖学金">光大奖学金</li>
+                <li id="是">是</li>
+            	<li id="否">否</li>
             </ul>
         </div>
     </div>
     
       <div class="short-input select ue-clear" >
         <label>学年：</label>
-        <input  hidden="hidden" class="noNull" value="" name="countryScholarship.academicYear">
+        <input  hidden="hidden" class="noNull" value="" name="loanscholarship.academicYear">
       <div class="select-wrap">
 				<div class="select-title ue-clear" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -132,7 +138,7 @@
 					</ul>					
 				</div>
 		<label>学期：</label>
-    	 <input  hidden="hidden" class="noNull" value="" name="countryScholarship.term">
+    	 <input  hidden="hidden" class="noNull" value="" name="loanscholarship.term">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -142,37 +148,20 @@
             </ul>
         </div>
     </div>
-  <p class="short-input ue-clear"> 
-         <label>职务：</label> 
-        <input type="text" name="countryScholarship.duty" placeholder="请输入职务" />  
-    </p> 
-  
     <p class="short-input ue-clear">
-    	<label >本校奖学金情况：</label>
-        <textarea name="countryScholarship.schoolScholarInfo" placeholder="请输入本校奖学金情况"></textarea>
-    </p>
-   <p class="short-input ue-clear">
-    	<label >获省级及省级以上奖学金情况：</label>
-        <textarea name="countryScholarship.provinceScholarIinfo" placeholder="请输入获省级及省级以上奖学金情况"></textarea>
-    </p>
-<p class="short-input ue-clear">
-    	<label >评优获奖情况：</label>
-        <textarea name="countryScholarship.awardInfo" placeholder="请输入评优获奖情况"></textarea>
-    </p>
-<p class="short-input ue-clear">
-    	<label >比赛、竞赛类获奖情况：</label>
-        <textarea name="countryScholarship.competitionInfo" placeholder="请输入比赛、竞赛类获奖情况"></textarea>
+    	<label >被拒绝原因：</label>
+        <textarea name="loanscholarship.refuseReason" placeholder="请输入原因"></textarea>
     </p>
     <p class="short-input ue-clear">
     	<label >备注：</label>
-        <textarea name="countryScholarship.memo" placeholder="请输入备注"></textarea>
+        <textarea name="loanscholarship.memo" placeholder="请输入备注"></textarea>
     </p>
     
 </div>
 
 <div class="btn ue-clear">
 	
-	<a href="javascript:editor('myForm','post','${basePath}couscholarship/couscholarship_add.action')"  class="confirm save">确定</a>
+	<a href="javascript:editor('myForm','post','${basePath}loanscholarship/loanscholarship_add.action')"  class="confirm save">确定</a>
     <a href="javascript:back()" class="clear clear" >返回</a>
 </div>
 </form>

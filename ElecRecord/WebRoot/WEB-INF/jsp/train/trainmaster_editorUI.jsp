@@ -35,15 +35,15 @@
 <div class="main">
     <p class="short-input ue-clear">
     	<label>负责人：</label>
-        <input type="text" name="traininfoMaster.manager" placeholder="请输入负责人"  value="${traininfoMaster.manager}" /> 
+        <input type="text" class="strutsinput noNull" name="traininfoMaster.manager" placeholder="请输入负责人"  value="${traininfoMaster.manager}" /> 
        <label>培训地点：</label>
-        <input type="text" name="traininfoMaster.trainsAddress" placeholder="请输入地点" value="${traininfoMaster.trainsAddress}"/>
+        <input type="text" class="strutsinput noNull" name="traininfoMaster.trainsAddress" placeholder="请输入地点" value="${traininfoMaster.trainsAddress}"/>
     </p>
     
      <div class="short-input select ue-clear" >
         
         <label>培训对象年级：</label>
-        <input  hidden="hidden"  value="<s:property value="traininfoMaster.trainsGrade"/>" name="traininfoMaster.trainsGrade">
+        <input  hidden="hidden"  class="noNull" value="<s:property value="traininfoMaster.trainsGrade"/>" name="traininfoMaster.trainsGrade">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >${traininfoMaster.trainsGrade}</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -56,16 +56,16 @@
         
        
      	<label>培训日期：</label> 
-         <input type="text" value="${traininfoMaster.trainsDate }" name="traininfoMaster.trainsDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/> 
+         <input type="text" class="noNull" value="${traininfoMaster.trainsDate }" name="traininfoMaster.trainsDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/> 
     </div>
     
      <p class="short-input ue-clear">
     	<label >培训主题：</label>
-        <textarea name="traininfoMaster.trainsTopic" placeholder="请输入主题">${traininfoMaster.trainsTopic}</textarea>
+        <textarea name="traininfoMaster.trainsTopic" class="noNull" placeholder="请输入主题">${traininfoMaster.trainsTopic}</textarea>
     </p>
      <p class="short-input ue-clear">
     	<label >培训内容：</label>
-        <textarea name="traininfoMaster.trainsContent" placeholder="请输入内容">${traininfoMaster.trainsContent}</textarea>
+        <textarea name="traininfoMaster.trainsContent" class="noNull" placeholder="请输入内容">${traininfoMaster.trainsContent}</textarea>
     </p>
     
     <p class="short-input ue-clear">
