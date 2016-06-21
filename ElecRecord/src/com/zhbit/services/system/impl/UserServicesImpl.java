@@ -118,12 +118,24 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 				userDao.deleteObjectByIds(userId);*/
 				List<User> users=new ArrayList<User>();
 				User user=findObjectById(userId);
-				user.getUserRoles().remove(user);
+/*				user.getUserRoles().remove(user);*/
+				user.setStatus(0);
 				users.add(user);
-				deleteObjectByCollection(users);
+				//deleteObjectByCollection(users);
 			}
 		}
 		
+	}
+
+	@Override
+	public String transform(User user) {
+		String result=null;
+		user=findObjectById(user.getUserId());
+		if(user!=null){
+			result=user.getStatus()==1?"0":"1";
+			user.setStatus(user.getStatus()==1?0:1);
+		}
+		return result;
 	}
 
 

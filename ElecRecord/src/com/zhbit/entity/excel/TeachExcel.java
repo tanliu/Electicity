@@ -60,7 +60,7 @@ public class TeachExcel extends BaseExcelBean implements java.io.Serializable,Cl
 	private String qualificationFlag;
 	@Lang(value="教师级别")
 	private String level;
-	@Lang(value="是否实验室人员")
+	@Lang(value="是否实验室人员",toExcle={"是","否"},toEntity={"Y","N"})
 	private String isLab;
 	@Lang(value="是否外聘")
 	private String isOutHire;

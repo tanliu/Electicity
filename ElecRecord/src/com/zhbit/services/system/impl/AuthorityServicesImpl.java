@@ -66,8 +66,8 @@ public class AuthorityServicesImpl extends BaseServicesImpl<Authority> implement
 		if(authorities!=null&&authorities.size()>0){
 			//能过权限查找到角色权限表中的信息
 			for (Authority authority : authorities) {
-				String[] fields={""};
-				String[] params={};
+				String[] fields={"authorityId=?"};
+				String[] params={authority.getAuthorityId()};
 				List<RoleAuthority> roleAuthorities =roleAuthotityServices.findObjectByFields(fields, params);
 				if(roleAuthorities!=null&& roleAuthorities.size()>0){
 					roleAuthotityServices.deleteObjectByCollection(roleAuthorities);

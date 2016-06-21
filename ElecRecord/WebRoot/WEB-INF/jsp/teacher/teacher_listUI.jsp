@@ -78,9 +78,9 @@ table thead tr th{
 </div>
 
 <div class="table-operate ue-clear">
-	<a href="${basePath}teacher/teacher_addUI.action" class="add">添加</a>
-    <a href="javascript:deleteItem()" class="del">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+	<a:if url="/teacher/teacher_add.action"><a href="${basePath}teacher/teacher_addUI.action" class="add">添加</a></a:if>
+    <a:if url="/teacher/teacher_delete.action"><a href="javascript:deleteItem()" class="del">删除</a></a:if>
+    <a:if url="/teacher/teacher_importExcel.action"><a href="javascript:" class="import clear clear">导入</a></a:if>
 <!--     <a href="javascript:;" class="count">统计</a>
     <a href="javascript:;" class="check">审核</a> -->
 </div>
@@ -88,23 +88,23 @@ table thead tr th{
 	<table>
     	<thead>
         	<tr>
-			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+			<a:if url="/teacher/teacher_editor.action"> <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
             	<th width="8%">工号</th>
 				<!-- <th class="class">上级机构</th> -->
                 <th width="8%" >姓名</th>
-				<th width="8%" align="center">性别</th>
+				<th width="5%" align="center">性别</th>
 				<th width="15%" >学院</th>
-				<th width="8%" align="center">职务</th>
+				<th width="13%" align="center">职务</th>
 				<th width="8%" >联系电话</th>
-				<th width="10%" >政治面貌</th>
+				<th width="8%" >政治面貌</th>
 				<th width="12%" >毕业院校</th>
-				<th width="5%">编辑</th>				
+				<a:if url="/teacher/teacher_editor.action"><th width="5%">编辑</th></a:if>				
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="teacher">
         	<tr>
-			 <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#teacher.id'/>' /></th>
+			<a:if url="/teacher/teacher_editor.action"> <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#teacher.id'/>' /></th></a:if>
             	<td><a href="javascript:detail('<s:property value='#teacher.id'/>')"><s:property value="#teacher.employNo"/></a></td>
 				<td ><s:property value="#teacher.employName"/></td>
 				<td><s:property value="#teacher.sex"/></td>
@@ -113,7 +113,7 @@ table thead tr th{
 				<td><s:property value="#teacher.telNo"/></td>
 				<td><s:property value="#teacher.politicalStatus"/></td>
 				<td><s:property value="#teacher.graduate"/></td>
-				<td><a href="javascript:editor('<s:property value='#teacher.id'/>')"><img src="../images/edtico.png"/></a></td>
+				<a:if url="/teacher/teacher_editor.action"><td><a href="javascript:editor('<s:property value='#teacher.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.system.LoginLogDao;
 import com.zhbit.entity.LoginLog;
+import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.system.LoginLogService;
 
 /** 
@@ -25,9 +26,13 @@ import com.zhbit.services.system.LoginLogService;
  * @version 
  */
 @Service(value=LoginLogService.SERVICES_NAME)
-public class LoginLogServiceImpl implements LoginLogService {
-	@Resource(name=LoginLogDao.DAO_NAME)
+public class LoginLogServiceImpl extends BaseServicesImpl<LoginLog> implements LoginLogService  {
 	LoginLogDao loginLogDao;
+	@Resource(name=LoginLogDao.DAO_NAME)
+	public void setLoginLogDao(LoginLogDao loginLogDao) {
+		setBaseDao(loginLogDao);
+		this.loginLogDao = loginLogDao;
+	}
 
 	@Override
 	public List<LoginLog> findLoginLogByUserNO(String employNo) {

@@ -85,17 +85,21 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 				//System.out.println(Excelmap);
 				//装载数据
 				for(int row=config.getStartRow();row<sheet.getRows();row++){
+					Boolean flag=false;
 					for(int colum=0;colum<sheet.getColumns();colum++){
 						String value=sheet.getCell(colum,row).getContents();
 						Field field=(Field) Excelmap.get(colum);
 
 						if(field!=null&&value!=null){
+							if(value!=null&&!"".equals(value)){
+								flag=true;
+							}
 							field.setAccessible(true);							
 							field.set(object, value);							
 							field.setAccessible(false);
 						}
 					}			
-					
+					if(!flag)continue;
 					Method rowmethod=object.getClass().getSuperclass().getDeclaredMethod("setRow", String.class);
 					rowmethod.setAccessible(true);
 					rowmethod.invoke(object, row+"");
@@ -300,6 +304,11 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 						if(value!=null&&!"".equals(value)){
 							target.set(object, Integer.parseInt(value));							
 						}
+					}else if("double".equals(type)||"Double".equals(type)){
+						target.set(object, 0.0);
+						if(value!=null&&!"".equals(value)){
+							target.set(object, Double.parseDouble(value));							
+						}
 					}else if("Timestamp".equals(type)){
 						if(value!=null&&!"".equals(value)){							
 							String fromat=null;
@@ -313,6 +322,10 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 								}else{
 									fromat="yyyyMMdd";
 								}
+								if(value.contains(":")){
+									fromat=fromat+" hh:mm:ss";
+								}
+								
 							}
 							if(fromat!=null){
 								SimpleDateFormat sdf=new SimpleDateFormat(fromat);

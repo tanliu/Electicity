@@ -7,11 +7,14 @@
             <column name="id" length="32" />
             <generator class="uuid.hex" />
         </id>
+        
         <property name="courseCode" type="java.lang.String">
             <column name="courseCode" length="20">
                 <comment>课程代码</comment>
             </column>
         </property>
+        
+        
         <property name="courseName" type="java.lang.String">
             <column name="courseName" length="100">
                 <comment>课程名称</comment>

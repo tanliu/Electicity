@@ -33,7 +33,7 @@
     </div>
     <div id="bd">
     	<div class="wrap ue-clear">
-        	<div class="sidebar">
+        	<div class="sidebar" id="mynav" >
             	<h2 class="sidebar-header"><p>功能导航</p></h2>
                 <ul class="nav">
                 	<li class="office current"><div class="nav-header"><a href="javascript:;" date-src="${basePath}system/login_personInfo.action" class="ue-clear"><span>个人信息</span><i class="icon"></i></a></div></li>
@@ -96,8 +96,7 @@
 var treeData =[
      	];
 
-$(function(){
-	
+$(function(){	
 	$.ajax({
 		url:"${basePath}system/login_menu.action",
 		type:"post",
@@ -125,6 +124,8 @@ $(function(){
 
 
 });
+
+
 </script>
 </body>
 

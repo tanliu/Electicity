@@ -24,7 +24,7 @@
 	       </interceptor-stack>
 	     </interceptors> 
 		<!-- 覆盖底层的拦截器栈 对包中的所有action都有效 -->
-	<!-- 	<default-interceptor-ref name="myAuthorityInterceptor"/> -->
+	 	<default-interceptor-ref name="myAuthorityInterceptor"/> 
 	
 	   	  <global-results>
 	    	<result name="error">/WEB-INF/error.jsp</result>
@@ -126,7 +126,7 @@
          </action>
          <!-- 登录管理 -->
          <action name="login_*" class="loginAction" method="{1}">
-               <interceptor-ref name="myAuthorityInterceptor"></interceptor-ref>
+              <!--  <interceptor-ref name="myAuthorityInterceptor"></interceptor-ref> -->
               <result name="failLogin">/WEB-INF/jsp/system/login.jsp</result>
               <result name="home">/WEB-INF/jsp/system/home.jsp</result>
               <result name="personInfo">/WEB-INF/jsp/system/personInfo.jsp</result>
@@ -137,6 +137,10 @@
               <result name="menujson" type="json">
 				<param name="includeProperties">\[\d+\]\.authorityId,\[\d+\]\.parentId,\[\d+\]\.authorityName,\[\d+\]\.url</param>
             </result>
+         </action>
+         <!-- 登录日志管理 -->
+         <action name="log_*" class="loginLogAction" method="{1}">
+              <result name="listUI">/WEB-INF/jsp/system/log_listUI.jsp</result>
          </action>
 	</package>
 

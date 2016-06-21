@@ -13,19 +13,44 @@
         <property name="stuId" type="java.lang.String">
             <column name="stu_id" length="32" />
         </property>
+        <property name="selectId" type="java.lang.String">
+            <column name="select_Id" length="32" />
+        </property>
+        
         <property name="studentNo" type="java.lang.String">
             <column name="studentNo" length="16" not-null="true">
                 <comment>学号</comment>
             </column>
         </property>
-        <property name="selectedCourseNo" type="java.lang.String">
+         <property name="selectedCourseNo" type="java.lang.String">
             <column name="selectedCourseNo" length="50">
                 <comment>选课课号</comment>
             </column>
-        </property>
+        </property> 
         <property name="stuName" type="java.lang.String">
             <column name="stuName" length="20" />
         </property>
+        <property name="employNo" type="java.lang.String">
+            <column name="employ_no" length="10">
+                <comment>教师工号</comment>
+            </column>
+        </property>
+        <property name="employName" type="java.lang.String">
+            <column name="employ_name" length="64">
+                <comment>教师姓名</comment>
+            </column>
+        </property>
+                <property name="courseType" type="java.lang.String">
+            <column name="courseType" length="20">
+                <comment>课程性质</comment>
+            </column>
+        </property>
+        <property name="courseName" type="java.lang.String">
+            <column name="courseName" length="100">
+                <comment>课程名称</comment>
+            </column>
+        </property>
+        
         <property name="orgId" type="java.lang.String">
             <column name="org_id" length="32">
                 <comment>学院id</comment>

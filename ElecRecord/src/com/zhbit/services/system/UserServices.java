@@ -48,5 +48,12 @@ public interface UserServices extends BaseServices<User> {
 	 * @param selectedRow
 	 */
 	public void deleteUser(String[] selectedRow);
+
+	/**
+	 * 方法描述:激活与关闭的转换
+	 * @param user
+	 * @return
+	 */
+	public String transform(User user);
     
 }

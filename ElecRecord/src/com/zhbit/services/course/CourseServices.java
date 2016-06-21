@@ -6,6 +6,7 @@ package com.zhbit.services.course;
 import java.util.List;
 
 import com.zhbit.entity.Course;
+import com.zhbit.entity.CourseGrade;
 import com.zhbit.services.BaseServices;
 
 /** 
@@ -42,4 +43,19 @@ void updateCourse(Course course);
  */
 void saveFromExcel(List<Object> courses, String creator);
 
+/**
+ * 方法描述:
+ */
+Course getCourseBySelectId(String selectId);
+
+/**
+ * 方法描述:保存选课学生的信息
+ * @param course
+ * @param grades
+ * @param gradesIds
+ * @param creator
+ */
+void saveSelectInfo(Course course, List<CourseGrade> grades, String[] gradesIds, String creator);
+
 }
+

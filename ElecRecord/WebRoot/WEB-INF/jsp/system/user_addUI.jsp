@@ -50,7 +50,7 @@
 			<div class="short-input select ue-clear">
 				<label>密码：</label>
 				<div class="select-wrap">
-					<s:password value="" name="user.password" class="strutsinput"></s:password>
+					<s:password  name="user.password" class="strutsinput"></s:password>
 				</div>
 				<label>用户类型：</label>
 				<input class="noNull"  hidden="hidden" value="" name="user.userType">

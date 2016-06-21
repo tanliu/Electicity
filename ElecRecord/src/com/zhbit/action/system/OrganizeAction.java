@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.zhbit.action.BaseAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Authority;
 import com.zhbit.entity.Organization;
 import com.zhbit.services.system.OrganizeServices;
@@ -50,6 +51,7 @@ public class OrganizeAction extends BaseAction {
 
 	
 	@Override
+	@Limit(url="/system/organize_listUI.action")
 	public String listUI() {
 		
 		return "listUI";
@@ -81,6 +83,7 @@ public class OrganizeAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/organize_listUI.action")
 	public String add() {
 		if(organize!=null){  //organize不为空
             //如果有父结点
@@ -106,6 +109,7 @@ public class OrganizeAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/organize_listUI.action")
 	public String delete() {
 		return null;
 	}
@@ -137,6 +141,7 @@ public class OrganizeAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/organize_listUI.action")
 	public String editor() {
 		organizeServices.editorNode(oldparentId,organize);
 		ActionContext.getContext().getValueStack().push(organize);

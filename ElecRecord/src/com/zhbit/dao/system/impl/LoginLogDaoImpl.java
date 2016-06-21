@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.zhbit.dao.BaseDaoImpl;
 import com.zhbit.dao.system.LoginLogDao;
 import com.zhbit.entity.LoginLog;
 
@@ -26,12 +27,7 @@ import com.zhbit.entity.LoginLog;
  * @version 
  */
 @Repository(value=LoginLogDao.DAO_NAME)
-public class LoginLogDaoImpl extends HibernateDaoSupport implements LoginLogDao {
-
-	@Resource(name="sessionFactory")
-	public void setDi(SessionFactory sessionFactory){
-		this.setSessionFactory(sessionFactory);
-	}
+public class LoginLogDaoImpl extends BaseDaoImpl<LoginLog> implements LoginLogDao {
 
 	@Override
 	public List<LoginLog> findLoginLogByUserNO(String employNo) {
@@ -39,8 +35,5 @@ public class LoginLogDaoImpl extends HibernateDaoSupport implements LoginLogDao 
 		return getHibernateTemplate().find(Hql);
 	}
 
-	@Override
-	public void save(LoginLog loginLog) {
-           getHibernateTemplate().save(loginLog);		
-	}
+
 }

@@ -19,16 +19,19 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Course;
 import com.zhbit.entity.CourseGrade;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.Teacher;
 import com.zhbit.entity.excel.CourseExcel;
-import com.zhbit.entity.excel.TeachExcel;
+import com.zhbit.entity.excel.CourseGradeExcel;
 import com.zhbit.excel.ExcelConfig;
+import com.zhbit.services.course.CourseGradeServices;
 import com.zhbit.services.course.CourseServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.services.teacher.TeacherServices;
+import com.zhbit.util.AjaxReturnUtils;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.QueryUtils;
 import com.zhbit.util.RequestUtils;
@@ -55,6 +58,7 @@ public class CourseAction extends BaseAndExcelAction {
 	private String courseNO;
 	private String studyYear;
 	private String courseName;
+	private String[] gradesIds;
 	
 	
 	@Resource(name=CourseServices.SERVICES_NAME)
@@ -64,8 +68,12 @@ public class CourseAction extends BaseAndExcelAction {
 	@Resource(name=TeacherServices.SERVICES_NAME)
 	TeacherServices teacherServices;
 	
+	@Resource(name=CourseGradeServices.SERVICE_NAME)
+	CourseGradeServices gradeServices;
+	
 	
 	@Override
+	@Limit(url="/course/course_importExcel.action")
 	public String importExcel() {
 		try {
 			ExcelConfig excelConfig=new ExcelConfig(CourseExcel.class, "Sheet1",1, new FileInputStream(excel),excelFileName);
@@ -94,6 +102,34 @@ public class CourseAction extends BaseAndExcelAction {
 		}
 		return "excelSuccess";
 	}
+	public String importGradeExcel() {
+		try {
+			ExcelConfig excelConfig=new ExcelConfig(CourseGradeExcel.class, "1",2, new FileInputStream(excel),excelFileName);
+			List<Object> objects=excelServicesMake.parseExcel(excelConfig);
+			Map<String, String> viladationExcel = excelServicesMake.viladationExcel(objects);
+			//对数据的校验
+			if(viladationExcel.size()>0){
+				for (Iterator<Entry<String, String>> iterator=viladationExcel.entrySet().iterator();iterator.hasNext();) {
+					Entry<String, String> entry=iterator.next();
+					this.addActionError(entry.getKey()+":"+entry.getValue());
+				}
+				//出错
+				return "excelError";
+			}
+			//数据的转换
+			List<Object> grades = excelServicesMake.toDBEnity(objects,CourseGrade.class);
+			
+			String creator=RequestUtils.getUserName(request);
+			gradeServices.saveGradeFromExcel(grades,creator);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "excelSuccess";
+	}
 
 	@Override
 	public void exportExcel() {
@@ -101,6 +137,7 @@ public class CourseAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/course/course_listUI.action")
 	public String listUI() {
 		setPageSize(10);
 		if(queryNO!=null&&qeuryName!=null&&courseName!=null&&courseNO!=null&&studyYear!=null){
@@ -129,6 +166,7 @@ public class CourseAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/course/course_add.action")
 	public String addUI() {
 
 		//生成学年
@@ -152,6 +190,7 @@ public class CourseAction extends BaseAndExcelAction {
 	}
 	
 	@Override
+	@Limit(url="/course/course_add.action")
 	public String add() {
 		if(course!=null){
 			String creator=RequestUtils.getUserName(request);
@@ -161,12 +200,16 @@ public class CourseAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/course/course_delete.action")
 	public String delete() {
-		// TODO Auto-generated method stub
+		if(selectedRow!=null&&selectedRow.length>0){
+			courseServices.deleteObjectByIds(selectedRow);
+		}
 		return "list";
 	}
 
 	@Override
+	@Limit(url="/course/course_editor.action")
 	public String editorUI() {
 		if(course!=null&&!StringUtils.isBlank(course.getId())){
 			course=courseServices.findObjectById(course.getId());
@@ -183,10 +226,16 @@ public class CourseAction extends BaseAndExcelAction {
 	}
 	
 	public String selectUI(){
+		if(course!=null&&!StringUtils.isBlank(course.getId())){
+			//查找到选课信息
+			grades=gradeServices.getSelectCourseBySelectNO(course.getId());
+			
+		}		
 		return "selectUI";
 	}
 
 	@Override
+	@Limit(url="/course/course_editor.action")
 	public String editor() {
 		if(course!=null){
 			courseServices.updateCourse(course);			
@@ -198,6 +247,28 @@ public class CourseAction extends BaseAndExcelAction {
 	public String deleteAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public String updateSelect(){
+		if(course!=null){
+			String creator=RequestUtils.getUserName(request);
+			courseServices.saveSelectInfo(course,grades,gradesIds,creator);
+		}
+		
+		AjaxReturnUtils.returnResult(response, "1");
+		
+		return null;
+	}
+	
+	/**
+	 * 方法描述:信息详细
+	 * @return
+	 */
+	public String detailUI(){
+		if(course!=null){
+			course=courseServices.findObjectById(course.getId());
+		}
+		return "detailUI";
 	}
 	//----------------------getter&&setter-----------------------------
 
@@ -256,6 +327,15 @@ public class CourseAction extends BaseAndExcelAction {
 	public void setGrades(List<CourseGrade> grades) {
 		this.grades = grades;
 	}
+
+	public String[] getGradesIds() {
+		return gradesIds;
+	}
+
+	public void setGradesIds(String[] gradesIds) {
+		this.gradesIds = gradesIds;
+	}
+	
 	
 	
 	

@@ -4,7 +4,7 @@
 <html>
 <head>
     
-<title>用户信息列表</title>
+<title>学生信息列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -61,7 +61,7 @@ table thead tr th{
 
 
 <body>
-<div class="title"><h2>用户信息列表</h2></div>
+<div class="title"><h2>学生信息列表</h2></div>
 <form id="queryForm" action="${basePath}student/student_listUI.action" method="post">
 <div class="query">
     <div class="main">     
@@ -79,10 +79,10 @@ table thead tr th{
 </div>
 
 <div class="table-operate ue-clear">
-	<a href="${basePath}student/student_addUI.action" class="add">添加</a>
-    <a href="javascript:deleteItem()" class="del">删除</a>
-    <a href="javascript:" id="importstudent" class="import clear clear">导入学生信息</a>
-    <a href="javascript:" id="importfamily" class="import clear clear">导入家庭信息</a>
+	<a:if url="/student/student_add.action"><a href="${basePath}student/student_addUI.action" class="add">添加</a></a:if>
+   <a:if url="/student/student_delete.action"> <a href="javascript:deleteItem()" class="del">删除</a></a:if>
+   <a:if url="/student/student_importExcel.action"> <a href="javascript:" style=" width:100px; " id="importstudent" class="import clear clear">导入学生信息</a></a:if>
+    <a:if url="/student/student_importExcel.action"><a href="javascript:" style=" width:100px; " id="importfamily" class="import clear clear">导入家庭信息</a></a:if>
 <!--     <a href="javascript:;" class="count">统计</a>
     <a href="javascript:;" class="check">审核</a> -->
 </div>
@@ -90,22 +90,21 @@ table thead tr th{
 	<table>
     	<thead>
         	<tr>
-			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+			 <a:if url="/student/student_editor.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
             	<th width="8%">学号</th>
-				<!-- <th class="class">上级机构</th> -->
                 <th width="8%" >姓名</th>
 				<th width="15%" >学院</th>
 				<th width="15%" align="center">专业</th>
 				<th width="16%" >班级</th>
 				<th width="8%" align="center">性别</th>
 				<th width="8%" >入学日期</th>
-				<th width="5%">编辑</th>				
+				<a:if url="/student/student_editor.action"><th width="5%">编辑</th>	</a:if>			
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="student">
         	<tr>
-			 <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#student.stuId'/>' /></th>
+			<a:if url="/student/student_editor.action"> <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#student.stuId'/>' /></th></a:if>
             	<td><a href="javascript:detail('<s:property value='#student.stuId'/>')"><s:property value="#student.studentNo"/></a></td>
 				<td ><s:property value="#student.stuName"/></td>
 				<td><s:property value="#student.orgName"/></td>
@@ -113,7 +112,7 @@ table thead tr th{
 				<td><s:property value="#student.className"/></td>
 				<td><s:property value="#student.sex"/></td>
 				<td> <s:date name="#student.acceptanceDate" format="yyyy-MM-dd"/> </td>
-				<td><a href="javascript:editor('<s:property value='#student.stuId'/>')"><img src="../images/edtico.png"/></a></td>
+				<a:if url="/student/student_editor.action"><td><a href="javascript:editor('<s:property value='#student.stuId'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>

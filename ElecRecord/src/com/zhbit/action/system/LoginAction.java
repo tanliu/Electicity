@@ -80,6 +80,11 @@ public class LoginAction extends ActionSupport {
 			   User user=users.get(0);
 
 			   if(password.equals(user.getPassword())&&username.equals(user.getEmployNo())){
+				   //判断当前用户的状态
+				   if(user.getStatus()==0){
+					    this.addFieldError("error", "当前用户已经被注销");
+						return "failLogin";
+				   }
 				   //------------------------存在这个用户时判断这个用户有没有分配了角色-------------------------------------------
 				   Hashtable<String, String> userRoleht = new Hashtable<String, String>();
 				   Set<UserRole> userRoles=user.getUserRoles();

@@ -5,6 +5,7 @@ package com.zhbit.dao.system;
 
 import java.util.List;
 
+import com.zhbit.dao.BaseDao;
 import com.zhbit.entity.LoginLog;
 
 /** 
@@ -18,10 +19,9 @@ import com.zhbit.entity.LoginLog;
  * 修改备注： 
  * @version 
  */
-public interface LoginLogDao {
+public interface LoginLogDao extends BaseDao<LoginLog> {
 	public final static String DAO_NAME="com.zhbit.dao.system.LoginLogDaoImpl";
 	
 	public List<LoginLog> findLoginLogByUserNO(String employNo);
-	public void save(LoginLog loginLog);
 
 }

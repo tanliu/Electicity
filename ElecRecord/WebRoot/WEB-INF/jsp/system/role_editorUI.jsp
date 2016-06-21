@@ -28,6 +28,18 @@ fieldset {
     color:#333; 
     border:#06c solid 1px;
 } 
+.main p input[type="text"] {
+	width: 180px;
+}
+
+.main p label {
+	float: left;
+	width: 100px;
+	text-align:right;
+}
+.btn {
+	padding: 13px 0 10px 300px;
+}
 </style>
   <SCRIPT type="text/javascript" >
   <!--
@@ -49,7 +61,7 @@ fieldset {
 			enable: true,
 			autoCheckTrigger : true,
 			chkStyle : "checkbox",
-			chkboxType : {"Y": "ps", "N": "ps"},
+			chkboxType : {"Y": "ps", "N": "s"},
 		},
 		data: {
 			simpleData: {
@@ -237,7 +249,7 @@ fieldset {
 		<TD  style="overflow:auto;border: 0;width:100%">
 			<p class="short-input ue-clear">
 				<label>角色名称：</label>
-				<s:textfield  name="role.roleName" class="strutsinput noNull"></s:textfield>	
+				<s:textfield  name="role.roleName" class="strutsinput noNull" ></s:textfield>	
 								<label>角色编号：</label>
 				<s:textfield  name="role.roleNo" class="strutsinput noNull"></s:textfield>	
 				<label>备注信息：</label>

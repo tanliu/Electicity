@@ -1,12 +1,12 @@
-ï»¿html {
+html {
 *overflow:auto;
 	min-width: 1020px;
 }
 body {
-	font-family: 'å¾®è½¯é›…é»‘';
+	font-family: 'Î¢ÈíÑÅºÚ';
 	background: #2a83cf;
 }
-/*é¡µé¢å¤´éƒ¨*/
+/*Ò³ÃæÍ·²¿*/
 #hd {
 	height: 74px;
 	background: url(../images/topbg.png) repeat-x;
@@ -103,7 +103,7 @@ h1 {
 	width: 39px;
 	background: url(../images/exit.png) no-repeat left top;
 }
-/*é¡µé¢ä¸»ä½“*/
+/*Ò³ÃæÖ÷Ìå*/
 #bd {
 	padding-top: 6px;
 	margin: 0 4px;
@@ -115,7 +115,7 @@ h1 {
 	padding-right: 6px;
 	background: url(../images/centerbottombg.png) repeat-x left bottom;
 }
-/*å·¦ä¾§æ å¯¼èˆª*/
+/*×ó²àÀ¸µ¼º½*/
 .sidebar {
 	height: 100%;
 	float: left;
@@ -136,7 +136,7 @@ h1 {
 	font-weight: bold;
 	background: url(../images/icon0.png) no-repeat left center;
 }
-/*ä¸»å¯¼èˆª*/
+/*Ö÷µ¼º½*/
 .sidebar .nav {
 	border: 1px solid #bdd0db;
 	border-top: none;
@@ -200,7 +200,7 @@ h1 {
 .sidebar .nav>li.system .nav-header a {
 	background: url(../images/ico07.png) no-repeat left center;
 }
-/*å­å¯¼èˆª*/
+/*×Óµ¼º½*/
 .sidebar .nav>li .subnav {
 	display: none;
 	padding: 6px 0 11px 0;
@@ -223,10 +223,11 @@ h1 {
 }
 .content {
 	float: left;
+
 	width: 100%;
 	overflow: auto;
 }
-/*é¡µé¢åº•éƒ¨*/
+/*Ò³Ãæµ×²¿*/
 #ft {
 	height: 25px;
 	line-height: 22px;
@@ -255,7 +256,7 @@ h1 {
 	padding-right: 10px;
 	background: url(../images/foot02.png) no-repeat right center;
 }
-/*å¼¹çª—å†…å®¹æ ·å¼*/
+/*µ¯´°ÄÚÈİÑùÊ½*/
 .dialog-content .buttons {
 	margin-top: 30px;
 }

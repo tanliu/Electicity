@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.Teacher;
 import com.zhbit.entity.excel.TeachExcel;
@@ -57,6 +58,7 @@ public class TeacherAction extends BaseAndExcelAction{
 	SystemDllServices systemDllServices;
 	
 	@Override
+	@Limit(url="/teacher/teacher_importExcel.action")
 	public String importExcel() {
 		try {
 			ExcelConfig excelConfig=new ExcelConfig(TeachExcel.class, "教师信息维护",2, new FileInputStream(excel),excelFileName);
@@ -93,6 +95,7 @@ public class TeacherAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/teacher/teacher_listUI.action")
 	public String listUI() {
 		setPageSize(10);
 		if(queryNO!=null&&qeuryName!=null){
@@ -117,6 +120,7 @@ public class TeacherAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/teacher/teacher_add.action")
 	public String addUI() {
 		//给数据字典加数据
 		List<SystemDll> majors=systemDllServices.findSystemDllByKeyword("专业");
@@ -131,6 +135,7 @@ public class TeacherAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/teacher/teacher_add.action")
 	public String add() {
 		if(teacher!=null){
 			String creator=RequestUtils.getUserName(request);
@@ -142,12 +147,14 @@ public class TeacherAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/teacher/teacher_delete.action")
 	public String delete() {
 		// TODO Auto-generated method stub
 		return "list";
 	}
 
 	@Override
+	@Limit(url="/teacher/teacher_editor.action")
 	public String editorUI() {
 		if(teacher==null||StringUtils.isBlank(teacher.getId())){
 			return "addUI";
@@ -184,6 +191,7 @@ public class TeacherAction extends BaseAndExcelAction{
 	}
 	
 	@Override
+	@Limit(url="/teacher/teacher_editor.action")
 	public String editor() {
 		if(teacher!=null){
 			teacherServies.update(teacher);
@@ -196,6 +204,13 @@ public class TeacherAction extends BaseAndExcelAction{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public String detailUI(){
+		if(teacher!=null){
+			teacher=teacherServies.findObjectById(teacher.getId());
+		}
+		return "detailUI";
+	}
+	
 	//-----------------------gette&&setter----------------------
 
 	public String getQueryNO() {

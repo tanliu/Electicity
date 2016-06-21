@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zhbit.action.BaseAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Authority;
 import com.zhbit.entity.Role;
 import com.zhbit.entity.RoleAuthority;
@@ -50,7 +51,7 @@ public class RoleAction extends BaseAction {
 	AuthorityServices authorityServices;
 	@Resource(name=RoleServices.SEVICES_NAME)
 	RoleServices roleServices;
-	
+	@Limit(url="/system/role_listUI.action")
 	public String listUI(){
 	
 		pageUtils=roleServices.getPageUtils(querycon,getPageNO(),getPageSize());
@@ -69,7 +70,7 @@ public class RoleAction extends BaseAction {
 	public String addUI() {
 		return "addUI";
 	}
-
+	@Limit(url="/system/role_listUI.action")
 	public String add(){
 		if(role!=null){
 			role.setCreateTime(new Timestamp(new Date().getTime()));
@@ -79,6 +80,7 @@ public class RoleAction extends BaseAction {
 		return null;
 	}
 	@Override
+	@Limit(url="/system/role_listUI.action")
 	public String delete() {
 		if(selectedRow!=null&&selectedRow.length>0){
 			roleServices.deleteRole(selectedRow);
@@ -100,6 +102,7 @@ public class RoleAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/role_listUI.action")
 	public String editor() {
 	  roleServices.editorRole(role,authoritys);
       //修改结束后

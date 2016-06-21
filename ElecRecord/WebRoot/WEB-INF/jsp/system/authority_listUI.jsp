@@ -23,15 +23,18 @@ text-align:center;
 }
 frame{
 	margin: 10px;
-	padding: 20px;
+	margin-top: 0px;
+	padding: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 </style>
 </head>
 
 <frameset id="test" name="test" cols="15%,75%">
-  <frame src="${basePath}/system/authority_tree.action" id="privilige" name="privilige" frameborder="0" scrolling="no"></frame>
-  <frameset rows="50%,50%">
-  <frame style="padding-bottom: 0px;" src="${basePath}/system/authority_editorUI.action" id="editor" name="editor"  marginheight="" marginwidth="" frameborder="0" scrolling="yes">
+  <frame src="${basePath}/system/authority_tree.action" id="privilige" name="privilige" frameborder="0"  scrolling="yes"></frame>
+  <frameset rows="50%,50%" >
+  <frame style="padding-bottom: 0px;" src="${basePath}/system/authority_editorUI.action" id="editor" name="editor"    marginheight="" marginwidth="" frameborder="0" scrolling="yes">
   <frame style="padding-top: 5px;" src="${basePath}/system/authority_addUI.action" id="add" name="add" frameborder="0" scrolling="yes">
   </frameset>
 </frameset> 

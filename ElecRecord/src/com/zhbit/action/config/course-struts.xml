@@ -7,7 +7,7 @@
 
 	<!-- 配置全局结果及异常映射 -->
 	<package name="course" namespace="/course" extends="json-default">
-         <!-- 学生信息管理 -->
+         <!-- 开课信息信息管理 -->
          <action name="/course_*" class="courseAction" method="{1}">            
             <result name="{1}">/WEB-INF/jsp/course/course_{1}.jsp</result>
             <result name="list" type="redirectAction">
@@ -20,6 +20,25 @@
 	             <param name="pageNO">${pageNO}</param>
             </result>
             <result name="teacherjson" type="json">
+            </result>
+            <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
+            <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>
+         </action>
+         <!-- 选课信息管理 -->
+         <action name="/coursegrade_*" class="courseGradeAction" method="{1}">            
+            <result name="{1}">/WEB-INF/jsp/course/coursegrade_{1}.jsp</result>
+            <result name="list" type="redirectAction">
+                 <param name="actionName">course_listUI</param>  
+	             <param name="queryNO">${queryNO}</param>
+	             <param name="qeuryName">${qeuryName}</param>
+	             <param name="courseNO">${courseNO}</param>
+	             <param name="studyYear">${studyYear}</param>
+	             <param name="courseName">${courseName}</param>
+	             <param name="pageNO">${pageNO}</param>
+            </result>
+            <result name="coursejson" type="json">
+            </result>
+            <result name="studentjson" type="json">
             </result>
             <result name="excelError">/WEB-INF/jsp/common/excelerror.jsp</result>
             <result name="excelSuccess">/WEB-INF/jsp/common/excelsuccess.jsp</result>

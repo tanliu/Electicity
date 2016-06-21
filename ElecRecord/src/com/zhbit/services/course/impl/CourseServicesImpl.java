@@ -12,13 +12,18 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.course.CourseDao;
 import com.zhbit.entity.Course;
+import com.zhbit.entity.CourseGrade;
 import com.zhbit.entity.Familyinfo;
+import com.zhbit.entity.Student;
 import com.zhbit.services.BaseServicesImpl;
+import com.zhbit.services.course.CourseGradeServices;
 import com.zhbit.services.course.CourseServices;
+import com.zhbit.services.student.StudentServices;
 
 /** 
  * 项目名称：ElecRecord
@@ -40,6 +45,12 @@ public class CourseServicesImpl extends BaseServicesImpl<Course> implements Cour
 		super.setBaseDao(courseDao);
 		this.courseDao = courseDao;
 	}
+	@Resource(name=CourseGradeServices.SERVICE_NAME)
+	CourseGradeServices gradeServices;
+	
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
+	
 	@Override
 	public void saveCourse(String creator, Course course) {
 		//创建选课号学年（2007-2008）-学期（1）-课程编号（02110000）-任课老师工号（02029）
@@ -123,6 +134,54 @@ public class CourseServicesImpl extends BaseServicesImpl<Course> implements Cour
 			}
 			courseDao.saveAll(dBCourses);
 		}
+		
+	}
+	@Override
+	public Course getCourseBySelectId(String selectId) {
+		if(StringUtils.isBlank(selectId)){
+			return null;
+		}
+		String[] fields={"selectedCourseNo=?"};
+		String[] params={selectId};
+		List<Course> courses=findObjectByFields(fields, params);
+		if(courses!=null&&courses.size()>0){
+			return courses.get(0);
+		}
+		return null;
+	}
+	@Override
+	public void saveSelectInfo(Course course, List<CourseGrade> grades, String[] gradesIds, String creator) {
+		//先查找是否存在这个课程
+		course=findObjectById(course.getId());
+		if(course==null){
+			return;
+		}		
+		//删除课程
+		if(gradesIds!=null){
+			gradeServices.deleteObjectByIds(gradesIds);			
+		}
+		if(grades!=null)
+		//保存更新的选课课程
+		for (CourseGrade grade : grades) {
+			//保存课程信息
+			grade.setSelectedCourseNo(course.getSelectedCourseNo());
+			grade.setSelectId(course.getId());
+			grade.setEmployNo(course.getEmployNo());
+			grade.setEmployName(course.getEmployName());
+			grade.setCourseName(course.getCourseName());
+			grade.setCourseType(course.getCourseType());
+			if(StringUtils.isBlank(grade.getId())){
+				//保存学生信息
+				Student student=studentServices.getStudentByNo(grade.getStudentNo());
+				if(student!=null){
+					grade.setStuId(student.getStuId());					
+				}
+				grade.setCreateTime(new Timestamp(new Date().getTime()));
+				grade.setCreator(creator);
+				
+			}
+		}
+		gradeServices.saveAll(grades);
 		
 	}
 	

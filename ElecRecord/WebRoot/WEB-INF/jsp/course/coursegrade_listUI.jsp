@@ -4,7 +4,7 @@
 <html>
 <head>
     
-<title>开课信息列表</title>
+<title>选课信息列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -26,9 +26,9 @@ table thead tr th{
 <script type="text/javascript">
 //使用pagination.jsp的这个命名是支付宝死的
 
-	var queryAction="${basePath}course/course_listUI.action";
-	var deleteAction="${basePath}course/course_delete.action";
-	var importUrl="${basePath}course/course_importExcel.action";
+	var queryAction="${basePath}course/coursegrade_listUI.action";
+	var deleteAction="${basePath}course/coursegrade_delete.action";
+	var importUrl="${basePath}course/coursegrade_importExcel.action";
 	function query(){
 	  	$("#pageNo").val(1);
 
@@ -44,17 +44,17 @@ table thead tr th{
  		$('.delDialog').Dialog('open'); 
 	} 
  	function editor(id){
- 		var url="${basePath}course/course_editorUI.action?course.id="+id;
+ 		var url="${basePath}course/coursegrade_editorUI.action?coursegrade.id="+id;
  		$("#queryForm").attr("action",url);
 	 	$("#queryForm").submit();  
 	} 
  	function detail(id){
- 		var url="${basePath}course/course_detailUI.action?course.id="+id;
- 		
+ 		var url="${basePath}course/coursegrade_detailUI.action?courseGrade.id="+id;
+ 	    
  		window.open(url) ; //打开窗口
  	}
  	function selectCourse(id){
- 		var url="${basePath}course/course_selectUI.action?course.id="+id;
+ 		var url="${basePath}course/coursegrade_selectUI.action?coursegrade.id="+id;
  		
  		window.open(url) ; //打开窗口
  	}
@@ -65,14 +65,14 @@ table thead tr th{
 
 
 <body>
-<div class="title"><h2>开课信息列表</h2></div>
-<form id="queryForm" action="${basePath}course/course_listUI.action" method="post">
+<div class="title"><h2>选课信息列表</h2></div>
+<form id="queryForm" action="${basePath}course/coursegrade_listUI.action" method="post">
 <div class="query">
     <div class="main">     
     <p class="short-input ue-clear">    	
         <label>教师工号：</label>
         <s:textfield name="queryNO" class="strutsinput"></s:textfield>
-        <label>教师姓名：</label>
+        <label>学生学号：</label>
         <s:textfield name="qeuryName" class="strutsinput"></s:textfield>
     </p>
     <p class="short-input ue-clear">    	
@@ -91,9 +91,9 @@ table thead tr th{
 </div>
 
 <div class="table-operate ue-clear">
-	<a:if url="/course/course_add.action"><a href="${basePath}course/course_addUI.action" class="add">添加</a></a:if>
-    <a:if url="/course/course_delete.action"><a href="javascript:deleteItem()" class="del">删除</a></a:if>
-    <a:if url="/course/course_importExcel.action"><a href="javascript:" class="import clear clear">导入</a></a:if>
+	<a href="${basePath}course/coursegrade_addUI.action" class="add">添加</a>
+    <a href="javascript:deleteItem()" class="del">删除</a>
+    <a href="javascript:" class="import clear clear">导入</a>
 <!--     <a href="javascript:;" class="count">统计</a>
     <a href="javascript:;" class="check">审核</a> -->
 </div>
@@ -101,36 +101,36 @@ table thead tr th{
 	<table>
     	<thead>
         	<tr>
-			<a:if url="/course/course_editor.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if> 
-            	<th width="8%">工号</th>
-				<!-- <th class="class">上级机构</th> -->
+			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+            	<th width="8%">学号</th>
                 <th width="8%" >姓名</th>
 				<th width="15%" align="center">课程名称</th>
 				<th width="8%" >学年</th>
 				<th width="8%" align="center">学期</th>
-				<th width="8%" >课程性质</th>
-				<th width="6%" >总学时</th>
-				<th width="8%" >选课人数</th>
-				<th width="14%" >教学班组成</th>
-				<th width="6%" >选课情况</th>				
-				<a:if url="/course/course_editor.action"><th width="5%">编辑</th>	</a:if>			
+				<th width="8%" align="center">学院名称</th>
+				<th width="8%" align="center">班级</th>         
+				<th width="8%" align="center">成绩</th>         
+				<th width="8%" align="center">绩点</th>         
+			
+<!-- 				<th width="5%">编辑</th>	 -->			
             </tr>
         </thead>
         <tbody>
-           <s:iterator value="pageUtils.items" var="course">
+           <s:iterator value="pageUtils.items" var="coursegrade">
         	<tr>
-			<a:if url="/course/course_editor.action"> <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#course.id'/>' /></th></a:if>
-            	<td><a href="javascript:detail('<s:property value='#course.id'/>')"><s:property value="#course.employNo"/></a></td>
-				<td ><s:property value="#course.employName"/></td>
-				<td><s:property value="#course.courseName"/></td>
-				<td><s:property value="#course.academicYear"/></td>
-				<td><s:property value="#course.term"/></td>
-				<td><s:property value="#course.courseType"/></td>
-				<td><s:property value="#course.totalHours"/></td>
-				<td><s:property value="#course.studentNum"/></td>
-				<td><s:property value="#course.classInfo.substring(0, 6)+'...'"/></td>
-				<td><a href="javascript:selectCourse('<s:property value='#course.id'/>')">查看</a></td>
-				<a:if url="/course/course_editor.action"><td><a href="javascript:editor('<s:property value='#course.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
+			 <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#coursegrade.id'/>' /></th>
+            	<td><a href="javascript:detail('<s:property value='#coursegrade.id'/>')"><s:property value="#coursegrade.studentNo"/></a></td>
+				<td ><s:property value="#coursegrade.stuName"/></td>
+				<td><s:property value="#coursegrade.courseName"/></td>
+				<td><s:property value="#coursegrade.selectedCourseNo.substring(1, 10)"/></td>
+				<td><s:property value="#coursegrade.selectedCourseNo.substring(11, 12)"/></td>
+				<td><s:property value="#coursegrade.orgName"/></td>
+				<td><s:property value="#coursegrade.className"/></td>
+				<td><s:property value="#coursegrade.convertScore"/></td>
+				<td><s:property value="#coursegrade.gradePoint"/></td>
+				<%-- <td><s:property value="#coursegrade.classInfo.substring(0, 6)+'...'"/></td> --%>
+				<%-- <td><a href="javascript:selectCourse('<s:property value='#course.id'/>')">查看</a></td> --%>
+				<%-- <td><a href="javascript:editor('<s:property value='#coursegrade.id'/>')"><img src="../images/edtico.png"/></a></td> --%>
             </tr> 
             </s:iterator>          
         </tbody>

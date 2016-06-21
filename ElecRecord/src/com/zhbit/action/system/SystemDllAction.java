@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.zhbit.action.BaseAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.util.QueryUtils;
@@ -33,6 +34,7 @@ public class SystemDllAction extends BaseAction {
 	
 
 	@Override
+	@Limit(url="/system/systemddl_listUI.action")
 	public String listUI() {
 		List<SystemDll> systemDlls = systemDllServices.findKeyWordByDistinct();
 		request.setAttribute("systemDlls", systemDlls);
@@ -45,6 +47,7 @@ public class SystemDllAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/systemddl_listUI.action")
 	public String add() {
 		if(systemDll!=null){
 		systemDllServices.saveSystemDll(ddlNames,systemDll.getKeyword());//把数据保存到数据库
@@ -71,6 +74,7 @@ public class SystemDllAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/systemddl_listUI.action")
 	public String editor() {
 		if(systemDll!=null){
 		  systemDllServices.editorSystemDll(ddlNames,systemDll.getKeyword());//把数据保存到数据库

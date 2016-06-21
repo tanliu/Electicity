@@ -23,7 +23,10 @@ text-align:center;
 }
 frame{
 	margin: 10px;
-	padding: 20px;
+	margin-top: 0px;
+	padding: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 </style>
 </head>
@@ -31,7 +34,7 @@ frame{
 <frameset id="test" name="test" cols="15%,75%">
   <frame src="${basePath}/system/organize_tree.action" id="privilige" name="privilige" frameborder="0" scrolling="no"></frame>
   <frameset rows="50%,50%">
-  <frame style="padding-bottom: 0px;margin-bottom: 0px;" src="${basePath}/system/organize_editorUI.action" id="editor" name="editor"  marginheight="" marginwidth="" frameborder="0" scrolling="no">
+  <frame style="padding-bottom: 0px;margin-bottom: 0px;" src="${basePath}/system/organize_editorUI.action" id="editor" name="editor"  marginheight="" marginwidth="" frameborder="0" scrolling="yes">
   <frame style="padding-top: 0px; margin-top: 0px;" src="${basePath}/system/organize_addUI.action" id="add" name="add" frameborder="0" scrolling="yes">
   </frameset>
 </frameset> 

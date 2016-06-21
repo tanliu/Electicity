@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Familyinfo;
 import com.zhbit.entity.LearningExperience;
 import com.zhbit.entity.Student;
@@ -71,7 +72,7 @@ public class StudentAciton extends BaseAndExcelAction {
 	LearnExperienceServices experienceServices;
 
 
-
+	@Limit(url="/student/student_importExcel.action")
 	public String importFamilyExcel() {
 		try {
 			ExcelConfig excelConfig=new ExcelConfig(FamilyExcel.class, "学生家庭表",1, new FileInputStream(excel),excelFileName);
@@ -101,6 +102,7 @@ public class StudentAciton extends BaseAndExcelAction {
 		return "excelSuccess";
 	}
 	@Override
+	@Limit(url="/student/student_importExcel.action")
 	public String importExcel() {
 		try {
 			ExcelConfig excelConfig=new ExcelConfig(StuExcel.class, "学生基本信息",1, new FileInputStream(excel),excelFileName);
@@ -138,6 +140,7 @@ public class StudentAciton extends BaseAndExcelAction {
 
 
 	@Override
+	@Limit(url="/student/student_listUI.action")
 	public String listUI() {
 		
 		if(queryNO!=null&&qeuryName!=null){
@@ -150,8 +153,8 @@ public class StudentAciton extends BaseAndExcelAction {
 			}
 		}
 		
-		String[] fields={"studentNo=?","stuName=?"};
-		String[] params={queryNO,qeuryName};
+		String[] fields={"studentNo=?","stuName like ?"};
+		String[] params={queryNO,(StringUtils.isBlank(qeuryName)?"":"%"+qeuryName+"%")};
 		String proterty="studentNo";
 		String order=QueryUtils.ORDER_BY_DESC;
 		pageUtils=studentServices.getPageUtils(fields, params, proterty, order, getPageNO(), getPageSize());
@@ -162,6 +165,7 @@ public class StudentAciton extends BaseAndExcelAction {
 	 * @see com.zhbit.action.BaseAction#addUI()
 	 */
 	@Override
+	@Limit(url="/student/student_add.action")
 	public String addUI() {
 		return "addUI";
 	}
@@ -184,6 +188,7 @@ public class StudentAciton extends BaseAndExcelAction {
 	
 
 	@Override
+	@Limit(url="/student/student_add.action")
 	public String add() {
 		if(student!=null&&student.getStudentNo()!=null){
 			User user=(User) request.getSession().getAttribute(User.SESSION_NAME);
@@ -198,6 +203,7 @@ public class StudentAciton extends BaseAndExcelAction {
 	 * @see com.zhbit.action.BaseAction#delete()
 	 */
 	@Override
+	@Limit(url="/student/student_delete.action")
 	public String delete() {
 		if(selectedRow!=null&&selectedRow.length>0){
 			studentServices.deleteObjectByIds(selectedRow);
@@ -209,6 +215,7 @@ public class StudentAciton extends BaseAndExcelAction {
 	 * @see com.zhbit.action.BaseAction#editorUI()
 	 */
 	@Override
+	@Limit(url="/student/student_editor.action")
 	public String editorUI() {
 		if(student!=null&&!StringUtils.isBlank(student.getStuId())){
 			student=studentServices.findObjectById(student.getStuId());	
@@ -227,6 +234,7 @@ public class StudentAciton extends BaseAndExcelAction {
 	 * @see com.zhbit.action.BaseAction#editor()
 	 */
 	@Override
+	@Limit(url="/student/student_editor.action")
 	public String editor() {
 		if(student!=null){
 			String creator=RequestUtils.getUserName(request);
@@ -242,6 +250,18 @@ public class StudentAciton extends BaseAndExcelAction {
 	public String deleteAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	
+	public String detailUI(){
+		if(student!=null){
+			student=studentServices.findObjectById(student.getStuId());
+			//查找到家庭信息
+			family=familyServices.findFamilyByStuId(student.getStuId());
+			//查找到学习情况
+			experiences=experienceServices.findExperiencByStuId(student.getStuId());
+		}
+		return "detailUI";
 	}
 //-----------------------------getter&&setter------------------------------
 

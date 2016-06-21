@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
 <html>
@@ -13,6 +14,17 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
+<style type="text/css">
+/*表单主体*/
+.main {
+	padding-top: 5px;
+}
+.btn {
+	padding: 13px 0 10px 300px;
+	border: 1px solid #c1d3de;
+	border-top: none;
+}
+</style>
 </head>
 
 
@@ -22,6 +34,7 @@
 		<h2>修改部门信息</h2>
 	</div>
 	<form id="myForm" method="post">
+	
 	    <input hidden="hidden" id="orgId" value="<s:property value="organize.orgId"/>" name="organize.orgId">
 	    <input hidden="hidden" value="<s:property value="organize.parentId"/>" name="oldparentId">
 	    <input hidden="hidden" value="<s:property value="organize.parentIds"/>" name="organize.parentIds">

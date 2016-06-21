@@ -14,6 +14,13 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
+<style type="text/css">
+/*表单主体*/
+.main {
+	padding-top: 5px;
+}
+
+</style>
 
 </head>
 
@@ -53,7 +60,7 @@
 				<label>访问地址：</label>
 				<s:textfield value="" name="authority.url" class="strutsinput"></s:textfield>			
 				<label>权限类型：</label> 			
-				<s:radio list="#{'0':'菜单','1':'新增','2':'修改','3':'查询','4':'删除','5':'导出','6':'导入','7':'授权'}" name="authority.authorityType" value="0"  cssStyle="width:25px;" />	
+				<s:radio list="#{'0':'菜单','1':'功能'}" name="authority.authorityType" value="0"  cssStyle="width:25px;" />	
 			</p>
 <%-- 			<div class="short-input select ue-clear">				
 				<div class="select-wrap">

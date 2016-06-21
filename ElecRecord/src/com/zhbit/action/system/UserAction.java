@@ -59,7 +59,7 @@ public class UserAction extends BaseAction {
 	RoleServices roleServices;
 
 	@Override
-	@Limit(url="/system/system_listUI.action")
+	@Limit(url="/system/user_listUI.action")
 	public String listUI(){
 		if(querycon!=null){
 			querycon=querycon.trim();
@@ -88,6 +88,7 @@ public class UserAction extends BaseAction {
 		return "listUI";
 	}
 
+	@Limit(url="system/user_add.action")
 	@Override
 	public String addUI() {
 		//查找所有的部门
@@ -107,6 +108,7 @@ public class UserAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="system/user_add.action")
 	public String add() {
 		if(user!=null){
 		   userServices.saveUser(user,roleIds);
@@ -122,8 +124,18 @@ public class UserAction extends BaseAction {
 		}
 		return "delete";
 	}
+	public String transform() {
+		String result=null;
+		if(user!=null){
+			result=userServices.transform(user);
+			
+		}
+		AjaxReturnUtils.returnResult(response, result);
+		return null;
+	}
 
 	@Override
+	@Limit(url="/system/user_editor.action")
 	public String editorUI() {
 		if(user!=null){			
 			user=userServices.findObjectById(user.getUserId());
@@ -148,6 +160,7 @@ public class UserAction extends BaseAction {
 		return "editorUI";
 	}
 
+	@Limit(url="/system/user_editor.action")
 	@Override
 	public String editor() {
 		//通过ID查找到对应

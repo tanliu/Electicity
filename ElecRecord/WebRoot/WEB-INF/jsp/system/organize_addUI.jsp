@@ -14,6 +14,18 @@
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <title>添加部门</title>
+<style type="text/css">
+/*表单主体*/
+.main {
+	padding-top: 5px;
+}
+.btn {
+	padding: 13px 0 10px 300px;
+	border: 1px solid #c1d3de;
+	border-top: none;
+}
+
+</style>
 </head>
 
 
@@ -30,6 +42,8 @@
 				<div class="select-wrap">
 					<s:textfield value="" name="organize.orgName" class="strutsinput"></s:textfield>
 				</div>
+				<label>联系人：</label> 
+				<s:textfield value="" name="organize.contactMan" class="strutsinput"></s:textfield>
 			</div>
 			<p class="short-input ue-clear">
 				<label>详细地址：</label> 
@@ -49,16 +63,14 @@
 			</p>
 
 			<p class="short-input ue-clear">
-				<label>联系人：</label> 
-				<s:textfield value="" name="organize.contactMan" class="strutsinput"></s:textfield>
+
 				<label>联系电话：</label>
 				<s:textfield value="" name="organize.tell" class="strutsinput"></s:textfield>
-
-			</p>
-			<p class="short-input ue-clear" >
 				<label>状态：</label>
 				<s:radio list="#{'开启':'开启','关闭':'关闭'}" name="organize.state" value="'开启'"  cssStyle="width:25px;" />	
+
 			</p>
+
 
 	<div class="btn ue-clear">
 	<a href="javascript:addauthority('myForm','post','${basePath}/system/organize_add.action')"  class="confirm save">确定</a> 

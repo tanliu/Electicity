@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zhbit.action.BaseAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Authority;
 import com.zhbit.services.system.AuthorityServices;
 import com.zhbit.util.AjaxReturnUtils;
@@ -40,6 +41,7 @@ public class AuthorityAction extends BaseAction {
 	AuthorityServices authorityServices;
 	
 	@Override
+	@Limit(url="/system/authority_listUI.action")
 	public String listUI() {
 		return "listUI";
 	}
@@ -59,6 +61,7 @@ public class AuthorityAction extends BaseAction {
 	}
 	
 	@Override
+	@Limit(url="/system/authority_listUI.action")
 	public String addUI() {
 		if(authority==null||StringUtils.isEmpty(authority.getParentId())||authority.getParentId().equals("0")){
 			authority=new Authority();
@@ -74,6 +77,7 @@ public class AuthorityAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/authority_listUI.action")
 	public String add() {
 		authorityServices.saveAuthoity(authority);
 		
@@ -82,6 +86,7 @@ public class AuthorityAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/authority_listUI.action")
 	public String delete() {
 		//删除选择
 		if(authority!=null&&!StringUtils.isEmpty(authority.getAuthorityId())){
@@ -92,6 +97,7 @@ public class AuthorityAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/authority_listUI.action")
 	public String editorUI() {
 		if(authority!=null&&!StringUtils.isEmpty(authority.getAuthorityId())){
 			authority=authorityServices.findObjectById(authority.getAuthorityId());
@@ -104,6 +110,7 @@ public class AuthorityAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/authority_listUI.action")
 	public String editor() {
 		authorityServices.update(authority);
 		ActionContext.getContext().getValueStack().push(authority);
@@ -111,6 +118,7 @@ public class AuthorityAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/system/authority_listUI.action")
 	public String deleteAll() {
 		// TODO Auto-generated method stub
 		return null;

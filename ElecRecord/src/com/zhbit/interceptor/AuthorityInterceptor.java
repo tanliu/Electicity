@@ -63,7 +63,7 @@ public class AuthorityInterceptor extends MethodFilterInterceptor {
 		Limit limit = method.getAnnotation(Limit.class);
 		//角色信息和权限值查角色权限
 		String url=limit.url();
-		if(urls.contains(urls)){
+		if(urls.contains(url)){
 			flag=true;
 		}
 		

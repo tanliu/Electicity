@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
-<%@ taglib prefix="a" uri="http://openhome.cc/jstl/fake"%>
+
 <html>
 <head>
     
@@ -60,6 +60,31 @@ table thead tr th{
  		
  		window.open(url) ; //打开窗口
  	}
+ 	function transform(id){
+ 		var url="${basePath}system/user_transform.action?user.userId="+id;
+ 		//alert(url);
+ 		$.ajax({
+	        url:url,
+	    	type:"post",
+	    	//dataType:"json",//返回数据类型
+	    	success: function(data){
+	    		//data为0时表示数据库中已经存在数据了
+	    		
+	    		if(data=="0"){
+	    			
+	    			
+	    			$("#"+id).text("注销");
+	    		}else if(data=="1"){
+	    			$("#"+id).text("激活");
+	    			
+	    		}
+	    	},
+	        error:function(){
+
+	        }
+	    
+	    }); 
+ 	}
 </script>
 
 </head>
@@ -96,8 +121,7 @@ table thead tr th{
 </div>
 
 <div class="table-operate ue-clear">
-	<a href="${basePath}system/user_addUI.action" class="add">添加</a>
-    <a href="javascript:deleteItem()" class="del">删除</a>
+   <a:if url="system/user_add.action">	<a href="${basePath}system/user_addUI.action" class="add">添加</a></a:if>
 <!--     <a href="javascript:;" class="count">统计</a>
     <a href="javascript:;" class="check">审核</a> -->
 </div>
@@ -105,30 +129,32 @@ table thead tr th{
 	<table>
     	<thead>
         	<tr>
-			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+			<a:if url="system/user_editor.action"> <th  width="5%"> <input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
             	<th width="16%" class="num">用户编号</th>
 				<!-- <th class="class">上级机构</th> -->
                 <th width="15%" >用户名称</th>
 				<th width="15%" >所属机构</th>
-				<th width="8%" align="center">联系人电话</th>
-				<th width="8%" >用户类型</th>
+				<th width="15%" align="center">联系人电话</th>
+				<th width="15%" >用户类型</th>
 				<th width="8%" align="center">性别</th>
-				<th width="8%" >状态</th>
-				<th width="5%">编辑</th>				
+				<a:if url="system/user_editor.action"><th width="8%" >状态</th>
+				<th width="5%">编辑</th>	</a:if>			
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="user">
         	<tr>
-			 <th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#user.userId'/>' /></th>
+			 
+			 <a:if url="system/user_editor.action"><th class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#user.userId'/>' /></th></a:if>
             	<td><a href="javascript:detail('<s:property value='#user.userId'/>')"><s:property value="#user.employNo"/></a></td>
 				<td ><s:property value="#user.employName"/></td>
 				<td><s:property value="#user.organization.orgName"/></td>
 				<td><s:property value="#user.tell"/></td>
 				<td><s:property value="#user.userType"/></td>
 				<td><s:property value="#user.sex? '男':'女'"/></td>
-				<td><s:property value="#user.status? '激活':'关闭' "/></td>
+				<a:if url="system/user_editor.action"><td  ><a id="<s:property value='#user.userId'/>" href="javascript:transform('<s:property value='#user.userId'/>')"><s:property value="#user.status? '激活':'注销' "/></a></td>
 				<td><a href="javascript:editor('<s:property value='#user.userId'/>')"><img src="../images/edtico.png"/></a></td>
+                </a:if>
             </tr> 
             </s:iterator>          
         </tbody>
