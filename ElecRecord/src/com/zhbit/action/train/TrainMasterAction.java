@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.entity.TraininfoDetail;
 import com.zhbit.entity.TraininfoMaster;
@@ -52,6 +53,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	
 	
 	@Override
+	@Limit(url="/train/trainmaster_importExcel.action")
 	public String importExcel() {
 		try {
 			/**
@@ -95,6 +97,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/trainmaster_listUI.action")
 	public String listUI() {
 		
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
@@ -120,12 +123,14 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/trainmaster_add.action")
 	public String addUI() {
 		request.setAttribute("querycon", traininfoMaster);
 		return "addUI";
 	}
 
 	@Override
+	@Limit(url="/train/trainmaster_add.action")
 	public String add() {
 		// TODO Auto-generated method stub
 		//获取当前时间作为createtime列的值并插入数据库
@@ -136,6 +141,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/trainmaster_delete.action")
 	public String delete() {
 		//将listUI界面传过来的查询条件保存
 		request.setAttribute("traininfoMaster", traininfoMaster);
@@ -148,6 +154,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/trainmaster_editor.action")
 	public String editorUI() {
 		//将listUI界面传过来的查询条件保存
 		request.setAttribute("querycon", traininfoMaster);
@@ -159,6 +166,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/trainmaster_editor.action")
 	public String editor() {
 		//直接调用baseDao接口里面的update方法更新修改后的数据
 		trainmasterServices.update(traininfoMaster);

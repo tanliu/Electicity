@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.TraininfoDetail;
 import com.zhbit.entity.TraininfoMaster;
@@ -56,6 +57,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 		TrainmasterServices trainmasterServices;
 
 	@Override
+	@Limit(url="/train/traindetail_importExcel.action")
 	public String importExcel() {
 		try {
 			/**
@@ -100,6 +102,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/traindetail_listUI.action")
 	public String listUI() {
 		//查找所有的培训信息trainmaster，方便获取培训主题trainTopic
 		List<TraininfoMaster> traininfoMaster=trainmasterServices.findAllObject();
@@ -128,6 +131,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/traindetail_add.action")
 	public String addUI() {
 		//查找所有的培训信息trainmaster
 		List<TraininfoMaster> traininfoMaster=trainmasterServices.findAllObject();
@@ -136,6 +140,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/traindetail_add.action")
 	public String add() {
 		//根据traininfoMaster的id，找到对应的trainsTopic，在将trainsTopic插入到新表中
 		traininfoMaster=trainmasterServices.findObjectById(traininfoDetail.getMaster_id());
@@ -145,6 +150,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/traindetail_delete.action")
 	public String delete() {
 		//将listUI界面传过来的查询条件保存
 		request.setAttribute("traininfoDetail", traininfoDetail);
@@ -157,6 +163,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/traindetail_editor.action")
 	public String editorUI() {
 		//查找所有的培训信息trainmaster，方便获取培训主题trainTopic
 		List<TraininfoMaster> traininfoMaster=trainmasterServices.findAllObject();
@@ -171,6 +178,7 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/train/traindetail_editor.action")
 	public String editor() {
 		//根据traininfoMaster的的主题字段，找出对应的id赋值到setMaster_id。
 		String[] fields={"trainsTopic=?"};
