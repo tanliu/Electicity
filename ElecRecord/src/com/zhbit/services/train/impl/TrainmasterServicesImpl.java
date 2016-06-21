@@ -121,11 +121,20 @@ TrainmasterServices{
 					//获取学生的学号,将学号赋给politicalstatus实体。
 					//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
 					//politicalstatus.setStuId(student.getStuId());
+
+					String[] fields;
+					Object[] params;
+					
+	               fields=new String[]{"manager=?","trainsTopic=?"};
+	               params=new Object[]{traininfoMaster.getManager(),traininfoMaster.getTrainsTopic()};
+	               if(this.findObjectByFields(fields, params)==null){
+	            	   //先查询要插入的数据系统中是否为空，为空才插入
 					//这里先设置一个值用来测试
 					//politicalstatus.setStuId("9527");
 					traininfoMaster.setCreator(creator);
 					traininfoMaster.setCreateTime(new Timestamp(new Date().getTime()));
 					this.save(traininfoMaster);
+				}
 				}
 			}
 			

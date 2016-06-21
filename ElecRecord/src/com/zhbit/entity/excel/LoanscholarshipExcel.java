@@ -29,7 +29,8 @@ public class LoanscholarshipExcel extends BaseExcelBean implements Cloneable{
 		private String studentNo;
 	    @Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 		private String stuName;
-	    @Lang(value="身份证号")
+	    //(\\d{14}[0-9a-zA-Z])|(\\d{17}[0-9a-zA-Z])
+	    @Lang(value="身份证号",isNull=Lang.TYPE_NONULL,type="^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$")
 		private String idCardNo;
 	    @Lang(value="年级")
 	 	private String grade;

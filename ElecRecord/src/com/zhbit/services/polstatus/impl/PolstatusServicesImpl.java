@@ -1,5 +1,6 @@
 package com.zhbit.services.polstatus.impl;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 		polstatusDao.add(politicalstatus);
 		return null;
 	}
+	
 	
 	//继承Services接口的queryList方法，实现数据查询
 	@Override
@@ -137,14 +139,24 @@ public PageUtils getPageUtils(String[] fields, Object[] params, String proterty,
 				//获取学生的学号,将学号赋给politicalstatus实体。
 				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
 				//politicalstatus.setStuId(student.getStuId());
+
+				String[] fields;
+				Object[] params;
+				
+               fields=new String[]{"studentNo=?",};
+               params=new Object[]{politicalstatus.getStudentNo()};
+               if(this.findObjectByFields(fields, params)==null){
+            	   //先查询要插入的数据系统中是否为空，为空才插入
 				//这里先设置一个值用来测试
 				politicalstatus.setStuId("9527");
 				politicalstatus.setCreator(creator);
 				politicalstatus.setCreateTime(new Timestamp(new Date().getTime()));
 				this.add(politicalstatus);
+				}
+               
 			}
 		}
-		
+
 	}
 	
 }

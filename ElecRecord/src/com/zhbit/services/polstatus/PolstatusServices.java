@@ -25,7 +25,7 @@ public interface PolstatusServices extends BaseServices<Politicalstatus> {
 	 * 定义add增加信息
 	 */
 	public String add(Politicalstatus politicalstatus);
-    
+  
 	/**
 	 * 方法描述:保存导入的数据
 	 * @param students

@@ -116,7 +116,7 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", commonScholarship);
 		//设置页面显示信息条数
-		setPageSize(2);
+		setPageSize(6);
 		//调用方法，根据查询条件显示数据
 		pageUtils=comscholarshipServices.queryList(commonScholarship, getPageNO(), getPageSize());	
 		return "listUI";

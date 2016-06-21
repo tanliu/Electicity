@@ -82,6 +82,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 				//获取创建人
 				String creator=RequestUtils.getUserName(request);
 	            //保存表格里面的数据，在polstatusServices重新定义saveFromExcel方法
+				
 				polstatusServices.saveFromExcel(politicalstatus,creator);
 
 			} catch (FileNotFoundException e) {

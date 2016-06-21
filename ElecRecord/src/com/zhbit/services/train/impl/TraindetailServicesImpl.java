@@ -93,11 +93,18 @@ TraindetailServices{
 			//如果不为空 则赋值
 			if(traininfoMaster!=null){
 				traininfoDetail.setMaster_id(traininfoMaster.getId());
+				String[] fields;
+				Object[] params;
+				
+               fields=new String[]{"studentNo=?","master_trainsTopic=?"};
+               params=new Object[]{traininfoDetail.getStudentNo(),traininfoDetail.getMaster_trainsTopic()};
+               if(this.findObjectByFields(fields, params)==null){
 				//这里先设置一个值用来测试
 				traininfoDetail.setStuId("9527");
 				//traininfoMaster.setCreator(creator);
 				//traininfoMaster.setCreateTime(new Timestamp(new Date().getTime()));
 				this.save(traininfoDetail);
+			}
 			}
 		}
 	}
