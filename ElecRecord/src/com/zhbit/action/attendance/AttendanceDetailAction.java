@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.AttendanceDetail;
 import com.zhbit.entity.AttendanceMaster;
 import com.zhbit.excel.ExcelConfig;
@@ -48,6 +49,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	AttendanceMasterServices attendanceMasterServices;
 
 	@Override
+	
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		ExcelConfig config;
@@ -63,15 +65,25 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 				if(i==0&&objects.get(i)!=null){
 					//转换为attendanceMaster对象 
 					AttendanceMaster attendanceMaster=(AttendanceMaster)objects.get(i);
+					String[] fields={"selectedcourseno=?"};
+					String[] params={attendanceMaster.getSelectedcourseno()};
+					if(attendanceMasterServices.findObjectByFields(fields, params)==null){//当记录不存在时，才进行保存操作
 					//设定创建时间为当前时间
 					Timestamp createtime = new Timestamp(System.currentTimeMillis());
 					attendanceMaster.setCreateTime(createtime);
 					attendanceMaster=attendanceMasterServices.trimAttendanceMaster(attendanceMaster);
 					//保存该记录至数据库中
 					attendanceMasterServices.save(attendanceMaster);
+					}
 				}else {
+					
 					if(objects.get(i)!=null){
 						AttendanceDetail attendanceDetail=(AttendanceDetail)objects.get(i);
+						
+					    String[] fields={"selectedcourseno=?","studentno=?","attendanceTime=?"};
+						Object[] params={attendanceDetail.getSelectedcourseno(),attendanceDetail.getStudentno(),attendanceDetail.getAttendanceTime()};
+						
+						if(attendanceDetailServices.findObjectByFields(fields, params)==null&&attendanceDetail.getAttendanceStatus()!=null){//当学号、选课课号、考勤时间对应查询出来的记录为空且考勤状态不为空时，才进行加入集合的操作
 						//设定创建时间为当前时间
 						Timestamp createtime = new Timestamp(System.currentTimeMillis());
 						attendanceDetail.setCreateTime(createtime);
@@ -81,12 +93,16 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 						
 						//将该数据保存至相对应的AttendanceDetail集合中
 						attendanceDetails.add(attendanceDetail);
+						}
+						
 					}
+					
 				}
 				
-				
-				attendanceDetailServices.saveAttendanceDeatils(attendanceDetails);
-				
+			}
+			
+			if(attendanceDetails.size()>=1){//记录数大于1时，才进行保存操作
+			attendanceDetailServices.saveAttendanceDeatils(attendanceDetails);
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -106,6 +122,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	
 	public String listUI() {
 		// TODO Auto-generated method stub
 		//对传来的查询条件进行编码

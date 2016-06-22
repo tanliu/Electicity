@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.zhbit.dao.BaseDao;
 import com.zhbit.dao.tutor.TutorDao;
+import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.Tutor;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.tutor.TutorServices;
@@ -142,7 +143,18 @@ public class TutorServicesImpl extends BaseServicesImpl<Tutor> implements TutorS
 		tutorDao.saveTutors(tutors);
 	}
 	
-	
+	@Override
+	public List<Tutor> findObjectByFields(String[] fields,Object[] params) {
+		QueryUtils queryUtils=new QueryUtils(Tutor.class, "entity");
+		if(fields!=null&&fields.length>0&&params!=null&&params.length>0){
+			for(int i=0;i<fields.length;i++){
+			if(!StringUtils.isEmpty(fields[i])&&!StringUtils.isEmpty((params[i]+""))){
+				queryUtils.addCondition("entity."+fields[i], params[i]);				
+			}
+			}
+		}
+		return tutorDao.findObjectByFields(queryUtils);
+	}
 	
 	
 	

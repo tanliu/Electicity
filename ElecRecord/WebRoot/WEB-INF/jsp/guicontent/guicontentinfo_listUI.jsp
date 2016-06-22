@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 
 <style type="text/css">
 /*单元格样式*/
@@ -101,70 +102,64 @@ function query(){
 <form id="queryForm" action="${basePath}guicontent/guicontent_listUI.action" method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" >
+	
                                                                
      
-        
-       <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;" >
-            <label style="margin-left:3px;width:50px">学号：</label>
-            <input   type="text" placeholder="请输入学生学号进行查询" name="guiContent.studentNo" value="${queryCon.studentNo}" style="width:200px;height:30px" />
+         <div class="main">                 
+	     <p class="short-input ue-clear"> 
+	     
+	        <label>导学时间：</label>
+            <input type="text" value="<s:date format="yyyy-MM-dd" name="guiContent.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="guiContent.guidDate" />
+     
+            <label >学号：</label>
+            <input   type="text" placeholder="请输入学生学号进行查询" name="guiContent.studentNo" value="${queryCon.studentNo}" />
             
-        </div>
-        
-         <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;">
-            <label style="margin-right:3px;width:50px">姓名：</label>
-            <input  type="text" placeholder="请输入学生姓名进行查询" name="guiContent.stuName" value="${queryCon.stuName}" style="width:200px;height:30px"/>
-            
-        </div>
-        
-          <div class="conditions staff ue-clear" >
-            <label>导学时间：</label>
-            <input type="text" value="<s:date format="yyyy-MM-dd" name="guiContent.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="guiContent.guidDate" style="width:233px;height:30px"/>
+            <label >姓名：</label>
+            <input  type="text" placeholder="请输入学生姓名进行查询" name="guiContent.stuName" value="${queryCon.stuName}" />
+     
+            </p>
             
         </div>
         
         
         
        
-        
-    </div>
-    
+ 
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>
     </div>
 </div>
 
 <div class="table-operate ue-clear">
-  <a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+     <a:if url="/guicontent/guicontent_add.action"><a href="javascript:add()" class="add">添加</a></a:if>
+    <a:if url="/guicontent/guicontent_delete.action"><a href="javascript:del()" class="del confirm save">删除</a></a:if>
+    <a:if url="/guicontent/guicontent_importExcel.action"><a href="javascript:" class="import clear clear">导入</a></a:if>
 </div>
 
 <div class="table-box">
 	<table>
     	<thead>
         	<tr>
-			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
+			<a:if url="/guicontent/guicontent_delete.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th></a:if>
             	<th width="20%" class="num">学号</th>
                 <th width="15%" >姓名</th>
 				<th width="20%" align="center">专业班级</th>
 				<th width="15%" >导学时间</th>
 				<th width="15%" align="center">导学地点</th>
-				<th width="10%">编辑</th>				
+				<a:if url="/guicontent/guicontent_editor.action"><th width="10%">编辑</th></a:if>				
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="guiContent">
         	<tr>
         	
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guiContent.id'/>' /></td>
-			
+			<a:if url="/guicontent/guicontent_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guiContent.id'/>' /></td></a:if>
             	<td><s:property value="#guiContent.studentNo"/></td>
 				<td ><s:property value="#guiContent.stuName"/></td>
 				<td><s:property value="#guiContent.className"/></td>
 				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#guiContent.guidDate"/></td>
 				<td><s:property value="#guiContent.guidAddress"/></td>
-				<td><a href="javascript:editor('<s:property value='#guiContent.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<a:if url="/guicontent/guicontent_editor.action"><td><a href="javascript:editor('<s:property value='#guiContent.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>

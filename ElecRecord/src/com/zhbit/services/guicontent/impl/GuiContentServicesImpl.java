@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-
+import com.zhbit.entity.AttendanceDetail;
 import com.zhbit.entity.GuiContent;
 
 import com.zhbit.entity.GuiContent;
@@ -31,35 +31,35 @@ public class GuiContentServicesImpl extends BaseServicesImpl<GuiContent> impleme
 	}
 	
 	@Override
-	public PageUtils queryList(GuiContent guiContentDao, int pageNO, int pageSize) {
+	public PageUtils queryList(GuiContent guiContent, int pageNO, int pageSize) {
 		// TODO Auto-generated method stub
 		String[] fields=null;
 		Object[] params=null;
 		String proterty="createTime";
 		
-		if(guiContentDao!=null){//当GuiContent不为空时
+		if(guiContent!=null){
 			//先去除学号和姓名中可能存在的空格
-			if(!StringUtils.isEmpty(guiContentDao.getStuName())){
-				guiContentDao.setStuName(guiContentDao.getStuName().trim());
+			if(!StringUtils.isEmpty(guiContent.getStuName())){
+				guiContent.setStuName(guiContent.getStuName().trim());
 			}
-			if(!StringUtils.isEmpty(guiContentDao.getStudentNo())){
-				guiContentDao.setStudentNo(guiContentDao.getStudentNo().trim());
+			if(!StringUtils.isEmpty(guiContent.getStudentNo())){
+				guiContent.setStudentNo(guiContent.getStudentNo().trim());
 			}
 			
 			//用于查询某个具体日期的数据
-			if(guiContentDao.getGuidDate()!=null){
-				long time=guiContentDao.getGuidDate().getTime();
+			if(guiContent.getGuidDate()!=null){
+				long time=guiContent.getGuidDate().getTime();
 				time=time+24*60*60*1000; 
 				nextday=new Timestamp(time);
 			}
 			
 			
-			if(guiContentDao.getGuidDate()==null){//此处与学籍异动信息模块不同，这里要对辅导日期进行判空处理
+			if(guiContent.getGuidDate()==null){//此处与学籍异动信息模块不同，这里要对辅导日期进行判空处理
 				fields=new String[]{"studentNo=?","stuName like ?"};
-				params=new Object[]{guiContentDao.getStudentNo(),"%"+guiContentDao.getStuName()+"%"};
+				params=new Object[]{guiContent.getStudentNo(),"%"+guiContent.getStuName()+"%"};
 			}else{
 				fields=new String[]{"stuName like ?","studentNo=?","guidDate>=?","guidDate<=?"};
-				params=new Object[]{"%"+guiContentDao.getStuName()+"%",guiContentDao.getStudentNo(),guiContentDao.getGuidDate(),nextday};
+				params=new Object[]{"%"+guiContent.getStuName()+"%",guiContent.getStudentNo(),guiContent.getGuidDate(),nextday};
 			}
 				
 		}
@@ -129,6 +129,18 @@ public class GuiContentServicesImpl extends BaseServicesImpl<GuiContent> impleme
 	}
 	
 
+	@Override
+	public List<GuiContent> findObjectByFields(String[] fields,Object[] params) {
+		QueryUtils queryUtils=new QueryUtils(GuiContent.class, "entity");
+		if(fields!=null&&fields.length>0&&params!=null&&params.length>0){
+			for(int i=0;i<fields.length;i++){
+			if(!StringUtils.isEmpty(fields[i])&&!StringUtils.isEmpty((params[i]+""))){
+				queryUtils.addCondition("entity."+fields[i], params[i]);				
+			}
+			}
+		}
+		return guiContentDao.findObjectByFields(queryUtils);
+	}
 
 	
 	

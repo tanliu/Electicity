@@ -29,14 +29,14 @@
                  
             </tr>
             <tr>
-            	 <td  class="colum" nowrap="nowrap">辅导时间:</td><td class="colum1"><s:property value="guiContent.guidDate"/></td>
+            	 <td  class="colum" nowrap="nowrap">导学时间:</td><td class="colum1"><s:property value="guiContent.guidDate"/></td>
             </tr>
              
             <tr>
-            	 <td  class="colum" nowrap="nowrap">辅导地点:</td><td class="colum1"><s:property value="guiContent.guidAddress"/></td>
+            	 <td  class="colum" nowrap="nowrap">导学地点:</td><td class="colum1"><s:property value="guiContent.guidAddress"/></td>
             </tr>
             <tr>
-            	 <td  class="colum" nowrap="nowrap">辅导内容:</td><td class="colum1"><s:property value="guiContent.guidContent"/></td>
+            	 <td  class="colum" nowrap="nowrap">导学内容:</td><td class="colum1"><s:property value="guiContent.guidContent"/></td>
             </tr>
             <tr>
             	 <td  class="colum" nowrap="nowrap">备注:</td><td class="colum1"><s:property value="guiContent.memo"/></td>

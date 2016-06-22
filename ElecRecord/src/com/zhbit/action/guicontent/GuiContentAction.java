@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -21,6 +22,8 @@ import com.zhbit.entity.excel.GuiContentEntity;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.guicontent.GuiContentServices;
 import com.zhbit.util.DecodeUtils;
+
+import freemarker.template.utility.StringUtil;
 
 /** 
  * 项目名称：ElecRecord
@@ -68,37 +71,43 @@ public class GuiContentAction extends BaseAndExcelAction {
 			}
 			//数据的转换
 			List<Object> guiContentEntitys = excelServicesMake.toDBEnity(objects,GuiContent.class);
-			List<GuiContent> guiContents=new ArrayList<GuiContent>();
-			
-			
-			for(Object object:guiContentEntitys){
-				GuiContent guiContent=(GuiContent) object;
-				System.out.println("学号是："+guiContent.getStudentNo());
-			}
+			List<GuiContent> guiContents=new ArrayList<GuiContent>();		
 			
 		//将集合中的对象保存至数据库
 			for(Object object:guiContentEntitys){
 				GuiContent guiContent=(GuiContent) object;
+				//去除可能存在的空格
+				guiContentServices.trimGuiContent(guiContent);
 				
-				//if(!StringUtils.isEmpty(guiContent.getStudentNo())){
+				if(!StringUtils.isEmpty(guiContent.getStudentNo())){
+					
+					String[] fields;
+					Object[] params;				
+					
+					fields=new String[]{"studentNo=?","guidDate=?","guidAddress=?"};
+					params=new Object[]{guiContent.getStudentNo(),guiContent.getGuidDate(),guiContent.getGuidAddress()};
+					
+					if(guiContentServices.findObjectByFields(fields, params)==null){//当学号、时间、地点查询到的对象为空时，才进行保存至数据库的操作
+						
 					//设定创建时间为当前时间，学生ID暂时设定为"9528"
 					guiContent.setStuId("9528");
 					Timestamp createtime = new Timestamp(System.currentTimeMillis());
 					guiContent.setCreateTime(createtime);
 					
-					//去除可能存在的空格
-					guiContentServices.trimGuiContent(guiContent);
-					
 					//将此对象放入guiContents集合中
 					guiContents.add(guiContent);
 					
 				}
+					
+			}
 				
-				
+			}
 			//}
 			
+			if(guiContents.size()>=1){
 			//批量插入导学内容信息
 			guiContentServices.saveGuiContents(guiContents);
+			}
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

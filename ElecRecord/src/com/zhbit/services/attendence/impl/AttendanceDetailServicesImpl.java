@@ -112,4 +112,17 @@ public class AttendanceDetailServicesImpl extends BaseServicesImpl<AttendanceDet
 	public void saveAttendanceDeatils(List<AttendanceDetail> attendanceDetails){
 		attendanceDetailDao.saveAttendanceDetails(attendanceDetails);
 	}
+	
+	@Override
+	public List<AttendanceDetail> findObjectByFields(String[] fields,Object[] params) {
+		QueryUtils queryUtils=new QueryUtils(AttendanceDetail.class, "entity");
+		if(fields!=null&&fields.length>0&&params!=null&&params.length>0){
+			for(int i=0;i<fields.length;i++){
+			if(!StringUtils.isEmpty(fields[i])&&!StringUtils.isEmpty((params[i]+""))){
+				queryUtils.addCondition("entity."+fields[i], params[i]);				
+			}
+			}
+		}
+		return attendanceDetailDao.findObjectByFields(queryUtils);
+	}
 }

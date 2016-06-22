@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 
 <style type="text/css">
 /*单元格样式*/
@@ -104,64 +105,60 @@ function editor(id){
 <form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" style="width:100%">                  
-	                                          
-       <div class="conditions staff ue-clear" style="width:25%">
+	 <div class="main">                 
+	     <p class="short-input ue-clear">                               
+
+			<label >辅导时间：</label>
+            <input type="text" value="<s:date format="yyyy-MM-dd" name="tutor.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="tutor.guidDate" />
+
+
+             <label>姓名：</label>
+            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" />
+            
             <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}" style="width:233px;height:30px" />
-        </div>
-        
-         <div class="conditions staff ue-clear" style="width:25%">
-            <label>姓名：</label>
-            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" style="width:233px;height:30px"/>
-            
-        </div>
-        
-            
-         <div class="conditions staff ue-clear" >
-            <label>辅导时间：</label>
-            <input type="text" value="<s:date format="yyyy-MM-dd" name="tutor.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="tutor.guidDate" style="width:233px;height:30px"/>
-            
-        </div>
+            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}"  />
+  
+			
+      </p>
        
        
         
     </div>
     
     <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
+    	<a href="javascript:query()" class="confirm" style="margin-left:5px">查询</a>
     </div>
 </div>
 
 <div class="table-operate ue-clear">
-     <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+     <a:if url="/tutor/tutor_add.action">	<a href="javascript:add()" class="add">添加</a></a:if>
+    <a:if url="/tutor/tutor_delete.action"> <a href="javascript:del()" class="del confirm save">删除</a></a:if>
+    <a:if url="/tutor/tutor_importExcel.action"><a href="javascript:" class="import clear clear">导入</a></a:if>
 </div>
 
 <div class="table-box">
 	<table>
     	<thead>
         	<tr>
-			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
+			<a:if url="/tutor/tutor_delete.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th></a:if>
             	<th width="20%" class="num">学号</th>
                 <th width="15%" >姓名</th>
 				<th width="20%" align="center">专业班级</th>
 				<th width="15%" >辅导时间</th>
 				<th width="15%" align="center">辅导地点</th>
-				<th width="10%">编辑</th>				
+			<a:if url="/tutor/tutor_editor.action"><th width="10%">编辑</th></a:if>				
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="tutor">
         	<tr>
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#tutor.id'/>'/></td>
+			<a:if url="/tutor/tutor_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#tutor.id'/>'/></td></a:if>
             	<td><s:property value="#tutor.studentNo"/></td>
 				<td ><s:property value="#tutor.stuName"/></td>
 				<td><s:property value="#tutor.className"/></td>
 				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#tutor.guidDate"/></td>
 				<td><s:property value="#tutor.guidAddress"/></td>
-				<td><a href="javascript:editor('<s:property value='#tutor.id'/>')"><img src="../images/edtico.png"/></a></td>
+				<a:if url="/tutor/tutor_editor.action"><td><a href="javascript:editor('<s:property value='#tutor.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>
