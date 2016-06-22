@@ -16,6 +16,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zhbit.entity.Student;
 import com.zhbit.entity.User;
 
 /** 
@@ -61,9 +62,9 @@ public class AuthorityFilter implements Filter {
 			return ;
 		}
 		//查看Session存不存在
+		Student student=(Student) request.getSession().getAttribute("student");
 		User user=(User) request.getSession().getAttribute("user");
-		
-		if(user!=null){
+		if(user!=null||student!=null){
 /*			//存在session但是不受权限控制的
 			if(hasSession.contains(path)){
 				chain.doFilter(request, response);

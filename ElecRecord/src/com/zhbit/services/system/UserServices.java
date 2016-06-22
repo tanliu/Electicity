@@ -1,6 +1,7 @@
 package com.zhbit.services.system;
 
 import com.zhbit.entity.StuStatus;
+import com.zhbit.entity.Teacher;
 import com.zhbit.entity.User;
 import com.zhbit.services.BaseServices;
 import com.zhbit.util.PageUtils;
@@ -55,5 +56,20 @@ public interface UserServices extends BaseServices<User> {
 	 * @return
 	 */
 	public String transform(User user);
+
+	/**
+	 * 方法描述:存在此帐号
+	 * @param employNo
+	 * @return
+	 */
+	public Boolean hasUser(String employNo);
+	
+	public void createTeacherUser(Teacher teacher);
+
+	/**
+	 * 方法描述:删除帐号
+	 * @param selectedRow
+	 */
+	public void trueDeleteUser(String[] selectedRow);
     
 }

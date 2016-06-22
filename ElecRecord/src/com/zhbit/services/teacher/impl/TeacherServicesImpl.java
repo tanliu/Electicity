@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import com.zhbit.dao.teacher.TeacherDao;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.Teacher;
+import com.zhbit.entity.User;
 import com.zhbit.services.BaseServicesImpl;
+import com.zhbit.services.system.UserServices;
 import com.zhbit.services.teacher.TeacherServices;
 import com.zhbit.util.EncryptUtils;
 
@@ -38,17 +40,23 @@ public class TeacherServicesImpl extends BaseServicesImpl<Teacher> implements Te
 		setBaseDao(teacherDao);
 		this.teacherDao = teacherDao;
 	}
+	@Resource(name=UserServices.SERVER_NAME)
+	UserServices userServices;
+	
+	
 	@Override
 	public void saveFromExcel(List<Object> teachers, String creator) {
 		if(teachers!=null&&teachers.size()>0){
 			//对每一条数据进行校验和设置相应的值
 			for (Object object : teachers) {
 				Teacher teacher=(Teacher) object;
-				//判断是否存在这个学生
+				//判断是否存在这个教师
 				Boolean flag=this.hasTeacher(teacher.getEmployNo());
 				if(!flag){ //如果系统中没有这个学生的信息
 					teacher.setCreateTime(new Timestamp(new Date().getTime()));
 					teacher.setCreator(creator);
+					//为教师创建用户
+					userServices.createTeacherUser(teacher);
 					this.save(teacher);					
 				}
 			}
@@ -84,4 +92,29 @@ public class TeacherServicesImpl extends BaseServicesImpl<Teacher> implements Te
 		}
 		return null;
 	}
+
+	public void saveAndCreateRole(Teacher teacher) {
+		// TODO Auto-generated method stub
+		userServices.createTeacherUser(teacher);
+		save(teacher);
+	}
+	@Override
+	public void deleteTeacher(String[] selectedRow) {
+		for (String id : selectedRow) {
+			Teacher teacher=findObjectById(id);
+			if(teacher==null){
+				continue;
+			}
+			String[] fields={"employNo = ?"};
+			String[] params={teacher.getEmployNo()};
+			List<User> users=userServices.findObjectByFields(fields, params);
+			if(users!=null&&users.size()>0){
+				userServices.deleteUser(new String[]{users.get(0).getUserId()});
+			}
+		}
+		deleteObjectByIds(selectedRow);
+		
+	}
+
+
 }

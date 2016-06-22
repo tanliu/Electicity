@@ -243,6 +243,7 @@ fieldset {
 	<form id="myForm">
 	    <s:hidden name="pageNO"></s:hidden>
 	    <s:hidden id="roleId" name="role.roleId"></s:hidden>
+	    <s:hidden name="role.createTime"></s:hidden>
 		<div class="main" style="text-align: center;align:center;">
 			<TABLE style="border: 0;align=center;" >
 	       <TR style="border: 0">

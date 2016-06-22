@@ -142,6 +142,8 @@ public class StudentAciton extends BaseAndExcelAction {
 	@Override
 	@Limit(url="/student/student_listUI.action")
 	public String listUI() {
+		//判断是否是学生，如果是学生的话，就把查询条件强加
+		queryNO=RequestUtils.checkStudentAuthority(request,queryNO);
 		
 		if(queryNO!=null&&qeuryName!=null){
 			try {

@@ -77,6 +77,7 @@ public class Teacher implements java.io.Serializable,Cloneable {
 	private String creator;
 
 	
+	public final static String ROLE_NAME="老师";
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {

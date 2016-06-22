@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.zhbit.entity.Model" table="tb_sys_model" catalog="elecrecord">
+        <id name="id" type="java.lang.String">
+            <column name="id" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="fileName" type="java.lang.String">
+            <column name="filename" length="100">
+                <comment>文件名</comment>
+            </column>
+        </property>
+        <property name="filePath" type="java.lang.String">
+            <column name="filepath" length="100">
+                <comment>文件路径</comment>
+            </column>
+        </property>
+        <property name="creator" type="java.lang.String">
+            <column name="employ_name" length="64">
+                <comment>上传文件的人</comment>
+            </column>
+        </property>
+
+    </class>
+</hibernate-mapping>

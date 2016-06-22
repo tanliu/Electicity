@@ -122,6 +122,7 @@ table thead tr th{
 
 <div class="table-operate ue-clear">
    <a:if url="system/user_add.action">	<a href="${basePath}system/user_addUI.action" class="add">添加</a></a:if>
+   <a:if url="system/user_add.action">	<a href="javascript:deleteItem()" class="del">删除</a></a:if>
 <!--     <a href="javascript:;" class="count">统计</a>
     <a href="javascript:;" class="check">审核</a> -->
 </div>

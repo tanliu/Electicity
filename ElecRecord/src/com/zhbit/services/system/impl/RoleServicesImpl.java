@@ -163,4 +163,12 @@ public class RoleServicesImpl extends BaseServicesImpl<Role> implements RoleServ
 		}
 		return buffer.toString();
 	}
+
+	@Override
+	public Role findObjectByName(String roleName) {
+		String[] fields={"roleName=?"};
+		String[] params={roleName};
+		List<Role> roles=findObjectByFields(fields, params);
+		return roles.get(0);
+	}
 }

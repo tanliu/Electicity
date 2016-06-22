@@ -5,6 +5,7 @@ package com.zhbit.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.zhbit.entity.Student;
 import com.zhbit.entity.User;
 
 /** 
@@ -23,6 +24,20 @@ public class RequestUtils {
 	public static String getUserName(HttpServletRequest request) {
 		User user=(User) request.getSession().getAttribute(User.SESSION_NAME);
 		return user.getEmployName();
+	}
+
+	/**
+	 * 方法描述:判断是否是学生，如果是学生的话，就把查询条件强加
+	 * @param request
+	 * @param queryNO
+	 * @return
+	 */
+	public static String checkStudentAuthority(HttpServletRequest request, String queryNO) {
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(student!=null){
+			queryNO=student.getStudentNo();
+		}
+		return queryNO;
 	}
 
 }

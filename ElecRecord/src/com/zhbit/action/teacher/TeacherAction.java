@@ -113,9 +113,6 @@ public class TeacherAction extends BaseAndExcelAction{
 		String proterty="employName";
 		String order=QueryUtils.ORDER_BY_DESC;
 		pageUtils=teacherServies.getPageUtils(fields, params, proterty, order, getPageNO(), getPageSize());
-		if(pageUtils.getItems()==null){
-			System.out.println("-----------------------");
-		}
 		return "listUI";
 	}
 
@@ -141,7 +138,7 @@ public class TeacherAction extends BaseAndExcelAction{
 			String creator=RequestUtils.getUserName(request);
 			teacher.setCreateTime(new Timestamp(new Date().getTime()));
 			teacher.setCreator(creator);
-			teacherServies.save(teacher);
+			teacherServies.saveAndCreateRole(teacher);
 		}
 		return "list";
 	}
@@ -149,7 +146,9 @@ public class TeacherAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/teacher/teacher_delete.action")
 	public String delete() {
-		// TODO Auto-generated method stub
+		if(selectedRow!=null&&selectedRow.length>0){
+			teacherServies.deleteTeacher(selectedRow);			
+		}
 		return "list";
 	}
 
