@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.CountryScholarship;
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.entity.SystemDll;
@@ -51,6 +52,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	private String query_rewardName;
 	
 	@Override
+	@Limit(url="/couscholarship/couscholarship_importExcel.action")
 	public String importExcel() {
 		try {
 			/**
@@ -95,6 +97,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/couscholarship/couscholarship_listUI.action")
 	public String listUI() {
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 		if(countryScholarship!=null){
@@ -118,6 +121,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/couscholarship/couscholarship_add.action")
 	public String addUI() {
 		//保存查询条件
 		request.setAttribute("querycon", countryScholarship);
@@ -136,6 +140,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/couscholarship/couscholarship_add.action")
 	public String add() {
 		//设定创建时间为当前时间
 		Timestamp createtime = new Timestamp(System.currentTimeMillis());
@@ -145,6 +150,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/couscholarship/couscholarship_delete.action")
 	public String delete() {
 		//将listUI界面传过来的查询条件保存
 		request.setAttribute("countryScholarship", countryScholarship);
@@ -157,6 +163,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/couscholarship/couscholarship_editor.action")
 	public String editorUI() {
 		//到数据字典查找类别
 		String[] fields={"keyword=?"};
@@ -179,6 +186,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/couscholarship/couscholarship_editor.action")
 	public String editor() {
 		//更新数据
 		couscholarshipServices.update(countryScholarship);

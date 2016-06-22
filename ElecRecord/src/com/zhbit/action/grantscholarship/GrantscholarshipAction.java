@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.CountryScholarship;
 import com.zhbit.entity.GrantScholarship;
 import com.zhbit.entity.SystemDll;
@@ -53,6 +54,7 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	private String query_orgName;
 	private String query_studentNo;
 	@Override
+	@Limit(url="/grantscholarship/grantscholarship_importExcel.action")
 	public String importExcel() {
 		try {
 			/**
@@ -97,6 +99,7 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/grantscholarship/grantscholarship_listUI.action")
 	public String listUI() {
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 				if(grantScholarship!=null){
@@ -119,6 +122,7 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/grantscholarship/grantscholarship_add.action")
 	public String addUI() {
 		//保存查询条件
 				request.setAttribute("querycon", grantScholarship);
@@ -137,6 +141,7 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/grantscholarship/grantscholarship_add.action")
 	public String add() {
 		//设定创建时间为当前时间
 				Timestamp createtime = new Timestamp(System.currentTimeMillis());
@@ -146,6 +151,7 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/grantscholarship/grantscholarship_delete.action")
 	public String delete() {
 		//将listUI界面传过来的查询条件保存
 				request.setAttribute("grantScholarship", grantScholarship);
@@ -158,6 +164,7 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/grantscholarship/grantscholarship_editor.action")
 	public String editorUI() {
 		//到数据字典查找类别
 				String[] fields={"keyword=?"};
@@ -180,6 +187,7 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	}
 
 	@Override
+	@Limit(url="/grantscholarship/grantscholarship_editor.action")
 	public String editor() {
 		//更新数据
 		grantscholarshipServices.update(grantScholarship);

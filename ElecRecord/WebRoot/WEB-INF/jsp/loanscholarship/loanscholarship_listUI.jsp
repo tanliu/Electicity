@@ -73,9 +73,9 @@ table thead tr th{
     </div>
 </div>
 <div class="table-operate ue-clear">
-	<a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:;" class="import clear clear">导入</a>
+	<a:if url="/loanscholarship/loanscholarship_add.action"><a href="javascript:add()" class="add">添加</a></a:if>
+    <a:if url="/loanscholarship/loanscholarship_delete.action"><a href="javascript:del()" class="del confirm save">删除</a></a:if>
+    <a:if url="/loanscholarship/loanscholarship_importExcel.action"><a href="javascript:;" class="import clear clear">导入</a></a:if>
 <!--     <a href="javascript:;" class="upload">上传</a> -->
 </div>
 
@@ -83,7 +83,7 @@ table thead tr th{
 	<table>
     	<thead>
         	<tr>
-			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+			 <a:if url="/loanscholarship/loanscholarship_editor.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
             	 <th width="5%" >姓名</th>
             	 <th width="15%" class="num">学号</th>
             	 <th width="10%">身份证号</th>
@@ -92,13 +92,13 @@ table thead tr th{
 				<th width="10%">贷款金额</th>
 				 <th width="15%">是否通过审核</th>
 				<th width="15%" >备注</th>
-				<th width="10%">编辑</th>				
+				 <a:if url="/loanscholarship/loanscholarship_editor.action"><th width="10%">编辑</th></a:if>			
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="loanscholarship">
         	<tr>
-			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#loanscholarship.id'/>'/></td>
+			 <a:if url="/loanscholarship/loanscholarship_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#loanscholarship.id'/>'/></td></a:if>
               	<td ><s:property value="#loanscholarship.stuName"/></td>
               	<td><s:property value="#loanscholarship.studentNo"/></td>
               	<td><s:property value="#loanscholarship.idCardNo"/></td>
@@ -108,7 +108,7 @@ table thead tr th{
 				<td><s:property value="#loanscholarship.censoredFlag"/></td>
 				<td><s:property value="#loanscholarship.memo"/></td>
 				<!-- 跳转到editor对应的action。并将对应的查询条件数据传到action -->
-				<td><a href="javascript:editor('<s:property value='#loanscholarship.id'/>')"><img src="../images/edtico.png"/></a></td>
+				 <a:if url="/loanscholarship/loanscholarship_editor.action"><td><a href="javascript:editor('<s:property value='#loanscholarship.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>        
         </tbody>

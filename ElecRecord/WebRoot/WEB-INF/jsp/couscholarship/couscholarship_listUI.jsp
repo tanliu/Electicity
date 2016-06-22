@@ -90,9 +90,9 @@ table thead tr th{
     </div>
 </div>
 <div class="table-operate ue-clear">
-	<a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:;" class="import clear clear">导入</a>
+	<a:if url="/couscholarship/couscholarship_add.action"><a href="javascript:add()" class="add">添加</a></a:if>
+   <a:if url="/couscholarship/couscholarship_delete.action"> <a href="javascript:del()" class="del confirm save">删除</a></a:if>
+   <a:if url="/couscholarship/couscholarship_importExcel.action"> <a href="javascript:;" class="import clear clear">导入</a></a:if>
 <!--     <a href="javascript:;" class="upload">上传</a> -->
 </div>
 
@@ -100,26 +100,26 @@ table thead tr th{
 	<table>
     	<thead>
         	<tr>
-			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+			<a:if url="/couscholarship/couscholarship_editor.action"> <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
             	 <th width="10%" >姓名</th>
             	 <th width="20%" class="num">学号</th>
 				<th width="20%" >学院</th>
 				<th width="15%" align="center">获奖名称</th>
 				<th width="30%" >备注</th>
-				<th width="10%">编辑</th>				
+				<a:if url="/couscholarship/couscholarship_editor.action"><th width="10%">编辑</th></a:if>				
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="countryScholarship">
         	<tr>
-			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#countryScholarship.id'/>'/></td>
+			<a:if url="/couscholarship/couscholarship_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#countryScholarship.id'/>'/></td></a:if>
               	<td ><s:property value="#countryScholarship.stuName"/></td>
               	<td><s:property value="#countryScholarship.studentNo"/></td>
 				<td><s:property value="#countryScholarship.orgName"/></td>
 				<td><s:property value="#countryScholarship.rewardName"/></td>
 				<td><s:property value="#countryScholarship.memo"/></td>
 				<!-- 跳转到editor对应的action。并将对应的查询条件数据传到action -->
-				<td><a href="javascript:editor('<s:property value='#countryScholarship.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<a:if url="/couscholarship/couscholarship_editor.action">	<td><a href="javascript:editor('<s:property value='#countryScholarship.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>        
         </tbody>

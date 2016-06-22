@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.QueryUtils;
 import com.zhbit.util.RequestUtils;
@@ -55,6 +56,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 	private Timestamp query_joinDate;
 	
 		@Override
+		@Limit(url="/polstatus/polstatus_importExcel.action")
 		public String importExcel() {
 			// TODO Auto-generated method stub
 			try {
@@ -99,6 +101,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			
 		}
 		@Override
+		@Limit(url="/polstatus/polstatus_listUI.action")
 		public String listUI() {
 			//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 			if(politicalstatus!=null){
@@ -120,6 +123,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			//setPageSize(5);设置页面显示信息条数 可以直接写getPageSize()，则默认为2条信息每页，也可以手动写数字，比如5，则为5条信息
 		}
 		@Override
+		@Limit(url="/polstatus/polstatus_add.action")
 		public String addUI() {
 			// TODO Auto-generated method stub
 			//保存查询条件
@@ -127,6 +131,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			return "addUI";
 		}
 		@Override
+		@Limit(url="/polstatus/polstatus_add.action")
 		public String add() {
 			//获取当前时间作为createtime列的值并插入数据库
 			Timestamp time = new Timestamp(System.currentTimeMillis());
@@ -135,6 +140,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			return "add";
 		}
 		@Override
+		@Limit(url="/polstatus/polstatus_delete.action")
 		public String delete() {
 			// TODO Auto-generated method stub
 			//将listUI界面传过来的查询条件保存
@@ -147,6 +153,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			return "delete";
 		}
 		@Override
+		@Limit(url="/polstatus/polstatus_editor.action")
 		public String editorUI() {
 			//将listUI界面传过来的查询条件保存
 			request.setAttribute("querycon", politicalstatus);
@@ -157,6 +164,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			return "editorUI";
 		}
 		@Override
+		@Limit(url="/polstatus/polstatus_editor.action")
 		public String editor() {
 			//直接调用baseDao接口里面的update方法更新修改后的数据
 			polstatusServices.update(politicalstatus);

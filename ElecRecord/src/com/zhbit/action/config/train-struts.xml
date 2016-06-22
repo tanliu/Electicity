@@ -5,7 +5,7 @@
 <struts>
 
 	<!-- 配置全局结果及异常映射 -->
-	<package name="train" namespace="/train" extends="struts-default">
+	<package name="train" namespace="/train" extends="basestruts">
 <!-- 	          培训情况Detail管理  -->
   <action name="traindetail_*" class="com.zhbit.action.train.TrainDetailAction" method="{1}">
          <result name="addUI">/WEB-INF/jsp/train/traindetail_addUI.jsp</result> 
