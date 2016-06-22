@@ -6,7 +6,7 @@
 <struts>
 
 	<!-- 配置全局结果及异常映射 -->
-	<package name="studentdutys" namespace="/studentdutys" extends="struts-default">
+	<package name="studentdutys" namespace="/studentdutys" extends="basestruts">
          <action name="studentdutys_*" class="com.zhbit.action.studentdutys.StudentDutysAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/studentdutys/studentdutys_listUI.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/studentdutys/studentdutys_editorUI.jsp</result>

@@ -1,6 +1,6 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
+<%@ taglib prefix="a" uri="http://openhome.cc/jstl/fake"%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -114,18 +114,17 @@
 		
 		</div>
 		<div class="table-operate ue-clear">
-			<a href="${basePath}subjectcontest/subjectcontest_addUI.action" class="add">添加</a>
-			<a href="javascript:deleteItem()" class="del">删除</a> 
-			<a href="javascript:;" class="import clear clear">导入</a>
-    		<a href="javascript:;" class="upload">上传</a>
-    		<a href="javascript:downloadItem()">下载</a>
+			<a:if url="/subjectcontest/subjectcontest_add.action"><a href="${basePath}subjectcontest/subjectcontest_addUI.action" class="add">添加</a></a:if>
+			<a:if url="/subjectcontest/subjectcontest_delete.action"><a href="javascript:deleteItem()" class="del">删除</a> </a:if>
+			<a:if url="/subjectcontest/subjectcontest_importExcel.action"><a href="javascript:;" class="import clear clear">导入</a></a:if>
+    		<a:if url="/subjectcontest/subjectcontest_exportExcel.action"><a href="javascript:downloadItem()">下载</a></a:if>
     		
 		</div>
 <div class="table-box">
 			<table>
 				<thead>
 					<tr>
-						<th width="3%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+						<a:if url="/subjectcontest/subjectcontest_editor.action"><th width="3%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
 						<th width="3%">序号</th>
 						<th width="6%">学号</th>
 						<th width="5%">获奖者姓名</th>
@@ -137,15 +136,15 @@
 						<th width="5%">指导老师</th>
 						<th width="6%">获奖时间</th>
 						<th width="5%">备注</th>
-						<th width="5%">编辑</th>
+						<a:if url="/subjectcontest/subjectcontest_editor.action"><th width="5%">编辑</th></a:if>
 					</tr>
 				</thead>
 				<tbody>
 					<s:iterator value="pageUtils.items" var="subjectcontest" status="stuts">
 					
 						<tr>
-							<td><input type="checkbox" name="selectedRow" id="subid"
-								value='<s:property value='#subjectcontest.id'/>' /></td>
+							<a:if url="/subjectcontest/subjectcontest_editor.action"><td><input type="checkbox" name="selectedRow" id="subid"
+								value='<s:property value='#subjectcontest.id'/>' /></td></a:if>
 							<td class="num">${stuts.count+(pageUtils.pageNo-1)*pageUtils.pageSize}</td>
 							<td><s:property value="#subjectcontest.studentNo" /></td>
 							<td><s:property value="#subjectcontest.stuName" /></td>
@@ -157,8 +156,8 @@
 							<td><s:property value="#subjectcontest.guidTeacher" /></td>
 							<td><s:date name="#subjectcontest.rewardDate" format="yyyy-MM-dd"></s:date></td>
 							<td><s:property value="#subjectcontest.memo" /></td>
-							<td><a href="javascript:editor('<s:property value='#subjectcontest.id'/>')">
-								<img src="../images/edtico.png" /></a></td>
+							<a:if url="/subjectcontest/subjectcontest_editor.action"><td><a href="javascript:editor('<s:property value='#subjectcontest.id'/>')">
+								<img src="../images/edtico.png" /></a></td></a:if>
 				
 						</tr>
 						
