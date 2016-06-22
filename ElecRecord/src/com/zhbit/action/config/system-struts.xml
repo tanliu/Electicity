@@ -124,6 +124,16 @@
 	          <param name="encode">true</param>
             </result>
          </action>
+         <!-- 模板管理 -->
+         <action name="model_*" class="modelAction" method="{1}">
+            <result name="{1}">/WEB-INF/jsp/system/model_{1}.jsp</result>
+            <result name="list" type="redirectAction">
+              <param name="actionName">model_listUI</param>
+	          <param name="querycon">${querycon}</param>
+	          <param name="pageNO">${pageNO}</param>
+	          <param name="encode">true</param>
+            </result>
+         </action>
          <!-- 登录管理 -->
          <action name="login_*" class="loginAction" method="{1}">
               <!--  <interceptor-ref name="myAuthorityInterceptor"></interceptor-ref> -->

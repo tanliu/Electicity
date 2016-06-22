@@ -90,6 +90,7 @@ public class CourseGradeAction extends BaseAndExcelAction {
 	@Override
 	public String listUI() {
 		setPageSize(10);
+		qeuryName=RequestUtils.checkStudentAuthority(request,qeuryName);
 		if(queryNO!=null&&qeuryName!=null&&courseName!=null&&courseNO!=null&&studyYear!=null){
 			try {
 				qeuryName=DecodeUtils.decodeUTF(qeuryName);

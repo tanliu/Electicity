@@ -75,15 +75,16 @@ public class GuiListAction extends BaseAndExcelAction {
 			List<Object> guiListEntitys = excelServicesMake.toDBEnity(objects,GuiList.class);
 			List<GuiList> guiLists=new ArrayList<GuiList>();
 					
-			/*for(Object object:guiListEntitys){
-				GuiList guiList=(GuiList) object;
-				System.out.println("姓名是："+guiList.getStuName());
-			}*/
+			
 		//将集合中的对象保存至数据库
 			for(Object object:guiListEntitys){
 				
 				GuiList guiList=(GuiList) object;
 				if(!StringUtils.isEmpty(guiList.getStudentNo())){	
+					String[] fields={"studentNo=?","teacherName=?"};
+					Object[] params={guiList.getStudentNo(),guiList.getTeacherName()};	
+					
+					if(guiListServices.findObjectByFields(fields, params)==null){//如果不存在学号、教师姓名都相同的记录，则进行添加到数据库的操作
 					//设定创建时间为当前时间
 					guiList.setStuId("9528");
 					Timestamp createtime = new Timestamp(System.currentTimeMillis());
@@ -98,11 +99,14 @@ public class GuiListAction extends BaseAndExcelAction {
 					//将此对象放入guiLists集合中
 					guiLists.add(guiList);
 				}
+				}
 				
 			}
 			
+			if(guiLists.size()>=1){
 			//批量存储导学名单信息
 			guiListServices.saveGuiLists(guiLists);
+			}
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

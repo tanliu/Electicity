@@ -31,8 +31,9 @@ public class LoginLogDaoImpl extends BaseDaoImpl<LoginLog> implements LoginLogDa
 
 	@Override
 	public List<LoginLog> findLoginLogByUserNO(String employNo) {
-		String Hql="From "+LoginLog.class.getSimpleName()+" where employNo = "+employNo+" order by loginTime DESC";		
-		return getHibernateTemplate().find(Hql);
+		String Hql="From "+LoginLog.class.getSimpleName()+" where employNo = '"+employNo+"' order by loginTime DESC";
+		List<LoginLog> loginLogs=getHibernateTemplate().find(Hql);
+		return loginLogs;
 	}
 
 

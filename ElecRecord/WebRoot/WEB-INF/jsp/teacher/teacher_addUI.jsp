@@ -54,7 +54,7 @@
 				<div class="select-wrap">
 					<input type="text" name="teacher.birthday"
 						onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="noNull"
-						readonly="readonly" />
+						 />
 				</div>
 
 

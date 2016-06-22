@@ -139,6 +139,7 @@ public class CourseAction extends BaseAndExcelAction {
 	@Override
 	@Limit(url="/course/course_listUI.action")
 	public String listUI() {
+		
 		setPageSize(10);
 		if(queryNO!=null&&qeuryName!=null&&courseName!=null&&courseNO!=null&&studyYear!=null){
 			try {

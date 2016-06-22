@@ -66,7 +66,14 @@ public interface RoleServices extends BaseServices<Role> {
 	 * @param userRoleht
 	 * @return
 	 */
-	String findPopedomByRoleIDs(Hashtable<String, String> userRoleht);	
+	String findPopedomByRoleIDs(Hashtable<String, String> userRoleht);
+
+	/**
+	 * 方法描述:通过角色名查找到角色
+	 * @param string
+	 * @return
+	 */
+	Role findObjectByName(String roleName);	
 	
 
 }

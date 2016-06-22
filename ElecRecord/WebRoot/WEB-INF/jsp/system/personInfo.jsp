@@ -14,16 +14,29 @@
 </head>
 
 <body>
+<script type="text/javascript">
+function download(){
+ 		var url="${basePath}system/model_download.action";
+ 		
+ 		window.open(url) ; //打开窗口
+}
+
+</script>
+
+
 <div class="article toolbar">
 	<div class="title ue-clear">
     	<h2>常用工具</h2>
-        <a href="javascript:;" class="more">更多</a>
     </div>
     <div class="content">
     	<ul class="toollist ue-clear">
             <li>
-            	<a href="javascript:;" class="img"><img src="images/icon03.png" /></a>
+            	<a href="javascript:;" class="img"><img src="${basePath}images/icon03.png" /></a>
                 <p><a href="javascript:;">密码修改</a></p>
+            </li>
+            <li>
+            	<a href="javascript:download();" class="img"><img src="${basePath}images/icon02.png" /></a>
+                <p><a href="javascript:;">下载模板</a></p>
             </li>
     	</ul>        
     </div>    
@@ -32,7 +45,6 @@
 	<div class="wrap-l">
         <div class="title ue-clear">
             <h2>登录情况</h2>
-            <a href="javascript:;" class="more">更多</a>
         </div>
         <div class="content">
         	<table>

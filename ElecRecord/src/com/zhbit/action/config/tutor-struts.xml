@@ -6,7 +6,7 @@
 <struts>
 
 	<!-- 配置全局结果及异常映射 -->
-	<package name="tutor" namespace="/tutor" extends="struts-default">
+	<package name="tutor" namespace="/tutor" extends="basestruts">
          <action name="tutor_*" class="com.zhbit.action.tutor.TutorAction" method="{1}">
             <result name="listUI">/WEB-INF/jsp/tutor/tutorinfo_listUI.jsp</result>
             <result name="editorUI">/WEB-INF/jsp/tutor/tutorinfo_editorUI.jsp</result>

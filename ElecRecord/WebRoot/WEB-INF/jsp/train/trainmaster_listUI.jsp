@@ -68,9 +68,9 @@ table thead tr th{
     </div>
 </div>
 <div class="table-operate ue-clear">
-	<a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:;" class="import clear clear">导入</a>
+	<a:if url="/train/trainmaster_add.action"><a href="javascript:add()" class="add">添加</a></a:if>
+   <a:if url="/train/trainmaster_delete.action"> <a href="javascript:del()" class="del confirm save">删除</a></a:if>
+    <a:if url="/train/trainmaster_importExcel.action"><a href="javascript:;" class="import clear clear">导入</a></a:if>
 <!--     <a href="javascript:;" class="upload">上传</a> -->
 </div>
 
@@ -78,20 +78,20 @@ table thead tr th{
 	<table>
     	<thead>
         	<tr>
-			 <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+			<a:if url="/train/trainmaster_editor.action"> <th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
             	<th width="20%" >主题</th>
             	 <th width="10%" >负责人</th>
 				<th width="10%" >地点</th>
 				<th width="20%" align="center">日期</th>
 				<th width="10%" align="center">培训年级</th>
 				<th width="20%" >备注</th>
-				<th width="10%">编辑</th>				
+				<a:if url="/train/trainmaster_editor.action"><th width="10%">编辑</th></a:if>			
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="traininfoMaster">
         	<tr>
-			<td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#traininfoMaster.id'/>'/></td>
+			<a:if url="/train/trainmaster_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#traininfoMaster.id'/>'/></td></a:if>
               	<td><s:property value="#traininfoMaster.trainsTopic"/></td>
 				<td ><s:property value="#traininfoMaster.manager"/></td>
 				
@@ -100,7 +100,7 @@ table thead tr th{
 				<td><s:property value="#traininfoMaster.trainsGrade"/></td>
 				<td><s:property value="#traininfoMaster.memo"/></td>
 				<!-- 跳转到editor对应的action。并将对应的查询条件数据传到action -->
-				<td><a href="javascript:editor('<s:property value='#traininfoMaster.id'/>')"><img src="../images/edtico.png"/></a></td>
+				<a:if url="/train/trainmaster_editor.action"><td><a href="javascript:editor('<s:property value='#traininfoMaster.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>        
         </tbody>

@@ -48,4 +48,16 @@ public interface TeacherServices extends BaseServices<Teacher> {
 	 * @return
 	 */
 	public Teacher getTeacherByName(String employName);
+
+	/**
+	 * 方法描述:保存用户的同时创建用户
+	 * @param teacher
+	 */
+	void saveAndCreateRole(Teacher teacher);
+
+	/**
+	 * 方法描述:删除教师基本信息同时也注销用户
+	 * @param selectedRow
+	 */
+	void deleteTeacher(String[] selectedRow);
 }

@@ -12,10 +12,12 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.Tutor;
@@ -53,6 +55,7 @@ public class TutorAction extends BaseAndExcelAction {
 	TutorServices tutorServices;
 
 	@Override
+	@Limit(url="/tutor/tutor_importExcel.action")
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		ExcelConfig config;
@@ -77,16 +80,19 @@ public class TutorAction extends BaseAndExcelAction {
 			List<Object> tutorEntitys = excelServicesMake.toDBEnity(objects,Tutor.class);
 			
 			List<Tutor> tutors=new ArrayList<Tutor>();
-			
-			
-			for(Object object:tutorEntitys){
-				Tutor tutor=(Tutor) object;
-				System.out.println("姓名是："+tutor.getStuName());
-			}
+		
 		//将集合中的对象保存至数据库
 			for(Object object:tutorEntitys){
 				Tutor tutor=(Tutor) object;
 				
+				String[] fields;
+				Object[] params;				
+				
+				fields=new String[]{"studentNo=?","guidDate=?","guidAddress=?"};
+				params=new Object[]{tutor.getStudentNo(),tutor.getGuidDate(),tutor .getGuidAddress()};
+				
+				if(!StringUtils.isEmpty(tutor.getStudentNo())){
+				if(tutorServices.findObjectByFields(fields, params)==null){//当学号、辅导时间、辅导地点相同的记录不存在时，才添加到集合中
 				//设定创建时间为当前时间，学生ID暂时设定为"9528"
 				tutor.setStuId("9528");
 				Timestamp createtime = new Timestamp(System.currentTimeMillis());
@@ -99,8 +105,13 @@ public class TutorAction extends BaseAndExcelAction {
 				
 			}
 			
-			//批量插入辅导信息
-			tutorServices.saveTutors(tutors);
+			}
+			
+			}
+			if(tutors.size()>=1){
+				//批量插入辅导信息
+				tutorServices.saveTutors(tutors);
+			}
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -120,6 +131,7 @@ public class TutorAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/tutor/tutor_listUI.action")
 	public String listUI() {
 		// TODO Auto-generated method stub
 		//对传来的查询条件进行编码
@@ -143,6 +155,7 @@ public class TutorAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/tutor/tutor_add.action")
 	public String addUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -152,6 +165,7 @@ public class TutorAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/tutor/tutor_add.action")
 	public String add() {
 		// TODO Auto-generated method stub
 		
@@ -179,6 +193,7 @@ public class TutorAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/tutor/tutor_delete.action")
 	public String delete() {
 		// TODO Auto-generated method stub
 		
@@ -193,6 +208,7 @@ public class TutorAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/tutor/tutor_editor.action")
 	public String editorUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -208,6 +224,7 @@ public class TutorAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/tutor/tutor_editor.action")
 	public String editor() {
 		// TODO Auto-generated method stub
 		//使用update方法更新辅导信息

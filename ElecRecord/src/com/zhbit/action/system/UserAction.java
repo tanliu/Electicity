@@ -119,7 +119,7 @@ public class UserAction extends BaseAction {
 	@Override
 	public String delete() {
 		if(selectedRow!=null&&selectedRow.length>0){
-			userServices.deleteUser(selectedRow);
+			userServices.trueDeleteUser(selectedRow);
 			
 		}
 		return "delete";
