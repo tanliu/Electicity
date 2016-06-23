@@ -99,6 +99,7 @@ table thead tr th{
            <s:iterator value="pageUtils.items" var="loanscholarship">
         	<tr>
 			 <a:if url="/loanscholarship/loanscholarship_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#loanscholarship.id'/>'/></td></a:if>
+              	<input type="hidden" name="select" value='<s:property value='#loanscholarship.id'/>'/>
               	<td ><s:property value="#loanscholarship.stuName"/></td>
               	<td><s:property value="#loanscholarship.studentNo"/></td>
               	<td><s:property value="#loanscholarship.idCardNo"/></td>
@@ -141,7 +142,7 @@ function doSelectAll(){
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
         //双击得到当前行数据的id
-       	 var $id=$(this).children("td").children("input").val();
+       	var $id=$(this).find('input[name=select]').val();
        	//跳转到详情页
        	window.open("${basePath}loanscholarship/loanscholarship_detailUI.action?loanscholarship.id="+$id);
         });

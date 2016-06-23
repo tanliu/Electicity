@@ -86,6 +86,7 @@ table thead tr th{
            <s:iterator value="pageUtils.items" var="traininfoMaster">
         	<tr>
 			<a:if url="/train/trainmaster_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#traininfoMaster.id'/>'/></td></a:if>
+              	<input type="hidden" name="select" value='<s:property value='#traininfoMaster.id'/>'/>
               	<td><s:property value="#traininfoMaster.trainsTopic"/></td>
 				<td ><s:property value="#traininfoMaster.manager"/></td>
 				
@@ -127,7 +128,7 @@ function doSelectAll(){
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
         //双击得到当前行数据的id
-       	 var $id=$(this).children("td").children("input").val();
+       	 var $id=$(this).find('input[name=select]').val();
        	//跳转到详情页
        	window.open("${basePath}train/trainmaster_detailUI.action?traininfoMaster.id="+$id);
         });

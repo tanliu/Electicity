@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -20,6 +21,7 @@ import com.zhbit.entity.CommonScholarship;
 import com.zhbit.entity.CountryScholarship;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
+import com.zhbit.entity.TraininfoDetail;
 import com.zhbit.entity.excel.ComscholarshipExcel;
 import com.zhbit.entity.excel.CouscholarshipExcel;
 import com.zhbit.excel.ExcelConfig;
@@ -105,8 +107,11 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/comscholarship/comscholarship_listUI.action")
 	public String listUI() {
-		//判断是否是学生，如果是学生的话，就把查询条件强加
-		query_stuName=RequestUtils.checkStudentName(request,query_stuName);
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(commonScholarship==null&&student!=null){
+			commonScholarship=new CommonScholarship();
+			commonScholarship.setStuName(RequestUtils.checkStudentName(request, commonScholarship.getStuName()==null?"":commonScholarship.getStuName()));
+		}
 		String[] fields={"keyword=?"};
 		String[] params2={"专业"};
 		//查找专业
@@ -114,11 +119,19 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 		request.setAttribute("major", major);
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 		if(commonScholarship!=null){
+			//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+			commonScholarship.setStuName(RequestUtils.checkStudentName(request, commonScholarship.getStuName()));
 			try {
+				if(!StringUtils.isBlank(commonScholarship.getStuName())){
 				commonScholarship.setStuName(DecodeUtils.decodeUTF(commonScholarship.getStuName()));
+				}
+				if(!StringUtils.isBlank(commonScholarship.getRewardName())){
 				commonScholarship.setRewardName(DecodeUtils.decodeUTF(commonScholarship.getRewardName()));
+				}
+				if(!StringUtils.isBlank(commonScholarship.getMajor())){
 				commonScholarship.setMajor(DecodeUtils.decodeUTF(commonScholarship.getMajor()));
-			} catch (UnsupportedEncodingException e) {
+				}
+				} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				System.out.println("编码时出错 ");
 		}

@@ -10,11 +10,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
 import com.zhbit.entity.CountryScholarship;
+import com.zhbit.entity.GrantScholarship;
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
@@ -103,15 +106,26 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/couscholarship/couscholarship_listUI.action")
 	public String listUI() {
-		//判断是否是学生，如果是学生的话，就把查询条件强加
-		query_stuName=RequestUtils.checkStudentName(request,query_stuName);
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(countryScholarship==null&&student!=null){
+			countryScholarship=new CountryScholarship();
+			countryScholarship.setStuName(RequestUtils.checkStudentName(request, countryScholarship.getStuName()==null?"":countryScholarship.getStuName()));
+		}
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 		if(countryScholarship!=null){
+			//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+			countryScholarship.setStuName(RequestUtils.checkStudentName(request, countryScholarship.getStuName()));
 			try {
+				if(!StringUtils.isBlank(countryScholarship.getStuName())){
 				countryScholarship.setStuName(DecodeUtils.decodeUTF(countryScholarship.getStuName()));
+				}
+				if(!StringUtils.isBlank(countryScholarship.getRewardName())){
 				countryScholarship.setRewardName(DecodeUtils.decodeUTF(countryScholarship.getRewardName()));
+				}
+				if(!StringUtils.isBlank(countryScholarship.getOrgName())){
 				countryScholarship.setOrgName(DecodeUtils.decodeUTF(countryScholarship.getOrgName()));
-			} catch (UnsupportedEncodingException e) {
+				}
+				} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				System.out.println("编码时出错 ");
 		}
@@ -119,7 +133,7 @@ public class CouscholarshipAction extends BaseAndExcelAction{
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", countryScholarship);
 		//设置页面显示信息条数
-		setPageSize(2);
+		setPageSize(6);
 		//调用方法，根据查询条件显示数据
 		pageUtils=couscholarshipServices.queryList(countryScholarship, getPageNO(), getPageSize());	
 		return "listUI";

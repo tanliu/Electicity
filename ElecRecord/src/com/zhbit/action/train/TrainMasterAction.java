@@ -114,7 +114,7 @@ public class TrainMasterAction extends BaseAndExcelAction{
 		request.setAttribute("querycon", traininfoMaster);
 		
 		//设置页面显示信息条数
-		setPageSize(2);
+		setPageSize(6);
 		//调用方法，根据查询条件显示数据
 		pageUtils=trainmasterServices.queryList(traininfoMaster, getPageNO(), getPageSize());	
 		return "listUI";

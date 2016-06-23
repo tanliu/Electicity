@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
+import com.zhbit.entity.GrantScholarship;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.TraininfoDetail;
@@ -107,29 +108,42 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/train/traindetail_listUI.action")
 	public String listUI() {
-		//判断是否是学生，如果是学生的话，就把查询条件强加
-		query_stuName=RequestUtils.checkStudentName(request,query_stuName);
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(traininfoDetail==null&&student!=null){
+			traininfoDetail=new TraininfoDetail();
+			traininfoDetail.setStuName(RequestUtils.checkStudentName(request, traininfoDetail.getStuName()==null?"":traininfoDetail.getStuName()));
+		}
 		//查找所有的培训信息trainmaster，方便获取培训主题trainTopic
 		List<TraininfoMaster> traininfoMaster=trainmasterServices.findAllObject();
 		request.setAttribute("traininfoMaster", traininfoMaster);
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 		if(traininfoDetail!=null){
-			if(!StringUtils.isEmpty(traininfoDetail.getStuName())||!StringUtils.isEmpty(traininfoDetail.getTrainsResult())
-					||!StringUtils.isEmpty(traininfoDetail.getMaster_trainsTopic())){
+			
+			//if(!StringUtils.isEmpty(traininfoDetail.getStuName())||!StringUtils.isEmpty(traininfoDetail.getTrainsResult())
+				//	||!StringUtils.isEmpty(traininfoDetail.getMaster_trainsTopic())){
+				
+				//判断是否是学生，如果是，则将其输入的姓名强转为他本人的姓名
+				traininfoDetail.setStuName(RequestUtils.checkStudentName(request, traininfoDetail.getStuName()));
 			try {
+				if(!StringUtils.isBlank(traininfoDetail.getStuName())){
 				traininfoDetail.setStuName(DecodeUtils.decodeUTF(traininfoDetail.getStuName()));
+				}
+				if(!StringUtils.isBlank(traininfoDetail.getTrainsResult())){
 				traininfoDetail.setTrainsResult(DecodeUtils.decodeUTF(traininfoDetail.getTrainsResult()));
+				}
+				if(!StringUtils.isBlank(traininfoDetail.getMaster_trainsTopic())){
 				traininfoDetail.setMaster_trainsTopic(DecodeUtils.decodeUTF(traininfoDetail.getMaster_trainsTopic()));
-			} catch (UnsupportedEncodingException e) {
+				}
+				} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				System.out.println("编码时出错 ");
 		}
 		}
-		}
+		//}
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", traininfoDetail);
 		//设置页面显示信息条数
-		setPageSize(3);
+		setPageSize(6);
 		//调用方法，根据查询条件显示数据
 		pageUtils=traindetailServices.queryList(traininfoDetail, getPageNO(), getPageSize());	
 		return "listUI";

@@ -113,6 +113,7 @@ table thead tr th{
            <s:iterator value="pageUtils.items" var="countryScholarship">
         	<tr>
 			<a:if url="/couscholarship/couscholarship_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#countryScholarship.id'/>'/></td></a:if>
+              	<input type="hidden" name="select" value='<s:property value='#countryScholarship.id'/>'/>
               	<td ><s:property value="#countryScholarship.stuName"/></td>
               	<td><s:property value="#countryScholarship.studentNo"/></td>
 				<td><s:property value="#countryScholarship.orgName"/></td>
@@ -152,7 +153,7 @@ function doSelectAll(){
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
         //双击得到当前行数据的id
-       	 var $id=$(this).children("td").children("input").val();
+       	var $id=$(this).find('input[name=select]').val();
        	//跳转到详情页
        	window.open("${basePath}couscholarship/couscholarship_detailUI.action?countryScholarship.id="+$id);
         });

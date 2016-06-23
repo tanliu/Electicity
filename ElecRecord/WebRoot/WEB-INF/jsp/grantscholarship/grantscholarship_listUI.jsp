@@ -108,6 +108,7 @@ table thead tr th{
            <s:iterator value="pageUtils.items" var="grantScholarship">
         	<tr>
 				<a:if url="/grantscholarship/grantscholarship_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#grantScholarship.id'/>'/></td></a:if>
+              	<input type="hidden" name="select" value='<s:property value='#grantScholarship.id'/>'/>
               	<td ><s:property value="#grantScholarship.stuName"/></td>
               	<td><s:property value="#grantScholarship.studentNo"/></td>
               	<td><s:property value="#grantScholarship.sex"/></td>
@@ -150,7 +151,7 @@ function doSelectAll(){
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
         //双击得到当前行数据的id
-       	 var $id=$(this).children("td").children("input").val();
+       	 var $id=$(this).find('input[name=select]').val();
        	//跳转到详情页
        	window.open("${basePath}grantscholarship/grantscholarship_detailUI.action?grantScholarship.id="+$id);
         });

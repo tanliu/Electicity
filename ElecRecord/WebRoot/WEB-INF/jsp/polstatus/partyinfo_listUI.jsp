@@ -88,6 +88,7 @@ table thead tr th{
            <s:iterator value="pageUtils.items" var="political">
         	<tr>
 			<a:if url="/polstatus/polstatus_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#political.id'/>'/></td></a:if>
+              		<input type="hidden" name="select" value='<s:property value='#political.id'/>'/>
               	<td><s:property value="#political.studentNo"/></td>
 				<td ><s:property value="#political.stuName"/></td>
 				<td><s:date name="#political.joinDate" format="yyyy-MM-dd"></s:date></td>
@@ -127,7 +128,7 @@ function doSelectAll(){
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
         //双击得到当前行数据的id
-       	 var $id=$(this).children("td").children("input").val();
+       	var $id=$(this).find('input[name=select]').val();
        	//跳转到详情页
        	window.open("${basePath}polstatus/polstatus_detailUI.action?politicalstatus.id="+$id);
         });

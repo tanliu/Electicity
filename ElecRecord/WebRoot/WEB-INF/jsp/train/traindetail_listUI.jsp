@@ -45,6 +45,11 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
+	
+      <div class="conditions staff ue-clear" style="width:25%">
+          <label style="margin-left:0px;width:50px"> 参训人：</label>
+        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人进行查询" value="${querycon.stuName}" style="width:180px;height:31px"/>
+    </div>
          <div class="conditions name ue-clear" style="width:25%"> 
             <label style="margin-left:0px;width:50px" >主题：</label> 
           <input  hidden="hidden" value="${querycon.master_trainsTopic}" name="traininfoDetail.master_trainsTopic" > 
@@ -72,10 +77,6 @@ table thead tr th{
         </div> 
   </div>
   
-      <div class="conditions staff ue-clear" style="width:25%">
-          <label style="margin-left:0px;width:50px"> 参训人：</label>
-        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人进行查询" value="${querycon.stuName}" style="width:180px;height:31px"/>
-    </div>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>
@@ -105,6 +106,7 @@ table thead tr th{
            <s:iterator value="pageUtils.items" var="traininfoDetail">
         	<tr>
 			<a:if url="/train/traindetail_editor.action"><td class="num"><input type="checkbox" name="selectedRow" value='<s:property value='#traininfoDetail.id'/>'/></td></a:if>
+				<input type="hidden" name="select" value='<s:property value='#traininfoDetail.id'/>'/>
 				<td ><s:property value="#traininfoDetail.stuName"/></td>
 				<td><s:property value="#traininfoDetail.studentNo"/></td>
   				<td><s:property value="#traininfoDetail.master_trainsTopic"/></td>   
@@ -144,7 +146,7 @@ function doSelectAll(){
         //双击跳转到详情页面
         $('tbody>tr').dblclick(function() {
         //双击得到当前行数据的id
-       	 var $id=$(this).children("td").children("input").val();
+       	 var $id=$(this).find('input[name=select]').val();
        	//跳转到详情页
        	window.open("${basePath}train/traindetail_detailUI.action?traininfoDetail.id="+$id);
         });

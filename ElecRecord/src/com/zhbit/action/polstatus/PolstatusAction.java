@@ -21,6 +21,7 @@ import com.zhbit.annotation.Limit;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.QueryUtils;
 import com.zhbit.util.RequestUtils;
+import com.zhbit.entity.LoanScholarship;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.Politicalstatus;
 import com.zhbit.entity.Student;
@@ -106,14 +107,26 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		@Limit(url="/polstatus/polstatus_listUI.action")
 		public String listUI() {
-			//判断是否是学生，如果是学生的话，就把查询条件强加
-			query_studentNo=RequestUtils.checkStudentAuthority(request,query_studentNo);
+			Student student=(Student) request.getSession().getAttribute("student");
+			if(politicalstatus==null&&student!=null){
+				politicalstatus=new Politicalstatus();
+				politicalstatus.setStuName(RequestUtils.checkStudentName(request, politicalstatus.getStuName()==null?"":politicalstatus.getStuName()));
+			}
 			//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 			if(politicalstatus!=null){
+				//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+				politicalstatus.setStuName(RequestUtils.checkStudentName(request, politicalstatus.getStuName()));
 				try {
+					if(!StringUtils.isBlank(politicalstatus.getStuName())){
 					politicalstatus.setStuName(DecodeUtils.decodeUTF(politicalstatus.getStuName()));
+					}
+					if(!StringUtils.isBlank(politicalstatus.getStudentNo())){
 					politicalstatus.setStudentNo(DecodeUtils.decodeUTF(politicalstatus.getStudentNo()));
-				} catch (UnsupportedEncodingException e) {
+					}
+					if(politicalstatus.getJoinDate()!=null){
+						
+					}
+					} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
 					System.out.println("编码时出错 ");
 			}
@@ -121,7 +134,7 @@ public class PolstatusAction extends BaseAndExcelAction{
 			//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 			request.setAttribute("querycon", politicalstatus);
 			//设置页面显示信息条数
-			setPageSize(2);
+			setPageSize(6);
 			//调用方法，根据查询条件显示数据
 			pageUtils=polstatusServices.queryList(politicalstatus, getPageNO(), getPageSize());	
 			return "listUI";
