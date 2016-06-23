@@ -51,6 +51,7 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 	SystemDllServices systeDllServices;
 	@Resource(name=StudentServices.SERVICES_NAME)
 	StudentServices studentServices;
+	
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
 	private String query_stuName;
 	private String query_major;
