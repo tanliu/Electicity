@@ -28,6 +28,7 @@ import com.zhbit.entity.excel.SubjectContestExcel;
 import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.Postinfo;
 import com.zhbit.entity.StudentDutys;
@@ -78,6 +79,7 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/studentdutys/studentdutys_listUI.action")
 	public String listUI() {
 		//到数据字典查找类别
 		String[] fields={"keyword=?"};
@@ -114,7 +116,8 @@ public class StudentDutysAction extends BaseAndExcelAction {
 		}
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", studentdutys);
-		pageUtils=studentDutysServices.queryList(studentdutys, getPageNO(),5);	
+		setPageSize(8);
+		pageUtils=studentDutysServices.queryList(studentdutys, getPageNO(),getPageSize());	
 		//pageUtils=studentDutysServices.queryList(studentDutys, getPageNO(), getPageSize());
 		
 		//pageUtils=studentDutysServices.getPageUtils(null, null, null, QueryUtils.ORDER_BY_ASC, getPageNO(), 5);
@@ -128,6 +131,7 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/studentdutys/studentdutys_add.action")
 	public String addUI() {
 				//到数据字典查找类别
 				String[] fields={"keyword=?"};
@@ -155,6 +159,7 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/studentdutys/studentdutys_add.action")
 	public String add() {
 		//设置学号
 		studentdutys.setStudentNo("123");
@@ -169,6 +174,7 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/studentdutys/studentdutys_delete.action")
 	public String delete() {
 		if(selectedRow!=null&&selectedRow.length>0){
 			studentDutysServices.deleteObjectByIds(selectedRow);
@@ -184,6 +190,7 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/studentdutys/studentdutys_editor.action")
 	public String editorUI() {
 		//将listUI界面传过来的查询条件保存
 		System.out.println("editorUI_duty="+studentdutys.getDuty());
@@ -216,6 +223,7 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/studentdutys/studentdutys_editor.action")
 	public String editor() {		
 		
 		//设置学号
@@ -269,6 +277,7 @@ public class StudentDutysAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/studentdutys/studentdutys_importExcel.action")
 	public String importExcel() {
 		try {
 			/**
