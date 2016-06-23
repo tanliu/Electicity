@@ -21,7 +21,7 @@ public class PostinfoExcel extends BaseExcelBean implements Cloneable {
 	private String stuName;    //姓名
 	@Lang(value = "学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 	private String studentNo;	
-	@Lang(value="性别",toExcle={"男","女"},toEntity={"1","0"})
+	@Lang(value="性别")
 	private String sex;		//性别
 	@Lang(value="派遣性质")
 	private String dispatchType;	//派遣性质

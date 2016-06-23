@@ -61,7 +61,7 @@
 			    
 			  	//双击跳转到详情页面
 			  	$('tbody>tr').dblclick(function() {
-			  		var sid=$(this).find('td').find("#subid").val();
+			  		var sid=$(this).find('input[name=select]').val();
 			  		var url="${basePath}postinfo/postinfo_detailUI.action?postinfo.id="+sid;
 			  		window.open(url);
 		    	});	
@@ -120,7 +120,6 @@
 			<a:if url="/postinfo/postinfo_add.action"><a href="${basePath}postinfo/postinfo_addUI.action" class="add">添加</a></a:if>
 			<a:if url="/postinfo/postinfo_delete.action"><a href="javascript:deleteItem()" class="del">删除</a> </a:if>
 			<a:if url="/postinfo/postinfo_importExcel.action"><a href="javascript:;" class="import clear clear">导入</a></a:if>
-    		<a:if url="/postinfo/postinfo_exportExcel.action"><a href="javascript:downloadItem()">下载</a></a:if>
  
 		</div>
 <div class="table-box">
@@ -149,6 +148,8 @@
 						<tr>
 							<a:if url="/postinfo/postinfo_editor.action"><td><input type="checkbox" name="selectedRow" id="subid"
 								value='<s:property value='#postinfo.id'/>' /></td></a:if>
+								<input type="hidden" name="select" 
+								value='<s:property value='#postinfo.id'/>' />
 							<td class="num">${stuts.count+(pageUtils.pageNo-1)*pageUtils.pageSize}</td>
 							<td><s:property value="#postinfo.emsno" /></td>
 							<td><s:property value="#postinfo.schoolNo" /></td>

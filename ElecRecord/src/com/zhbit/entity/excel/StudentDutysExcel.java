@@ -18,7 +18,7 @@ public class StudentDutysExcel extends BaseExcelBean implements Cloneable{
 		private String stuName;    //姓名
 		@Lang(value = "学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 		private String studentNo;
-		@Lang(value="性别",toExcle={"男","女"},toEntity={"1","0"})
+		@Lang(value="性别")
 		private String sex;		//性别
 		@Lang(value="职务",isNull=Lang.TYPE_NONULL)
 		private String duty;	//职务

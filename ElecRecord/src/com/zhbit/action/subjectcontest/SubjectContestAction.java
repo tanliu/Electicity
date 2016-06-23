@@ -97,6 +97,9 @@ public class SubjectContestAction extends BaseAndExcelAction {
 		//对传来的查询条件进行编码
 		if(subjectcontest!=null){
 			try {
+				//判断是否是学生，如果是学生的话，就把查询条件强加
+				subjectcontest.setStuName(RequestUtils.checkStudentAuthority(request,subjectcontest.getStuName()));
+				
 				subjectcontest.setStuName(DecodeUtils.decodeUTF(subjectcontest.getStuName()));
 				subjectcontest.setStudentNo(DecodeUtils.decodeUTF(subjectcontest.getStudentNo()));
 				subjectcontest.setGrantUnits(DecodeUtils.decodeUTF(subjectcontest.getGrantUnits()));
@@ -106,6 +109,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 				System.out.println("编码时出错");
 			}
 		}
+		
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", subjectcontest);
 		setPageSize(8);
