@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 
 <style type="text/css">
 /*单元格样式*/
@@ -104,72 +105,67 @@ function editor(id){
 <form id="queryForm"   method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" >                  
-	                                          
-       <div class="conditions staff ue-clear" style="margin-right:2px">
-            <label style="text-align: right;margin-right: 15px">学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" name="attendanceDetail.studentno" value="${queryCon.studentno}" style="width:210px;height:30px" />
-        </div>
+	 <div class="main"> 
+		  <p class="short-input ue-clear">   
+            <label >学号：</label>
+            <input type="text"  name="attendanceDetail.studentno" value="${queryCon.studentno}"  />
         
-         <div class="conditions staff ue-clear" >
-            <label style="text-align: right;margin-right: 15px">姓名：</label>
-            <input type="text" placeholder="请输入学生姓名进行查询" name="attendanceDetail.stuname" value="${queryCon.stuname}" style="width:210px;height:30px"/>
-            
-        </div>
+            <label >姓名：</label>
+            <input type="text"  name="attendanceDetail.stuname" value="${queryCon.stuname}" />
+            </p>
+        
        
-    </div>
+   
     
-    <div class="query-conditions ue-clear" >                  
-	                                          
-       <div class="conditions staff ue-clear" style="margin-right:2px">
-            <label style="text-align: right;margin-right: 15px">考勤时间：</label>
-           <input type="text" value="<s:date format="yyyy-MM-dd" name="attendanceDetail.attendanceTime"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="attendanceDetail.attendanceTime" style="width:210px;height:30px"/>
-        </div>
+   			<p class="short-input ue-clear">
+            <label >考勤时间：</label>
+           <input type="text" value="<s:date format="yyyy-MM-dd" name="attendanceDetail.attendanceTime"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="attendanceDetail.attendanceTime" />
         
-         <div class="conditions staff ue-clear" >
-            <label style="text-align: right;margin-right: 15px">班级：</label>
-            <input type="text" placeholder="请输入学生所在班级进行查询" name="attendanceDetail.classname" value="${queryCon.classname}" style="width:210px;height:30px"/>
-            
-        </div>
+        
+        
+            <label >班级：</label>
+            <input type="text"  name="attendanceDetail.classname" value="${queryCon.classname}" />
+        </p>    
+        
        
        
         
     </div>
     
     <div class="query-btn ue-clear" >
-    	<a href="javascript:query()" class="confirm" style="margin-left:16px">查询</a>
+    	<a href="javascript:query()" class="confirm" style="margin-left:5px">查询</a>
     </div>
 </div>
 
 <div class="table-operate ue-clear">
-     <a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+    <a:if url="/attendancedetail/attendancedetail_add.action"> <a href="javascript:add()" class="add">添加</a></a:if>
+    <a:if url="/attendancedetail/attendancedetail_delete.action"><a href="javascript:del()" class="del confirm save">删除</a></a:if>
+    <a:if url="/attendancedetail/attendancedetail_importExcel.action"><a href="javascript:" class="import clear clear">导入</a></a:if>
 </div>
 
 <div class="table-box">
 	<table>
     	<thead>
         	<tr>
-			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
+			 <a:if url="/attendancedetail/attendancedetail_delete.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th></a:if>
             	<th width="20%" class="num">学号</th>
                 <th width="15%" >姓名</th>
                 <th width="10%" >性别</th>
 				<th width="20%" align="center">所在班级</th>
 				<th width="20%" >考勤时间</th>
-				<th width="10%">编辑</th>				
+				 <a:if url="/attendancedetail/attendancedetail_editor.action"><th width="10%">编辑</th></a:if>				
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="attendanceDetail">
         	<tr>
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceDetail.id'/>'/></td>
+			<a:if url="/attendancedetail/attendancedetail_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceDetail.id'/>'/></td></a:if>
             	<td><s:property value="#attendanceDetail.studentno"/></td>
 				<td ><s:property value="#attendanceDetail.stuname"/></td>
 				<td ><s:property value="#attendanceDetail.sex"/></td>
 				<td><s:property value="#attendanceDetail.classname"/></td>
 				<td><s:date format="yyyy-MM-dd" name="#attendanceDetail.attendanceTime"/></td>
-				<td><a href="javascript:editor('<s:property value='#attendanceDetail.id'/>')"><img src="../images/edtico.png"/></a></td>
+				<a:if url="/attendancedetail/attendancedetail_editor.action"><td><a href="javascript:editor('<s:property value='#attendanceDetail.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>

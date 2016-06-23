@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 import com.zhbit.dao.couscholarship.CouscholarshipDao;
 import com.zhbit.entity.CountryScholarship;
 import com.zhbit.entity.Politicalstatus;
+import com.zhbit.entity.Student;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.couscholarship.CouscholarshipServices;
-
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -33,7 +34,8 @@ import com.zhbit.util.QueryUtils;
 @Service(value=CouscholarshipServices.SERVICES_NAME)
 public class CouscholarshipServicesImpl extends BaseServicesImpl<CountryScholarship> implements
 CouscholarshipServices{
-
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	//初始化Dao层
 	CouscholarshipDao couscholarshipDao;
 		@Resource(name=CouscholarshipDao.DAO_NAME)
@@ -83,18 +85,17 @@ CouscholarshipServices{
 			//对每一条数据进行校验和设置相应的值
 			for (Object object : countryScholarships) {
 				CountryScholarship countryScholarship=(CountryScholarship) object;
-				//获取学生的学号,将学号赋给countryScholarship实体。
-				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
-				//politicalstatus.setStuId(student.getStuId());
-
+				
 				String[] fields;
 				Object[] params;
 	               fields=new String[]{"studentNo=?","rewardName=?"};
 	               params=new Object[]{countryScholarship.getStudentNo(),countryScholarship.getRewardName()};
 	               if(this.findObjectByFields(fields, params)==null){
 	            	   //先查询要插入的数据系统中是否为空，为空才插入
-				//这里先设置一个值用来测试
-				countryScholarship.setStuId("9527");
+	            	 //获取学生的学号,将学号赋给countryScholarship实体。
+	   				Student student=studentServices.getStudentByNo(countryScholarship.getStudentNo());
+	   				countryScholarship.setStuId(student.getStuId());
+			
 				countryScholarship.setCreator(creator);
 				countryScholarship.setCreateTime(new Timestamp(new Date().getTime()));
 				this.save(countryScholarship);

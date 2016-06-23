@@ -64,10 +64,7 @@ public class PolstatusServicesImpl extends BaseServicesImpl<Politicalstatus> imp
 		Object[] params=null;
 		//排序条件，根据创建时间去排序查出来的结果集
 		String proterty="createTime";	
-		
-		
 		if(politicalstatus!=null){ //判定politicalstatus不为空时
-			
 			//先去除学号和姓名中可能存在的空格
 			if(!StringUtils.isEmpty(politicalstatus.getStuName())){
 				politicalstatus.setStuName(politicalstatus.getStuName().trim());
@@ -136,10 +133,6 @@ public PageUtils getPageUtils(String[] fields, Object[] params, String proterty,
 			//对每一条数据进行校验和设置相应的值
 			for (Object object : politicalstatuss) {
 				Politicalstatus politicalstatus=(Politicalstatus) object;
-				//获取学生的学号,将学号赋给politicalstatus实体。
-				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
-				//politicalstatus.setStuId(student.getStuId());
-
 				String[] fields;
 				Object[] params;
 				
@@ -147,8 +140,10 @@ public PageUtils getPageUtils(String[] fields, Object[] params, String proterty,
                params=new Object[]{politicalstatus.getStudentNo()};
                if(this.findObjectByFields(fields, params)==null){
             	   //先查询要插入的数据系统中是否为空，为空才插入
-				//这里先设置一个值用来测试
-				politicalstatus.setStuId("9527");
+            	 //获取学生的id,将学号赋给politicalstatus实体。
+   				Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
+   				politicalstatus.setStuId(student.getStuId());
+				
 				politicalstatus.setCreator(creator);
 				politicalstatus.setCreateTime(new Timestamp(new Date().getTime()));
 				this.add(politicalstatus);

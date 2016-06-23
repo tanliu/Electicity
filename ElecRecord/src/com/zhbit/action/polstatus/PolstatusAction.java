@@ -28,6 +28,7 @@ import com.zhbit.entity.User;
 import com.zhbit.entity.excel.PolstatusExcel;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.polstatus.PolstatusServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.transform.BaseTransfrom;
 import com.zhbit.transform.PolstatusTransform;
 import com.zhbit.transform.TestTransform;
@@ -50,6 +51,8 @@ public class PolstatusAction extends BaseAndExcelAction{
 	private static final long serialVersionUID = 1L;
 	@Resource(name=PolstatusServices.SERVICES_NAME)
 	PolstatusServices polstatusServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
 	private String query_stuName;
 	private String query_studentNo;
@@ -103,6 +106,8 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		@Limit(url="/polstatus/polstatus_listUI.action")
 		public String listUI() {
+			//判断是否是学生，如果是学生的话，就把查询条件强加
+			query_studentNo=RequestUtils.checkStudentAuthority(request,query_studentNo);
 			//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 			if(politicalstatus!=null){
 				try {
@@ -133,6 +138,12 @@ public class PolstatusAction extends BaseAndExcelAction{
 		@Override
 		@Limit(url="/polstatus/polstatus_add.action")
 		public String add() {
+			//获取学生的学号,将学号赋给CommonScholarship实体。
+			Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
+			politicalstatus.setStuId(student.getStuId());
+			//获取创建人
+			String creator=RequestUtils.getUserName(request);
+			politicalstatus.setCreator(creator);
 			//获取当前时间作为createtime列的值并插入数据库
 			Timestamp time = new Timestamp(System.currentTimeMillis());
 			politicalstatus.setCreateTime(time);

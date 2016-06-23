@@ -16,6 +16,7 @@ var importUrl="${basePath}train/trainmaster_importExcel.action";
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <!-- 行之间的显示效果与选中行的效果 -->
@@ -45,23 +46,16 @@ table thead tr th{
 <!-- 跳转页面时表单提交数据，换页显示数据 -->
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
-	<div class="query-conditions ue-clear" style="width:100%">
-       <div class="conditions staff ue-clear" style="width:25%" >
+	<div class="main">     
+    <p class="short-input ue-clear"> 
           <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主题：</label>
         <input type="text" name="traininfoMaster.trainsTopic" placeholder="请输入主题进行查询" value="${querycon.trainsTopic}" style="width:200px;height:30px"/>
-    </div>
-        
-         <div class="conditions staff ue-clear" style="width:25%">
+
           <label>&nbsp;&nbsp;&nbsp;负责人：</label>
         <input type="text" name="traininfoMaster.manager" placeholder="请输入负责人进行查询" value="${querycon.manager}" style="width:200px;height:30px"/>
-    </div>
-
-<div class="conditions staff ue-clear" style="width:25%">
             <label>&nbsp;&nbsp;培训日期：</label>
-             <div class="select-wrap" >
-            <input type="text" value="<s:date format="yyyy-MM-dd" name="traininfoMaster.trainsDate"/>" placeholder="请输入日期进行查询" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="traininfoMaster.trainsDate" style="width:200px;height:30px"/>
-            </div>
-        </div>
+            <input type="text" value="<s:date format="yyyy-MM-dd" name="traininfoMaster.trainsDate"/>" placeholder="请输入日期进行查询" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="traininfoMaster.trainsDate" style="width:200px;height:30px"/>  
+        </p>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>

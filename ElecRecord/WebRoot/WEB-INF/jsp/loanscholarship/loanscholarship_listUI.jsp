@@ -45,24 +45,24 @@ table thead tr th{
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
         <div class="conditions staff ue-clear" style="width:25%">
-            <label>姓名：</label>
-        <input type="text" name="loanscholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
+            <label style="margin-left:0px;width:50px">姓名：</label>
+        <input type="text" name="loanscholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:180px;height:31px"/>
         </div>
         
       <div class="conditions staff ue-clear" style="width:25%">
-            <label>学号：</label>
-        <input type="text" name="loanscholarship.studentNo" placeholder="请输入姓名进行查询" value="${querycon.studentNo}" style="width:200px;height:30px"/>
+            <label style="margin-left:0px;width:50px">学号：</label>
+        <input type="text" name="loanscholarship.studentNo" placeholder="请输入姓名进行查询" value="${querycon.studentNo}" style="width:180px;height:31px"/>
         </div>
   
   <div class="conditions name ue-clear" style="width:25%">
          <label>是否通过：</label>
-        <input  hidden="hidden"  value="${querycon.censoredFlag}" name="loanscholarship.censoredFlag" style="width:200px;height:30px">
-        <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>${querycon.censoredFlag}</span><i class="icon"></i></div>
-            <ul class="select-list" >
+        <input  hidden="hidden"  value="${querycon.censoredFlag}" name="loanscholarship.censoredFlag" >
+        <div class="select-wrap" style="width:180px">
+        	<div class=" select-title ue-clear" style="width:180px"><span>${querycon.censoredFlag}</span><i class="icon"></i></div>
+            <ul class="select-list" style="width:200px">
                 <li id="">请选择</li>
-            	<li id="是">是</li>
-                <li id="否">否</li>
+            	<li id="1">1</li>
+                <li id="0">0</li>
                 
             </ul>
         </div>

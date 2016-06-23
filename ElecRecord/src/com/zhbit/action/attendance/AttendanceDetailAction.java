@@ -13,11 +13,14 @@ import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
 import com.zhbit.entity.AttendanceDetail;
 import com.zhbit.entity.AttendanceMaster;
+import com.zhbit.entity.Student;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.AttendExcelImpl;
 import com.zhbit.services.attendence.AttendanceDetailServices;
 import com.zhbit.services.attendence.AttendanceMasterServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -47,9 +50,11 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	AttendanceDetailServices attendanceDetailServices;
 	@Resource(name=AttendanceMasterServices.SERVICES_NAME)
 	AttendanceMasterServices attendanceMasterServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 
 	@Override
-	
+	@Limit(url="/attendancedetail/attendancedetail_importExcel.action")
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		ExcelConfig config;
@@ -87,8 +92,13 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 						//设定创建时间为当前时间
 						Timestamp createtime = new Timestamp(System.currentTimeMillis());
 						attendanceDetail.setCreateTime(createtime);
-						//先设定Stu_id为9526
-						attendanceDetail.setStuId("9526");
+						//通过学生学号找到学生并得到其对应的stu_id
+						Student student=studentServices.getStudentByNo(attendanceDetail.getStudentno());
+						
+						if(student!=null){//若得到的Student不为空，进行stu_id的设定
+							attendanceDetail.setStuId(student.getStuId());
+						}
+						
 						attendanceDetail=attendanceDetailServices.trimAttendanceDetail(attendanceDetail);
 						
 						//将该数据保存至相对应的AttendanceDetail集合中
@@ -122,11 +132,15 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	}
 
 	@Override
-	
+	@Limit(url="/attendancedetail/attendancedetail_listUI.action")
 	public String listUI() {
 		// TODO Auto-generated method stub
+		
 		//对传来的查询条件进行编码
 		if(attendanceDetail!=null){
+			//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+			attendanceDetail.setStudentno(RequestUtils.checkStudentAuthority(request, attendanceDetail.getStudentno()));
+			
 			try {
 				attendanceDetail.setStudentno(DecodeUtils.decodeUTF(attendanceDetail.getStudentno()));
 				attendanceDetail.setStuname(DecodeUtils.decodeUTF(attendanceDetail.getStuname()));
@@ -146,6 +160,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/attendancedetail/attendancedetail_add.action")
 	public String addUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -155,6 +170,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/attendancedetail/attendancedetail_add.action")
 	public String add() {
 		// TODO Auto-generated method stub
 		//先去除存在的空格，再进行存储
@@ -163,8 +179,13 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 			//设定创建时间为当前时间
 			Timestamp createtime = new Timestamp(System.currentTimeMillis());
 			attendanceDetail.setCreateTime(createtime);
-			//先设定stu_id为9526
-			attendanceDetail.setStuId("9526");
+			//通过学号查找相应的对象从而得到其对应的Stu_id
+			
+			Student student=studentServices.getStudentByNo(attendanceDetail.getStudentno());
+			
+			if(student!=null){
+				attendanceDetail.setStuId(student.getStuId());
+			}
 			
 			attendanceDetailServices.save(attendanceDetail);
 		}
@@ -181,6 +202,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/attendancedetail/attendancedetail_delete.action")
 	public String delete() {
 		// TODO Auto-generated method stub
 		request.setAttribute("attendanceDetail",attendanceDetail);
@@ -194,6 +216,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/attendancedetail/attendancedetail_editor.action")
 	public String editorUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -212,6 +235,7 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/attendancedetail/attendancedetail_editor.action")
 	public String editor() {
 		// TODO Auto-generated method stub
 		//去除空格外使用update方法更新考勤课程信息

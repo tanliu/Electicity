@@ -45,16 +45,16 @@ table thead tr th{
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
         <div class="conditions staff ue-clear" style="width:25%">
-            <label>姓名：</label>
-        <input type="text" name="countryScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
+            <label style="margin-left:0px;width:50px">姓名：</label>
+        <input type="text" name="countryScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:180px;height:31px"/>
         </div>
         
        <div class="conditions name ue-clear" style="width:25%">
          <label>获奖名称：</label>
-        <input  hidden="hidden"  value="${querycon.rewardName}" name="countryScholarship.rewardName" style="width:200px;height:30px">
-        <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>${querycon.rewardName}</span><i class="icon"></i></div>
-            <ul class="select-list" >
+        <input  hidden="hidden"  value="${querycon.rewardName}" name="countryScholarship.rewardName" >
+        <div class="select-wrap" style="width:180px">
+        	<div class=" select-title ue-clear" style="width:180px" ><span>${querycon.rewardName}</span><i class="icon"></i></div>
+            <ul class="select-list" style="width:200px">
                 <li id="">请选择</li>
             	<li id="国家奖学金">国家奖学金</li>
                 <li id="光大奖学金">光大奖学金</li>
@@ -64,10 +64,10 @@ table thead tr th{
   
   <div class="conditions name ue-clear" style="width:25%">
          <label>学院名称：</label>
-        <input  hidden="hidden"  value="${querycon.orgName}" name="countryScholarship.orgName" style="width:200px;height:30px">
-        <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>${querycon.orgName}</span><i class="icon"></i></div>
-            <ul class="select-list" >
+        <input  hidden="hidden"  value="${querycon.orgName}" name="countryScholarship.orgName" >
+        <div class="select-wrap" style="width:180px">
+        	<div class=" select-title ue-clear" style="width:180px"><span>${querycon.orgName}</span><i class="icon"></i></div>
+            <ul class="select-list" style="width:200px">
                 <li id="">请选择</li>
             	<li id="计算机学院">计算机学院</li>
                 <li id="艺术与设计学院">艺术与设计学院</li>

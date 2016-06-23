@@ -22,11 +22,11 @@ public class StuStaEntity extends BaseExcelBean implements Cloneable {
 	private String transactionNo;
 	@Lang(value="异动后行政班")
 	private String tansactionClass;
-	@Lang(value="学号")
+	@Lang(value="学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 	private String studentNo;
-	@Lang(value="姓名")
+	@Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 	private String stuName;
-	@Lang(value="性别")
+	@Lang(value="性别",isNull=Lang.TYPE_NONULL)
 	private String sex;
 	@Lang(value="处理文号")
 	private String processSymbols;
@@ -62,7 +62,7 @@ public class StuStaEntity extends BaseExcelBean implements Cloneable {
 	private String ydqcultivateDirection;
 	@Lang(value="异动前行政班")
 	private String ydqclassName;
-	@Lang(value="异动前学籍状态")
+	@Lang(value="异动前学籍状态",toExcle={"有","无"},toEntity={"1","0"})
 	private String ydqschoolStatus;
 	@Lang(value="转出后学校名称")
 	private String zchschool;
@@ -82,7 +82,7 @@ public class StuStaEntity extends BaseExcelBean implements Cloneable {
 	private String ydhmajorField;
 	@Lang(value="异动后培养方向")
 	private String ydhcultivatedirection;
-	@Lang(value="异动后学籍状态")
+	@Lang(value="异动后学籍状态",toExcle={"有","无"},toEntity={"1","0"})
 	private String ydhschoolStatus;
 	@Lang(value="异动前所在年级")
 	private String ydqgrade;
@@ -96,17 +96,17 @@ public class StuStaEntity extends BaseExcelBean implements Cloneable {
 	private String operator;
 	@Lang(value="操作日期")
 	private String operatorTime;
-	@Lang(value="异动前是否在校")
+	@Lang(value="异动前是否在校",toExcle={"是","否"},toEntity={"1","0"})
 	private String ydqinSchool;
-	@Lang(value="异动后是否在校")
+	@Lang(value="异动后是否在校",toExcle={"是","否"},toEntity={"1","0"})
 	private String ydhinSchool;
 	@Lang(value="异动前专业代码")
 	private String ydqmajorCode;
 	@Lang(value="异动后专业代码")
 	private String ydhmajorCode;
-	@Lang(value="异动前是否注册")
+	@Lang(value="异动前是否注册",toExcle={"是","否"},toEntity={"1","0"})
 	private String ydqisRegiste;
-	@Lang(value="异动后是否注册")
+	@Lang(value="异动后是否注册",toExcle={"是","否"},toEntity={"1","0"})
 	private String ydhisRegiste;
 	@Lang(value="备注")
 	private String memo;
@@ -122,9 +122,9 @@ public class StuStaEntity extends BaseExcelBean implements Cloneable {
 	private String ydresult;
 	@Lang(value="学生类别")
 	private String studentCategory;
-	@Lang(value="考生号")
+	@Lang(value="考生号",isNull=Lang.TYPE_NONULL)
 	private String examinateNo;
-	@Lang(value="身份证号")
+	@Lang(value="身份证号",isNull=Lang.TYPE_NONULL)
 	private String idCardNo;
 	
 	

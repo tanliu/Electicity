@@ -133,6 +133,9 @@ public class TrainMasterAction extends BaseAndExcelAction{
 	@Limit(url="/train/trainmaster_add.action")
 	public String add() {
 		// TODO Auto-generated method stub
+		//获取创建人
+		String creator=RequestUtils.getUserName(request);
+		traininfoMaster.setCreator(creator);
 		//获取当前时间作为createtime列的值并插入数据库
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		traininfoMaster.setCreateTime(time);

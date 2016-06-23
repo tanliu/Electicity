@@ -39,5 +39,17 @@ public class RequestUtils {
 		}
 		return queryNO;
 	}
-
+	/**
+	 * 方法描述:判断是否是学生，如果是学生的话，就把查询条件强加为自己的名字
+	 * @param request
+	 * @param queryNO
+	 * @return
+	 */
+	public static String checkStudentName(HttpServletRequest request, String query_stuName) {
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(student!=null){
+			query_stuName=student.getStuName();
+		}
+		return query_stuName;
+	}
 }

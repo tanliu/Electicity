@@ -9,15 +9,15 @@ public class GuiContentEntity extends BaseExcelBean implements Cloneable {
 
 	@Lang(value="序号")
 	private String xuhao;
-	@Lang(value="学号")
+	@Lang(value="学号",isNull=Lang.TYPE_NONULL,type="^[0-9]{12}$")
 	private String studentNo;
-	@Lang(value="专业班级")
+	@Lang(value="专业班级",isNull=Lang.TYPE_NONULL)
 	private String className;
-	@Lang(value="姓名")
+	@Lang(value="姓名",isNull=Lang.TYPE_NONULL)
 	private String stuName;
-	@Lang(value="导学时间")
+	@Lang(value="导学时间",isNull=Lang.TYPE_NONULL)
 	private String guidDate;
-	@Lang(value="导学地点")
+	@Lang(value="导学地点",isNull=Lang.TYPE_NONULL)
 	private String guidAddress;
 	@Lang(value="导学内容")
 	private String guidContent;
