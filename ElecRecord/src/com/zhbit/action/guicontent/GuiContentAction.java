@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
+import com.zhbit.entity.AttendanceDetail;
 import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.excel.GuiContentEntity;
@@ -156,6 +157,14 @@ public class GuiContentAction extends BaseAndExcelAction {
 		}
 		}
 	
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(student!=null){
+			guiContent=new GuiContent();
+			guiContent.setStudentNo(student.getStudentNo());
+			guiContent.setStuName(student.getStuName());		
+			
+		}
+		
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",guiContent);
 	    setPageSize(10);

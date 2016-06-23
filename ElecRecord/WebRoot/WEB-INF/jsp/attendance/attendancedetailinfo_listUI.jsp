@@ -48,16 +48,7 @@ $(function(){
    $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
    $("tr:even").addClass("even"); /* 偶数行添加样式*/
    
-    //双击跳转到详情页面
-    $('tbody>tr').dblclick(function() {
     
-    	 var $id=$(this).children("td").children("input").val();
-    	
-    	window.open("${basePath}attendancedetail/attendancedetail_detailUI.action?attendanceDetail.id="+$id);
-
-     }  
-        
-    );
     
     //点击改变选中样式
     $('tbody>tr').click(function() {
@@ -95,7 +86,11 @@ function editor(id){
  		$("#queryForm").submit();  
 } 
 
-
+function detail(id){
+	var url="${basePath}attendancedetail/attendancedetail_detailUI.action?attendanceDetail.id="+id;
+	
+	window.open(url) ; //打开窗口
+}
  </script>
 <title>考勤信息</title>
 </head>
@@ -160,7 +155,7 @@ function editor(id){
            <s:iterator value="pageUtils.items" var="attendanceDetail">
         	<tr>
 			<a:if url="/attendancedetail/attendancedetail_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceDetail.id'/>'/></td></a:if>
-            	<td><s:property value="#attendanceDetail.studentno"/></td>
+            	<td><a href="javascript:detail('<s:property value="#attendanceDetail.id"/>')"><s:property value="#attendanceDetail.studentno"/></a></td>
 				<td ><s:property value="#attendanceDetail.stuname"/></td>
 				<td ><s:property value="#attendanceDetail.sex"/></td>
 				<td><s:property value="#attendanceDetail.classname"/></td>

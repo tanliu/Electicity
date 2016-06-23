@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
+import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.GuiList;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.excel.GuiListEntity;
@@ -156,6 +157,14 @@ public class GuiListAction extends BaseAndExcelAction {
 						System.out.println("编码时出错");
 			}
 			}
+		
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(student!=null){
+			guiList=new GuiList();
+			guiList.setStudentNo(student.getStudentNo());
+			guiList.setStuName(student.getStuName());		
+			guiList.setTeacherName("");
+		}
 		
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",guiList);

@@ -156,6 +156,14 @@ public class TutorAction extends BaseAndExcelAction {
 						System.out.println("编码时出错");
 				}
 				}
+				
+				Student student=(Student) request.getSession().getAttribute("student");
+				if(student!=null){
+					tutor=new Tutor();
+					tutor.setStudentNo(student.getStudentNo());
+					tutor.setStuName(student.getStuName());
+					
+				}
 			
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",tutor);

@@ -46,16 +46,7 @@ $(function(){
    $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
    $("tr:even").addClass("even"); /* 偶数行添加样式*/
    
-    //双击跳转到详情页面
-    $('tbody>tr').dblclick(function() {
     
-    	 var $id=$(this).children("td").children("input").val();
-    	
-    	window.open("${basePath}guicontent/guicontent_detailUI.action?guiContent.id="+$id);
-
-     }  
-        
-    );
     
     //点击改变选中样式
     $('tbody>tr').click(function() {
@@ -92,6 +83,11 @@ function query(){
 	 	$("#queryForm").submit(); 
 	}
 	
+function detail(id){
+	var url="${basePath}guicontent/guicontent_detailUI.action?guiContent.id="+id;
+	
+	window.open(url) ; //打开窗口
+}
 
  </script>
 <title>导学信息</title>
@@ -154,7 +150,7 @@ function query(){
         	<tr>
         	
 			<a:if url="/guicontent/guicontent_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guiContent.id'/>' /></td></a:if>
-            	<td><s:property value="#guiContent.studentNo"/></td>
+            	<td><a href="javascript:detail('<s:property value="#guiContent.id"/>')"><s:property value="#guiContent.studentNo"/></a></td>
 				<td ><s:property value="#guiContent.stuName"/></td>
 				<td><s:property value="#guiContent.className"/></td>
 				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#guiContent.guidDate"/></td>

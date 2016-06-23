@@ -20,6 +20,7 @@ import com.sun.org.apache.xerces.internal.util.Status;
 import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
+import com.zhbit.entity.GuiList;
 import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
@@ -167,6 +168,13 @@ public class StuStatusAction extends BaseAndExcelAction {
 				// TODO Auto-generated catch block
 				System.out.println("编码时出错");
 		}
+		}
+		
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(student!=null){
+			stuStatus=new StuStatus();
+			stuStatus.setStudentNo(student.getStudentNo());
+			stuStatus.setStuName(student.getStuName());		
 		}
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",stuStatus);
