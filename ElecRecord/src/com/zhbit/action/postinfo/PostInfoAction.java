@@ -348,6 +348,8 @@ public class PostInfoAction extends BaseAndExcelAction {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+				}else{
+					AjaxReturnUtils.returnResult(response,"");
 				}
 		}
 		

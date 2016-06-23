@@ -104,9 +104,13 @@
 				dataType:"text",//返回数据类型
 				contentType: "application/x-www-form-urlencoded; charset=utf-8", 
 				success : function(data) {
-					var name=decodeURI(data);
-                   if(data!=null){
+                   if(data!=""){
+                	   var name=decodeURI(data);
                 	  $('#Name').attr("value",name);
+                   }else{
+                	   alert("系统未保存此学号,请检查学号是否正确");
+                	   $('#stuNO').attr("value","");
+                	   $('#Name').attr("value","");
                    }
 				},
 				error : function() {
