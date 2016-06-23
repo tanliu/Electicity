@@ -24,20 +24,20 @@
    <input type="hidden" name="guiList.stuId" value="9528"/>
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" placeholder="请输入学生学号" name="guiList.studentNo"/>
+        <input class="noNull" type="text" placeholder="请输入学生学号" name="guiList.studentNo"/>
     </p>
     <p class="short-input ue-clear">
     	<label>专业班级：</label>
-        <input type="text" placeholder="请输入学生所在专业班级" name="guiList.className"/>
+        <input class="noNull" type="text" placeholder="请输入学生所在专业班级" name="guiList.className"/>
     </p> 
     <p class="short-input ue-clear">
     	<label>姓名：</label>
-        <input type="text" placeholder="请输入学生姓名" name="guiList.stuName"/>
+        <input class="noNull" type="text" placeholder="请输入学生姓名" name="guiList.stuName"/>
     </p>
     
     <p class="short-input ue-clear">
     	<label>导学老师：</label>
-        <input name="guiList.teacherName" type="text" placeholder="请输入导学老师姓名"/>
+        <input class="noNull" name="guiList.teacherName" type="text" placeholder="请输入导学老师姓名"/>
     </p>
     
 </div>

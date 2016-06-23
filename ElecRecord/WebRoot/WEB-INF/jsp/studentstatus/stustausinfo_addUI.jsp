@@ -21,14 +21,13 @@
 	 <input type="hidden" name="query_studentNo" value="${queryCon.studentNo}">
 	 <input type="hidden" name="query_stuName" value="${queryCon.stuName}">
      <s:hidden name="pageNO"></s:hidden>
-	<!-- 这里先将stuid设定死，用于测试 -->
-	<input type="hidden" name="stuStatus.stuId" value="0145214"/>
+	
 	<fieldset >
     <legend>学生信息</legend>
      
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" placeholder="请输入学生学号" name="stuStatus.studentNo"/> 
+        <input class="noNull" type="text" placeholder="请输入学生学号" name="stuStatus.studentNo"/> 
         <label>姓名：</label>
         <input type="text" placeholder="请输入学生姓名" name="stuStatus.stuName"/> 
     </p>
@@ -142,7 +141,7 @@
     	<label>操作人：</label>
         <input type="text" placeholder="请输入操作人姓名" name="stuStatus.operator"/> 
         <label>操作时间：</label>
-        <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" name="stuStatus.operatorTime"/>
+        <input class="noNull" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" name="stuStatus.operatorTime"/>
        
     </p>
     <p class="short-input ue-clear">

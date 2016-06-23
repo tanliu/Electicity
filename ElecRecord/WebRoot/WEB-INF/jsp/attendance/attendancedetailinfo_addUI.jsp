@@ -24,7 +24,7 @@
 
     <p class="short-input ue-clear">
     	<label>选课课号：</label>
-        <input type="text" placeholder="请输入选课课号" name="attendanceDetail.selectedcourseno"/>
+        <input class="noNull" type="text"  placeholder="请输入选课课号" name="attendanceDetail.selectedcourseno"/>
     </p>
     <p class="short-input ue-clear">
     	<label>课程名称：</label>
@@ -37,23 +37,23 @@
     
      <p class="short-input select ue-clear" >
      <label>学年：</label>
-         <input type="text"  readonly="readonly"/>
+         <input  type="text"  readonly="readonly"/>
     </p>
     
     <p class="short-input select ue-clear" >
     	<label>学期：</label>
-    	 <input type="text" readonly="readonly"/>
+    	 <input  type="text" readonly="readonly"/>
         </p>
         
     <p class="short-input select ue-clear" >
      <label>开课单位（学院名称）：</label>
-        <input type="text" readonly="readonly"/>
+        <input  type="text" readonly="readonly"/>
     </p>
 
     
     <p class="short-input ue-clear">
     	<label>上课时间：</label>
-        <input type="text" readonly="readonly"/>
+        <input  type="text" readonly="readonly"/>
     </p>
     
      <p class="short-input ue-clear">
@@ -63,17 +63,17 @@
     
      <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" name="attendanceDetail.studentno" placeholder="请输入学生学号"/>
+        <input class="noNull" type="text" name="attendanceDetail.studentno" placeholder="请输入学生学号"/>
     </p>
     
     <p class="short-input ue-clear">
     	<label>学生姓名：</label>
-        <input type="text" name="attendanceDetail.stuname" placeholder="请输入学生姓名"/>
+        <input class="noNull" type="text" name="attendanceDetail.stuname" placeholder="请输入学生姓名"/>
     </p>
     
     <div class="short-input select ue-clear" >
     	<label>学生性别：</label>
-    	 <input  hidden="hidden" value="" name="attendanceDetail.sex">
+    	 <input  hidden="hidden" class="noNull" value="" name="attendanceDetail.sex">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -86,12 +86,12 @@
         
         <p class="short-input ue-clear">
     	<label>学生班级：</label>
-        <input type="text" name="attendanceDetail.classname" placeholder="请输入学生所在班级"/>
+        <input type="text" class="noNull" name="attendanceDetail.classname" placeholder="请输入学生所在班级"/>
     	</p>
     
     	<p class="short-input ue-clear">
             <label>考勤时间：</label>
-            <input type="text" value="<s:date format="yyyy-MM-dd" name="attendanceDetail.attendanceTime"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="attendanceDetail.attendanceTime" />      
+            <input class="noNull" type="text" value="<s:date format="yyyy-MM-dd" name="attendanceDetail.attendanceTime"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="attendanceDetail.attendanceTime" />      
         </p>
         
         <p class="short-input ue-clear">

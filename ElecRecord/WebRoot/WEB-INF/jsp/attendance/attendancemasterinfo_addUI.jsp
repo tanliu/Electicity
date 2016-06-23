@@ -23,24 +23,24 @@
 
     <p class="short-input ue-clear">
     	<label>选课课号：</label>
-        <input type="text" placeholder="请输入选课课号" name="attendanceMatser.selectedcourseno"/>
+        <input class="noNull" type="text" placeholder="请输入选课课号" name="attendanceMatser.selectedcourseno"/>
     </p>
     <p class="short-input ue-clear">
     	<label>课程名称：</label>
-        <input type="text" placeholder="请输入课程名称" name="attendanceMatser.coursename"/>
+        <input class="noNull" type="text" placeholder="请输入课程名称" name="attendanceMatser.coursename"/>
     </p>
     <p class="short-input ue-clear">
     	<label>教师工号：</label>
-        <input type="text" placeholder="请输入教师工号" name="attendanceMatser.employNo"/>
+        <input class="noNull" type="text" placeholder="请输入教师工号" name="attendanceMatser.employNo"/>
     </p>
     <p class="short-input ue-clear">
     	<label>教师姓名：</label>
-        <input type="text" placeholder="请输入教师姓名" name="attendanceMatser.employName"/>
+        <input class="noNull" type="text" placeholder="请输入教师姓名" name="attendanceMatser.employName"/>
     </p>
     
      <div class="short-input select ue-clear" >
      <label>学年：</label>
-        <input  hidden="hidden" value="" name="attendanceMatser.academicyear">
+        <input  hidden="hidden" class="noNull" value="" name="attendanceMatser.academicyear">
       <div class="select-wrap">
 				<div class="select-title ue-clear" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -56,7 +56,7 @@
     
     <div class="short-input select ue-clear" >
     	<label>学期：</label>
-    	 <input  hidden="hidden" value="" name="attendanceMatser.term">
+    	 <input  hidden="hidden" class="noNull" value="" name="attendanceMatser.term">
         <div class="select-wrap">
         	<div class=" select-title ue-clear" ><span >请选择</span><i class="icon"></i></div>
             <ul class="select-list" >
@@ -69,7 +69,7 @@
         
     <div class="short-input select ue-clear" >
      <label>开课单位（学院名称）：</label>
-        <input  hidden="hidden" value="" name="attendanceMatser.orgName">
+        <input  hidden="hidden" class="noNull" value="" name="attendanceMatser.orgName">
       <div class="select-wrap">
 				<div class="select-title ue-clear" >
 					<span id="span1">请选择</span><i class="icon"></i>
@@ -86,12 +86,12 @@
     
     <p class="short-input ue-clear">
     	<label>上课时间：</label>
-        <input type="text" name="attendanceMatser.schooltime" placeholder="示例：周三第2，3节｛第1-13周｝"/>
+        <input class="noNull" type="text" name="attendanceMatser.schooltime" placeholder="示例：周三第2，3节｛第1-13周｝"/>
     </p>
     
      <p class="short-input ue-clear">
     	<label>上课地点：</label>
-        <input type="text" name="attendanceMatser.address" placeholder="请输入上课地点"/>
+        <input class="noNull" type="text" name="attendanceMatser.address" placeholder="请输入上课地点"/>
     </p>
     
     <p class="short-input ue-clear">

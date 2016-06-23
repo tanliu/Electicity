@@ -24,24 +24,24 @@
    <input type="hidden" name="guiContent.stuId" value="9528"/>
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" placeholder="请输入学生学号" name="guiContent.studentNo"/>
+        <input class="noNull" type="text" placeholder="请输入学生学号" name="guiContent.studentNo"/>
     </p>
     <p class="short-input ue-clear">
     	<label>专业班级：</label>
-        <input type="text" placeholder="请输入学生所在专业班级" name="guiContent.className"/>
+        <input class="noNull" type="text" placeholder="请输入学生所在专业班级" name="guiContent.className"/>
     </p> 
     <p class="short-input ue-clear">
     	<label>姓名：</label>
-        <input type="text" placeholder="请输入学生姓名" name="guiContent.stuName"/>
+        <input class="noNull" type="text" placeholder="请输入学生姓名" name="guiContent.stuName"/>
     </p>
     <p class="short-input ue-clear">
     	<label>导学时间：</label>
-        <input type="text" name="guiContent.guidDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
+        <input class="noNull" type="text" name="guiContent.guidDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
     </p>
     
     <p class="short-input ue-clear">
     	<label>导学地点：</label>
-        <input name="guiContent.guidAddress" type="text" placeholder="请输入导学地点"/>
+        <input class="noNull" name="guiContent.guidAddress" type="text" placeholder="请输入导学地点"/>
     </p>
     <p class="short-input ue-clear">
     	<label>导学内容：</label>
