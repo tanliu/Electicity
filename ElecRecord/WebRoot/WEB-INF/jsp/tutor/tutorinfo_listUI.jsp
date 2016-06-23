@@ -48,17 +48,6 @@ $(function(){
    $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
    $("tr:even").addClass("even"); /* 偶数行添加样式*/
    
-    //双击跳转到详情页面
-    $('tbody>tr').dblclick(function() {
-    
-    	 var $id=$(this).children("td").children("input").val();
-    	
-    	window.open("${basePath}tutor/tutor_detailUI.action?tutor.id="+$id);
-
-     }  
-        
-    );
-    
     //点击改变选中样式
     $('tbody>tr').click(function() {
         $(this)
@@ -95,7 +84,11 @@ function editor(id){
  		$("#queryForm").submit();  
 } 
 
-
+function detail(id){
+	var url="${basePath}tutor/tutor_detailUI.action?tutor.id="+id;
+	
+	window.open(url) ; //打开窗口
+}
  </script>
 <title>辅导信息</title>
 </head>
@@ -153,7 +146,7 @@ function editor(id){
            <s:iterator value="pageUtils.items" var="tutor">
         	<tr>
 			<a:if url="/tutor/tutor_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#tutor.id'/>'/></td></a:if>
-            	<td><s:property value="#tutor.studentNo"/></td>
+            	<td><a href="javascript:detail('<s:property value="#tutor.id"/>')"><s:property value="#tutor.studentNo"/></a></td>
 				<td ><s:property value="#tutor.stuName"/></td>
 				<td><s:property value="#tutor.className"/></td>
 				<td><s:date format="yyyy-MM-dd HH:mm:ss" name="#tutor.guidDate"/></td>

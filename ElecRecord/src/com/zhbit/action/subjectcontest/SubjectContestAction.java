@@ -274,10 +274,10 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	public String hasStudent(){
 		//根据学号返回姓名
 		if(subjectcontest!=null&&!StringUtils.isBlank(subjectcontest.getStudentNo())){
-			if(subjectContestServices.hasStudent(subjectcontest.getStudentNo())){
 				Student student = studentServices.getStudentByNo(subjectcontest.getStudentNo());
 				if(student!=null){
 					try {
+						
 						String string=student.getStuName();
 						string=URLEncoder.encode(string, "UTF-8");
 						request.setCharacterEncoding("utf-8");
@@ -287,9 +287,9 @@ public class SubjectContestAction extends BaseAndExcelAction {
 						e.printStackTrace();
 					}
 				}else{
-					AjaxReturnUtils.returnResult(response,null);
+					AjaxReturnUtils.returnResult(response,"");
 				}
-			}
+			
 		}
 		//AjaxReturnUtils.returnResult(response, result);
 		

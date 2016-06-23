@@ -120,9 +120,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 			return pageUtils;
 		}
 		
-		
-		
-		
 		return null;
 	}
 

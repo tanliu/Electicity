@@ -24,24 +24,24 @@
    <input type="hidden" name="tutor.stuId" value="9528"/>
     <p class="short-input ue-clear">
     	<label>学号：</label>
-        <input type="text" placeholder="请输入学生学号" name="tutor.studentNo"/>
+        <input class="noNull" type="text" placeholder="请输入学生学号" name="tutor.studentNo"/>
     </p>
     <p class="short-input ue-clear">
     	<label>专业班级：</label>
-        <input type="text" placeholder="请输入学生所在专业班级" name="tutor.className"/>
+        <input class="noNull" type="text" placeholder="请输入学生所在专业班级" name="tutor.className"/>
     </p>
     <p class="short-input ue-clear">
     	<label>姓名：</label>
-        <input type="text" placeholder="请输入学生姓名" name="tutor.stuName"/>
+        <input class="noNull" type="text" placeholder="请输入学生姓名" name="tutor.stuName"/>
     </p>
     <p class="short-input ue-clear">
     	<label>辅导时间：</label>
-        <input type="text" name="tutor.guidDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
+        <input class="noNull" type="text" name="tutor.guidDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
     </p>
     
     <p class="short-input ue-clear">
     	<label>辅导地点：</label>
-        <input name="tutor.guidAddress" type="text" placeholder="请输入辅导地点"/>
+        <input class="noNull" name="tutor.guidAddress" type="text" placeholder="请输入辅导地点"/>
     </p>
     <p class="short-input ue-clear">
     	<label>辅导内容：</label>

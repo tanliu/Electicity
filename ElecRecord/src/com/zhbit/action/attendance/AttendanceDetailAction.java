@@ -14,6 +14,7 @@ import com.zhbit.annotation.Limit;
 import com.zhbit.entity.AttendanceDetail;
 import com.zhbit.entity.AttendanceMaster;
 import com.zhbit.entity.Student;
+import com.zhbit.entity.Tutor;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.AttendExcelImpl;
 import com.zhbit.services.attendence.AttendanceDetailServices;
@@ -151,6 +152,14 @@ public class AttendanceDetailAction extends BaseAndExcelAction {
 		}
 		}
 	
+		Student student=(Student) request.getSession().getAttribute("student");
+		if(student!=null){
+			attendanceDetail=new AttendanceDetail();
+			attendanceDetail.setStudentno(student.getStudentNo());
+			attendanceDetail.setStuname(student.getStuName());		
+			attendanceDetail.setClassname(student.getClassName());
+		}
+		
 		//将传过来的参数进行回显
 		request.setAttribute("queryCon",attendanceDetail);
 		setPageSize(9);

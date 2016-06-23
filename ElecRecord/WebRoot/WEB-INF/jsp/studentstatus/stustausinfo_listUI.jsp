@@ -45,16 +45,7 @@ $(function(){
    $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
    $("tr:even").addClass("even"); /* 偶数行添加样式*/
    
-    //双击跳转到详情页面
-    $('tbody>tr').dblclick(function() {
     
-    	 var $id=$(this).children("td").children("input").val();
-    	
-    	window.open("${basePath}stustatus/stustatus_detailUI.action?stuStatus.id="+$id);
-
-     }  
-        
-    );
     
     //点击改变选中样式
     $('tbody>tr').click(function() {
@@ -91,6 +82,11 @@ function query(){
 	 	$("#queryForm").submit(); 
 	}
 	
+function detail(id){
+		var url="${basePath}stustatus/stustatus_detailUI.action?stuStatus.id="+id;
+		
+		window.open(url) ; //打开窗口
+	}
 
  </script>
 <title>学生学籍异动信息</title>
@@ -163,7 +159,7 @@ function query(){
         	
 			<a:if url="/stustatus/stustatus_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#stustatus.id'/>' /></td></a:if>
 			
-            	<td><s:property value="#stustatus.studentNo"/></td>
+            	<td><a href="javascript:detail('<s:property value="#stustatus.id"/>')"><s:property value="#stustatus.studentNo"/></a></td>
 				<td ><s:property value="#stustatus.stuName"/></td>
 				<td><s:property value="#stustatus.sex"/></td>
 				<td><s:property value="#stustatus.idCardNo"/></td>

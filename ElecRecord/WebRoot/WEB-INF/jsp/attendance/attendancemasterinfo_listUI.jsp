@@ -48,16 +48,7 @@ $(function(){
    $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
    $("tr:even").addClass("even"); /* 偶数行添加样式*/
    
-    //双击跳转到详情页面
-    $('tbody>tr').dblclick(function() {
-    
-    	 var $id=$(this).children("td").children("input").val();
-    	
-    	window.open("${basePath}attendancemaster/attendancemaster_detailUI.action?attendanceMatser.id="+$id);
-
-     }  
-        
-    );
+   
     
     //点击改变选中样式
     $('tbody>tr').click(function() {
@@ -95,6 +86,11 @@ function editor(id){
  		$("#queryForm").submit();  
 } 
 
+function detail(id){
+	var url="${basePath}attendancemaster/attendancemaster_detailUI.action?attendanceMatser.id="+id
+	
+	window.open(url) ; //打开窗口
+}
 
  </script>
 <title>考勤课程信息</title>
@@ -110,16 +106,10 @@ function editor(id){
 		  <p class="short-input ue-clear"> 
             <label>课程名称：</label>
             <input type="text"  name="attendanceMatser.coursename" value="${queryCon.coursename}"  />
-      
-        
-        
+    
             <label>教师姓名：</label>
             <input type="text"  name="attendanceMatser.employName" value="${queryCon.employName}" />
-            
-        
-        
-            
-         
+  
             <label>上课地点：</label>
             <input type="text"  name="attendanceMatser.address" value="${queryCon.address}" />
             
@@ -156,7 +146,7 @@ function editor(id){
            <s:iterator value="pageUtils.items" var="attendanceMatser">
         	<tr>
 			<a:if url="/attendancemaster/attendancemaster_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceMatser.id'/>'/></td></a:if>
-            	<td><s:property value="#attendanceMatser.selectedcourseno"/></td>
+            	<td><a href="javascript:detail('<s:property value="#attendanceMatser.id"/>')"><s:property value="#attendanceMatser.selectedcourseno"/></a></td>
 				<td ><s:property value="#attendanceMatser.coursename"/></td>
 				<td><s:property value="#attendanceMatser.employNo"/></td>
 				<td><s:property value="#attendanceMatser.employName"/></td>

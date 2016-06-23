@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.zhbit.dao.BaseDao;
 import com.zhbit.dao.tutor.TutorDao;
 import com.zhbit.entity.GuiContent;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.Tutor;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.tutor.TutorServices;
@@ -50,6 +52,7 @@ public class TutorServicesImpl extends BaseServicesImpl<Tutor> implements TutorS
 		String[] fields=null;
 		Object[] params=null;
 		String proterty="createTime";
+		
 		
 		if(tutor!=null){//当tutor不为空时
 			//先去除学号和姓名中可能存在的空格

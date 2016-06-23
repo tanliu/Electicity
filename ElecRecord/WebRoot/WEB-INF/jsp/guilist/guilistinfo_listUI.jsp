@@ -82,6 +82,11 @@ function query(){
 	 	$("#queryForm").submit(); 
 	}
 	
+function detail(id){
+	var url="${basePath}guilist/guilist_detailUI.action?guilist.id="+id;
+	
+	window.open(url) ; //打开窗口
+}
 
  </script>
 <title>导学名单</title>

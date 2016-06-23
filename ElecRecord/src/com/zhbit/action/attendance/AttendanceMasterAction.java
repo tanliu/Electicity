@@ -13,8 +13,10 @@ import com.zhbit.action.BaseAction;
 import com.zhbit.annotation.Limit;
 import com.zhbit.entity.AttendanceMaster;
 import com.zhbit.entity.SystemDll;
+import com.zhbit.entity.Teacher;
 import com.zhbit.services.attendence.AttendanceMasterServices;
 import com.zhbit.services.system.SystemDllServices;
+import com.zhbit.services.teacher.TeacherServices;
 import com.zhbit.util.DecodeUtils;
 
 @Controller("attendanceMasterAction")
@@ -32,6 +34,8 @@ public class AttendanceMasterAction extends BaseAction {
 	AttendanceMasterServices attendanceMasterServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
+	@Resource(name=TeacherServices.SERVICES_NAME)
+	TeacherServices teacherServices;
 	
 	/**
 	 * 
@@ -97,6 +101,7 @@ public class AttendanceMasterAction extends BaseAction {
 			//设定创建时间为当前时间
 			Timestamp createtime = new Timestamp(System.currentTimeMillis());
 			attendanceMatser.setCreateTime(createtime);
+			
 			
 			attendanceMasterServices.save(attendanceMatser);
 		}
