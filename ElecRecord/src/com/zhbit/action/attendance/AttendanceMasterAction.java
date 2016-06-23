@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.AttendanceMaster;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.services.attendence.AttendanceMasterServices;
@@ -38,6 +39,7 @@ public class AttendanceMasterAction extends BaseAction {
 	
 
 	@Override
+	@Limit(url="/attendancemaster/attendancemaster_listUI.action")
 	public String listUI() {
 		// TODO Auto-generated method stub
 		//对传来的查询条件进行编码
@@ -60,6 +62,7 @@ public class AttendanceMasterAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/attendancemaster/attendancemaster_add.action")
 	public String addUI() {
 		// TODO Auto-generated method stub
 		//到数据字典查找类别
@@ -83,6 +86,7 @@ public class AttendanceMasterAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/attendancemaster/attendancemaster_add.action")
 	public String add() {
 		// TODO Auto-generated method stub
 		
@@ -108,6 +112,7 @@ public class AttendanceMasterAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/attendancemaster/attendancemaster_delete.action")
 	public String delete() {
 		// TODO Auto-generated method stub
 		request.setAttribute("attendanceMatser",attendanceMatser);
@@ -120,6 +125,7 @@ public class AttendanceMasterAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/attendancemaster/attendancemaster_editor.action")
 	public String editorUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -147,6 +153,7 @@ public class AttendanceMasterAction extends BaseAction {
 	}
 
 	@Override
+	@Limit(url="/attendancemaster/attendancemaster_editor.action")
 	public String editor() {
 		// TODO Auto-generated method stub
 		//去除空格外使用update方法更新考勤课程信息

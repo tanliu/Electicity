@@ -20,14 +20,17 @@ import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
 import com.zhbit.entity.GuiContent;
 import com.zhbit.entity.StuStatus;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.Tutor;
 import com.zhbit.entity.excel.StuStaEntity;
 import com.zhbit.entity.excel.TutorEntity;
 import com.zhbit.excel.ExcelConfig;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.tutor.TutorServices;
 import com.zhbit.transform.StuStatusTransform;
 import com.zhbit.transform.TutorTransform;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 
 /** 
  * 项目名称：ElecRecord
@@ -53,6 +56,8 @@ public class TutorAction extends BaseAndExcelAction {
 	private String query_stuName;
 	@Resource(name=TutorServices.SERVICE_NAME)
 	TutorServices tutorServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 
 	@Override
 	@Limit(url="/tutor/tutor_importExcel.action")
@@ -93,8 +98,12 @@ public class TutorAction extends BaseAndExcelAction {
 				
 				if(!StringUtils.isEmpty(tutor.getStudentNo())){
 				if(tutorServices.findObjectByFields(fields, params)==null){//当学号、辅导时间、辅导地点相同的记录不存在时，才添加到集合中
-				//设定创建时间为当前时间，学生ID暂时设定为"9528"
-				tutor.setStuId("9528");
+					//通过对应的学生学号得到对应的stu_id
+					Student student=studentServices.getStudentByNo(tutor.getStudentNo());
+					if(student!=null){
+						tutor.setStuId(student.getStuId());
+					}
+				
 				Timestamp createtime = new Timestamp(System.currentTimeMillis());
 				tutor.setCreateTime(createtime);
 				
@@ -134,8 +143,11 @@ public class TutorAction extends BaseAndExcelAction {
 	@Limit(url="/tutor/tutor_listUI.action")
 	public String listUI() {
 		// TODO Auto-generated method stub
+		
 		//对传来的查询条件进行编码
 				if(tutor!=null){
+					//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+					tutor.setStudentNo(RequestUtils.checkStudentAuthority(request, tutor.getStudentNo()));							
 					try {
 						tutor.setStuName(DecodeUtils.decodeUTF(tutor.getStuName()));
 						tutor.setStudentNo(DecodeUtils.decodeUTF(tutor.getStudentNo()));
@@ -176,7 +188,11 @@ public class TutorAction extends BaseAndExcelAction {
 			//设定创建时间为当前时间
 			Timestamp createtime = new Timestamp(System.currentTimeMillis());
 			tutor.setCreateTime(createtime);
-			
+			//通过对应的学生学号得到对应的stu_id
+			Student student=studentServices.getStudentByNo(tutor.getStudentNo());
+			if(student!=null){
+				tutor.setStuId(student.getStuId());
+			}
 			tutorServices.save(tutor);
 		}
 		

@@ -17,11 +17,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.GuiContent;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.excel.GuiContentEntity;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.guicontent.GuiContentServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 
 import freemarker.template.utility.StringUtil;
 
@@ -50,8 +54,11 @@ public class GuiContentAction extends BaseAndExcelAction {
 	private String query_stuName;
 	@Resource(name=GuiContentServices.SERVICES_NAME)
 	GuiContentServices guiContentServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	
 	@Override
+	@Limit(url="/guicontent/guicontent_importExcel.action")
 	public String importExcel() {
 		
 		try {
@@ -89,8 +96,12 @@ public class GuiContentAction extends BaseAndExcelAction {
 					
 					if(guiContentServices.findObjectByFields(fields, params)==null){//当学号、时间、地点查询到的对象为空时，才进行保存至数据库的操作
 						
-					//设定创建时间为当前时间，学生ID暂时设定为"9528"
-					guiContent.setStuId("9528");
+					//通过对应的学生学号得到对应的stu_id
+					Student student=studentServices.getStudentByNo(guiContent.getStudentNo());
+					if(student!=null){
+						guiContent.setStuId(student.getStuId());
+					}
+					
 					Timestamp createtime = new Timestamp(System.currentTimeMillis());
 					guiContent.setCreateTime(createtime);
 					
@@ -127,10 +138,15 @@ public class GuiContentAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guicontent/guicontent_listUI.action")
 	public String listUI() {
 		// TODO Auto-generated method stub
+		
+		
 		//对传来的查询条件进行编码
 		if(guiContent!=null){
+			//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+			guiContent.setStudentNo(RequestUtils.checkStudentAuthority(request, guiContent.getStudentNo()));
 			try {
 				guiContent.setStuName(DecodeUtils.decodeUTF(guiContent.getStuName()));
 				guiContent.setStudentNo(DecodeUtils.decodeUTF(guiContent.getStudentNo()));
@@ -150,6 +166,7 @@ public class GuiContentAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guicontent/guicontent_add.action")
 	public String addUI() {
 		
 		//保存查询条件
@@ -159,6 +176,7 @@ public class GuiContentAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guicontent/guicontent_add.action")
 	public String add() {
 		// TODO Auto-generated method stub
 		
@@ -171,6 +189,12 @@ public class GuiContentAction extends BaseAndExcelAction {
 			//设定创建时间为当前时间
 			Timestamp createtime = new Timestamp(System.currentTimeMillis());
 			guiContent.setCreateTime(createtime);
+			
+			//通过对应的学生学号得到对应的stu_id
+			Student student=studentServices.getStudentByNo(guiContent.getStudentNo());
+			if(student!=null){
+				guiContent.setStuId(student.getStuId());
+			}
 			
 			guiContentServices.save(guiContent);
 		}
@@ -186,6 +210,7 @@ public class GuiContentAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guicontent/guicontent_delete.action")
 	public String delete() {
 		// TODO Auto-generated method stub
 		request.setAttribute("guiContent",guiContent);
@@ -199,6 +224,7 @@ public class GuiContentAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guicontent/guicontent_editor.action")
 	public String editorUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -214,6 +240,7 @@ public class GuiContentAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guicontent/guicontent_editor.action")
 	public String editor() {
 		// TODO Auto-generated method stub
 		//使用update方法更新辅导信息

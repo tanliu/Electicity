@@ -102,27 +102,26 @@ function query(){
 <div class="query">
 
 	<div class="query-conditions ue-clear" >
-                                                               
-     
-        
-       <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;" >
-            <label style="margin-left:3px;width:50px">学号：</label>
-            <input   type="text" placeholder="请输入学生学号进行查询" name="stuStatus.studentNo" value="${queryCon.studentNo}" style="width:200px;height:30px" />
+	
+  	 <div class="conditions staff ue-clear" style="margin-right:0px;width:255px">
+  	 
+            <label style="margin-left:22px;width:50px">学号：</label>
+            <input   type="text"  name="stuStatus.studentNo" value="${queryCon.studentNo}" style="width:180px;height:31px;margin-right:2px" />
             
         </div>
         
-         <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;">
-            <label style="margin-right:3px;width:50px">姓名：</label>
-            <input  type="text" placeholder="请输入学生姓名进行查询" name="stuStatus.stuName" value="${queryCon.stuName}" style="width:200px;height:30px"/>
+         <div class="conditions staff ue-clear" style="margin-right:0px;width:255px">
+            <label style="width:50px;margin-left:15px">姓名：</label>
+            <input  type="text"  name="stuStatus.stuName" value="${queryCon.stuName}" style="width:180px;height:31px;margin-right:2px"/>
             
         </div>
         
-          <div class="conditions name ue-clear" style="width:30%;">
-           <label style="margin-left:3px;width:50px">学年：</label>
+          <div class="conditions name ue-clear" style="width:280px">
+           <label style="margin-left:0px;width:50px">学年：</label>
         <input  hidden="hidden" value="${queryCon.academicYear}" name="stuStatus.academicYear">
-      <div class="select-wrap" >
-				<div class="select-title ue-clear" ><span id="span1" >${queryCon.academicYear}</span><i class="icon"></i></div>
-					<ul class="select-list" >
+      <div class="select-wrap" style="width:180px">
+				<div class="select-title ue-clear" style="width:180px"><span id="span1" >${queryCon.academicYear}</span><i class="icon"></i></div>
+					<ul class="select-list" style="width:200px">
 					 <li id="" >请选择</li>
 					    <s:iterator value="#request.years" var="years">
 					      <li id="<s:property value='#years.ddlName'/>" ><s:property value="#years.ddlName"/></li>
@@ -130,43 +129,39 @@ function query(){
 					</ul>					
 				</div>
         </div>
-        
-        
-        
-       
-        
+  
     </div>
     
-    <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
+    <div class="query-btn ue-clear" ">
+    	<a href="javascript:query()" class="confirm" >查询</a>
     </div>
 </div>
 
-<div class="table-operate ue-clear">
-   <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+<div class="table-operate ue-clear" >
+   <a:if url="/stustatus/stustatus_add.action">	<a href="javascript:add()" class="add">添加</a></a:if>
+    <a:if url="/stustatus/stustatus_delete.action"><a href="javascript:del()" class="del confirm save">删除</a></a:if>
+   <a:if url="/stustatus/stustatus_importExcel.action"><a href="javascript:" class="import clear clear">导入</a></a:if>
 </div>
 
 <div class="table-box">
 	<table>
     	<thead>
         	<tr>
-			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
+			<a:if url="/stustatus/stustatus_delete.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th></a:if>
             	<th width="20%" class="num">学号</th>
                 <th width="10%" >姓名</th>
 				<th width="5%" >性别</th>
 				<th width="20%" align="center">身份证号</th>
 				<th width="20%" >考生号</th>
 				<th width="10%" align="center">异动类别</th>
-				<th width="10%">编辑</th>				
+				<a:if url="/stustatus/stustatus_editor.action"><th width="10%">编辑</th></a:if>		
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="stustatus">
         	<tr>
         	
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#stustatus.id'/>' /></td>
+			<a:if url="/stustatus/stustatus_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#stustatus.id'/>' /></td></a:if>
 			
             	<td><s:property value="#stustatus.studentNo"/></td>
 				<td ><s:property value="#stustatus.stuName"/></td>
@@ -174,7 +169,7 @@ function query(){
 				<td><s:property value="#stustatus.idCardNo"/></td>
 				<td><s:property value="#stustatus.examinateNo"/></td>
 				<td><s:property value="#stustatus.tansactionType"/></td>
-				<td><a href="javascript:editor('<s:property value='#stustatus.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<a:if url="/stustatus/stustatus_editor.action"><td><a href="javascript:editor('<s:property value='#stustatus.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>

@@ -17,11 +17,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.GuiList;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.excel.GuiListEntity;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.guilist.GuiListServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.util.DecodeUtils;
+import com.zhbit.util.RequestUtils;
 
 
 
@@ -40,9 +44,7 @@ import com.zhbit.util.DecodeUtils;
 @Scope(value="prototype")
 public class GuiListAction extends BaseAndExcelAction {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	GuiList guiList;
 	private String query_studentNo;
@@ -51,10 +53,13 @@ public class GuiListAction extends BaseAndExcelAction {
 	
 	@Resource(name=GuiListServices.SERVICES_NAME)
 	GuiListServices guiListServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	
 	
 	
 	@Override
+	@Limit(url="/guilist/guilist_importExcel.action")
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		
@@ -85,8 +90,13 @@ public class GuiListAction extends BaseAndExcelAction {
 					Object[] params={guiList.getStudentNo(),guiList.getTeacherName()};	
 					
 					if(guiListServices.findObjectByFields(fields, params)==null){//如果不存在学号、教师姓名都相同的记录，则进行添加到数据库的操作
+					
+					Student student=studentServices.getStudentByNo(guiList.getStudentNo());
+					if(student!=null){
+						guiList.setStuId(student.getStuId());
+					}
+					
 					//设定创建时间为当前时间
-					guiList.setStuId("9528");
 					Timestamp createtime = new Timestamp(System.currentTimeMillis());
 					guiList.setCreateTime(createtime);
 					//设定学年为2013-2014学年，学期为第一学期
@@ -121,17 +131,22 @@ public class GuiListAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	
 	public void exportExcel() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	@Limit(url="/guilist/guilist_listUI.action")
 	public String listUI() {
 		// TODO Auto-generated method stub
 		
 		//对传来的查询条件进行编码
 		if(guiList!=null){
+			//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+			guiList.setStudentNo(RequestUtils.checkStudentAuthority(request, guiList.getStudentNo()));
+			
 			try {
 				guiList.setStuName(DecodeUtils.decodeUTF(guiList.getStuName()));
 				guiList.setStudentNo(DecodeUtils.decodeUTF(guiList.getStudentNo()));
@@ -152,6 +167,7 @@ public class GuiListAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guilist/guilist_add.action")
 	public String addUI() {
 		// TODO Auto-generated method stub
 				
@@ -161,12 +177,18 @@ public class GuiListAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guilist/guilist_add.action")
 	public String add() {
 		// TODO Auto-generated method stub
 		//去除空格后再进行存储
 		guiList=guiListServices.trimGuiList(guiList);
 						
 		if(guiList!=null){
+			
+			Student student=studentServices.getStudentByNo(guiList.getStudentNo());
+			if(student!=null){
+				guiList.setStuId(student.getStuId());
+			}
 			//设定创建时间为当前时间
 			Timestamp createtime = new Timestamp(System.currentTimeMillis());
 			guiList.setCreateTime(createtime);
@@ -186,6 +208,7 @@ public class GuiListAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guilist/guilist_delete.action")
 	public String delete() {
 		// TODO Auto-generated method stub
 		request.setAttribute("guiList",guiList);
@@ -199,6 +222,7 @@ public class GuiListAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guilist/guilist_editor.action")
 	public String editorUI() {
 		// TODO Auto-generated method stub
 		request.setAttribute("queryCon",guiList );
@@ -213,6 +237,7 @@ public class GuiListAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/guilist/guilist_editor.action")
 	public String editor() {
 		// TODO Auto-generated method stub
 		//使用update方法更新辅导信息

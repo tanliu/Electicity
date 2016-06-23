@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.zhbit.excel.annotation.Lang;
 
 import com.zhbit.annotation.Transform;
+import com.zhbit.entity.StuStatus;
 import com.zhbit.entity.excel.BaseExcelBean;
 import com.zhbit.excel.ExcelConfig;
 
@@ -330,7 +331,9 @@ public class ExcelServicesMakeImpl implements ExcelServicesMake {
 							if(fromat!=null){
 								SimpleDateFormat sdf=new SimpleDateFormat(fromat);
 								Date date = sdf.parse(value);
-								target.set(object, new Timestamp(date.getTime()));	
+								//System.out.println(date.getTime());
+								target.set(object, new Timestamp(date.getTime()));
+								
 							}						
 						}
 					}

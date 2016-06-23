@@ -35,7 +35,7 @@
     	<label>学号：</label>
         <input type="text" placeholder="请输入学生学号" readonly="readonly" name="stuStatus.studentNo" value="${stuStatus.studentNo}" /> 
         <label>姓名：</label>
-        <input type="text" placeholder="请输入学生姓名" name="stuStatus.stuName" value="${stuStatus.stuName} "/> 
+        <input type="text" placeholder="请输入学生姓名" readonly="readonly" name="stuStatus.stuName" value="${stuStatus.stuName} "/> 
     </p>
     
   

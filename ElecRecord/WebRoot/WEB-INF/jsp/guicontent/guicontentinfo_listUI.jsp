@@ -112,10 +112,10 @@ function query(){
             <input type="text" value="<s:date format="yyyy-MM-dd" name="guiContent.guidDate"/>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="guiContent.guidDate" />
      
             <label >学号：</label>
-            <input   type="text" placeholder="请输入学生学号进行查询" name="guiContent.studentNo" value="${queryCon.studentNo}" />
+            <input   type="text"  name="guiContent.studentNo" value="${queryCon.studentNo}" />
             
             <label >姓名：</label>
-            <input  type="text" placeholder="请输入学生姓名进行查询" name="guiContent.stuName" value="${queryCon.stuName}" />
+            <input  type="text"  name="guiContent.stuName" value="${queryCon.stuName}" />
      
             </p>
             
@@ -126,7 +126,7 @@ function query(){
        
  
     <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
+    	<a href="javascript:query()" class="confirm" style="margin-left:5px">查询</a>
     </div>
 </div>
 
