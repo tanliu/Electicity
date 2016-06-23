@@ -18,11 +18,13 @@ import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
 import com.zhbit.entity.CommonScholarship;
 import com.zhbit.entity.CountryScholarship;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.excel.ComscholarshipExcel;
 import com.zhbit.entity.excel.CouscholarshipExcel;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.comscholarship.ComscholarshipServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.RequestUtils;
@@ -47,6 +49,8 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 	ComscholarshipServices comscholarshipServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
 	private String query_stuName;
 	private String query_major;
@@ -100,6 +104,8 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/comscholarship/comscholarship_listUI.action")
 	public String listUI() {
+		//判断是否是学生，如果是学生的话，就把查询条件强加
+		query_stuName=RequestUtils.checkStudentName(request,query_stuName);
 		String[] fields={"keyword=?"};
 		String[] params2={"专业"};
 		//查找专业
@@ -148,6 +154,12 @@ public class ComscholarshipAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/comscholarship/comscholarship_add.action")
 	public String add() {
+		//获取学生的学号,将学号赋给CommonScholarship实体。
+		Student student=studentServices.getStudentByNo(commonScholarship.getStudentNo());
+		commonScholarship.setStuId(student.getStuId());
+		//获取创建人
+		String creator=RequestUtils.getUserName(request);
+		commonScholarship.setCreator(creator);
 		//设定创建时间为当前时间
 		Timestamp createtime = new Timestamp(System.currentTimeMillis());
 		commonScholarship.setCreateTime(createtime);

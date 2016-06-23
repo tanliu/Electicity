@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.zhbit.dao.comscholarship.ComscholarshipDao;
 import com.zhbit.entity.CommonScholarship;
 import com.zhbit.entity.CountryScholarship;
+import com.zhbit.entity.Student;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.comscholarship.ComscholarshipServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -34,7 +36,8 @@ import com.zhbit.util.QueryUtils;
 @Service(value=ComscholarshipServices.SERVICES_NAME)
 public class ComscholarshipServicesImpl extends BaseServicesImpl<CommonScholarship> implements
 ComscholarshipServices{
-
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	//初始化Dao层
 		ComscholarshipDao comscholarshipDao;
 			@Resource(name=ComscholarshipDao.DAO_NAME)
@@ -84,9 +87,7 @@ ComscholarshipServices{
 			//对每一条数据进行校验和设置相应的值
 			for (Object object : commonScholarships) {
 				CommonScholarship commonScholarship=(CommonScholarship) object;
-				//获取学生的学号,将学号赋给CommonScholarship实体。
-				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
-				//politicalstatus.setStuId(student.getStuId());
+			
 
 				String[] fields;
 				Object[] params;
@@ -95,8 +96,11 @@ ComscholarshipServices{
                params=new Object[]{commonScholarship.getStudentNo()};
                if(this.findObjectByFields(fields, params)==null){
             	   //先查询要插入的数据系统中是否为空，为空才插入
-				//这里先设置一个值用来测试
-				commonScholarship.setStuId("9527");
+            		//获取学生的学号,将学号赋给CommonScholarship实体。
+   				Student student=studentServices.getStudentByNo(commonScholarship.getStudentNo());
+   				commonScholarship.setStuId(student.getStuId());
+				
+				
 				commonScholarship.setCreator(creator);
 				commonScholarship.setCreateTime(new Timestamp(new Date().getTime()));
 				this.save(commonScholarship);

@@ -13,9 +13,11 @@ import com.zhbit.dao.couscholarship.CouscholarshipDao;
 import com.zhbit.dao.grantscholarship.GrantscholarshipDao;
 import com.zhbit.entity.CountryScholarship;
 import com.zhbit.entity.GrantScholarship;
+import com.zhbit.entity.Student;
 import com.zhbit.services.BaseServicesImpl;
 import com.zhbit.services.couscholarship.CouscholarshipServices;
 import com.zhbit.services.grantscholarship.GrantscholarshipServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
 
@@ -34,6 +36,8 @@ import com.zhbit.util.QueryUtils;
 @Service(value=GrantscholarshipServices.SERVICES_NAME)
 public class GrantscholarshipServicesImpl extends BaseServicesImpl<GrantScholarship> implements
 GrantscholarshipServices{
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	//初始化Dao层
 	GrantscholarshipDao grantscholarshipDao;
 		@Resource(name=GrantscholarshipDao.DAO_NAME)
@@ -83,10 +87,7 @@ GrantscholarshipServices{
 			//对每一条数据进行校验和设置相应的值
 			for (Object object : grantScholarships) {
 				GrantScholarship grantScholarship=(GrantScholarship) object;
-				//获取学生的学号,将学号赋给countryScholarship实体。
-				//Student student=studentServices.getStudentByNo(politicalstatus.getStudentNo());
-				//politicalstatus.setStuId(student.getStuId());
-
+			
 				String[] fields;
 				Object[] params;
 				
@@ -94,8 +95,10 @@ GrantscholarshipServices{
                params=new Object[]{grantScholarship.getStudentNo()};
                if(this.findObjectByFields(fields, params)==null){
             	   //先查询要插入的数据系统中是否为空，为空才插入
-				//这里先设置一个值用来测试
-				grantScholarship.setStuId("9527");
+            		//获取学生的学号,将学号赋给grantScholarship实体。
+   				Student student=studentServices.getStudentByNo(grantScholarship.getStudentNo());
+   				grantScholarship.setStuId(student.getStuId());
+				
 				grantScholarship.setCreator(creator);
 				grantScholarship.setCreateTime(new Timestamp(new Date().getTime()));
 				this.save(grantScholarship);

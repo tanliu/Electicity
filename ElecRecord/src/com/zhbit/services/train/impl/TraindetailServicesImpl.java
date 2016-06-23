@@ -14,7 +14,7 @@ import com.zhbit.entity.Student;
 import com.zhbit.entity.TraininfoDetail;
 import com.zhbit.entity.TraininfoMaster;
 import com.zhbit.services.BaseServicesImpl;
-
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.train.TraindetailServices;
 import com.zhbit.services.train.TrainmasterServices;
 import com.zhbit.util.PageUtils;
@@ -36,9 +36,8 @@ import com.zhbit.util.QueryUtils;
 @Service(value=TraindetailServices.SERVICES_NAME)
 public class TraindetailServicesImpl extends BaseServicesImpl<TraininfoDetail> implements
 TraindetailServices{
-
-	//@Resource(name=StudentServices.SERVICES_NAME)
-	//StudentServices studentServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	//注入TrainmasterServices
 	@Resource(name=TrainmasterServices.SERVICES_NAME)
 	TrainmasterServices trainmasterServices;
@@ -99,10 +98,10 @@ TraindetailServices{
                fields=new String[]{"studentNo=?","master_trainsTopic=?"};
                params=new Object[]{traininfoDetail.getStudentNo(),traininfoDetail.getMaster_trainsTopic()};
                if(this.findObjectByFields(fields, params)==null){
-				//这里先设置一个值用来测试
-				traininfoDetail.setStuId("9527");
-				//traininfoMaster.setCreator(creator);
-				//traininfoMaster.setCreateTime(new Timestamp(new Date().getTime()));
+               //获取学生的id,将学号赋给traininfoDetail实体。
+      			Student student=studentServices.getStudentByNo(traininfoDetail.getStudentNo());
+      			traininfoDetail.setStuId(student.getStuId());
+				
 				this.save(traininfoDetail);
 			}
 			}

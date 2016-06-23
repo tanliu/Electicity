@@ -19,8 +19,7 @@
 
 <div class="title"><h2>添加普通奖学金基本信息</h2></div>
 <form id="myForm" method="post">  
-	    <input hidden="hidden" value="<s:property value="1"/>" name="commonScholarship.stuId">
-	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="commonScholarship.creator">
+	   
 	    
 <div class="main">
     <p class="short-input ue-clear">

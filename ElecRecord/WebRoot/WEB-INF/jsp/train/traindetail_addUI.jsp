@@ -19,8 +19,7 @@
 
 <div class="title"><h2>添加学生干部培训明细表信息</h2></div>
 <form id="myForm" method="post">  
-	    <input hidden="hidden" value="<s:property value="1"/>" name="traininfoDetail.stuId">
-<%--  	    <input hidden="hidden" value="<s:property value="'罗吉林'"/>" name="traininfoMaster.creator">  --%>
+
 	    
 <div class="main">
     <p class="short-input ue-clear">

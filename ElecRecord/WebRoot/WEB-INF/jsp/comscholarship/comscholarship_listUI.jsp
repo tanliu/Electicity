@@ -14,6 +14,7 @@ var importUrl="${basePath}comscholarship/comscholarship_importExcel.action";
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <!-- 行之间的显示效果与选中行的效果 -->
@@ -44,17 +45,17 @@ table thead tr th{
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions staff ue-clear" style="width:25%">
-            <label>姓名：</label>
-        <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
+        <div class="conditions staff ue-clear" style="width:25%">   
+            <label style="margin-left:0px;width:50px">姓名：</label>
+        <input type="text" name="commonScholarship.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:180px;height:31px"/>
         </div>
         
-       <div class="conditions name ue-clear" style="width:25%">
+<div class="conditions name ue-clear" style="width:25%"> 
          <label>获奖名称：</label>
-        <input  hidden="hidden"  value="${querycon.rewardName}" name="commonScholarship.rewardName" style="width:200px;height:30px">
-        <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>${querycon.rewardName}</span><i class="icon"></i></div>
-            <ul class="select-list" >
+        <input  hidden="hidden"  value="${querycon.rewardName}" name="commonScholarship.rewardName" >
+        <div class="select-wrap" style="width:180px">
+        	<div class=" select-title ue-clear" style="width:180px" ><span>${querycon.rewardName}</span><i class="icon"></i></div>
+            <ul class="select-list" style="width:200px">
                 <li id="">请选择</li>
             	<li id="特等奖学金">特等奖学金</li>
                 <li id="一等奖学金">一等奖学金</li>
@@ -62,23 +63,23 @@ table thead tr th{
                 <li id="三等奖学金">三等奖学金</li>
             </ul>
         </div>
-  </div>
-  
+  </div> 
+ 
   <div class="conditions name ue-clear" style="width:25%">
        <label>专业：</label>
        <input  hidden="hidden" value="${querycon.major}" name="commonScholarship.major">
-        <div class="select-wrap">
-				<div class="select-title" >
+        <div class="select-wrap" style="width:180px">
+				<div class="select-title" style="width:180px">
 					<span id="span1">${querycon.major}</span><i class="icon"></i>
 					</div>
-					<ul class="select-list" id="list1">
+					<ul class="select-list" id="list1" style="width:200px">
 					 <li id="">请选择</li>
 					    <s:iterator value="#request.major" var="major">
 					      <li id="<s:property value='#major.ddlName'/>"><s:property value="#major.ddlName"/></li>
 					    </s:iterator>
 					</ul>					
-				</div>
-  </div>
+           </div> 
+   </div>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>

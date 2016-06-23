@@ -15,6 +15,7 @@ var importUrl="${basePath}polstatus/polstatus_importExcel.action";
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <!-- 行之间的显示效果与选中行的效果 -->
@@ -44,22 +45,20 @@ table thead tr th{
 <!-- 跳转页面时表单提交数据，换页显示数据 -->
  <form id="queryForm" action="${basePath}system/user_listUI.action" method="post">
 <div class="query">
-	<div class="query-conditions ue-clear" style="width:100%">
-        <div class="conditions staff ue-clear" style="width:25%">
+
+ <div class="main">     
+    <p class="short-input ue-clear"> 
             <label>&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label>
         <input type="text" name="politicalstatus.stuName" placeholder="请输入姓名进行查询" value="${querycon.stuName}" style="width:200px;height:30px"/>
-        </div>
+
         
-         <div class="conditions staff ue-clear" style="width:25%">
+
           <label>&nbsp;&nbsp;&nbsp;&nbsp;学号：</label>
-        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${querycon.studentNo}" style="width:200px;height:30px"/>
-    </div>
- <div class="conditions staff ue-clear" style="width:25%">
+        <input type="text" name="politicalstatus.studentNo" placeholder="请输入学号进行查询" value="${querycon.studentNo}" style="width:200px;height:30px" />
+
             <label>&nbsp;&nbsp;入党日期：</label>
-             <div class="select-wrap" >
             <input type="text" value="<s:date format="yyyy-MM-dd" name="politicalstatus.joinDate"/>" placeholder="请输入日期进行查询" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" readonly="readonly" name="politicalstatus.joinDate" style="width:200px;height:30px"/>
-            </div>
-        </div>
+</p>
    </div>
     <div class="query-btn ue-clear">
     	<a href="javascript:query()" class="confirm">查询</a>

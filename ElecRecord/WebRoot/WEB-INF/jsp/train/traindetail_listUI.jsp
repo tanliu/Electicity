@@ -14,6 +14,7 @@ var importUrl="${basePath}train/traindetail_importExcel.action";
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+
 <link rel="stylesheet" type="text/css"
 	href="${basePath}css/jquery.dialog.css" />
 <!-- 行之间的显示效果与选中行的效果 -->
@@ -45,11 +46,11 @@ table thead tr th{
 <div class="query">
 	<div class="query-conditions ue-clear" style="width:100%">
          <div class="conditions name ue-clear" style="width:25%"> 
-            <label>主题：</label> 
-          <input  hidden="hidden" value="${querycon.master_trainsTopic}" name="traininfoDetail.master_trainsTopic" style="width:200px;height:30px"> 
-       <div class="select-wrap" > 
- 				<div class="select-title ue-clear" ><span id="span1" >${querycon.master_trainsTopic}</span><i class="icon"></i></div> 
- 					<ul class="select-list" > 
+            <label style="margin-left:0px;width:50px" >主题：</label> 
+          <input  hidden="hidden" value="${querycon.master_trainsTopic}" name="traininfoDetail.master_trainsTopic" > 
+       <div class="select-wrap" style="width:180px"> 
+ 				<div class="select-title ue-clear" style="width:180px"><span id="span1" >${querycon.master_trainsTopic}</span><i class="icon"></i></div> 
+ 					<ul class="select-list" style="width:200px"> 
  					    <li id="">请选择</li> 
  					    <s:iterator value="#request.traininfoMaster" var="traininfoMaster"> 
  					      <li id="<s:property value='#traininfoMaster.trainsTopic'/>"><s:property value="#traininfoMaster.trainsTopic"/></li> 
@@ -57,21 +58,23 @@ table thead tr th{
 					</ul>					 
 				</div> 
          </div> 
-     <div class="conditions name ue-clear" style="width:25%">
-         <label>参训结果：</label>
-        <input  hidden="hidden"  value="${querycon.trainsResult}" name="traininfoDetail.trainsResult" style="width:200px;height:30px">
-        <div class="select-wrap">
-        	<div class=" select-title ue-clear" ><span>${querycon.trainsResult}</span><i class="icon"></i></div>
-            <ul class="select-list" >
+         
+      <div class="conditions name ue-clear" style="width:25%"> 
+         <label style="margin-left:0px;width:60px">参训结果：</label>
+        <input  hidden="hidden"  value="${querycon.trainsResult}" name="traininfoDetail.trainsResult" ">
+        <div class="select-wrap" style="width:180px">
+        	<div class=" select-title ue-clear" style="width:180px"><span>${querycon.trainsResult}</span><i class="icon"></i></div>
+            <ul class="select-list" style="width:200px">
                 <li id="">请选择</li>
             	<li id="合格">合格</li>
                 <li id="不合格">不合格</li>
             </ul>
-        </div>
+        </div> 
   </div>
+  
       <div class="conditions staff ue-clear" style="width:25%">
-          <label> 参训人：</label>
-        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人进行查询" value="${querycon.stuName}" style="width:233px;height:30px"/>
+          <label style="margin-left:0px;width:50px"> 参训人：</label>
+        <input type="text" name="traininfoDetail.stuName" placeholder="请输入参训人进行查询" value="${querycon.stuName}" style="width:180px;height:31px"/>
     </div>
    </div>
     <div class="query-btn ue-clear">

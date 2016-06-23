@@ -17,12 +17,14 @@ import org.springframework.stereotype.Controller;
 
 import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.TraininfoDetail;
 import com.zhbit.entity.TraininfoMaster;
 import com.zhbit.entity.excel.TraindetailExcel;
 import com.zhbit.entity.excel.TrainmasterExcel;
 import com.zhbit.excel.ExcelConfig;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.train.TraindetailServices;
 import com.zhbit.services.train.TrainmasterServices;
 import com.zhbit.util.DecodeUtils;
@@ -55,7 +57,8 @@ public class TrainDetailAction extends BaseAndExcelAction{
 		TraindetailServices traindetailServices;
 		@Resource(name=TrainmasterServices.SERVICES_NAME)
 		TrainmasterServices trainmasterServices;
-
+		@Resource(name=StudentServices.SERVICES_NAME)
+		StudentServices studentServices;
 	@Override
 	@Limit(url="/train/traindetail_importExcel.action")
 	public String importExcel() {
@@ -104,6 +107,8 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/train/traindetail_listUI.action")
 	public String listUI() {
+		//判断是否是学生，如果是学生的话，就把查询条件强加
+		query_stuName=RequestUtils.checkStudentName(request,query_stuName);
 		//查找所有的培训信息trainmaster，方便获取培训主题trainTopic
 		List<TraininfoMaster> traininfoMaster=trainmasterServices.findAllObject();
 		request.setAttribute("traininfoMaster", traininfoMaster);
@@ -142,6 +147,9 @@ public class TrainDetailAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/train/traindetail_add.action")
 	public String add() {
+		//获取学生的学号,将学号赋给CommonScholarship实体。
+		Student student=studentServices.getStudentByNo(traininfoDetail.getStudentNo());
+		traininfoDetail.setStuId(student.getStuId());
 		//根据traininfoMaster的id，找到对应的trainsTopic，在将trainsTopic插入到新表中
 		traininfoMaster=trainmasterServices.findObjectById(traininfoDetail.getMaster_id());
 		traininfoDetail.setMaster_trainsTopic(traininfoMaster.getTrainsTopic());

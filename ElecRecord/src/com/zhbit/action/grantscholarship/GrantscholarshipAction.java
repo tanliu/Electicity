@@ -18,12 +18,14 @@ import com.zhbit.action.BaseAndExcelAction;
 import com.zhbit.annotation.Limit;
 import com.zhbit.entity.CountryScholarship;
 import com.zhbit.entity.GrantScholarship;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.excel.CouscholarshipExcel;
 import com.zhbit.entity.excel.GrantscholarshipExcel;
 import com.zhbit.excel.ExcelConfig;
 import com.zhbit.services.couscholarship.CouscholarshipServices;
 import com.zhbit.services.grantscholarship.GrantscholarshipServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.RequestUtils;
@@ -49,6 +51,8 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	//注入的Services
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	//定义查询的条件,创建get&set方法,接收页面发送过去的查询条件
 	private String query_stuName;
 	private String query_orgName;
@@ -101,6 +105,8 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/grantscholarship/grantscholarship_listUI.action")
 	public String listUI() {
+		//判断是否是学生，如果是学生的话，就把查询条件强加
+		query_stuName=RequestUtils.checkStudentName(request,query_stuName);
 		//对传来的查询条件进行编码，防止文字查询条件出现乱码。比如姓名
 				if(grantScholarship!=null){
 					try {
@@ -143,6 +149,12 @@ public class GrantscholarshipAction extends BaseAndExcelAction{
 	@Override
 	@Limit(url="/grantscholarship/grantscholarship_add.action")
 	public String add() {
+		//获取学生的学号,将学号赋给CommonScholarship实体。
+				Student student=studentServices.getStudentByNo(grantScholarship.getStudentNo());
+				grantScholarship.setStuId(student.getStuId());
+				//获取创建人
+				String creator=RequestUtils.getUserName(request);
+				grantScholarship.setCreator(creator);
 		//设定创建时间为当前时间
 				Timestamp createtime = new Timestamp(System.currentTimeMillis());
 				grantScholarship.setCreateTime(createtime);

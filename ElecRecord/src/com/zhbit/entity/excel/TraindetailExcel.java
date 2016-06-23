@@ -26,7 +26,7 @@ public class TraindetailExcel extends BaseExcelBean implements Cloneable{
 		  @Lang(value="参训人",isNull=Lang.TYPE_NONULL)
 			private String stuName;
 		  
-		  @Lang(value="参训结果",toExcle={"合格","不合格"},toEntity={"1","0"})
+		  @Lang(value="参训结果",isNull=Lang.TYPE_NONULL)
 			private String trainsResult;
 		  
 		  @Lang(value="备注")
