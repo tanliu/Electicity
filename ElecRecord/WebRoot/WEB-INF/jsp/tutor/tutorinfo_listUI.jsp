@@ -113,10 +113,10 @@ function editor(id){
 
 
              <label>姓名：</label>
-            <input type="text" placeholder="请输入学生姓名进行查询" name="tutor.stuName" value="${queryCon.stuName}" />
+            <input type="text"  name="tutor.stuName" value="${queryCon.stuName}" />
             
             <label>学号：</label>
-            <input type="text" placeholder="请输入学生学号进行查询" name="tutor.studentNo" value="${queryCon.studentNo}"  />
+            <input type="text" name="tutor.studentNo" value="${queryCon.studentNo}"  />
   
 			
       </p>

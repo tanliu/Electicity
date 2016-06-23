@@ -1,6 +1,6 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/common/header_js.jsp"%>
+<%@ taglib prefix="a" uri="http://openhome.cc/jstl/fake"%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -140,18 +140,18 @@
 		
 		
 <div class="table-operate ue-clear">
-			<a href="${basePath}studentdutys/studentdutys_addUI.action" class="add">添加</a>
-			<a href="javascript:deleteItem()" class="del">删除</a> 
-			<a href="javascript:;" class="import clear clear">导入</a>
-    		<a href="javascript:;" class="upload">上传</a>
-    		<a href="javascript:downloadItem()">下载</a>
+			<a:if url="/studentdutys/studentdutys_add.action"><a href="${basePath}studentdutys/studentdutys_addUI.action" class="add">添加</a></a:if>
+			<a:if url="/studentdutys/studentdutys_delete.action"><a href="javascript:deleteItem()" class="del">删除</a> </a:if>
+			<a:if url="/studentdutys/studentdutys_importExcel.action"><a href="javascript:;" class="import clear clear">导入</a></a:if>
+    		<a:if url="/studentdutys/studentdutys_exportExcel.action"><a href="javascript:downloadItem()">下载</a></a:if>
  
 		</div>
 <div class="table-box">
 	<table>
 				<thead>
 					<tr>
-						<th width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th>
+						<a:if url="/studentdutys/studentdutys_editor.action"><th width="5%">
+							<input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()"/></th></a:if>
 						<th width="3%">序号</th>
 						<th width="8%">年级</th>
 						<th width="6%">学院</th>
@@ -163,15 +163,15 @@
 						<th width="6%">短号</th>
 						<th width="8%">宿舍</th>
 						<th width="8%">备注</th>
-						<th width="5%">编辑</th>
+						<a:if url="/studentdutys/studentdutys_editor.action"><th width="5%">编辑</th></a:if>
 					</tr>
 				</thead>
 				<tbody>
 					<s:iterator value="pageUtils.items" var="studentdutys" status="stuts">
 					
 						<tr>
-							<td><input type="checkbox" name="selectedRow" id="subid"
-								value='<s:property value='#studentdutys.id'/>' /></td>
+							<a:if url="/studentdutys/studentdutys_editor.action"><td><input type="checkbox" name="selectedRow" id="subid"
+								value='<s:property value='#studentdutys.id'/>' /></td></a:if>
 							<td class="num">${stuts.count+(pageUtils.pageNo-1)*pageUtils.pageSize}</td>
 							<td><s:property value="#studentdutys.grade" /></td>
 							<td><s:property value="#studentdutys.college" /></td>
@@ -183,8 +183,8 @@
 							<td><s:property value="#studentdutys.shortTelNo" /></td>
 							<td><s:property value="#studentdutys.address"/></td>
 							<td><s:property value="#studentdutys.memo" /></td>
-							<td><a href="javascript:editor('<s:property value='#studentdutys.id'/>')">
-								<img src="../images/edtico.png" /></a></td>
+							<a:if url="/studentdutys/studentdutys_editor.action"><td><a href="javascript:editor('<s:property value='#studentdutys.id'/>')">
+								<img src="../images/edtico.png" /></a></td></a:if>
 						</tr>
 						
 					</s:iterator>

@@ -4,6 +4,7 @@
 <html>
 <head>
 	<title>学生电子档案管理系统</title>
+	<meta charset="utf-8">
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
@@ -24,9 +25,9 @@
                 </p>
                 <p class="short-input ue-clear">
                     <label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
-                       <input  type="text" placeholder="请输入姓名" name="postinfo.stuName" class="strutsinput noNull"/>
+                       <input  id="Name" type="text" value="" placeholder="请输入姓名" name="postinfo.stuName" class="strutsinput noNull"/>
                     <label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
-                       <input  type="text"  placeholder="请输入学号" name="postinfo.studentNo"/>
+                       <input  id="stuNO" type="text"  placeholder="请输入学号" name="postinfo.studentNo" class="strutsinput noNull studentNo"/>
                 </p>
             <div class="short-input select ue-clear" > 
                     <label>专业名称：</label>
@@ -91,7 +92,38 @@
     <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
     <script type="text/javascript" src="../js/stustausinfo-reg.js"></script>
     <script type="text/javascript">
-    showRemind('input[type=text], textarea','placeholder');
+  //--------------------------------------信息唯一性校验------------------------------
+	function myonfocus() {
+		window.setTimeout(function() {
+			document.getElementById('stuNO').select();
+		}, 0);
+		$("#stuNO").focus();
+
+	}
+
+    $("#stuNO").blur(function() {
+    	
+		var value = $(this).val();
+		var url="${basePath}postinfo/postinfo_hasStudent.action";
+			$.ajax({
+			url : url,
+			data : {'postinfo.studentNo':value},
+			type : "post",
+			dataType:"text",//返回数据类型
+			contentType: "application/x-www-form-urlencoded; charset=utf-8", 
+			success : function(data) {
+				var name=decodeURI(data);
+               if(data!=null){
+            	  $('#Name').attr("value",name);
+               }
+			},
+			error : function() {
+				alert("失败！");
+			}
+
+		});  
+
+	});
 
   
     </script>

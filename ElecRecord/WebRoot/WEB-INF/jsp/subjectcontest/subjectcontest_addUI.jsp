@@ -4,6 +4,7 @@
 <html>
 <head>
 	<title>学生电子档案管理系统</title>
+	<meta charset="utf-8">
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
@@ -19,9 +20,9 @@
             <input hidden="hidden"  name="subjectcontest.stuId" value="00001"/>
                 <p class="short-input ue-clear">
                     <label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
-                    	<input type="text" placeholder="请输入学生学号" name="subjectcontest.studentNo"class="strutsinput noNull"/> 
+                    	<input type="text" placeholder="请输入学生学号" name="subjectcontest.studentNo"class="strutsinput noNull studentNo" id="stuNO"/> 
                     <label>获奖者姓名：</label>
-                        <input type="text" placeholder="请输入学生姓名" name="subjectcontest.stuName" class="strutsinput noNull"/> 
+                        <input type="text" value="" placeholder="请输入学生姓名" name="subjectcontest.stuName" class="strutsinput noNull" id="Name"/> 
                 </p>
                 <p class="short-input ue-clear">
                     <label>奖励名称：</label>
@@ -83,7 +84,38 @@
     <script type="text/javascript" src="${basePath}js/WdatePicker.js"></script>
     <script type="text/javascript" src="../js/stustausinfo-reg.js"></script>
     <script type="text/javascript">
-    showRemind('input[type=text], textarea','placeholder');
+  //--------------------------------------信息唯一性校验------------------------------
+	function myonfocus() {
+		window.setTimeout(function() {
+			document.getElementById('stuNO').select();
+		}, 0);
+		$("#stuNO").focus();
+
+	}
+
+		$('#stuNO').blur(function() {
+			
+			var value = $(this).val();
+			var url="${basePath}subjectcontest/subjectcontest_hasStudent.action";
+ 			$.ajax({
+				url : url,
+				data : {'subjectcontest.studentNo':value},
+				type : "post",
+				dataType:"text",//返回数据类型
+				contentType: "application/x-www-form-urlencoded; charset=utf-8", 
+				success : function(data) {
+					var name=decodeURI(data);
+                   if(data!=null){
+                	  $('#Name').attr("value",name);
+                   }
+				},
+				error : function() {
+					alert("失败！");
+				}
+
+			});  
+
+		});
 
   
     </script>

@@ -2,7 +2,10 @@ package com.zhbit.action.subjectcontest;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -27,6 +31,7 @@ import com.zhbit.entity.excel.SubjectContestExcel;
 import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
@@ -35,6 +40,7 @@ import com.zhbit.excel.ExcelConfig;
 import com.zhbit.entity.Subjectcontest;
 import com.zhbit.services.subjectcontest.SubjectContestServices;
 import com.zhbit.services.polstatus.PolstatusServices;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.system.OrganizeServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.transform.BaseTransfrom;
@@ -77,6 +83,8 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	SubjectContestServices subjectContestServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	/* 
 	* 方法重写
 	* 方法名: listUI 
@@ -84,14 +92,11 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/subjectcontest/subjectcontest_listUI.action")
 	public String listUI() {
 		//对传来的查询条件进行编码
 		if(subjectcontest!=null){
 			try {
-				System.out.println("listUI传来的学号="+subjectcontest.getStudentNo());
-				System.out.println("listUI传来的姓名="+subjectcontest.getStuName());
-				System.out.println("listUI传来的单位="+subjectcontest.getGrantUnits());
-				System.out.println("listUI传来的名称="+subjectcontest.getRewardName());
 				subjectcontest.setStuName(DecodeUtils.decodeUTF(subjectcontest.getStuName()));
 				subjectcontest.setStudentNo(DecodeUtils.decodeUTF(subjectcontest.getStudentNo()));
 				subjectcontest.setGrantUnits(DecodeUtils.decodeUTF(subjectcontest.getGrantUnits()));
@@ -103,7 +108,8 @@ public class SubjectContestAction extends BaseAndExcelAction {
 		}
 		//将页面表单传过来的查询条件封装到实体类里面，querycon为查询条件。
 		request.setAttribute("querycon", subjectcontest);
-		pageUtils=subjectContestServices.queryList(subjectcontest, getPageNO(),5);	
+		setPageSize(8);
+		pageUtils=subjectContestServices.queryList(subjectcontest, getPageNO(),getPageSize());	
 		//pageUtils=subjectContestServices.queryList(subjectcontest, getPageNO(), getPageSize());
 		
 		
@@ -118,6 +124,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/subjectcontest/subjectcontest_add.action")
 	public String addUI() {
 		//到数据字典查找类别
 			String[] fields={"keyword=?"};
@@ -140,11 +147,11 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/subjectcontest/subjectcontest_add.action")
 	public String add() {
 		//设置创建时间 
 		subjectcontest.setCreateTime(new Timestamp(new Date().getTime()));
-		subjectcontest.setCreator("朱嘉鑫");
-		System.out.println("Name="+subjectcontest.getStuName());
+		subjectcontest.setCreator(RequestUtils.getUserName(request));
 		subjectContestServices.save(subjectcontest);
 		return "add";
 	}
@@ -156,6 +163,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/subjectcontest/subjectcontest_delete.action")
 	public String delete() {
 		if(selectedRow!=null&&selectedRow.length>0){
 			subjectContestServices.deleteObjectByIds(selectedRow);
@@ -170,6 +178,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/subjectcontest/subjectcontest_editor.action")
 	public String editorUI() {
 		//将listUI界面传过来的查询条件保存
 		request.setAttribute("querycon", subjectcontest);
@@ -198,6 +207,7 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/subjectcontest/subjectcontest_editor.action")
 	public String editor() {
 		subjectContestServices.update(subjectcontest);
 		
@@ -258,17 +268,31 @@ public class SubjectContestAction extends BaseAndExcelAction {
 	 * @return
 	 */
 	public String hasStudent(){
-		//1表示存在、0表示不存在
-		String result="0";
+		//根据学号返回姓名
 		if(subjectcontest!=null&&!StringUtils.isBlank(subjectcontest.getStudentNo())){
 			if(subjectContestServices.hasStudent(subjectcontest.getStudentNo())){
-				result="1";
+				Student student = studentServices.getStudentByNo(subjectcontest.getStudentNo());
+				if(student!=null){
+					try {
+						String string=student.getStuName();
+						string=URLEncoder.encode(string, "UTF-8");
+						request.setCharacterEncoding("utf-8");
+						AjaxReturnUtils.returnResult(response,string);
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					AjaxReturnUtils.returnResult(response,null);
+				}
 			}
 		}
-		AjaxReturnUtils.returnResult(response, result);
+		//AjaxReturnUtils.returnResult(response, result);
+		
 		return null;
 	}
 	@Override
+	@Limit(url="/subjectcontest/subjectcontest_importExcel.action")	
 	public String importExcel() {
 		try {
 			/**

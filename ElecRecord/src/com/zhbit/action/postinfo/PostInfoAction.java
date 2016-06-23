@@ -3,6 +3,7 @@ package com.zhbit.action.postinfo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,8 +26,10 @@ import com.mysql.fabric.xmlrpc.base.Data;
 import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAction;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.Organization;
 import com.zhbit.entity.Postinfo;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.StudentDutys;
 import com.zhbit.entity.Subjectcontest;
 import com.zhbit.entity.SystemDll;
@@ -69,6 +72,8 @@ public class PostInfoAction extends BaseAndExcelAction {
 	PostInfoServices postInfoServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	/* 
 	* 方法重写
 	* 方法名: listUI 
@@ -76,6 +81,7 @@ public class PostInfoAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/postinfo/postinfo_listUI.action")
 	public String listUI() {
 		//到数据字典查找类别
 		String[] fields={"keyword=?"};
@@ -113,6 +119,7 @@ public class PostInfoAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/postinfo/postinfo_add.action")
 	public String addUI() {
 		//到数据字典查找类别
 			String[] fields={"keyword=?"};
@@ -135,6 +142,7 @@ public class PostInfoAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/postinfo/postinfo_add.action")
 	public String add() {
 		postinfo.setStuId("001");
 		//设置创建时间 
@@ -152,6 +160,7 @@ public class PostInfoAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/postinfo/postinfo_delete.action")
 	public String delete() {
 		if(selectedRow!=null&&selectedRow.length>0){
 			postInfoServices.deleteObjectByIds(selectedRow);
@@ -166,6 +175,7 @@ public class PostInfoAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/postinfo/postinfo_editor.action")
 	public String editorUI() {
 		//将listUI界面传过来的查询条件保存
 		request.setAttribute("querycon", postinfo);
@@ -195,6 +205,7 @@ public class PostInfoAction extends BaseAndExcelAction {
 	* @return       
 	*/
 	@Override
+	@Limit(url="/postinfo/postinfo_editor.action")
 	public String editor() {
 		postInfoServices.update(postinfo);
 		
@@ -231,7 +242,14 @@ public class PostInfoAction extends BaseAndExcelAction {
 		return "detailUI";
 	}
 
+	/* 
+	* 方法重写
+	* 方法名: importExcel 
+	* 方法描述: 
+	* @return       
+	*/
 	@Override
+	@Limit(url="/postinfo/postinfo_importExcel.action")
 	public String importExcel() {
 		try {
 			/**
@@ -241,7 +259,6 @@ public class PostInfoAction extends BaseAndExcelAction {
 			 * arg04:上传文件的输入流
 			 * arg05:文件名
 			 */
-			System.out.println("我我我我哦我");
 			ExcelConfig config=new ExcelConfig(PostinfoExcel.class, "sheet1", 1, new FileInputStream(excel),excelFileName);
 			List<Object> lists=excelServicesMake.parseExcel(config);
 			
@@ -310,6 +327,31 @@ public class PostInfoAction extends BaseAndExcelAction {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	
+	/**
+	 * 方法描述:数据唯一性校验
+	 * @return
+	 */
+	public String hasStudent(){
+	
+		if(postinfo!=null&&!StringUtils.isBlank(postinfo.getStudentNo())){
+			Student student=studentServices .getStudentByNo(postinfo.getStudentNo());
+				if(student!=null){
+					try {
+						String string=student.getStuName();
+						System.out.println("name="+string);
+						string=URLEncoder.encode(string, "UTF-8");
+						request.setCharacterEncoding("utf-8");
+						AjaxReturnUtils.returnResult(response,string);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+		}
+		
+		return null;
 	}
 	//-------------------------getter&&setter-----------------------
 

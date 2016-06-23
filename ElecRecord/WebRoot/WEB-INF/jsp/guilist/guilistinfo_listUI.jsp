@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${basePath}css/info-mgt.css" />
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 
 <style type="text/css">
 /*单元格样式*/
@@ -91,68 +92,59 @@ function query(){
 <form id="queryForm" action="${basePath}guilist/guilist_listUI.action" method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" >
-                                                               
-     
-        
-       <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;" >
-            <label style="margin-left:3px;width:50px">学号：</label>
-            <input   type="text" placeholder="请输入学生学号进行查询" name="guiList.studentNo" value="${queryCon.studentNo}" style="width:200px;height:30px" />
+		<div class="main">                 
+	     <p class="short-input ue-clear"> 
+            <label >学号：</label>
+            <input   type="text" name="guiList.studentNo" value="${queryCon.studentNo}"  />
             
-        </div>
-        
-         <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;">
-            <label style="margin-right:3px;width:60px">学生姓名：</label>
-            <input  type="text" placeholder="请输入学生姓名进行查询" name="guiList.stuName" value="${queryCon.stuName}" style="width:200px;height:30px"/>
+            <label >学生姓名：</label>
+            <input  type="text"  name="guiList.stuName" value="${queryCon.stuName}" />
             
-        </div>
-        
-          <div class="conditions staff ue-clear" style="width:25%;margin-right:3px;">
-            <label style="margin-right:3px;width:60px">导师姓名：</label>
-            <input  type="text" placeholder="请输入导师姓名进行查询" name="guiList.teacherName" value="${queryCon.teacherName}" style="width:200px;height:30px"/>
-            
+            <label >导师姓名：</label>
+            <input  type="text"  name="guiList.teacherName" value="${queryCon.teacherName}" />
+            </p>
         </div>
         
         
         
        
         
-    </div>
+    
     
     <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
+    	<a href="javascript:query()" class="confirm" style="margin-left:5px">查询</a>
     </div>
 </div>
 
 <div class="table-operate ue-clear">
-  <a href="javascript:add()" class="add">添加</a>
-    <a href="javascript:del()" class="del confirm save">删除</a>
-    <a href="javascript:" class="import clear clear">导入</a>
+  <a:if url="/guilist/guilist_add.action"><a href="javascript:add()" class="add">添加</a></a:if>
+    <a:if url="/guilist/guilist_delete.action"><a href="javascript:del()" class="del confirm save">删除</a></a:if>
+    <a:if url="/guilist/guilist_importExcel.action"><a href="javascript:" class="import clear clear">导入</a></a:if>
 </div>
 
 <div class="table-box">
 	<table>
     	<thead>
         	<tr>
-			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
+			<a:if url="/guilist/guilist_delete.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th></a:if>
             	<th width="25%" class="num">学号</th>
                 <th width="25%" >专业班级</th>
 				<th width="20%" align="center">姓名</th>
 				<th width="20%" >导师姓名</th>
-				<th width="10%">编辑</th>				
+		<a:if url="/guilist/guilist_editor.action"><th width="10%">编辑</th></a:if>				
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="guilist">
         	<tr>
         	
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guilist.id'/>' /></td>
+			<a:if url="/guilist/guilist_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#guilist.id'/>' /></td></a:if>
 			
             	<td><s:property value="#guilist.studentNo"/></td>
             	<td><s:property value="#guilist.className"/></td>
 				<td ><s:property value="#guilist.stuName"/></td>		
 				<td><s:property value="#guilist.teacherName"/></td>
-				<td><a href="javascript:editor('<s:property value='#guilist.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<a:if url="/guilist/guilist_editor.action"><td><a href="javascript:editor('<s:property value='#guilist.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>

@@ -19,17 +19,23 @@ import org.springframework.stereotype.Controller;
 import com.sun.org.apache.xerces.internal.util.Status;
 import com.text.entity.excel.TestEntity;
 import com.zhbit.action.BaseAndExcelAction;
+import com.zhbit.annotation.Limit;
 import com.zhbit.entity.StuStatus;
+import com.zhbit.entity.Student;
 import com.zhbit.entity.SystemDll;
 import com.zhbit.entity.Tutor;
 import com.zhbit.entity.excel.StuStaEntity;
 import com.zhbit.excel.ExcelConfig;
+import com.zhbit.services.student.StudentServices;
 import com.zhbit.services.studentstatus.StuStatusServices;
 import com.zhbit.services.system.SystemDllServices;
 import com.zhbit.transform.StuStatusTransform;
 import com.zhbit.util.DecodeUtils;
 import com.zhbit.util.PageUtils;
 import com.zhbit.util.QueryUtils;
+import com.zhbit.util.RequestUtils;
+
+import org.apache.catalina.util.RequestUtil;
 import org.apache.commons.lang3.StringUtils;;
 
 
@@ -57,12 +63,15 @@ public class StuStatusAction extends BaseAndExcelAction {
 	StuStatusServices stuStatusServices;
 	@Resource(name=SystemDllServices.SERVICE_NAME)
 	SystemDllServices systeDllServices;
+	@Resource(name=StudentServices.SERVICES_NAME)
+	StudentServices studentServices;
 	private String  query_academicYear;
 	private String  query_studentNo;
 	private String  query_stuName;
 	
 
 	@Override 
+	@Limit(url="/stustatus/stustatus_importExcel.action")
 	public String importExcel() {
 		// TODO Auto-generated method stub
 		try {
@@ -94,8 +103,12 @@ public class StuStatusAction extends BaseAndExcelAction {
 				String[] fields={"transactionNo=?"};
 				String[] params={stuStatus.getTransactionNo()};
 				if(stuStatusServices.findObjectByFields(fields,params)==null){//当数据库中不存在此记录时，才将其加入要放入数据库的集合
-					//设定创建时间为当前时间，学生ID暂时设定为"9528"
-					stuStatus.setStuId("9528");
+					//通过对应的学生学号得到对应的stu_id
+					Student student=studentServices.getStudentByNo(stuStatus.getStudentNo());
+					if(student!=null){
+						stuStatus.setStuId(student.getStuId());
+					}
+					
 					Timestamp createtime = new Timestamp(System.currentTimeMillis());
 					stuStatus.setCreateTime(createtime);
 					//去除可能存在的空格
@@ -132,6 +145,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/stustatus/stustatus_listUI.action")
 	public String listUI() {
 		// TODO Auto-generated method stub
 		//查询学年信息并推送到前台进行显示
@@ -140,8 +154,11 @@ public class StuStatusAction extends BaseAndExcelAction {
 		List<SystemDll> years=systeDllServices.findObjectByFields(fields,params1);
 		request.setAttribute("years", years);
 		
+		
 		//对传来的查询条件进行编码
 		if(stuStatus!=null){
+			//判断是否是学生，如果是，则将其输入的学号强转为他本人的学号
+			stuStatus.setStudentNo(RequestUtils.checkStudentAuthority(request, stuStatus.getStudentNo()));
 			try {
 				stuStatus.setStuName(DecodeUtils.decodeUTF(stuStatus.getStuName()));
 				stuStatus.setAcademicYear(DecodeUtils.decodeUTF(stuStatus.getAcademicYear()));
@@ -165,6 +182,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 		 * @param 
 		 */
 	@Override
+	@Limit(url="/stustatus/stustatus_add.action")
 	public String addUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -172,7 +190,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 			
 			//到数据字典查找类别
 			String[] fields={"keyword=?"};
-			String[] params1={"学院名称"};
+			String[] params1={"学院"};
 			String[] params2={"学年"};
 			String[] params3={"专业"};
 			String[] params4={"异动类别"};
@@ -195,17 +213,23 @@ public class StuStatusAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/stustatus/stustatus_add.action")
 	public String add() {
 		//设定创建时间为当前时间
 		Timestamp createtime = new Timestamp(System.currentTimeMillis());
 		stuStatus.setCreateTime(createtime);
 		
+		//通过对应的学生学号得到对应的stu_id
+		Student student=studentServices.getStudentByNo(stuStatus.getStudentNo());
+		if(student!=null){
+			stuStatus.setStuId(student.getStuId());
+		}
+		
 		//利用save方法将新添加的学籍异动信息添加到数据库中
 		stuStatus=stuStatusServices.trimStustatus(stuStatus);//去除空格后再进行数据的存储
 		if(stuStatus!=null){//非空，进行存储
 			stuStatusServices.save(stuStatus);
-		}
-		
+		}	
 		
 		//保存成功后将Stustatus中的属性设定为查询条件
 		stuStatus.setAcademicYear(getQuery_academicYear());
@@ -219,6 +243,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 	}
 
 	@Override
+	@Limit(url="/stustatus/stustatus_delete.action")
 	public String delete() {
 		// TODO Auto-generated method stub
 		
@@ -238,6 +263,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 		 * @param 
 		 */
 	@Override
+	@Limit(url="/stustatus/stustatus_editor.action")
 	public String editorUI() {
 		// TODO Auto-generated method stub
 		//保存查询条件
@@ -266,7 +292,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 		}
 		//到数据字典查找类别
 		String[] fields={"keyword=?"};
-		String[] params1={"学院名称"};
+		String[] params1={"学院"};
 		String[] params2={"学年"};
 		String[] params3={"专业"};
 		String[] params4={"异动类别"};
@@ -293,6 +319,7 @@ public class StuStatusAction extends BaseAndExcelAction {
 
 	
 	@Override
+	@Limit(url="/stustatus/stustatus_editor.action")
 	public String editor() {
 		// TODO Auto-generated method stub
 		

@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${basePath}css/alter.css" />
 <link rel="stylesheet" href="${basePath}css/jquery.dialog.css" />
 <link rel="stylesheet" href="${basePath}css/WdatePicker.css" />
+<link rel="stylesheet" href="${basePath}css/list.css" />
 
 <style type="text/css">
 /*单元格样式*/
@@ -101,41 +102,40 @@ function editor(id){
 
 <body>
 <div class="title"><h2>考勤课程信息</h2></div>
-<form id="queryForm"  action="${basePath}tutor/tutor_listUI.action" method="post">
+<form id="queryForm"  action="${basePath}attendancemaster/attendancemaster_listUI.action" method="post">
 <div class="query">
 
-	<div class="query-conditions ue-clear" style="width:100%">                  
-	                                          
-       <div class="conditions staff ue-clear" style="width:25%">
+	<div class="main"> 
+	
+		  <p class="short-input ue-clear"> 
             <label>课程名称：</label>
-            <input type="text" placeholder="请输入课程名称进行查询" name="attendanceMatser.coursename" value="${queryCon.coursename}" style="width:233px;height:30px" />
-        </div>
+            <input type="text"  name="attendanceMatser.coursename" value="${queryCon.coursename}"  />
+      
         
-         <div class="conditions staff ue-clear" style="width:25%">
+        
             <label>教师姓名：</label>
-            <input type="text" placeholder="请输入教师姓名进行查询" name="attendanceMatser.employName" value="${queryCon.employName}" style="width:233px;height:30px"/>
+            <input type="text"  name="attendanceMatser.employName" value="${queryCon.employName}" />
             
-        </div>
+        
         
             
-         <div class="conditions staff ue-clear" >
+         
             <label>上课地点：</label>
-            <input type="text" placeholder="请输入上课地点进行查询" name="attendanceMatser.address" value="${queryCon.address}" style="width:233px;height:30px"/>
+            <input type="text"  name="attendanceMatser.address" value="${queryCon.address}" />
             
-        </div>
-       
-       
+        </p>
         
+         
     </div>
     
     <div class="query-btn ue-clear">
-    	<a href="javascript:query()" class="confirm">查询</a>
+    	<a href="javascript:query()" class="confirm" style="margin-left:5px">查询</a>
     </div>
 </div>
 
 <div class="table-operate ue-clear">
-     <a:if url="/tutor/tutor_addUI.action">	<a href="javascript:add()" class="add">添加</a></a:if>
-    <a href="javascript:del()" class="del confirm save">删除</a>
+     <a:if url="/attendancemaster/attendancemaster_add.action">	<a href="javascript:add()" class="add">添加</a></a:if>
+     <a:if url="/attendancemaster/attendancemaster_delete.action"><a href="javascript:del()" class="del confirm save">删除</a></a:if>
     
 </div>
 
@@ -143,25 +143,25 @@ function editor(id){
 	<table>
     	<thead>
         	<tr>
-			<th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th>
+			<a:if url="/attendancemaster/attendancemaster_delete.action"><th  width="5%"><input type="checkbox" id="selAll" class="checkall" onclick="doSelectAll()" /></th></a:if>
             	<th width="20%" class="num">选课课号</th>
                 <th width="15%" >课程名称</th>
 				<th width="20%" align="center">教师工号</th>
 				<th width="15%" >教师姓名</th>
 				<th width="15%" align="center">上课地点</th>
-				<th width="10%">编辑</th>				
+			<a:if url="/attendancemaster/attendancemaster_editor.action"><th width="10%">编辑</th></a:if>		
             </tr>
         </thead>
         <tbody>
            <s:iterator value="pageUtils.items" var="attendanceMatser">
         	<tr>
-			<td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceMatser.id'/>'/></td>
+			<a:if url="/attendancemaster/attendancemaster_delete.action"><td class="num" ><input  type="checkbox" name="selectedRow" value='<s:property value='#attendanceMatser.id'/>'/></td></a:if>
             	<td><s:property value="#attendanceMatser.selectedcourseno"/></td>
 				<td ><s:property value="#attendanceMatser.coursename"/></td>
 				<td><s:property value="#attendanceMatser.employNo"/></td>
 				<td><s:property value="#attendanceMatser.employName"/></td>
 				<td><s:property value="#attendanceMatser.address"/></td>
-				<td><a href="javascript:editor('<s:property value='#attendanceMatser.id'/>')"><img src="../images/edtico.png"/></a></td>
+			<a:if url="/attendancemaster/attendancemaster_editor.action"><td><a href="javascript:editor('<s:property value='#attendanceMatser.id'/>')"><img src="../images/edtico.png"/></a></td></a:if>
             </tr> 
             </s:iterator>          
         </tbody>
