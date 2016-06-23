@@ -60,7 +60,7 @@
 			    
 			  	//双击跳转到详情页面
 			  	$('tbody>tr').dblclick(function() {
-			  		var sid=$(this).find('td').find("#subid").val();
+			  		var sid=$(this).find('input[name=select]').val();
 			  		var url="${basePath}subjectcontest/subjectcontest_detailUI.action?subjectcontest.id="+sid;
 			  		window.open(url);
 			  		//window.location.href="${basePath}subjectcontest/subjectcontest_detailUI.action?subjectcontest.id="+sid;	
@@ -117,7 +117,7 @@
 			<a:if url="/subjectcontest/subjectcontest_add.action"><a href="${basePath}subjectcontest/subjectcontest_addUI.action" class="add">添加</a></a:if>
 			<a:if url="/subjectcontest/subjectcontest_delete.action"><a href="javascript:deleteItem()" class="del">删除</a> </a:if>
 			<a:if url="/subjectcontest/subjectcontest_importExcel.action"><a href="javascript:;" class="import clear clear">导入</a></a:if>
-    		<a:if url="/subjectcontest/subjectcontest_exportExcel.action"><a href="javascript:downloadItem()">下载</a></a:if>
+    		
     		
 		</div>
 <div class="table-box">
@@ -145,6 +145,8 @@
 						<tr>
 							<a:if url="/subjectcontest/subjectcontest_editor.action"><td><input type="checkbox" name="selectedRow" id="subid"
 								value='<s:property value='#subjectcontest.id'/>' /></td></a:if>
+								<input type="hidden" name="select" 
+								value='<s:property value='#subjectcontest.id'/>' />
 							<td class="num">${stuts.count+(pageUtils.pageNo-1)*pageUtils.pageSize}</td>
 							<td><s:property value="#subjectcontest.studentNo" /></td>
 							<td><s:property value="#subjectcontest.stuName" /></td>

@@ -57,11 +57,10 @@
 	    $(function(){
 	    	 $("tr:odd").addClass("odd");  /* 奇数行添加样式*/
 			    $("tr:even").addClass("even"); /* 偶数行添加样式*/
-			
-			    
+			  
 			  	//双击跳转到详情页面
 			  	$('tbody>tr').dblclick(function() {
-			  		var sid=$(this).find('td').find("#subid").val();
+			  		var sid=$(this).find('input[name=select]').val();
 			  		var url="${basePath}studentdutys/studentdutys_detailUI.action?studentdutys.id="+sid;
 			  		window.open(url);
 			  		//window.location.href="${basePath}subjectcontest/subjectcontest_detailUI.action?subjectcontest.id="+sid;	
@@ -143,8 +142,7 @@
 			<a:if url="/studentdutys/studentdutys_add.action"><a href="${basePath}studentdutys/studentdutys_addUI.action" class="add">添加</a></a:if>
 			<a:if url="/studentdutys/studentdutys_delete.action"><a href="javascript:deleteItem()" class="del">删除</a> </a:if>
 			<a:if url="/studentdutys/studentdutys_importExcel.action"><a href="javascript:;" class="import clear clear">导入</a></a:if>
-    		<a:if url="/studentdutys/studentdutys_exportExcel.action"><a href="javascript:downloadItem()">下载</a></a:if>
- 
+    		
 		</div>
 <div class="table-box">
 	<table>
@@ -170,8 +168,10 @@
 					<s:iterator value="pageUtils.items" var="studentdutys" status="stuts">
 					
 						<tr>
-							<a:if url="/studentdutys/studentdutys_editor.action"><td><input type="checkbox" name="selectedRow" id="subid"
+							<a:if url="/studentdutys/studentdutys_editor.action"><td><input type="checkbox" name="selectedRow" 
 								value='<s:property value='#studentdutys.id'/>' /></td></a:if>
+							<input type="hidden" name="select" 
+								value='<s:property value='#studentdutys.id'/>' />
 							<td class="num">${stuts.count+(pageUtils.pageNo-1)*pageUtils.pageSize}</td>
 							<td><s:property value="#studentdutys.grade" /></td>
 							<td><s:property value="#studentdutys.college" /></td>
