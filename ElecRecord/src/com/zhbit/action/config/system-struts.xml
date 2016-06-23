@@ -6,7 +6,7 @@
 <struts>
 
 	<!-- 配置全局结果及异常映射 -->
-	<package name="system" namespace="/system" extends="json-default">
+	<package name="system" namespace="/system" extends="basestruts">
 	     <interceptors>
 	       <interceptor name="authorityInterceptor" class="com.zhbit.interceptor.AuthorityInterceptor"></interceptor>
 	       <interceptor name="errorInterceptor" class="com.zhbit.interceptor.ErrorInterceptor"></interceptor>
@@ -141,6 +141,7 @@
               <result name="home">/WEB-INF/jsp/system/home.jsp</result>
               <result name="personInfo">/WEB-INF/jsp/system/personInfo.jsp</result>
               <result name="loginUI">/WEB-INF/jsp/system/login.jsp</result>
+              <result name="alterpwdUI">/WEB-INF/jsp/system/login_alterpwdUI.jsp</result>
               <result name="success" type="redirectAction">
 	          <param name="actionName">login_home</param>
 	        </result>

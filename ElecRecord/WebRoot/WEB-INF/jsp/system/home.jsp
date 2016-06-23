@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="toolbar ue-clear">
-                <a href="javascript:;" class="home-btn">首页</a>
+                <a href="${pathPath}system/login_home.action" class="home-btn">首页</a>
                 <a href="javascript:;" class="quit-btn exit"></a>
             </div>
         </div>

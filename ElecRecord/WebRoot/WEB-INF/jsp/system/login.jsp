@@ -48,7 +48,7 @@ function checkNumberImage(){
                     </p>
                     <p class="password ue-clear">
                     	<label>密&nbsp;&nbsp;&nbsp;码</label>
-                        <input type="text" name="password" value="${requestScope.password}" />
+                        <input type="password" name="password" value="${requestScope.password}" />
                        <%--  <s:password name="#password" class="strutsinput"></s:password> --%>
                     </p>
                      <p class="yzm ue-clear">

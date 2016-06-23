@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -29,8 +30,10 @@ import com.zhbit.services.system.LoginLogService;
 import com.zhbit.services.system.RoleServices;
 import com.zhbit.services.system.UserRoleServices;
 import com.zhbit.services.system.UserServices;
+import com.zhbit.util.AjaxReturnUtils;
 import com.zhbit.util.EncryptUtils;
 import com.zhbit.util.LoginUtils;
+import com.zhbit.util.RequestUtils;
 
 /**
  * 项目名称：ElecRecord 类名称：LoginAction 类描述： 系统登录的Action层 创建人：谭柳 创建时间：2016年6月4日
@@ -44,6 +47,10 @@ public class LoginAction extends ActionSupport {
 	List<LoginLog> logs;
 	private String username;
 	private String password;
+	
+	private String nowpwn;
+	private String newpwd;
+	private String confirmpwd;
 
 	@Resource(name = UserServices.SERVER_NAME)
 	UserServices userServices;
@@ -200,6 +207,39 @@ public class LoginAction extends ActionSupport {
 		ServletActionContext.getRequest().getSession().invalidate();
 		return "loginUI";
 	}
+	public String alterpwdUI(){
+		return "alterpwdUI";
+	}
+	public String alter(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		String result="0";
+		if(!StringUtils.isBlank(newpwd)&&!StringUtils.isBlank(nowpwn)&&!StringUtils.isBlank(confirmpwd)&&newpwd.equals(confirmpwd)){
+			User user=(User) ServletActionContext.getRequest().getSession().getAttribute(User.SESSION_NAME);
+			if(user==null){
+				Student student=(Student) ServletActionContext.getRequest().getSession().getAttribute("student");
+				if(student!=null){
+					if(student.getPassword().equals(EncryptUtils.MD5Encrypt(nowpwn))){
+						student=studentServices.findObjectById(student.getStuId());
+						student.setPassword(EncryptUtils.MD5Encrypt(newpwd));
+						studentServices.update(student);
+						result="1";
+					}
+				}
+			}else{
+				if(user.getPassword().equals(EncryptUtils.MD5Encrypt(nowpwn))){
+					user=userServices.findObjectById(user.getUserId());
+					user.setPassword(EncryptUtils.MD5Encrypt(newpwd));
+					userServices.update(user);
+					result="1";
+				}
+			}
+			
+		}
+		
+		
+		AjaxReturnUtils.returnResult(response, result);
+		return null;
+	}
 
 	/**
 	 * 方法描述:查找到权限的菜单树
@@ -237,5 +277,30 @@ public class LoginAction extends ActionSupport {
 	public void setLogs(List<LoginLog> logs) {
 		this.logs = logs;
 	}
+
+	public String getNowpwn() {
+		return nowpwn;
+	}
+
+	public void setNowpwn(String nowpwn) {
+		this.nowpwn = nowpwn;
+	}
+
+	public String getNewpwd() {
+		return newpwd;
+	}
+
+	public void setNewpwd(String newpwd) {
+		this.newpwd = newpwd;
+	}
+
+	public String getConfirmpwd() {
+		return confirmpwd;
+	}
+
+	public void setConfirmpwd(String confirmpwd) {
+		this.confirmpwd = confirmpwd;
+	}
+	
 
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
     
-<title>添加角色操作</title>
+<title>修改角色操作</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -102,6 +102,9 @@ fieldset {
                 //把数据输入到Znodes
 	    		for(var i=0;i<dataObj.length;i++){
 		    		var val = {id:dataObj[i].authorityId, pId:dataObj[i].parentId, name:dataObj[i].authorityName, open:true};
+		    		if(i>30){
+		    			val.open=false;
+		    		}
 		    		zNodes.push(val); 
 	    		}
 	    		}
@@ -238,7 +241,7 @@ fieldset {
 
 
 	<div class="title">
-		<h2>添加角色操作</h2>
+		<h2>修改角色操作</h2>
 	</div>
 	<form id="myForm">
 	    <s:hidden name="pageNO"></s:hidden>
@@ -257,7 +260,9 @@ fieldset {
 				<s:textfield  name="role.memo" class="strutsinput"></s:textfield>	
 			</p>
 		 <div class="btn ue-clear" >
-	     <a href="javascript:editorrole('myForm','post','${basePath}system/role_editor.action')"  class="confirm save">修改角色</a> 
+	     <a href="javascript:editorrole('myForm','post','${basePath}system/role_editor.action')"  class="confirm save">修改角色</a>
+	     			<a href="javascript:tolist('myForm','post','${basePath}system/role_listUI.action')"
+				class="confirm clear">返回</a> 
 		</div>
 		
 		</TD>

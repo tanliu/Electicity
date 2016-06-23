@@ -3,7 +3,7 @@
 <html>
 <head>
     
-<title>用户信息列表</title>
+<title>模块信息列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -64,7 +64,7 @@ table thead tr th{
 <div class="query">
 	<div class="query-conditions ue-clear">
         <div class="conditions staff ue-clear">
-            <label>角色名称：</label>
+            <label>模块名称：</label>
             <!-- 如果employNo的值是空时，表示上一页的查询条件是以用户的方式查询 -->
             <s:textfield id="condition" name="querycon"></s:textfield>            
 

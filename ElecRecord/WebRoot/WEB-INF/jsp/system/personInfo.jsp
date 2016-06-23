@@ -20,6 +20,11 @@ function download(){
  		
  		window.open(url) ; //打开窗口
 }
+function alter(){
+ 		var url="${basePath}system/login_alterpwdUI.action";
+ 		
+ 		window.open(url) ; //打开窗口
+}
 
 </script>
 
@@ -31,7 +36,7 @@ function download(){
     <div class="content">
     	<ul class="toollist ue-clear">
             <li>
-            	<a href="javascript:;" class="img"><img src="${basePath}images/icon03.png" /></a>
+            	<a href="javascript:alter();" class="img"><img src="${basePath}images/icon03.png" /></a>
                 <p><a href="javascript:;">密码修改</a></p>
             </li>
             <li>
@@ -128,5 +133,7 @@ function download(){
         </div>
     </div>
 </div>
+
+
 </body>
 </html>

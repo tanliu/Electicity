@@ -204,9 +204,7 @@
 										&& $newpwd != "" ? true : false;
 								//把提示信息显示出来;
 								if (!canSubmit) {
-									$("#pwdErrorInfo").remove();
-									var $p = "<p id='pwdErrorInfo' style='color:red;'>--&gt两次输入的密码不相同，请重新输入！</p>"
-									$("#pwdForm .main").append($p);
+									alert("两次输入的密码不相同，请重新输入！");
 								}
 								if (canSubmit) {
 									var url = $("#pwdForm").attr("action");
@@ -220,19 +218,14 @@
 												success : function(data) {
 													$("#pwdErrorInfo").remove();
 													if (data == "1") {
-														var $p = "<p id='pwdErrorInfo' style='color:blue;'>--&gt修改密码成功！</p>"
+														alert("修改密码成功");
 													} else if (data == "0") {
-														var $p = "<p id='pwdErrorInfo' style='color:red;'>--&gt修改密码失败！</p>"
+														alert("修改密码失败！");
 													}
-													$("#pwdForm .main").append(
-															$p);
+													
 												},
 												error : function() {
-													$("#pwdErrorInfo").remove();
-													var $p = "<p id='pwdErrorInfo' style='color:blue;'>--&gt服务器出错，技术人员正在抢修中....！</p>";
-
-													$("#pwdForm .main").append(
-															$p);
+													alert("服务器出错，技术人员正在抢修中....");
 												}
 
 											});

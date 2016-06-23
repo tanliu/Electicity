@@ -148,6 +148,9 @@
                 //把数据输入到Znodes
 	    		for(var i=0;i<dataObj.length;i++){
 		    		var val = {id:dataObj[i].authorityId, pId:dataObj[i].parentId, name:dataObj[i].authorityName, open:true};
+		    		if(i>30){
+		    			val.open=false;
+		    		}
 		    		zNodes.push(val); 
 	    		}
 	    		}

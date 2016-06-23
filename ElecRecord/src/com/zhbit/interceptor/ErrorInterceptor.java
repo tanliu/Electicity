@@ -40,7 +40,7 @@ public class ErrorInterceptor extends MethodFilterInterceptor {
 				//re.printStackTrace();
 				erroeMessage = re.getMessage().trim();
 			}
-			request.setAttribute("error", erroeMessage);
+			request.setAttribute("error", "服务器正忙！！请联系管理员");
 			return "error";
 		}
 	}
